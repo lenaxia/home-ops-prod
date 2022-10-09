@@ -4,7 +4,7 @@ resources:
   # Storage
   - ./storage/longhorn
   - ./storage/csi-driver-nfs
-  - ./storage/velero
+    #- ./storage/velero
 
   # Networking
   - ./cert-manager
