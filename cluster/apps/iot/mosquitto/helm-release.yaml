@@ -14,7 +14,7 @@ spec:
         kind: HelmRepository
         name: k8s-at-home
         namespace: flux-system
-      interval: 5m
+      interval: 10m
   install:
     createNamespace: true
   values:
