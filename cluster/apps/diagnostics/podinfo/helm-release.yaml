@@ -19,7 +19,7 @@ spec:
   values:
     #cache: redis-master.redis:6379
     service:
-      type: LoadBalancer
+      type: ClusterIP
     ingress:
       enabled: true
       className: "traefik"
