@@ -36,15 +36,15 @@ resources:
   - ./media/nzbhydra2
   #- ./media/bookstack
   - ./media/metube
-  #  - ./media/overseerr
+  - ./media/overseerr
   - ./media/calibre
   - ./media/calibre-web
   - ./media/tautulli
   - ./media/outline
 
   # IOT Namespace
-  #- ./iot/mosquitto
-    #- ./iot/nodered
+  - ./iot/mosquitto
+  - ./iot/nodered
 
   # Utilities Namespace
   #  - ./utilities/vaultwarden
