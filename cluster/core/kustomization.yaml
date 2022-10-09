@@ -11,7 +11,7 @@ resources:
 
   # Databases
   #- ./databases/mariadb
-  #- ./databases/redis
+  - ./databases/redis
   - ./databases/cloudnative-pg
   - ./databases/cloudnative-pg/clusters
   - ./databases/influxdb
