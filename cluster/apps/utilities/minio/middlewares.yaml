@@ -1,0 +1,46 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:
+  name: middlewares-minio-headers
+  namespace: networking
+spec:
+  headers:
+    accessControlAllowMethods:
+      - GET
+      - OPTIONS
+      - PUT
+    accessControlAllowOriginList:
+      - "*"
+        #      - https://w.${SECRET_DEV_DOMAIN}
+        #      - https://s3.${SECRET_DEV_DOMAIN}
+    accessControlMaxAge: 100
+    addVaryHeader: true
+    stsSeconds: 63072000
+    stsIncludeSubdomains: true
+    stsPreload: true
+    frameDeny: true
+    forceSTSHeader: true
+    # frameDeny: true #overwritten by customFrameOptionsValue
+    customFrameOptionsValue: "allow-from https:${SECRET_DEV_DOMAIN}" #CSP takes care of this but may be needed for organizr.
+    contentTypeNosniff: true
+    browserXssFilter: true
+    referrerPolicy: "origin-when-cross-origin"
+      #referrerPolicy: "same-origin"
+    # Setting contentSecurityPolicy is more secure but it can break things. Proper auth will reduce the risk.
+    # the below line also breaks some apps due to 'none' - sonarr, radarr, etc.
+    # contentSecurityPolicy: "frame-ancestors '*.example.com:*';object-src 'none';script-src 'none';"
+    permissionsPolicy: "camera 'none'; geolocation 'none'; microphone 'none'; payment 'none'; usb 'none'; vr 'none';"
+    customResponseHeaders:
+      X-Robots-Tag: "none,noarchive,nosnippet,notranslate,noimageindex,"
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:
+  name: chain-authelia-minio
+  namespace: networking
+spec:
+  chain:
+    middlewares:
+      - name: middlewares-rate-limit
+      - name: middlewares-minio-headers
+      - name: middlewares-authelia

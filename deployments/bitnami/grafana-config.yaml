@@ -1,0 +1,33 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: grafana-config
+  namespace: monitoring 
+data:
+  grafana.ini: |
+    #################################### Auth Proxy ##########################
+    [auth.proxy]
+    enabled = true
+    header_name = Remote-User
+    header_property = username
+    auto_sign_up = false
+    sync_ttl = 60
+    whitelist = 172.24.0.0/24
+    headers = Email:X-User-Email, Name:X-User-Name, Group:Remote-Groups
+    # Read the auth proxy docs for details on what the setting below enables
+    ;enable_login_token = false
+
+    #################################### Anonymous Auth ######################
+    [auth.anonymous]
+    # enable anonymous access
+    enabled = true
+    
+    # specify organization name that should be used for unauthenticated users
+    ;org_name = Main Org.
+    
+    # specify role for unauthenticated users
+    org_role = Viewer
+    
+    # mask the Grafana version number for unauthenticated users
+    hide_version = false

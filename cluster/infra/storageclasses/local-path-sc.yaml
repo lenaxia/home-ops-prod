@@ -1,0 +1,19 @@
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  annotations:
+    objectset.rio.cattle.io/applied: '{"apiVersion":"storage.k8s.io/v1","kind":"StorageClass","metadata":{"annotations":{"objectset.rio.cattle.io/id":"","objectset.rio.cattle.io/owner-gvk":"k3s.cattle.io/v1,
+      Kind=Addon","objectset.rio.cattle.io/owner-name":"local-storage","objectset.rio.cattle.io/owner-namespace":"kube-system","storageclass.kubernetes.io/is-default-class":"true"},"labels":{"objectset.rio.cattle.io/hash":"183f35c65ffbc3064603f43f1580d8c68a2dabd4"},"name":"local-path"},"provisioner":"rancher.io/local-path","reclaimPolicy":"Delete","volumeBindingMode":"WaitForFirstConsumer"}'
+    objectset.rio.cattle.io/id: ""
+    objectset.rio.cattle.io/owner-gvk: k3s.cattle.io/v1, Kind=Addon
+    objectset.rio.cattle.io/owner-name: local-storage
+    objectset.rio.cattle.io/owner-namespace: kube-system
+    storageclass.kubernetes.io/is-default-class: "true"
+  creationTimestamp: "2022-03-23T04:20:15Z"
+  labels:
+    objectset.rio.cattle.io/hash: 183f35c65ffbc3064603f43f1580d8c68a2dabd4
+  name: local-path
+  resourceVersion: "297865"
+provisioner: rancher.io/local-path
+reclaimPolicy: Delete
+volumeBindingMode: WaitForFirstConsumer

@@ -1,0 +1,56 @@
+apiVersion: v1
+kind: Secret
+metadata:
+    name: kaocloud-ca-secret
+    namespace: default
+data:
+    tls.crt: ENC[AES256_GCM,data:EOT3shWdE3vcsiZxfINwUH4TUU8gpPtKqSRPlyt90IproNy5w4LZHgyCqNWAeAmQOGT+t29qtM81xwfujhqgQsxPIJKorBZDl3E04ZEDRhWOt153avkFyDMgFjFPYFBWDy4uyqY/iJC5wd8dzcL8EQ9q3/PGq3vC8QyfJUm1lt9Vw8FuuDYeNQ41bmu5ecuoQIHjCBhKvkbF1KXdvy7ySAe5g0NbnStrlWiCJg/gtvq/upy4vmLcvFGcgsts8y6e8FgUncneVsywEeix7AT/hESYUway+53aBk2GS08dBET6cnwU7u79PXwZK4tCcOQXM61fUtwV5X0AnP95ZwCtOVCUP50jocZnxdmj5padMNPGRKg+n5zOTaWT3iQXt/4uy5/n3/ZEIqywv6NjQjXaUX9Ix/IX6QoVyLDQ90488c1HvBO0/0KJxJkDRh8tLwm5klkmart7qEyh0J/OY1WoOjXYHKqan9e8LzG9x0AoBhElZJe6Si7oudbgKBlBJcwQfrd63iUZ8jZ+n+8m1eKoWQe1CqlEld9jkHkZPNwebRd8p8bxZQ3vOCik+E7/ZMxpFeeoXygXSZjEPs5yH3alDPZtGEwo75DroDkuQD0JMtPqrLsduZPgRsMXLOi9Et1WNLCunfOqQ1M78AMNXASAWgzp5E8U1fU/wdBLFaoJVbUFoQWcXfciH3yzvSlc9CgRfnOpGvYMe5YSra6wwewAgqGez3O5IXA5zJoakNjWGWjoWoaBqGRiWJDjuB+cr0nDumiqWCeJV4JkOvaLOvkRw9ZPWI7zTKWFUO07/gYHVTaBVrMBOcFWuiFlGJ/O3ur+UEMULVLtuGfkJUV6VYWcAEjgRT8M+XdumsZ7G6X+0BUtV9bSnBm5D1qgwbi3EgkhQ/8+xEoshtvG97HI5ClEBodABNVvNL1zoq/RnXEtm2DKa4nmCN5Ezy/g6b0WRDi/TzSe4wCbUG4/69kEiBurZ3c7W1DEIs+la4vuSXOnT+5KyJiQ7Cgj/O3Ey7UmA2sCiURoDj1lr3kQqDEqpp8qRllBl0I=,iv:FXMkoxrHz0kD6BStWoYeX1uVQdX9asGh/1zco8FmuOI=,tag:Xz3IBwqyd7MWRzbL+PSF1w==,type:str]
+    tls.key: ENC[AES256_GCM,data:lP9JWZhRYKEYmMTLAzr0pHRIP+Ybxy7GZvvyih18P52bSzXVIJn5N5UBvLysFyDXVopKU/D0HMrTPG2Nz7JXqZoeCe1cDY1FQK9DZmCpFzq1B+tmISXI8rtPz8bunxksU2ExNEWW9ozyjeHqkWctMLDRxyzzFRDDUY6urM7TPNrC8MKkSuS3dy2Of88y7S9hHMlR6LTO/k0tTnZz8NSR6+fYBJXFQFziqOCB+/CGKyYcYmyPEhTdl56/6Id7I6/MgcA8EH5b98llpsZKZRctnbazX5yf23TBD+TD2JjL/ZXvvECqtyxyPi+acG9YI4DL+4ZiNVTUih60QUPP8+zLOxJeqlTb+N4B6p6wkk5ZRMYwk/rDK8vwBTcD24vtTas0dOMgP/1V9vpvAiM76g27TQ==,iv:6vrfNn7m5QFk2SKvBQrmOyIlVIs2YTh6C5QkjUWRVYc=,tag:/HamlX+mou9nFsFqgdMsRg==,type:str]
+sops:
+    kms: []
+    gcp_kms: []
+    azure_kv: []
+    hc_vault: []
+    age:
+        - recipient: age1rr569v9jm7ck70q4wpnspfhdvt4y5m6s604tx0ygs0a65qkt7g4qdszk6k
+          enc: |
+            -----BEGIN AGE ENCRYPTED FILE-----
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBpTTBLSGMyLytCajhwWmpM
+            M0VaSHp1NTBQaEZnSnp2ZlZpZzZNeWl1QlZFClBnb2ovVGFRZXh4VGJmcHcrbDJX
+            ODN3SFV5Z0JudEpRT1duTlI4azhQMnMKLS0tIE5hb3Z3cHFDaGhUYXBpQWVoRlBE
+            SUlQMm9OMVlZN0xpMC9NRjhiRWVISnMKk8rid0KbsQquWNBredDP2bxBXXMG3k1D
+            43ZmKXe8mDuFybbMlsUKHwt7hrfBZvHWr/1kjPEElPYrdKZgRn+PFQ==
+            -----END AGE ENCRYPTED FILE-----
+    lastmodified: "2022-07-28T06:58:11Z"
+    mac: ENC[AES256_GCM,data:/QKaM4MArp9K63V9BTSixehoMoIGhKpfIgRiDEpt7vMxR0gQHkG/V2GvBoxMUlbU8zzDswS4ran/4xBReVz/H2BEFFIIeGfC/5iNtA6YAkY1Ve2k+/nzueOFYgtVxdtShAC/GJB3CAz0bUumXUtEHymtslFelNHlkv8/UrLFo5k=,iv:YM/gqu432pNmh6gFPKNsdjbpgHieTQxkFMhHBFd9S/k=,tag:do6Yb2mmU2Op+/MVqtylxQ==,type:str]
+    pgp: []
+    encrypted_regex: ^(data|stringData)$
+    version: 3.7.1
+---
+apiVersion: cert-manager.io/v1
+kind: ClusterIssuer
+metadata:
+    name: ca-issuer
+spec:
+    ca:
+        secretName: kaocloud-ca-secret
+sops:
+    kms: []
+    gcp_kms: []
+    azure_kv: []
+    hc_vault: []
+    age:
+        - recipient: age1rr569v9jm7ck70q4wpnspfhdvt4y5m6s604tx0ygs0a65qkt7g4qdszk6k
+          enc: |
+            -----BEGIN AGE ENCRYPTED FILE-----
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBpTTBLSGMyLytCajhwWmpM
+            M0VaSHp1NTBQaEZnSnp2ZlZpZzZNeWl1QlZFClBnb2ovVGFRZXh4VGJmcHcrbDJX
+            ODN3SFV5Z0JudEpRT1duTlI4azhQMnMKLS0tIE5hb3Z3cHFDaGhUYXBpQWVoRlBE
+            SUlQMm9OMVlZN0xpMC9NRjhiRWVISnMKk8rid0KbsQquWNBredDP2bxBXXMG3k1D
+            43ZmKXe8mDuFybbMlsUKHwt7hrfBZvHWr/1kjPEElPYrdKZgRn+PFQ==
+            -----END AGE ENCRYPTED FILE-----
+    lastmodified: "2022-07-28T06:58:11Z"
+    mac: ENC[AES256_GCM,data:/QKaM4MArp9K63V9BTSixehoMoIGhKpfIgRiDEpt7vMxR0gQHkG/V2GvBoxMUlbU8zzDswS4ran/4xBReVz/H2BEFFIIeGfC/5iNtA6YAkY1Ve2k+/nzueOFYgtVxdtShAC/GJB3CAz0bUumXUtEHymtslFelNHlkv8/UrLFo5k=,iv:YM/gqu432pNmh6gFPKNsdjbpgHieTQxkFMhHBFd9S/k=,tag:do6Yb2mmU2Op+/MVqtylxQ==,type:str]
+    pgp: []
+    encrypted_regex: ^(data|stringData)$
+    version: 3.7.1

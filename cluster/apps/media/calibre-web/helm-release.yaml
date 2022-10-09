@@ -1,0 +1,79 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: &appname calibre-web
+  namespace: media
+spec:
+  chart:
+    spec:
+      chart: app-template
+      version: 0.1.1
+      interval: 15m
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s-charts
+        namespace: flux-system
+  dependsOn:
+    - name: calibre
+      namespace: media
+  interval: 15m
+  values:
+    initContainers:
+      update-volume-permission:
+        image: busybox@sha256:20142e89dab967c01765b0aea3be4cec3a5957cc330f061e5503ef6168ae6613
+        command: ["sh", "-c", "chown -R 1000:1000 /config"]
+        volumeMounts:
+          - name: config
+            mountPath: /config
+        securityContext:
+          runAsUser: 0
+    image:
+      repository: ghcr.io/linuxserver/calibre-web
+      tag: version-0.6.19
+    env:
+      DOCKER_MODS: ghcr.io/linuxserver/mods:universal-calibre
+      PGID: "65539"
+      PUID: "1000"
+    service:
+      main:
+        ports:
+          http:
+            port: 8083
+    ingress:
+      main:
+        enabled: true
+        ingressClassName: "traefik"
+        annotations:
+          hajimari.io/enable: "true"
+          hajimari.io/icon: "bookshelf"
+          hajimari.io/appName: "The Library"
+          hajimari.io/group: "Media"
+          cert-manager.io/cluster-issuer: "letsencrypt-production"
+            ##cert-manager.io/cluster-issuer: "ca-issuer"
+          traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
+          traefik.ingress.kubernetes.io/router.middlewares: networking-chain-authelia@kubernetescrd
+        hosts:
+          - host: &uri "library.${SECRET_DEV_DOMAIN}"
+            paths:
+              - path: /
+                pathType: Prefix
+        tls:
+          - hosts:
+              - *uri
+            secretName: *uri
+    persistence:
+      config:
+        enabled: true
+        existingClaim: calibre-web-config-volume
+      media:
+        enabled: true
+        existingClaim: calibre-media-volume
+        namespace: media
+        mountPath: /library
+    resources:
+      requests:
+        cpu: 15m
+        memory: 249M
+      limits:
+        memory: 299M

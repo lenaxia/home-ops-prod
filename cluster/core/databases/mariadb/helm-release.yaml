@@ -1,0 +1,92 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: mariadb
+  namespace: databases
+spec:
+  interval: 5m
+  chart:
+    spec:
+      chart: mariadb
+      version: "11.1.2"
+      sourceRef:
+        kind: HelmRepository
+        name: bitnami
+        namespace: flux-system
+  install:
+    createNamespace: true
+    remediation:
+      retries: 3
+  upgrade:
+    remediation:
+      retries: 3
+  values:
+    architecture: standalone
+    auth:
+      rootPassword: "${SECRET_MARIADB_PASSWORD}"
+      #replicationUser: replicator
+      #replicationPassword: "${SECRET_MARIADB_REPLICATION_PASSWORD}"
+
+
+    primary:
+      persistence:
+        enabled: true
+        existingClaim: "mariadb-primary-pvc"
+        storageClass: "longhorn"
+      service:
+        loadBalancerIP: "${SVC_MARIADB_PRIMARY_ADDR}"
+        annotations:
+          metallb.universe.tf/address-pool: dev-infra
+        type: LoadBalancer
+        ports:
+          mysql: 3306
+        #loadBalancerIP: "192.168.5.5"
+        externalTrafficPolicy: Cluster
+        ## @param primary.service.loadBalancerSourceRanges Address that are allowed when MariaDB Primary service is LoadBalancer
+        ## https://kubernetes.io/docs/tasks/access-application-cluster/configure-cloud-provider-firewall/#restrict-access-for-loadbalancer-service
+        ## E.g.
+        ## loadBalancerSourceRanges:
+        ##   - 10.10.10.0/24
+        ##
+        loadBalancerSourceRanges: []
+        annotations: 
+          metallb.universe.tf/address-pool: dev-infra
+        ## @param primary.service.sessionAffinity Session Affinity for Kubernetes service, can be "None" or "ClientIP"
+        ## If "ClientIP", consecutive client requests will be directed to the same Pod
+        ## ref: https://kubernetes.io/docs/concepts/services-networking/service/#virtual-ips-and-service-proxies
+        ##
+        sessionAffinity: ClientIP
+        sessionAffinityConfig:
+          clientIP:
+            timeoutSeconds: 300
+    
+    secondary:
+      replicaCount: 0
+#      persistence:
+#        enabled: true
+#        existingClaim: "mariadb-secondary-pvc"
+#        storageClass: "longhorn"
+#      service:
+#        type: LoadBalancer
+#        ports:
+#          mysql: 3306
+#        #loadBalancerIP: "192.168.5.6"
+#        externalTrafficPolicy: Cluster
+#        ## @param primary.service.loadBalancerSourceRanges Address that are allowed when MariaDB Primary service is LoadBalancer
+#        ## https://kubernetes.io/docs/tasks/access-application-cluster/configure-cloud-provider-firewall/#restrict-access-for-loadbalancer-service
+#        ## E.g.
+#        ## loadBalancerSourceRanges:
+#        ##   - 10.10.10.0/24
+#        ##
+#        loadBalancerSourceRanges: []
+#        annotations: 
+#          metallb.universe.tf/address-pool: dev-infra
+#        ## @param primary.service.sessionAffinity Session Affinity for Kubernetes service, can be "None" or "ClientIP"
+#        ## If "ClientIP", consecutive client requests will be directed to the same Pod
+#        ## ref: https://kubernetes.io/docs/concepts/services-networking/service/#virtual-ips-and-service-proxies
+#        ##
+#        sessionAffinity: ClientIP
+#        sessionAffinityConfig:
+#          clientIP:
+#            timeoutSeconds: 300

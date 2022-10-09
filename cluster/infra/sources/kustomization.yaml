@@ -1,0 +1,29 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: flux-system
+resources:
+  - longhorn-charts.yaml
+  - traefik-charts.yaml
+  - ealenn-charts.yaml
+  - bitnami-charts.yaml
+  - metallb-charts.yaml
+  - podinfo-charts.yaml
+  - k8s-at-home.yaml
+  - grafana-charts.yaml
+  - metrics-server-charts.yaml
+  - minio-charts.yaml
+  - prometheus-community-charts.yaml
+  - hajimari-charts.yaml
+  - jetstack-charts.yaml
+  - node-feature-discovery-charts.yaml
+  - fission-charts.yaml
+  - timescale-charts.yaml
+  - vmware-tanzu-charts.yaml
+  - authentik-charts.yaml
+  - authelia-charts.yaml
+  - nicholaswilde-charts.yaml
+  - descheduler-charts.yaml
+  - cloudnative-pg-charts.yaml
+  - influxdata-charts.yaml
+  - skater-charts.yaml
+  - csi-driver-nfs-charts.yaml

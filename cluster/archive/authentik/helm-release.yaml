@@ -1,0 +1,67 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: authentik 
+  namespace: networking
+spec:
+  interval: 5m
+  chart:
+    spec:
+      chart: authentik
+      version: 2022.7.3
+      sourceRef:
+        kind: HelmRepository
+        name: authentik-charts
+        namespace: flux-system
+      interval: 5m
+  dependsOn:
+    - name: cert-manager
+      namespace: cert-manager
+  install:
+    createNamespace: true
+    remediation:
+      retries: 3
+  upgrade:
+    remediation:
+      retries: 3
+  values:
+    image:
+      repository: ghcr.io/goauthentik/server
+      pullPolicy: IfNotPresent
+    deployment:
+      kind: Deployment
+      replicas: 1
+    service:
+      enabled: true
+      type: LoadBalancer
+      spec:
+        loadBalancerIP: "${SVC_AUTHENTIK_ADDR}"
+        externalTrafficPolicy: Local
+      annotations:
+        metallb.universe.tf/address-pool: dev-infra
+    authentik:
+      secret_key: "EAYEESah3DWkS8eGngfS2C6ny3M2afMQdyTtbuDTbmJ3dXDCUJ"
+      error_reporting:
+          enabled: true
+      redis:
+        host: "${SVC_REDIS_ADDR}"
+        password: ""
+      postgresql:
+        enabled: true
+        host: "${RURI_ADDR}"
+        user: authentik
+        password: FgAyH6m8ga
+        port: 5432
+        s3_backup:
+          host: "http://${NAS_ADDR}:9000"
+          access_key: authentik-sfZkjR9
+          secret_key: mMHKwbdG3XpbsBu
+          bucket: authentik-i5rgd92
+          insecure_skip_verify: true
+
+    postgresql:
+      enabled: false
+
+    redis:
+      enabled: false

@@ -1,0 +1,69 @@
+image:
+  registry: docker.io
+  repository: bitnami/mariadb
+  tag: 10.5.15-debian-10-r11
+  pullPolicy: IfNotPresent
+  pullSecrets: []
+  debug: false
+architecture: replication
+auth:
+  rootPassword: "65ZndqAMB3bmpWgC7c9"
+  replicationUser: replicator
+  replicationPassword: "KCPyfMtkBnGrgZBPaSaY5WN587kGT"
+primary:
+  persistence:
+    enabled: true
+    existingClaim: "mariadb-primary-pvc"
+    storageClass: "longhorn"
+  service:
+    type: LoadBalancer
+    ports:
+      mysql: 3306
+    loadBalancerIP: "192.168.2.10"
+    externalTrafficPolicy: Cluster
+    ## @param primary.service.loadBalancerSourceRanges Address that are allowed when MariaDB Primary service is LoadBalancer
+    ## https://kubernetes.io/docs/tasks/access-application-cluster/configure-cloud-provider-firewall/#restrict-access-for-loadbalancer-service
+    ## E.g.
+    ## loadBalancerSourceRanges:
+    ##   - 10.10.10.0/24
+    ##
+    loadBalancerSourceRanges: []
+    annotations: 
+      metallb.universe.tf/address-pool: prod-infra
+    ## @param primary.service.sessionAffinity Session Affinity for Kubernetes service, can be "None" or "ClientIP"
+    ## If "ClientIP", consecutive client requests will be directed to the same Pod
+    ## ref: https://kubernetes.io/docs/concepts/services-networking/service/#virtual-ips-and-service-proxies
+    ##
+    sessionAffinity: ClientIP
+    sessionAffinityConfig:
+      clientIP:
+        timeoutSeconds: 300
+
+secondary:
+  replicaCount: 1
+  persistence:
+    enabled: true
+    existingClaim: "mariadb-secondary-pvc"
+    storageClass: "longhorn"
+  service:
+    type: LoadBalancer
+    ports:
+      mysql: 3306
+    loadBalancerIP: "192.168.2.11"
+    externalTrafficPolicy: Cluster
+    ## @param primary.service.loadBalancerSourceRanges Address that are allowed when MariaDB Primary service is LoadBalancer
+    ## https://kubernetes.io/docs/tasks/access-application-cluster/configure-cloud-provider-firewall/#restrict-access-for-loadbalancer-service
+    ## E.g.
+    ## loadBalancerSourceRanges:
+    ##   - 10.10.10.0/24
+    ##
+    loadBalancerSourceRanges: []
+    annotations: 
+      metallb.universe.tf/address-pool: prod-infra
+    ## @param primary.service.sessionAffinity Session Affinity for Kubernetes service, can be "None" or "ClientIP"
+    ## If "ClientIP", consecutive client requests will be directed to the same Pod
+    ## ref: https://kubernetes.io/docs/concepts/services-networking/service/#virtual-ips-and-service-proxies
+    ##
+    sessionAffinity: ClientIP
+    sessionAffinityConfig:
+      clientIP:

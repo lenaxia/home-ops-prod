@@ -1,0 +1,17 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+    name: grafana2
+    namespace: traefik
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`grafana2.lan`)
+      kind: Rule
+      middlewares:
+        - name: traefik-basicauth
+          namespace: traefik
+      services:
+        - name: grafana
+          port: 3000

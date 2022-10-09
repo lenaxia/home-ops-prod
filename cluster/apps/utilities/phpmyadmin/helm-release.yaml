@@ -1,0 +1,43 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: phpmyadmin
+  namespace: utilities
+spec:
+  interval: 5m
+  chart:
+    spec:
+      chart: phpmyadmin
+      sourceRef:
+        kind: HelmRepository
+        name: bitnami
+        namespace: flux-system
+  install:
+    createNamespace: true
+    remediation:
+      retries: 3
+  upgrade:
+    remediation:
+      retries: 3
+  values:
+    ingress:
+      enabled: true
+      ingressClassName: "traefik"
+      annotations:
+        hajimari.io/enable: "true"
+        hajimari.io/icon: "language-php"
+        hajimari.io/group: "Media"
+        cert-manager.io/cluster-issuer: "letsencrypt-production"
+        ##cert-manager.io/cluster-issuer: "ca-issuer"
+        traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
+        traefik.ingress.kubernetes.io/router.middlewares: networking-chain-authelia@kubernetescrd
+      hostname: &uri "phpmyadmin.${SECRET_DEV_DOMAIN}"
+      path: /
+      pathType: Prefix
+      
+      tls: true
+        #- hosts:
+        #    - *uri
+        #  secretName: *uri
+---

@@ -1,0 +1,8 @@
+version: "2"
+services:
+  oauth2-debugger:
+    image: datawire/oauth2-oidc-debugger
+    container_name: oauth2-oidc-debugger
+    ports:
+      - 3000:3000
+    restart: unless-stopped

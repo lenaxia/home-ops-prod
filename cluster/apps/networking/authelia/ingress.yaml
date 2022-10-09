@@ -1,0 +1,29 @@
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    hajimari.io/enable: "true"
+    hajimari.io/icon: "shield-account"
+      #cert-manager.io/cluster-issuer: ca-issuer
+    cert-manager.io/cluster-issuer: letsencrypt-production
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
+  name: &appname authelia
+  namespace: networking
+spec:
+  ingressClassName: "traefik"
+  rules:
+  - host: &uri "authelia.${SECRET_DEV_DOMAIN}"
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: *appname
+            port:
+              number: 80
+  tls:
+  - hosts:
+    - *uri
+    secretName: *uri

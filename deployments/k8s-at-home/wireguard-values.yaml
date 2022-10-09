@@ -1,0 +1,120 @@
+#
+# IMPORTANT NOTE
+#
+# This chart inherits from our common library chart. You can check the default values/options here:
+# https://github.com/k8s-at-home/library-charts/tree/main/charts/stable/common/values.yaml
+#
+
+image:
+  # -- image repository
+  repository: ghcr.io/k8s-at-home/wireguard
+  # -- image tag
+  tag: v1.0.20210424
+  # -- image pull policy
+  pullPolicy: IfNotPresent
+
+# @default -- See below
+env:
+  # -- Set the container timezone
+  TZ: America/Los Angeles 
+  # -- Override the backend used by iptables. Valid values are nft and legacy
+  IPTABLES_BACKEND: nft
+  # -- Enable a killswitch that kills all trafic when the VPN is not connected
+  # @default -- false
+  KILLSWITCH: false
+  # -- A separated list of IPv4 networks that will be excluded from the VPN/killswitch
+  # KILLSWITCH_EXCLUDEDNETWORKS_IPV4:
+  # -- A separated list of IPv6 networks that will be excluded from the VPN/killswitch
+  # KILLSWITCH_EXCLUDEDNETWORKS_IPV6:
+  # -- The separator that is used to split the KILLSWITCH_EXCLUDEDNETWORKS lists
+  # @default -- ;
+  # SEPARATOR: ;
+
+# -- Configures service settings for the chart.
+# @default -- See values.yaml
+service:
+  main:
+    enabled: true
+    ports:
+      http:
+        enabled: false
+      vpn:
+        enabled: true
+        port: 51820
+        protocol: UDP
+    type: LoadBalancer
+    loadBalancerIP: 192.168.2.6
+    annotations:
+      metallb.universe.tf/address-pool: prod-infra
+
+ingress:
+  # -- Enable and configure ingress settings for the chart under this key.
+  # @default -- See values.yaml
+  main:
+    enabled: false
+
+# -- Configure persistence settings for the chart under this key.
+# @default -- See values.yaml
+persistence:
+  config:
+    enabled: false
+    mountPath: /etc/wireguard
+
+# -- Security contexts required for container.
+# @default -- see values.yaml
+securityContext:
+  capabilities:
+    add:
+    - NET_ADMIN
+    - SYS_MODULE
+
+# -- Configures the probes for the main Pod.
+# @default -- See values.yaml
+probes:
+  liveness:
+    enabled: true
+    ## Set this to true if you wish to specify your own livenessProbe
+    custom: true
+    ## The spec field contains the values for the default livenessProbe.
+    ## If you selected custom: true, this field holds the definition of the livenessProbe.
+    spec:
+      exec:
+        command: ["bash", "-c", "if [[ $(curl -s https://ipinfo.io) ]]; then exit 0; else exit $?; fi"]
+      initialDelaySeconds: 0
+      timeoutSeconds: 1
+      periodSeconds: 5
+      failureThreshold: 5
+  readiness:
+    enabled: false
+  startup:
+    enabled: false
+
+# -- If set to 'true', the configuration will be read from these values.
+# -- Otherwise you have to mount a volume to /etc/wireguard containing the wg0.conf.
+# @default -- base64 encoded wg0.conf by running `base64 wg0.conf`
+#configSecret:
+#  # -- Store Wireguard config as a secret
+#  enabled: false 
+#  # @default -- See values.yaml
+config: |
+  [Interface]
+  Address = 10.0.0.1/24
+  ListenPort = 51820
+  PrivateKey = +Lf/JdRrQYjLk7R8qu2cYmszbsDwp7NOXsNJzrJk72s=
+  PostUp = iptables -A FORWARD -i %i -j ACCEPT; iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE
+  PostDown = iptables -D FORWARD -i %i -j ACCEPT; iptables -t nat -D POSTROUTING -o eth0 -j MASQUERADE
+  
+  [Peer]
+  PublicKey = Z+VIRkK5wG4OEZERvYZTLWVHPySoPa6v/nwfFgrR4C4=
+  PresharedKey = odaVvS8G0bRCllRZNeWw9euBWNexph0lLnJ6MqFvy/c=
+  AllowedIPs = 10.0.0.2/32
+  
+  [Peer]
+  PublicKey = 53amziZGXmSXDu4O64F0Z555y44W6CQwVjLy0QWWCi8=
+  PresharedKey = mpFmXkbxA8UPnfTlhcoiQNo0H6YgNrHWr6bonvAR06c=
+  AllowedIPs = 10.0.0.3/32
+  
+  [Peer]
+  PublicKey = FU0IN98ADBnNGbDK/Vzyx70aYsoL4nFPlJgx22w/TmM=
+  PresharedKey = SfNcd2sdgrjoQZxkh2HAO7QTas/KFoHWVHa/Rd8HEeM=
+  AllowedIPs = 10.0.0.4/32

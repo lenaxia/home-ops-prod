@@ -1,0 +1,104 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: &appname bookstack
+  namespace: media
+  labels:
+    app: *appname
+spec:
+  releaseName: *appname
+  chart:
+    spec:
+      chart: *appname
+      version: "5.1.2"
+      sourceRef:
+        kind: HelmRepository
+        name: k8s-at-home
+        namespace: flux-system
+  interval: 5m
+  values:
+    image:
+      repository: ghcr.io/linuxserver/bookstack
+      pullPolicy: IfNotPresent
+    podLabels:
+      app: *appname
+    ingress:
+      main:
+        enabled: true
+        ingressClassName: "traefik"
+        annotations:
+          hajimari.io/enable: "true"
+          hajimari.io/icon: "book-open-page-variant"
+          #cert-manager.io/cluster-issuer: "letsencrypt-staging"
+          cert-manager.io/cluster-issuer: "ca-issuer"
+          traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
+          traefik.ingress.kubernetes.io/router.middlewares: networking-chain-authelia@kubernetescrd
+        hosts:
+          - host: &uri "w.${SECRET_DEV_DOMAIN}"
+            paths:
+              - path: /
+                pathType: Prefix
+        tls:
+          - hosts:
+            - *uri
+            secretName: *uri
+    
+    env:
+      TZ: "${TIMEZONE}"
+      APP_URL: "https://w.${SECRET_DEV_DOMAIN}"
+      DB_HOST: 192.168.0.125
+      DB_USER: bookstack
+      DB_PASS: hul6[5CXOzeqX@9s
+      DB_DATABASE: bookstack
+
+    service:
+      main:
+        ports:
+          http:
+            port: 80
+        type: LoadBalancer
+    
+    persistence:
+      config:
+        enabled: true
+        existingClaim: "bookstack-config-volume"
+      envconfig:
+        enabled: true
+        type: configMap
+        name: bookstack-config
+        mountPath: /backup
+
+    # -- Enable and configure mariadb database subchart under this key.
+    #    For more options see [mariadb chart documentation](https://github.com/bitnami/charts/tree/master/bitnami/mariadb).
+    # @default -- See values.yaml
+    mariadb:
+      enabled: false
+        #architecture: standalone
+        #auth:
+        #  database: bookstack
+        #  username: bookstack
+        #  password: bookstack
+        #  rootPassword: bookstack
+        #primary:
+        #  persistence:
+        #    enabled: true
+        #    existingClaim: "bookstack-mariadb-config-volume"
+            #  postRenderers:
+            #    # Instruct helm-controller to use built-in "kustomize" post renderer.
+            #    - kustomize:
+            #        # Array of inline strategic merge patch definitions as YAML object.
+            #        # Note, this is a YAML object and not a string, to avoid syntax
+            #        # indention errors.
+            #        patchesStrategicMerge:
+            #          - kind: Deployment
+            #            apiVersion: apps/v1
+            #            metadata:
+            #              name: bookstack
+            #            spec:
+            #              template:
+            #                spec:
+            #                  tolerations:
+            #                    - key: "workload-type"
+            #                      operator: "Equal"
+            #                      value: "cluster-services"
+            #                      effect: "NoSchedule"

@@ -1,0 +1,109 @@
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+    name: plex
+      #    namespace: traefik 
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`plex.k3s`)
+      kind: Rule
+      middlewares:
+        - name: traefik-basicauth
+          #          namespace: traefik
+      services:
+        - name: plex 
+          port: 32400
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+    name: sonarr
+      #    namespace: traefik 
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`sonarr.k3s`)
+      kind: Rule
+      middlewares:
+        - name: traefik-basicauth
+          #          namespace: traefik
+      services:
+        - name: sonarr
+          port: 8989
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+    name: radarr
+      #    namespace: traefik 
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`radarr.k3s`)
+      kind: Rule
+      middlewares:
+        - name: traefik-basicauth
+          #          namespace: traefik
+      services:
+        - name: radarr
+          port: 7878
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+    name: uptime-kuma 
+      #    namespace: traefik 
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`status.k3s`)
+      kind: Rule
+      middlewares:
+        - name: traefik-basicauth
+          #          namespace: traefik
+      services:
+        - name: uptime-kuma
+          port: 3001
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+    name: nzbhydra
+      #    namespace: traefik 
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`nzbhydra.k3s`)
+      kind: Rule
+      middlewares:
+        - name: traefik-basicauth
+          #          namespace: traefik
+      services:
+        - name: nzbhydra2
+          port: 5076
+---
+#apiVersion: traefik.containo.us/v1alpha1
+#kind: IngressRoute
+#metadata:
+#    name: nzbget
+#      #    namespace: traefik 
+#spec:
+#  entryPoints:
+#    - websecure
+#  routes:
+#    - match: Host(`nzbget.k3s`)
+#      kind: Rule
+#      middlewares:
+#        - name: traefik-basicauth
+#          #          namespace: traefik
+#      services:
+#        - name: nzbget
+#          port: 6789
+#---

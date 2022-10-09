@@ -1,0 +1,93 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: &appname telegraf
+  namespace: databases
+spec:
+  interval: 5m
+  chart:
+    spec:
+      chart: telegraf
+      version: 1.8.20
+      sourceRef:
+        kind: HelmRepository
+        name: influxdata-charts
+        namespace: flux-system
+  install:
+    createNamespace: true
+    remediation:
+      retries: 3
+  upgrade:
+    remediation:
+      retries: 3
+  values:
+    podLabels:
+      app: telegraf 
+
+#    adminUser:
+#      organization: "kaocloud"
+#      bucket: "default"
+#      user: "admin"
+#      retention_policy: "30d"
+#      existingSecret: influxdb-auth
+
+    persistence:
+      enabled: true
+      useExisting: true
+      name: telegraf-data-volume
+
+    service:
+      type: ClusterIP
+      port: 80
+      targetPort: 8086
+      annotations:
+        metallb.universe.tf/address-pool: dev-infra
+      labels:
+        app: telegraf
+      portName: http
+
+
+    ## Exposed telegraf configuration
+    ## For full list of possible values see `/docs/all-config-values.yaml` and `/docs/all-config-values.toml`
+    ## ref: https://docs.influxdata.com/telegraf/v1.1/administration/configuration/
+    config:
+      agent:
+        interval: "10s"
+        round_interval: true
+        metric_batch_size: 1000
+        metric_buffer_limit: 10000
+        collection_jitter: "0s"
+        flush_interval: "10s"
+        flush_jitter: "0s"
+        precision: ""
+        debug: false
+        quiet: false
+        logfile: ""
+        hostname: "$HOSTNAME"
+        omit_hostname: false
+      processors:
+        - enum:
+            mapping:
+              field: "status"
+              dest: "status_code"
+              value_mappings:
+                healthy: 1
+                problem: 2
+                critical: 3
+      outputs:
+        - influxdb:
+            urls:
+              - "http://influxdb.databases.svc.cluster.local:80"
+            database: "telegraf"
+            precision: "s"
+      inputs:
+        - statsd:
+            service_address: ":8125"
+            percentiles:
+              - 50
+              - 95
+              - 99
+            metric_separator: "_"
+            allowed_pending_messages: 10000
+            percentile_limit: 1000

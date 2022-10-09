@@ -1,0 +1,116 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: &app ltb-project
+  namespace: utilities
+spec:
+  interval: 15m
+  chart:
+    spec:
+      chart: app-template
+      version: 0.1.1
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s-charts
+        namespace: flux-system
+  install:
+    createNamespace: true
+    remediation:
+      retries: 5
+  upgrade:
+    remediation:
+      retries: 5
+  values:
+    image:
+      repository: docker.io/ltbproject/self-service-password
+      tag: latest
+    env:
+      TZ: "${TIMEZONE}"
+    envFrom:
+      - secretRef:
+          name: ltb-secret
+    lifecycle: 
+      postStart:
+        exec:
+          command:
+            - /bin/bash
+            - -c
+            - /postStart.sh
+    podAnnotations:
+      configmap.reloader.stakater.com/reload: "poststart-sh,ltb-config,custom-css,ltb-secret"
+    service:
+      main:
+        ports:
+          http:
+            port: &port 80
+    ingress:
+      main:
+        enabled: true
+        ingressClassName: "traefik"
+        annotations:
+          hajimari.io/enable: "true"
+          hajimari.io/icon: "lock-reset"
+          hajimari.io/appName: "Password Reset"
+          hajimari.io/group: "utilities"
+          cert-manager.io/cluster-issuer: "letsencrypt-production"
+            ##cert-manager.io/cluster-issuer: "ca-issuer"
+          traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
+          traefik.ingress.kubernetes.io/router.middlewares: networking-chain-authelia@kubernetescrd
+        hosts:
+          - host: &uri "password.${SECRET_DEV_DOMAIN}"
+            paths:
+              - path: /
+                pathType: Prefix
+        tls:
+          - hosts:
+              - *uri
+            secretName: *uri
+    probes:
+      liveness: &probes
+        enabled: true
+        custom: true
+        spec:
+          httpGet:
+            path: /
+            port: *port
+          initialDelaySeconds: 10
+          periodSeconds: 10
+          timeoutSeconds: 1
+          failureThreshold: 3
+      readiness: *probes
+      startup:
+        enabled: false
+    persistence:
+      #      config:
+      #        enabled: true
+      #        existingClaim: ltb-config-volume
+      #        mountPath: /var/www/html/images
+      #        defaultMode: 0777
+      #        readOnly: false
+      poststart:
+        enabled: true
+        type: configMap
+        name: poststart-sh
+        subPath: postStart.sh
+        mountPath: /postStart.sh
+        defaultMode: 0777
+      ltb-config:
+        enabled: true
+        type: configMap 
+        name: ltb-config
+        subPath: config.inc.local.php
+        mountPath: /var/www/conf/config.inc.local.php
+      custom-css:
+        enabled: true
+        type: configMap
+        name: custom-css 
+        subPath: custom.css
+        mountPath: /var/www/html/css/custom.css
+#        defaultMode: 0777
+#    resources:
+#      requests:
+#        cpu: 10m
+#        memory: 50Mi
+#      limits:
+#        memory: 500Mi

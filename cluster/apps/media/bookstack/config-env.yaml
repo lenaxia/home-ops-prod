@@ -1,0 +1,88 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: bookstack-config
+  namespace: media
+data:
+  .env: |
+    # Known good config as of 2022.08.12
+
+    # Application key
+    # Used for encryption where needed.
+    # Run `php artisan key:generate` to generate a valid key.
+    APP_KEY=base64:cWmR/s8qmVqToMy5ErLStoJwPy7qUF2AO1JB0Ydd398=
+
+    APP_DEBUG=true
+
+    # Application URL
+    # This must be the root URL that you want to host BookStack on.
+    # All URLs in BookStack will be generated using this value
+    # to ensure URLs generated are consistent and secure.
+    # If you change this in the future you may need to run a command
+    # to update stored URLs in the database. Command example:
+    # php artisan bookstack:update-url https://old.example.com https://new.example.com
+    APP_URL=https://w.${SECRET_DEV_DOMAIN}
+    
+    # Database details
+    DB_HOST=bookstack-mariadb
+    DB_DATABASE=bookstack
+    DB_USERNAME=bookstack
+    DB_PASSWORD=bookstack
+    
+    ## Configure Auth Method
+    #AUTH_METHOD=ldap
+    AUTH_METHOD=oidc
+
+    # LDAP Authentication
+    LDAP_SERVER=192.168.0.120:389
+    LDAP_BASE_DN="cn=users,dc=kao,dc=family"
+    LDAP_DN="uid=autheliauser,cn=users,dc=kao,dc=family"
+    LDAP_PASS=${SECRET_LDAP_PASSWORD_AUTHELIAUSER}
+    LDAP_USER_FILTER="(&(uid=${user}))"  # this should be (&(uid=\$\{user\})) but may be messed up during import
+    LDAP_VERSION=3
+    LDAP_ID_ATTRIBUTE=uid
+    LDAP_EMAIL_ATTRIBUTE=mail
+    LDAP_DISPLAY_NAME_ATTRIBUTE=cn
+    LDAP_THUMBNAIL_ATTRIBUTE=jpegphoto
+   
+    # Force TLS to be used for LDAP communication.
+    # Use this if you can but your LDAP support will need to support it and
+    # you may need to import your certificate to the BookStack host machine.
+    # Defaults to 'false'.
+    LDAP_START_TLS=false
+    
+    # If you need to allow untrusted LDAPS certificates, add the below and uncomment (remove the #)
+    # Only set this option if debugging or you're absolutely sure it's required for your setup.
+    # If using php-fpm, you may want to restart it after changing this option to avoid instability.
+    LDAP_TLS_INSECURE=true
+    
+    # If you need to debug the details coming from your LDAP server, add the below and uncomment (remove the #)
+    # Only set this option if debugging since it will block logins and potentially show private details.
+    #LDAP_DUMP_USER_DETAILS=true
+    
+    # OIDC Authentication
+    AUTH_AUTO_INITIATE=true
+    OIDC_NAME="bookstack"
+    OIDC_DISPLAY_NAME_CLAIMS=displayname
+    OIDC_CLIENT_ID=bookstack
+    OIDC_CLIENT_SECRET=${SECRET_BOOKSTACK_OAUTH_CLIENT_SECRET}
+    OIDC_ISSUER=https://authelia.${SECRET_DEV_DOMAIN}
+    OIDC_ISSUER_DISCOVER=true
+
+    # Mail system to use
+    # Can be 'smtp' or 'sendmail'
+    MAIL_DRIVER=smtp
+    
+    # Mail sender details
+    MAIL_FROM_NAME="BookStack"
+    MAIL_FROM=bookstack@example.com
+    
+    # SMTP mail options
+    # These settings can be checked using the "Send a Test Email"
+    # feature found in the "Settings > Maintenance" area of the system.
+    MAIL_HOST=localhost
+    MAIL_PORT=1025
+    MAIL_USERNAME=null
+    MAIL_PASSWORD=null
+    MAIL_ENCRYPTION=null

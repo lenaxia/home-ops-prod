@@ -1,0 +1,71 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: &appname librespeed
+  namespace: utilities
+
+spec:
+  releaseName: *appname
+  chart:
+    spec:
+      chart: *appname
+      version: 5.4.2
+      sourceRef:
+        kind: HelmRepository
+        name: k8s-at-home
+        namespace: flux-system
+  interval: 5m
+  values:
+    service:
+      main:
+        primary: true
+        annotations:
+          metallb.universe.tf/address-pool: dev-infra
+        ports:
+          http:
+            port: 80
+
+    image:
+      repository: linuxserver/librespeed
+      tag: version-5.2.4
+      pullPolicy: IfNotPresent
+    
+    env:
+      TZ: ${TIMEZONE}
+      PUID: "1001"
+      PGID: "1001"
+      PASSWORD: thekaocloud
+      CUSTOM_RESULTS: false
+      DB_TYPE: sqlite
+      DB_NAME: librespeed
+        #DB_HOSTNAME: ${RURI_ADDR}
+        #DB_USERNAME: librespeed
+        #DB_PASSWORD: 
+        #DB_PORT: 3306
+    
+    persistence:
+      config:
+        enabled: false
+        existingClaim: librespeed-config-volume
+
+    ingress:
+      main:
+        enabled: true
+        ingressClassName: "traefik"
+        annotations:
+          hajimari.io/enable: "true"
+          hajimari.io/icon: "speedometer-slow"
+          hajimari.io/appName: "Speed Test"
+          hajimari.io/group: "Utilities"
+          cert-manager.io/cluster-issuer: "letsencrypt-production"
+          traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
+          traefik.ingress.kubernetes.io/router.middlewares: networking-chain-authelia@kubernetescrd
+        hosts:
+          - host: &uri "speed.${SECRET_DEV_DOMAIN}"
+            paths:
+              - path: /
+                pathType: Prefix
+        tls:
+          - hosts:
+              - *uri
+            secretName: *uri

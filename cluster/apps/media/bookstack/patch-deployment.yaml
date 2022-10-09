@@ -1,0 +1,15 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bookstack
+  namespace: media
+spec:
+  template:
+    spec:
+      containers:
+      - name: bookstack
+        image: ghcr.io/linuxserver/bookstack
+        lifecycle:
+          postStart:
+            exec:
+              command: ["/bin/sh", "-c", "cat /backup/.env > /config/www/.env && echo config move done > /config/www/config.log"] 

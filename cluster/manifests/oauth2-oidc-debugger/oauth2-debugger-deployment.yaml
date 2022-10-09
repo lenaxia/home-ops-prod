@@ -1,0 +1,86 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: &appname oauth2-debugger
+  namespace: &ns utilities
+  annotations:
+    kompose.cmd: kompose convert
+    kompose.version: 1.26.0 (40646f47)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: *appname
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: *appname
+  strategy: {}
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: kompose convert
+        kompose.version: 1.26.0 (40646f47)
+      creationTimestamp: null
+      labels:
+        io.kompose.service: *appname
+    spec:
+      containers:
+        - image: datawire/oauth2-oidc-debugger
+          name: oauth2-oidc-debugger
+          ports:
+            - containerPort: 3000
+          resources: {}
+      restartPolicy: Always
+status: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: &appname oauth2-debugger
+  namespace: &ns utilities
+  annotations:
+    kompose.cmd: kompose convert
+    kompose.version: 1.26.0 (40646f47)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: *appname
+spec:
+  ports:
+    - name: "3000"
+      port: 3000
+      targetPort: 3000
+  selector:
+    io.kompose.service: *appname
+status:
+  loadBalancer: {}
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: &appname oauth2-debugger
+  namespace: &ns utilities
+  annotations:
+    hajimari.io/enable: "true"
+    hajimari.io/icon: "shield-bug-outline"
+    cert-manager.io/cluster-issuer: letsencrypt-production
+      #cert-manager.io/cluster-issuer: ca-issuer
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
+    traefik.ingress.kubernetes.io/router.middlewares: networking-chain-authelia@kubernetescrd
+spec:
+  rules:
+  #- host: &uri oauth-debug.${SECRET_DEV_DOMAIN}
+  - host: &uri oauth-debug.thekao.cloud
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: *appname
+            port:
+              number: 3000
+  tls:
+  - hosts:
+    - *uri
+    secretName: *appname

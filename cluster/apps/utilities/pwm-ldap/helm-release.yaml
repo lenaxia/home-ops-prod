@@ -1,0 +1,79 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: &app pwm-ldap
+  namespace: utilities
+spec:
+  interval: 15m
+  chart:
+    spec:
+      chart: app-template
+      version: 0.1.1
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s-charts
+        namespace: flux-system
+  install:
+    createNamespace: true
+    remediation:
+      retries: 5
+  upgrade:
+    remediation:
+      retries: 5
+  values:
+    image:
+      repository: docker.io/fjudith/pwm
+      tag: latest
+    env:
+      TZ: "${TIMEZONE}"
+    service:
+      main:
+        ports:
+          http:
+            port: &port 8080
+    ingress:
+      main:
+        enabled: true
+        ingressClassName: "traefik"
+        annotations:
+          hajimari.io/enable: "true"
+          hajimari.io/icon: "alpha-f-circle-outline"
+          hajimari.io/group: "Media"
+          cert-manager.io/cluster-issuer: "letsencrypt-production"
+            ##cert-manager.io/cluster-issuer: "ca-issuer"
+          traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
+          traefik.ingress.kubernetes.io/router.middlewares: networking-chain-authelia@kubernetescrd
+        hosts:
+          - host: &uri "password.${SECRET_DEV_DOMAIN}"
+            paths:
+              - path: /
+                pathType: Prefix
+        tls:
+          - hosts:
+              - *uri
+            secretName: *uri
+#    probes:
+#      liveness: &probes
+#        enabled: true
+#        custom: true
+#        spec:
+#          httpGet:
+#            path: /health
+#            port: *port
+#          initialDelaySeconds: 0
+#          periodSeconds: 10
+#          timeoutSeconds: 1
+#          failureThreshold: 3
+#      readiness: *probes
+#      startup:
+#        enabled: false
+    persistence:
+      config:
+        enabled: false
+#    resources:
+#      requests:
+#        cpu: 10m
+#        memory: 50Mi
+#      limits:
+#        memory: 500Mi

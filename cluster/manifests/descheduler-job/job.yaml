@@ -1,0 +1,55 @@
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: &app descheduler-job
+  namespace: kube-system
+  annotations:
+    secret.reloader.stakater.com/reload: *app
+spec:
+  parallelism: 1
+  completions: 1
+  template:
+    metadata:
+      name: descheduler-pod
+    spec:
+      priorityClassName: system-cluster-critical
+      containers:
+        - name: descheduler
+          image: k8s.gcr.io/descheduler/descheduler:v0.24.1
+          volumeMounts:
+          - mountPath: /policy-dir
+            name: policy-volume
+          command:
+            - "/bin/descheduler"
+          args:
+            - "--policy-config-file"
+            - "/policy-dir/policy.yaml"
+            - "--v"
+            - "3"
+          resources:
+            requests:
+              cpu: "500m"
+              memory: "256Mi"
+          livenessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /healthz
+              port: 10258
+              scheme: HTTPS
+            initialDelaySeconds: 3
+            periodSeconds: 10
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - ALL
+            privileged: false
+            readOnlyRootFilesystem: true
+            runAsNonRoot: true
+      restartPolicy: "Never"
+      serviceAccountName: descheduler-sa
+      volumes:
+      - name: policy-volume
+        configMap:
+          name: descheduler-policy-configmap

@@ -1,0 +1,57 @@
+apiVersion: v1
+kind: Secret
+metadata:
+    name: cloudflare-api-credentials
+    #  namespace: traefik
+type: Opaque
+stringData:
+    email: ENC[AES256_GCM,data:PfEXjijgUYFp1zoTa93Ay8clWrdysg==,iv:bzss5IACzZjiyc47r5hnm3FnGzPGbutbh43GjPRd52M=,tag:2KDJEhpRyjWWB+MnEfx+Pw==,type:str]
+    apiKey: ENC[AES256_GCM,data:I7Utjrh4aCFI1J6kjLz23Bq1Jk+7jE8ggaKWNI3GvoWhEpQfoQ==,iv:hbIj4/CRonKBWgcbRsbQLtuxQzed71fCLOhrsXfQuzQ=,tag:+TpWUEva9d8x8t2l9B24+A==,type:str]
+sops:
+    kms: []
+    gcp_kms: []
+    azure_kv: []
+    hc_vault: []
+    age:
+        - recipient: age1rr569v9jm7ck70q4wpnspfhdvt4y5m6s604tx0ygs0a65qkt7g4qdszk6k
+          enc: |
+            -----BEGIN AGE ENCRYPTED FILE-----
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBjSVo2cVMwNWVLd3B1bjhQ
+            aVFDMmw4TEdTd1VGUHZlTHpZM2tGTjU5OTE4CmRvSmVnTFhsdHRydjBWYnFFdGto
+            ZENNWUpGa2h2dHFXZ3FlS2pHYkVqb1EKLS0tIE92dVNnckI1WVlMUHBEbUkwdU9k
+            WXBOREN1akV5aWFIS29iSThlSXk4VUEK+nTc7CbY/k0yR/JRqaqRzrlOMI3kqAGG
+            8P3CC3tubXTFg4MWcOITuhmECDD3qsc6YXoebfVgn1cMEwGN5Rl/Jw==
+            -----END AGE ENCRYPTED FILE-----
+    lastmodified: "2022-07-04T21:22:29Z"
+    mac: ENC[AES256_GCM,data:mgxUA+YlEr9rVHaPgtuAX1ZCDKwnOmx2VvJ/tJd5BZPbkPc42UOe6ziF+GZOMrs4n2kmRJFowzOoxDt+Ryf7WHZnmVRsIdpWcjPC2oJRv/3yfp33yPo0t/ccdVoEsip6xgk4VAcrZIlucCkzPS7fpEl6kiep6RYr5CWlY/36nVI=,iv:5wu5msV9mWRSE1AodAVgLshlb7m5TrFKvc0rd3UPQt0=,tag:uzWrJkQ88sIkV2KJwHJ74w==,type:str]
+    pgp: []
+    encrypted_regex: ^(data|stringData)$
+    version: 3.7.1
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+    name: traefik-config
+    #  namespace: traefik
+data:
+    traefik-config.yaml: ENC[AES256_GCM,data:yyWzkfgiHsvhoNFPcb2oz1mcSrMOaA4D2GpYliKRGbQrJnLwSI/lN2WzTsAPSE8YbCgPL4v1u78UxOW4aB8ILU+CCOqLoyGZd7Kkfi0f2jUK5jLaULlJNSk9t1UHqgGTtPBVp+6iFs3hSefRw7WCFBfO5x//zdmBg7zkHFfJvCH7k1jsyXthd42t4ZMiIGYYmPOQR6hS9p0uH+8v/TQxizoxBcQAWnslHi6puVAEqtSXDEB3lfroDIeSWjk2/dUbvdDKp3vXXwevJj8HswtQ/+MBZFUtUHB9Elh+mWRCfmLZyTfZIBe8oGUNbMwfpS1jDrviwmCTHLsjDl/nkxrEseo5mU8Kv4QwfeKVq6b1zphz5nUHA+8HaBYNfTCeqIqedlyGZz8MU7D2fCfBOtlhRhxq3FTU,iv:p+bKQcPzZkkfwRbw7jROimi4BtlO7AeEsA8KSloubDE=,tag:mZW3q37f/2xUG2hYEkkryg==,type:str]
+sops:
+    kms: []
+    gcp_kms: []
+    azure_kv: []
+    hc_vault: []
+    age:
+        - recipient: age1rr569v9jm7ck70q4wpnspfhdvt4y5m6s604tx0ygs0a65qkt7g4qdszk6k
+          enc: |
+            -----BEGIN AGE ENCRYPTED FILE-----
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBjSVo2cVMwNWVLd3B1bjhQ
+            aVFDMmw4TEdTd1VGUHZlTHpZM2tGTjU5OTE4CmRvSmVnTFhsdHRydjBWYnFFdGto
+            ZENNWUpGa2h2dHFXZ3FlS2pHYkVqb1EKLS0tIE92dVNnckI1WVlMUHBEbUkwdU9k
+            WXBOREN1akV5aWFIS29iSThlSXk4VUEK+nTc7CbY/k0yR/JRqaqRzrlOMI3kqAGG
+            8P3CC3tubXTFg4MWcOITuhmECDD3qsc6YXoebfVgn1cMEwGN5Rl/Jw==
+            -----END AGE ENCRYPTED FILE-----
+    lastmodified: "2022-07-04T21:22:29Z"
+    mac: ENC[AES256_GCM,data:mgxUA+YlEr9rVHaPgtuAX1ZCDKwnOmx2VvJ/tJd5BZPbkPc42UOe6ziF+GZOMrs4n2kmRJFowzOoxDt+Ryf7WHZnmVRsIdpWcjPC2oJRv/3yfp33yPo0t/ccdVoEsip6xgk4VAcrZIlucCkzPS7fpEl6kiep6RYr5CWlY/36nVI=,iv:5wu5msV9mWRSE1AodAVgLshlb7m5TrFKvc0rd3UPQt0=,tag:uzWrJkQ88sIkV2KJwHJ74w==,type:str]
+    pgp: []
+    encrypted_regex: ^(data|stringData)$
+    version: 3.7.1

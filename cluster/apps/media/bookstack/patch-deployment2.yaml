@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    meta.helm.sh/release-name: bookstack
+    meta.helm.sh/release-namespace: media
+  labels:
+    app.kubernetes.io/instance: bookstack
+    app.kubernetes.io/name: bookstack
+  name: bookstack
+  namespace: media
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/instance: bookstack
+      app.kubernetes.io/name: bookstack
+  template:
+    metadata:
+      labels:
+        app: bookstack
+        app.kubernetes.io/instance: bookstack
+        app.kubernetes.io/name: bookstack
+    spec:
+      containers:
+      - image: ghcr.io/linuxserver/bookstack
+        lifecycle:
+          postStart:
+            exec:
+              command:
+              - /bin/sh
+              - -c
+              - cat /backup/.env > /config/www/.env && echo config move done > /config/www/config.log
+        name: bookstack

@@ -1,0 +1,81 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: &appname loki-stack
+  namespace: monitoring
+spec:
+  interval: 5m
+  dependsOn:
+    - name: kube-prometheus-stack
+  chart:
+    spec:
+      version: "2.x"
+      chart: *appname
+      sourceRef:
+        kind: HelmRepository
+        name: grafana-charts
+        namespace: flux-system
+      interval: 60m
+  # https://github.com/grafana/helm-charts/blob/main/charts/loki-stack/values.yaml
+  # https://github.com/grafana/helm-charts/blob/main/charts/loki/values.yaml
+  values:
+    grafana:
+      enabled: false
+      sidecar:
+        datasources:
+          enabled: true
+          maxLines: 1000
+    promtail:
+      enabled: false
+    loki:
+      enabled: true
+      isDefault: false
+      serviceMonitor:
+        enabled: true
+        additionalLabels:
+          app.kubernetes.io/part-of: kube-prometheus-stack
+      config:
+        chunk_store_config:
+          max_look_back_period: 0s
+        table_manager:
+          retention_deletes_enabled: true
+          retention_period: 12h
+    gateway:
+      enabled: false
+      #      ingress:
+      #        enabled: true
+      #        ingressClassName: "traefik"
+      #        annotations:
+      #          hajimari.io/enable: "true"
+      #          hajimari.io/icon: "mdiPlayNetwork"
+      #          cert-manager.io/cluster-issuer: "letsencrypt-production"
+      #          #cert-manager.io/cluster-issuer: "ca-issuer"
+      #          traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
+      #        hosts:
+      #          - &host "loki.${SECRET_DEV_DOMAIN}"
+      #        tls:
+      #          - hosts:
+      #              - *host
+      #            secretName: *host
+      #config:
+      #  #existingSecret:
+      #  auth_enabled: false
+      #  # Needed for Alerting: https://grafana.com/docs/loki/latest/rules/
+      #  # This is just a simple example, for more details: https://grafana.com/docs/loki/latest/configuration/#ruler_config
+      #  ruler:
+      #    storage:
+      #      type: local
+      #      local:
+      #        directory: /rules
+      #    rule_path: /tmp/scratch
+      #    alertmanager_url: http://alertmanager.svc.namespace:9093
+      #    ring:
+      #      kvstore:
+      #        store: inmemory
+      #    enable_api: true
+      #persistence:
+      #  enabled: true
+      #  existingClaim: loki-data-volume
+      #  size: 10Gi
+      #podLabels:
+      #  app: loki

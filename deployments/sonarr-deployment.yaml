@@ -1,0 +1,81 @@
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: vol-sonarr
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: longhorn
+  resources:
+    requests:
+      storage: 1Gi
+---
+apiVersion: apps/v1
+kind: Deployment 
+metadata:
+  name: sonarr-deployment
+  labels:
+    app: sonarr
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: sonarr
+  template:
+    metadata:
+      namespace: default
+      labels:
+        app: sonarr
+    spec:
+      containers:
+        - name: sonarr
+          image: linuxserver/sonarr
+          ports:
+            - containerPort: 8989
+          volumeMounts:
+          - name: vol-sonarr
+            mountPath: /data
+          env:
+          - name: PGID
+            value: "1000"
+          - name: PUID
+            value: "1000"
+      volumes:
+        - name: vol-sonarr
+          persistentVolumeClaim:
+            claimName: vol-sonarr
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: sonarr
+  namespace: default 
+spec:
+  ports:
+    - port: 80
+      protocol: TCP
+      targetPort: 8989
+  selector:
+    app: sonarr
+  type: LoadBalancer
+---
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+    name: sonarr
+    namespace: traefik
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`sonarr.lan`)
+      kind: Rule
+      middlewares:
+        - name: traefik-basicauth
+          namespace: traefik
+      services:
+        - name: sonarr
+          port: 8989
+---

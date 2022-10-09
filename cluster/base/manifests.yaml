@@ -1,0 +1,30 @@
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
+kind: Kustomization
+metadata:
+  name: manifests
+  namespace: flux-system
+spec:
+  interval: 1m
+  dependsOn:
+    - name: infrastructure
+    - name: core
+    - name: crds
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+  path: ./cluster/manifests
+  prune: true
+  wait: true
+  timeout: 5m0s
+  decryption:
+    provider: sops
+    secretRef:
+      name: sops-age
+  postBuild:
+    substitute: {}
+    substituteFrom:
+      - kind: ConfigMap
+        name: cluster-settings
+      - kind: Secret
+        name: cluster-secrets

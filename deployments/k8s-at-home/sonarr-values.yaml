@@ -1,0 +1,90 @@
+
+image:
+  repository: ghcr.io/k8s-at-home/sonarr-develop
+  tag: v3.0.7.1479
+  pullPolicy: IfNotPresent
+
+# -- environment variables.
+# @default -- See below
+env:
+  # -- Set the container timezone
+  TZ: "America/Los_Angeles"
+
+# -- Configures service settings for the chart.
+# @default -- See values.yaml
+service:
+  main:
+    ports:
+      http:
+        port: 8989
+    type: LoadBalancer
+
+persistence:
+  config:
+    enabled: true 
+    existingClaim: "sonarr-config-volume"
+
+  media:
+    enabled: true
+    type: custom
+    volumeSpec:
+      nfs:
+        server: 192.168.0.120
+        path: /volume1/media
+    mountPath: /media-nfs
+  downloads-k3s:
+    enabled: true
+    type: custom
+    volumeSpec:
+      nfs:
+        server: 192.168.0.120
+        path: /volume2/downloads-k3s
+    mountPath: /downloads-k3s
+  downloads:
+    enabled: true
+    type: custom
+    volumeSpec:
+      nfs:
+        server: 192.168.0.120
+        path: /volume2/downloads
+    mountPath: /downloads
+
+
+metrics:
+  # -- Enable and configure Exportarr sidecar and Prometheus serviceMonitor.
+  # @default -- See values.yaml
+  enabled: false
+  serviceMonitor:
+    interval: 3m
+    scrapeTimeout: 1m
+    labels: {}
+  # -- Enable and configure Prometheus Rules for the chart under this key.
+  # @default -- See values.yaml
+  prometheusRule:
+    enabled: false
+    labels: {}
+    # -- Configure additionial rules for the chart under this key.
+    # @default -- See prometheusrules.yaml
+    rules: []
+      # - alert: SonarrDown
+      #   annotations:
+      #     description: Sonarr service is down.
+      #     summary: Sonarr is down.
+      #   expr: |
+      #     sonarr_system_status == 0
+      #   for: 5m
+      #   labels:
+      #     severity: critical
+  exporter:
+    image:
+      repository: ghcr.io/onedr0p/exportarr
+      tag: v1.0.0
+      pullPolicy: IfNotPresent
+    env:
+      # -- metrics port
+      port: 9794
+      # -- Set to true to enable gathering of additional metrics (slow)
+      additionalMetrics: false
+      # -- Set to true to enable gathering unknown queue items
+      unknownQueueItems: false
+

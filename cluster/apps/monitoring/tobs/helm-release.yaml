@@ -1,0 +1,122 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: tobs
+  namespace: monitoring
+  labels:
+    app: tobs
+spec:
+  interval: 15m
+  chart:
+    spec:
+      chart: tobs
+      version: 12.0.1
+      sourceRef:
+        kind: HelmRepository
+        name: timescale-charts
+        namespace: flux-system
+      interval: 15m
+  install:
+    createNamespace: true
+    remediation:
+      retries: 5
+    timeout: 15m
+  upgrade:
+    remediation:
+      retries: 5
+        #  values:
+    timeout: 15m
+  values:
+    opentelemetry-operator:
+      enabled: true
+
+    promscale:
+      enabled: true
+      #image: timescale/promscale:0.8.0
+      service:
+        type: LoadBalancer
+
+    timescaledb-single:
+      enabled: true
+      replicaCount: 1
+      loadBalancer:
+        enabled: true
+      persistentVolumes:
+        data:
+          size: 11Gi
+        wal:
+          size: 5Gi
+      backup:
+        enabled: false
+      #env:
+      #  PGBACKREST_REPO1_S3_BUCKET
+      #  PGBACKREST_REPO1_S3_ENDPOINT
+      #  PGBACKREST_REPO1_S3_REGION
+      #  PGBACKREST_REPO1_S3_KEY
+      #  PGBACKREST_REPO1_S3_KEY_SECRET
+
+    kube-prometheus-stack:
+      enabled: true
+
+      alertManager:
+        enabled: true
+        alertmanagerSpec:
+          replicas: 1
+
+      grafana:
+        enabled: true
+
+        prometheus:
+          datasource:
+            enabled: true
+        timescale:
+          datasource:
+            enabled: true
+
+        adminPassword: faith6510
+
+        ingress:
+          enabled: true
+          ingressClassName: "traefik"
+          annotations:
+            hajimari.io/enable: "true"
+            hajimari.io/icon: "mdiPlayNetwork"
+            cert-manager.io/cluster-issuer: "letsencrypt-production"
+            #cert-manager.io/cluster-issuer: "ca-issuer"
+            traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
+          hosts:
+            - &hostGrafana "grafana.${SECRET_DEV_DOMAIN}"
+          tls:
+            - hosts:
+                - *hostGrafana
+              secretName: *hostGrafana
+
+      prometheus:
+        prometheusSpec:
+          replicas: 1
+          scrapeInterval: 1m
+          scrapeTimeout: 10s
+          evaluationInterval: 1m
+          retention: 1d
+          storageSpec:
+            volumeClaimTemplate:
+              spec:
+                resources:
+                  requests:
+                    storage:
+                      3Gi
+
+        ingress:
+          enabled: true
+          ingressClassName: "traefik"
+          annotations:
+            cert-manager.io/cluster-issuer: "letsencrypt-production"
+            #cert-manager.io/cluster-issuer: "ca-issuer"
+            traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
+          hosts:
+            - &hostProm "prometheus.${SECRET_DEV_DOMAIN}"
+          tls:
+            - hosts:
+                - *hostProm
+              secretName: *hostProm
+

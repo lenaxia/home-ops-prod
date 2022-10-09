@@ -1,0 +1,14 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - databases.yaml
+  - longhorn-system.yaml
+  - cert-manager.yaml
+  - networking.yaml
+  - infra.yaml
+  - media.yaml
+  - iot.yaml
+  - monitoring.yaml
+  - utilities.yaml
+  - velero.yaml
+  - kube-tools.yaml

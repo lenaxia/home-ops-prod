@@ -1,0 +1,23 @@
+---
+- name: Install packages to allow apt to use a repository over HTTPS
+  apt:
+    pkg: "{{ item }}"
+    state: present
+  loop:
+    - cifs-utils
+    - jq
+    - util-linux
+    - coreutils
+
+- name: Create fstab-cifs directory
+  file:
+    path: /usr/libexec/kubernetes/kubelet-plugins/volume/exec/fstab~cifs 
+    state: directory
+
+- name: Download fstab/cifs flexvolume manager
+  get_url:
+    url: https://raw.githubusercontent.com/fstab/cifs/master/cifs
+    dest: /usr/libexec/kubernetes/kubelet-plugins/volume/exec/fstab~cifs/cifs
+    mode: '0755'
+
+

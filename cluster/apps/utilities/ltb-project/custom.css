@@ -1,0 +1,188 @@
+/* CSS for LDAP Tool Box Self Service Password */
+
+html, body {
+  background: #eee;
+  padding-top: 20px;
+  font-size: 12pt;
+}
+
+.captcha {
+  padding-top: 0 !important;
+  margin-bottom: 5px !important;
+}
+
+a, a:hover {
+  text-decoration: none;
+}
+
+.panel, .alert, .navbar-wrapper {
+  box-shadow:0 3px 6px rgba(0,0,0,.25);
+}
+
+.panel {
+  background-color:#fff;
+  background-color:rgba(255,255,255,0.8);
+}
+
+img.logo {
+  margin-bottom: 20px;
+}
+
+img.menu-logo {
+  display: inline;
+  height: 25px;
+}
+
+.table {
+  margin-bottom: 0;
+}
+
+.display img {
+  margin-bottom: 20px;
+}
+
+.input-group-addon label {
+  margin: 0;
+  font-weight: normal;
+}
+
+div#footer {
+  position:fixed;
+  bottom:0;
+  background-color:#fff;
+  background-color:rgba(255,255,255,0.8);
+  text-align:center;
+  padding:5px;
+  width:100%;
+}
+
+textarea#sshkey {
+  font-family: monospace;
+  word-break: break-all;
+  resize: vertical;
+  min-height: 10em;
+}
+
+@media print {
+
+  html, body {
+    margin: 0;
+    padding: 0;
+  }
+  .container {
+    width: 100%;
+  }
+
+  a[href]:after {
+    content: none;
+  }
+
+}
+
+
+.btn {
+    text-align: center;
+    white-space: nowrap;
+    -ms-touch-action: manipulation;
+    touch-action: manipulation;
+    background-image: none;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none
+    display: inline-flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    position: relative;
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+    outline: 0px;
+    border: 0px;
+    margin: 0px;
+    cursor: pointer;
+    user-select: none;
+    vertical-align: middle;
+    appearance: none;
+    text-decoration: none;
+    font-family: Roboto, Helvetica, Arial, sans-serif;
+    font-weight: 500;
+    font-size: 14px
+    line-height: 1.75;
+    letter-spacing: 0.02857em;
+    text-transform: uppercase;
+    min-width: 64px;
+    padding: 6px 16px;
+    border-radius: 4px;
+    transition: background-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms, box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms, border-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms, color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+    color: rgb(255, 255, 255);
+    background-color: rgb(25, 118, 210);
+    box-shadow: rgba(0, 0, 0, 0.2) 0px 3px 1px -2px, rgba(0, 0, 0, 0.14) 0px 2px 2px 0px, rgba(0, 0, 0, 0.12) 0px 1px 5px 0px;
+    width: 100%;
+}
+
+.alert-warning {
+    color: #8a6d3b;
+    background-color: #fcf8e3;
+    border-color: #f5e79e;
+    background-image: none;
+}
+
+.alert-success {
+    color: #3c763d;
+    background-color: #dff0d8;
+    border-color: #d6e9c6;
+    background-image: none;
+}
+
+.alert-info{
+    color: #000000;
+    background-color: #ffffff;
+    border-color: #000000;
+    background-image: none;
+    text-align: left;
+    display: flex;
+    justify-content: center;
+}
+
+.alert {
+    transition: box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+    border-radius: 4px;
+    box-shadow: rgba(0, 0, 0, 0.2) 0px 3px 5px -1px, rgba(0, 0, 0, 0.14) 0px 6px 10px 0px, rgba(0, 0, 0, 0.12) 0px 1px 18px 0px;
+    font-family: Roboto, Helvetica, Arial, sans-serif;
+    font-weight: 100;
+    font-size: 14px
+    line-height: 1.43;
+    letter-spacing: 0.01071em;
+    #background-color: rgb(244, 67, 54);
+    #display: flex;
+    padding: 16px;
+	margin-bottom: 20px;
+}
+
+.panel {
+	margin-bottom: 20px;
+	background-color: #fff;
+	border: 1px solid transparent;
+	border-radius: 4px;
+	-webkit-box-shadow: 0;
+	box-shadow: 0;
+}
+
+.col-sm-4 {
+    width: 100%;
+}
+
+.col-sm-offset-4 {
+    margin-left: 0%;
+    padding-top: 15px;
+}
+
+.col-sm-8 {
+    width: 100%;
+}
+
+.form-horizontal .control-label {
+    text-align: left;
+}

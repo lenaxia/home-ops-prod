@@ -1,0 +1,18 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  # Storage
+  - ./storage/longhorn
+  - ./storage/csi-driver-nfs
+  - ./storage/velero
+
+  # Networking
+  - ./cert-manager
+
+  # Databases
+  #- ./databases/mariadb
+  #- ./databases/redis
+  - ./databases/cloudnative-pg
+  - ./databases/cloudnative-pg/clusters
+  - ./databases/influxdb
+  - ./databases/chronograf

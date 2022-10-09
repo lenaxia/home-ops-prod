@@ -1,0 +1,71 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: &appname smokeping
+  namespace: utilities
+
+spec:
+  releaseName: *appname
+  chart:
+    spec:
+      chart: *appname 
+      version: "0.1.24"
+      sourceRef:
+        kind: HelmRepository
+        name: nicholaswilde
+        namespace: flux-system
+  interval: 5m
+  values:
+    # -- Configures service settings for the chart.
+    # @default -- See values.yaml
+    service:
+      type: LoadBalancer
+      annotations:
+        metallb.universe.tf/address-pool: dev-infra
+      port:
+        port: 80
+
+    image:
+      repository: ghcr.io/linuxserver/smokeping
+      pullPolicy: IfNotPresent
+      tag: "version-2.7.3-r5"
+    
+    strategy:
+      type: Recreate
+    
+    # See more environment variables in the smokeping documentation
+    # https://github.com/linuxserver/docker-smokeping#parameters
+    env: 
+      TZ: ${TIMEZONE}
+    
+    persistence:
+      config:
+        enabled: false
+        existingClaim: smokeping-config-volume
+        mountPath: /config
+      data:
+        enabled: false
+        existingClaim: smokeping-data-volume
+        mountPath: /data
+
+    ingress:
+      main:
+        enabled: true
+        ingressClassName: "traefik"
+        annotations:
+          hajimari.io/enable: "true"
+          hajimari.io/icon: "alpha-s-box"
+          hajimari.io/group: "Utilities"
+          cert-manager.io/cluster-issuer: "letsencrypt-production"
+          #cert-manager.io/cluster-issuer: "ca-issuer"
+          traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
+          traefik.ingress.kubernetes.io/router.middlewares: networking-chain-authelia@kubernetescrd
+        hosts:
+          - host: &uri "ping.${SECRET_DEV_DOMAIN}"
+            paths:
+              - path: /
+                pathType: Prefix
+        tls:
+          - hosts:
+            - *uri
+            secretName: *uri

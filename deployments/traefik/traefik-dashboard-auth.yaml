@@ -1,0 +1,56 @@
+apiVersion: v1
+kind: Secret
+metadata:
+    name: traefik-auth
+    #  namespace: traefik
+data:
+    users: ENC[AES256_GCM,data:WDROg9V/DUZvR3WbtsNAzsLhRuY24vA31NPLkqQYn/rEWsTjJSga7MpXG6amsCMy1S0R0bKjUt6Nqqcxmg==,iv:8W8ai8C/Rv+Pj+vZnU98h9NVVHAIDpNML/rfVHWOZUo=,tag:4Z4gsT//pz39wET2N28ZOA==,type:str]
+sops:
+    kms: []
+    gcp_kms: []
+    azure_kv: []
+    hc_vault: []
+    age:
+        - recipient: age1rr569v9jm7ck70q4wpnspfhdvt4y5m6s604tx0ygs0a65qkt7g4qdszk6k
+          enc: |
+            -----BEGIN AGE ENCRYPTED FILE-----
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBpc1d1Rkl0bWNrL1BMM1VV
+            UW9VUzRmc24wMFFqSzA4dlRzM3JzaEZVTGhrCkFOVXY3OXlyei9BR0ZmN3NNNkNv
+            ZFhhaiswWVlEMm9NZmhKSGhKbWxFZm8KLS0tIHUzeFZpWHhDbHJGQkN2eXVXcnZ2
+            R3hyQ0VNWjhxZnRjSHV5Y0FrRW9lQVUKu/WSGAgsoZu9BGl7RVte/4dBYz7FWQ4c
+            fnkJ0JSwDHVgskAyuVpusawtIRGGSr9jXSZgD0jTkpAXM5fj7c0YGw==
+            -----END AGE ENCRYPTED FILE-----
+    lastmodified: "2022-07-04T21:22:14Z"
+    mac: ENC[AES256_GCM,data:+MmMGnAJAE6djiU3xCJxT8dtFl3x2Hs5FW7s1ABXCTOEH154Zba3rl6qu1jlEdhtKyvZ3IYVWI7fv3+ZZ+362LIsrsOAIjNKVctxilapzpNoSdJCmc0EQd2qGhjTrXNkIUfp5h/UQQspfNgpJXm2+HiiiuIN9oaMtSFvyOM/s0E=,iv:Sx3Wj0lTeJ0S4iSBjlucZdQ3/IAvxIU/d91k7VULMSU=,tag:Bt+7CtisY+So4VgGMORsxQ==,type:str]
+    pgp: []
+    encrypted_regex: ^(data|stringData)$
+    version: 3.7.1
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:
+    name: traefik-basicauth
+    #  namespace: traefik
+spec:
+    basicAuth:
+        secret: traefik-dashboard-auth
+sops:
+    kms: []
+    gcp_kms: []
+    azure_kv: []
+    hc_vault: []
+    age:
+        - recipient: age1rr569v9jm7ck70q4wpnspfhdvt4y5m6s604tx0ygs0a65qkt7g4qdszk6k
+          enc: |
+            -----BEGIN AGE ENCRYPTED FILE-----
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBpc1d1Rkl0bWNrL1BMM1VV
+            UW9VUzRmc24wMFFqSzA4dlRzM3JzaEZVTGhrCkFOVXY3OXlyei9BR0ZmN3NNNkNv
+            ZFhhaiswWVlEMm9NZmhKSGhKbWxFZm8KLS0tIHUzeFZpWHhDbHJGQkN2eXVXcnZ2
+            R3hyQ0VNWjhxZnRjSHV5Y0FrRW9lQVUKu/WSGAgsoZu9BGl7RVte/4dBYz7FWQ4c
+            fnkJ0JSwDHVgskAyuVpusawtIRGGSr9jXSZgD0jTkpAXM5fj7c0YGw==
+            -----END AGE ENCRYPTED FILE-----
+    lastmodified: "2022-07-04T21:22:14Z"
+    mac: ENC[AES256_GCM,data:+MmMGnAJAE6djiU3xCJxT8dtFl3x2Hs5FW7s1ABXCTOEH154Zba3rl6qu1jlEdhtKyvZ3IYVWI7fv3+ZZ+362LIsrsOAIjNKVctxilapzpNoSdJCmc0EQd2qGhjTrXNkIUfp5h/UQQspfNgpJXm2+HiiiuIN9oaMtSFvyOM/s0E=,iv:Sx3Wj0lTeJ0S4iSBjlucZdQ3/IAvxIU/d91k7VULMSU=,tag:Bt+7CtisY+So4VgGMORsxQ==,type:str]
+    pgp: []
+    encrypted_regex: ^(data|stringData)$
+    version: 3.7.1

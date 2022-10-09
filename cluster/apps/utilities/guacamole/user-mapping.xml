@@ -1,0 +1,24 @@
+<user-mapping>
+
+    <authorize
+        username="mikek">
+
+        <!-- First authorized connection -->
+        <connection name="HoshinoRuri">
+            <protocol>ssh</protocol>
+            <param name="hostname">192.168.0.125</param>
+            <param name="port">22</param>
+            <param name="password"></param>
+        </connection>
+
+        <!-- Second authorized connection -->
+        <connection name="Aibou ">
+            <protocol>rdp</protocol>
+            <param name="hostname">192.168.0.39</param>
+            <param name="port">3389</param>
+            <param name="password"></param>
+        </connection>
+
+    </authorize>
+
+</user-mapping>

@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: default
+  labels:
+    app: busybox
+  name: busybox 
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: busybox
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      name: busybox
+      namespace: default
+      labels:
+        app: busybox          
+    spec:
+      containers:
+      - name: busybox
+        image: busybox
+        command:
+          - sleep
+          - "3600"
+        imagePullPolicy: IfNotPresent
+        volumeMounts:
+        - name: sonarr 
+          mountPath: /data
+      volumes:
+        #- name: test
+        #  flexVolume:
+        #    driver: "fstab/cifs"
+        #    fsType: "cifs"
+        #    secretRef:
+        #      name: "cifs-omoikane-plexuser"
+        #    options:
+        #      networkPath: "//192.168.0.120/omoikane/[Anime]"
+        #      mountOptions: "dir_mode=0755,file_mode=0644,noperm"
+      - name: sonarr
+        persistentVolumeClaim:
+          claimName: sonarr-config-volume

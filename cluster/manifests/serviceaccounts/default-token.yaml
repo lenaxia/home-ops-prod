@@ -1,0 +1,27 @@
+apiVersion: v1
+kind: Secret
+metadata:
+    name: default-token
+    annotations:
+        kubernetes.io/service-account.name: default
+type: kubernetes.io/service-account-token
+sops:
+    kms: []
+    gcp_kms: []
+    azure_kv: []
+    hc_vault: []
+    age:
+        - recipient: age1rr569v9jm7ck70q4wpnspfhdvt4y5m6s604tx0ygs0a65qkt7g4qdszk6k
+          enc: |
+            -----BEGIN AGE ENCRYPTED FILE-----
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBuSXJoREEyN2hRWTNtZ0VZ
+            S1JEdlJpUWZ6MGxvQmlHWUM2RVVEUjJSZkZNCjFBWFJyUEozZ2dkQm4yZUJMUlQx
+            bmpUaFRwbXI4U0dST1hWc0VqOWFTQm8KLS0tIEtUcDZwbFRlSWQ2WFk2THdKdHRQ
+            b3BGV09qcmMvUTN3UWdJbmd5aS9peDQK7DZuI09Hx6Xyr+rfB/yLDun0erWnjmC+
+            AFUWeqepcM59pV58afXCwDrENhL7CcYEwDqIU0OAIVIxDU5SXHP35A==
+            -----END AGE ENCRYPTED FILE-----
+    lastmodified: "2022-08-03T20:04:06Z"
+    mac: ENC[AES256_GCM,data:GRXFDY6vAALJrZOzxChhMsSO5lThmgPwrjXqPIQHR+4F21w2cCLzFmv/Fhwf953+D0lxmccNFKiJ8R9YdtqV7AJtS1r1oQMCC6AaqO3Qm8YpPyVzQyJXnneAIKvIGb5eCqaT66r2jOgtjjEarwjIG4CzcddfPMigiSu2uauyE4c=,iv:ukOvCNAFQf8L6n5SkqfMZTtYldhDzvsgYNz2TFR8dkE=,tag:inZjdX4o/71EDuC6V+lJqA==,type:str]
+    pgp: []
+    encrypted_regex: ^(data|stringData)$
+    version: 3.7.1

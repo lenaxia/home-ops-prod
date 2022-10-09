@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: pgadmin
+data:
+  PGADMIN_DEFAULT_EMAIL: mike@kao.family
+  PGADMIN_DEFAULT_PASSWORD: faith6510
+

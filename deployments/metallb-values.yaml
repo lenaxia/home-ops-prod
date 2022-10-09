@@ -1,0 +1,10 @@
+configInline:
+  address-pools:
+  - name: default
+    protocol: layer2
+    addresses:
+    - 192.168.2.120-192.168.2.255
+  - name: prod-infra
+    protocol: layer2
+    addresses:
+    - 192.168.2.5-192.168.2.63
