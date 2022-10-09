@@ -22,7 +22,7 @@ spec:
 
     image:
       repository: ghcr.io/k8s-at-home/sonarr-develop
-      #tag: v3.0.7.1479
+      tag: "v3.0.9.1555"
       pullPolicy: IfNotPresent
     
     # -- environment variables.
