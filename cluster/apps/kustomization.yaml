@@ -30,7 +30,7 @@ resources:
 
   # Media Namespace
   - ./media/sonarr
-    #- ./media/radarr
+  - ./media/radarr
   - ./media/bazarr
   - ./media/nzbget
   - ./media/nzbhydra2
