@@ -70,23 +70,23 @@ spec:
       readiness: *probes
       startup:
         enabled: false
-    podSecurityContext:
+    #podSecurityContext:
       #runAsUser: 0
       #runAsGroup: 0
-      fsGroup: 1000
-      fsGroupChangePolicy: "OnRootMismatch"
+      #fsGroup: 1000
+      #fsGroupChangePolicy: "OnRootMismatch"
     persistence:
       config:
         enabled: true
         existingClaim: tautulli-config-volume
-      backups:
-        enabled: true
-        type: custom
-        volumeSpec:
-          nfs:
-            server: ${NAS_ADDR}
-            path: /volume1/backups/tautulli
-        mountPath: /config/backups
+          #      backups:
+          #        enabled: true
+          #        type: custom
+          #        volumeSpec:
+          #          nfs:
+          #            server: ${NAS_ADDR}
+          #            path: /volume1/backups/tautulli
+          #        mountPath: /config/backups
  
 #    resources:
 #      requests:
