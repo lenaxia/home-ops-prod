@@ -74,14 +74,14 @@ spec:
       config:
         enabled: true
         existingClaim: tautulli-config-volume
-      backups:
-        enabled: true
-        type: custom
-        volumeSpec:
-          nfs:
-            server: ${NAS_ADDR}
-            path: /volume1/backups/tautulli
-        mountPath: /config/backups
+#      backups:
+#        enabled: true
+#        type: custom
+#        volumeSpec:
+#          nfs:
+#            server: ${NAS_ADDR}
+#            path: /volume1/backups/tautulli
+#        mountPath: /config/backups
 #    resources:
 #      requests:
 #        cpu: 10m
