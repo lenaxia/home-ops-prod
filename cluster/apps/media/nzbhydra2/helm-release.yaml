@@ -56,6 +56,14 @@ spec:
             server: ${NAS_ADDR}
             path: /volume2/downloads
         mountPath: /downloads
+      backup:
+        enabled: true
+        type: custom
+        volumeSpec:
+          nfs:
+            server: ${NAS_ADDR}
+            path: /volume1/bacukups
+        mountPath: /config/backup
 
     ingress:
       main:
