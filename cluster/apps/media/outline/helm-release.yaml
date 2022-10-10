@@ -39,7 +39,7 @@ spec:
     command: ["/bin/sh", "-c", "yarn db:migrate --env=production-ssl-disabled && yarn start --env=production-ssl-disabled"]
     service:
       main:
-        type: LoadBalancer
+        type: ClusterIP
         ports:
           http:
             port: 3000
