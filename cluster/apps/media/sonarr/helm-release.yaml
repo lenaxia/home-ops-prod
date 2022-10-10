@@ -53,14 +53,14 @@ spec:
             server: ${NAS_ADDR}
             path: /volume1/omoikane
         mountPath: /omoikane
-#      downloads-k3s:
-#        enabled: true
-#        type: custom
-#        volumeSpec:
-#          nfs:
-#            server: ${NAS_ADDR}
-#            path: /volume2/downloads-k3s
-#        mountPath: /downloads-k3s
+      backups:
+        enabled: true
+        type: custom
+        volumeSpec:
+          nfs:
+            server: ${NAS_ADDR}
+            path: /volume1/backups
+        mountPath: /config/Backups
       downloads:
         enabled: true
         type: custom
