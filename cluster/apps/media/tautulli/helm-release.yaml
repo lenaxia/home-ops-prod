@@ -23,7 +23,7 @@ spec:
       retries: 5
   values:
     image:
-      repository: ghcr.io/linuxserver/tautulli
+      #repository: ghcr.io/linuxserver/tautulli
       repository: ghcr.io/onedr0p/tautulli
       tag: latest
     env:
