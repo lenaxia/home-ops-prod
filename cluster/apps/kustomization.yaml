@@ -39,7 +39,7 @@ resources:
   - ./media/overseerr
   - ./media/calibre
   - ./media/calibre-web
-    #- ./media/tautulli
+  - ./media/tautulli
   - ./media/outline
 
   # IOT Namespace
