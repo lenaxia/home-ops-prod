@@ -24,6 +24,7 @@ spec:
   values:
     image:
       repository: ghcr.io/linuxserver/tautulli
+      repository: ghcr.io/onedr0p/tautulli
       tag: latest
     env:
       TZ: "${TIMEZONE}"
@@ -71,10 +72,10 @@ spec:
       startup:
         enabled: false
     podSecurityContext:
-      #runAsUser: 1000
-      #runAsGroup: 1000
-      fsGroup: 1000
-      #fsGroupChangePolicy: "OnRootMismatch"
+      runAsUser: 568
+      runAsGroup: 568
+      fsGroup: 568
+      fsGroupChangePolicy: "OnRootMismatch"
     persistence:
       config:
         enabled: true
