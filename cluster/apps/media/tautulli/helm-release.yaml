@@ -31,6 +31,7 @@ spec:
       PGID: 1000
     service:
       main:
+        type: LoadBalancer
         ports:
           http:
             port: &port 8181
