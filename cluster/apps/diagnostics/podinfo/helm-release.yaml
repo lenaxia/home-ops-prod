@@ -25,7 +25,7 @@ spec:
       className: "traefik"
       annotations:
         hajimari.io/enable: "true"
-        hajimari.io/icon: "alpha-p-box"
+        hajimari.io/icon: "information-outline"
         hajimari.io/group: "Utilities"
         cert-manager.io/cluster-issuer: "letsencrypt-production"
         traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
