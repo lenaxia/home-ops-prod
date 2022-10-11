@@ -24,7 +24,7 @@ spec:
   values:
     image:
       repository: docker.io/jlesage/firefox
-      tag: latest
+      tag: v1.18.0
     env:
       TZ: "${TIMEZONE}"
       UMASK: 022
