@@ -1,0 +1,105 @@
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: cert-manager
+  labels:
+    app.kubernetes.io/component: cert-manager
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: databases
+  labels:
+    app.kubernetes.io/component: databases
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: infra
+  labels:
+    app.kubernetes.io/component: infra
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: iot
+  labels:
+    app.kubernetes.io/component: iot
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: kube-tools
+  labels:
+    app.kubernetes.io/component: kube-tools
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: longhorn-system
+  labels:
+    app.kubernetes.io/component: longhorn-system
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: media
+  labels:
+    app.kubernetes.io/component: media
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: monitoring
+  labels:
+    app.kubernetes.io/component: monitoring
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: networking
+  labels:
+    app.kubernetes.io/component: networking
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: podinfo
+  labels:
+    app.kubernetes.io/component: podinfo
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: traefik
+  labels:
+    app.kubernetes.io/component: traefik
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: utilities
+  labels:
+    app.kubernetes.io/component: utilities 
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: velero
+  labels:
+    app.kubernetes.io/component: velero
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: system-upgrade
+  labels:
+    app.kubernetes.io/component: system-upgrade
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: kyverno
+  labels:
+    app.kubernetes.io/component: kyverno

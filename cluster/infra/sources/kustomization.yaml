@@ -27,3 +27,4 @@ resources:
   - influxdata-charts.yaml
   - skater-charts.yaml
   - csi-driver-nfs-charts.yaml
+  - kyverno-charts.yaml
