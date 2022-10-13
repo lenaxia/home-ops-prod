@@ -72,7 +72,7 @@ spec:
                 name: "{{ request.object.metadata.name }}"
                 uid: "{{ request.object.metadata.uid }}"
           spec:
-            schedule: "20 * * * *"
+            schedule: "25 * * * *"
             suspend: false
             concurrencyPolicy: Forbid
             successfulJobsHistoryLimit: 1
