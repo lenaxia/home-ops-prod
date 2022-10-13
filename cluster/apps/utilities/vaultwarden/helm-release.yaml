@@ -61,75 +61,75 @@ spec:
     postgresql:
       enabled: false
 
-    ingress:
-      main:
-        enabled: true
-        ingressClassName: "traefik"
-        annotations:
-          hajimari.io/enable: "true"
-          hajimari.io/icon: "shield-key"
-          hajimari.io/group: "Utilities"
-          cert-manager.io/cluster-issuer: "letsencrypt-production"
-          #cert-manager.io/cluster-issuer: "ca-issuer"
-          traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
-          traefik.ingress.kubernetes.io/router.middlewares: networking-chain-no-auth@kubernetescrd
-        hosts:
-          - host: &uri "vault.${SECRET_DEV_DOMAIN}"
-            paths:
-              - path: /
-                pathType: Prefix
-                service:
-                  port: 80
-              - path: /notifications/hub/negotiate
-                pathType: Prefix
-                service:
-                  port: 80
-              - path: /notifications/hub
-                pathType: Prefix
-                service:
-                  port: 3012
-          - host: "vault.${SECRET_PROD_DOMAIN_MGO}"
-            paths:
-              - path: /
-                pathType: Prefix
-                service:
-                  port: 80
-              - path: /notifications/hub/negotiate
-                pathType: Prefix
-                service:
-                  port: 80
-              - path: /notifications/hub
-                pathType: Prefix
-                service:
-                  port: 3012
-        tls:
-          - hosts:
-            - *uri
-            secretName: *uri
-      secondary:
-        enabled: true
-        ingressClassName: "traefik"
-        annotations:
-          cert-manager.io/cluster-issuer: "letsencrypt-production"
-          #cert-manager.io/cluster-issuer: "ca-issuer"
-          traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
-          traefik.ingress.kubernetes.io/router.middlewares: networking-chain-no-auth@kubernetescrd
-        hosts:
-          - host: &uri2 "vault.${SECRET_PROD_DOMAIN_MGO}"
-            paths:
-              - path: /
-                pathType: Prefix
-                service:
-                  port: 80
-              - path: /notifications/hub/negotiate
-                pathType: Prefix
-                service:
-                  port: 80
-              - path: /notifications/hub
-                pathType: Prefix
-                service:
-                  port: 3012
-        tls:
-          - hosts:
-            - *uri2
-            secretName: *uri2
+        #    ingress:
+        #      main:
+        #        enabled: true
+        #        ingressClassName: "traefik"
+        #        annotations:
+        #          hajimari.io/enable: "true"
+        #          hajimari.io/icon: "shield-key"
+        #          hajimari.io/group: "Utilities"
+        #          cert-manager.io/cluster-issuer: "letsencrypt-production"
+        #          #cert-manager.io/cluster-issuer: "ca-issuer"
+        #          traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
+        #          traefik.ingress.kubernetes.io/router.middlewares: networking-chain-no-auth@kubernetescrd
+        #        hosts:
+        #          - host: &uri "vault.${SECRET_DEV_DOMAIN}"
+        #            paths:
+        #              - path: /
+        #                pathType: Prefix
+        #                service:
+        #                  port: 80
+        #              - path: /notifications/hub/negotiate
+        #                pathType: Prefix
+        #                service:
+        #                  port: 80
+        #              - path: /notifications/hub
+        #                pathType: Prefix
+        #                service:
+        #                  port: 3012
+        #          - host: "vault.${SECRET_PROD_DOMAIN_MGO}"
+        #            paths:
+        #              - path: /
+        #                pathType: Prefix
+        #                service:
+        #                  port: 80
+        #              - path: /notifications/hub/negotiate
+        #                pathType: Prefix
+        #                service:
+        #                  port: 80
+        #              - path: /notifications/hub
+        #                pathType: Prefix
+        #                service:
+        #                  port: 3012
+        #        tls:
+        #          - hosts:
+        #            - *uri
+        #            secretName: *uri
+        #      secondary:
+        #        enabled: true
+        #        ingressClassName: "traefik"
+        #        annotations:
+        #          cert-manager.io/cluster-issuer: "letsencrypt-production"
+        #          #cert-manager.io/cluster-issuer: "ca-issuer"
+        #          traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
+        #          traefik.ingress.kubernetes.io/router.middlewares: networking-chain-no-auth@kubernetescrd
+        #        hosts:
+        #          - host: &uri2 "vault.${SECRET_PROD_DOMAIN_MGO}"
+        #            paths:
+        #              - path: /
+        #                pathType: Prefix
+        #                service:
+        #                  port: 80
+        #              - path: /notifications/hub/negotiate
+        #                pathType: Prefix
+        #                service:
+        #                  port: 80
+        #              - path: /notifications/hub
+        #                pathType: Prefix
+        #                service:
+        #                  port: 3012
+        #        tls:
+        #          - hosts:
+        #            - *uri2
+        #            secretName: *uri2
