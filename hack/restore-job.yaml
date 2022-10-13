@@ -39,4 +39,4 @@ spec:
         - name: snapshots
           nfs:
             server: 192.168.0.120
-            path: /volume1/backups/kopia-dev
+            path: /volume1/backups/kopia
