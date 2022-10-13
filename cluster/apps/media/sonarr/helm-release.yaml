@@ -59,7 +59,7 @@ spec:
         volumeSpec:
           nfs:
             server: ${NAS_ADDR}
-            path: /volume1/backups
+            path: /volume1/backups/arr
         mountPath: /config/Backups
       downloads:
         enabled: true

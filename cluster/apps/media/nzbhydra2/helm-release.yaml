@@ -62,7 +62,7 @@ spec:
         volumeSpec:
           nfs:
             server: ${NAS_ADDR}
-            path: /volume1/backups
+            path: /volume1/backups/nzbhydra2
         mountPath: /config/backup
 
     ingress:
