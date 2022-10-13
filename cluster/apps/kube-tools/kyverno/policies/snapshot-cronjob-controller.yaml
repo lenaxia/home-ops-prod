@@ -19,6 +19,7 @@ metadata:
 spec:
   generateExistingOnPolicyUpdate: true
   mutateExistingOnPolicyUpdate: true
+
   rules:
     - name: create-snapshot-cronjob
       match:
@@ -58,7 +59,7 @@ spec:
         synchronize: true
         apiVersion: batch/v1
         kind: CronJob
-        name: "{{ appName }}-{{ claimName }}-snapshot"
+        name: "{{ appName }}-snap"
         namespace: "{{ request.object.metadata.namespace }}"
         data:
           metadata:
@@ -71,7 +72,7 @@ spec:
                 name: "{{ request.object.metadata.name }}"
                 uid: "{{ request.object.metadata.uid }}"
           spec:
-            schedule: "0 3 * * *"
+            schedule: "0 * * * *"
             suspend: false
             concurrencyPolicy: Forbid
             successfulJobsHistoryLimit: 1
@@ -91,7 +92,7 @@ spec:
                         command: ["/scripts/sleep.sh"]
                         args: ["1", "900"]
                     containers:
-                      - name: snapshot
+                      - name: snapshot 
                         image: ghcr.io/onedr0p/kopia:0.12.1@sha256:e333295b519ce586e7c050c970b2255d87bdb2979298ff87ebdb1113e381ba3b
                         env:
                           - name: KOPIA_CACHE_DIRECTORY
@@ -127,8 +128,8 @@ spec:
                           claimName: "{{ claimName }}"
                       - name: snapshots
                         nfs:
-                          server: "expanse.${SECRET_PRIVATE_DOMAIN}"
-                          path: /eros/Apps/Kopia
+                          server: ${NAS_ADDR}
+                          path: /volume1/backups/kopia
                     affinity:
                       podAffinity:
                         requiredDuringSchedulingIgnoredDuringExecution:

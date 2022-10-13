@@ -103,3 +103,10 @@ metadata:
   name: kyverno
   labels:
     app.kubernetes.io/component: kyverno
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: storage
+  labels:
+    app.kubernetes.io/component: storage
