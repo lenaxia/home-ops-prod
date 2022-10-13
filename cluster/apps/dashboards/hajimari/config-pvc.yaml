@@ -4,6 +4,8 @@ kind: PersistentVolumeClaim
 metadata:
   name: hajimari-config
   namespace: default
+  labels:
+    snapshot.home.arpa/enabled: "true"
 spec:
   accessModes:
     - ReadWriteMany

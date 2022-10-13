@@ -4,6 +4,8 @@ kind: PersistentVolume
 metadata:
   name: minio-nfs
   namespace: utilities
+  labels:
+    snapshot.home.arpa/enabled: "true"
 spec:
   capacity:
     storage: 1Mi
@@ -25,6 +27,8 @@ kind: PersistentVolumeClaim
 metadata:
   name: minio-nfs
   namespace: utilities 
+  labels:
+    snapshot.home.arpa/enabled: "true"
 spec:
   accessModes:
     - ReadWriteMany

@@ -5,6 +5,7 @@ metadata:
     namespace: utilities
     labels:
       app: guacamole
+      snapshot.home.arpa/enabled: "true"
 spec:
     accessModes:
         - ReadWriteOnce

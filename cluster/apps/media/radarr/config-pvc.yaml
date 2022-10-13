@@ -4,6 +4,7 @@ metadata:
     name: radarr-config-volume
     labels:
       app: radarr
+      snapshot.home.arpa/enabled: "true"
 spec:
     accessModes:
         - ReadWriteOnce

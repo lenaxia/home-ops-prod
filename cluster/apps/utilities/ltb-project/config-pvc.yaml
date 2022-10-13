@@ -4,7 +4,8 @@ metadata:
     name: ltb-config-volume
     namespace: utilities
     labels:
-      app: guacamole
+      app: ltb-project
+      snapshot.home.arpa/enabled: "true"
 spec:
     accessModes:
         - ReadWriteOnce

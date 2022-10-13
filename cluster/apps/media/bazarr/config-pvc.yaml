@@ -5,6 +5,7 @@ metadata:
     namespace: media
     labels:
       app: bazarr 
+      snapshot.home.arpa/enabled: "true"
 spec:
     accessModes:
         - ReadWriteOnce

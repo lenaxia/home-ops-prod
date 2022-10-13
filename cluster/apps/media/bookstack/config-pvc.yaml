@@ -5,6 +5,7 @@ metadata:
     name: bookstack-config-volume
     labels:
       app: bookstack
+      snapshot.home.arpa/enabled: "true"
 spec:
     accessModes:
         - ReadWriteMany
@@ -19,6 +20,7 @@ metadata:
     name: bookstack-mariadb-config-volume
     labels:
       app: bookstack
+      snapshot.home.arpa/enabled: "true"
 spec:
     accessModes:
         - ReadWriteMany

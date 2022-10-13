@@ -1,6 +1,9 @@
 ---
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
+commonLabels:
+  app.kubernetes.io/name: &app cloudflare-ddns
+  app.kubernetes.io/instance: *app
 resources:
   - cron-job.yaml
     #  - secret.sops.yaml

@@ -4,6 +4,7 @@ metadata:
     name: sonarr-config-volume
     labels:
       app: sonarr
+      snapshot.home.arpa/enabled: "true"
 spec:
     accessModes:
         - ReadWriteOnce

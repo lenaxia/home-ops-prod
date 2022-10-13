@@ -4,6 +4,7 @@ metadata:
     name: nzbget-config-volume
     labels:
       app: nzbget
+      snapshot.home.arpa/enabled: "true"
 spec:
     accessModes:
         - ReadWriteMany
