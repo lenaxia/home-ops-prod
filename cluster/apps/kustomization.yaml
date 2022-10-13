@@ -11,7 +11,7 @@ resources:
   - ./kube-tools/descheduler
   - ./kube-tools/kyverno
   - ./storage/minio
-    #- ./storage/kopia-web
+  - ./storage/kopia-web
     #- ./kube-tools/metrics-server  # k3s already comes with a metrics server
 
   # Security
