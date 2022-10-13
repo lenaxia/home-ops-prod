@@ -4,7 +4,7 @@ commonLabels:
   app.kubernetes.io/name: &app minio
   app.kubernetes.io/instance: *app
 resources:
+  - config-pvc.yaml
   - helm-release.yaml
   - secret.sops.yaml
-  - config-pvc.yaml
   - middlewares.yaml
