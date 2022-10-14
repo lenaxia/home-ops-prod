@@ -1,0 +1,135 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: vaultwarden
+  namespace: utilities
+
+spec:
+  releaseName: vaultwarden
+  chart:
+    spec:
+      chart: vaultwarden
+      sourceRef:
+        kind: HelmRepository
+        name: k8s-at-home
+        namespace: flux-system
+  interval: 5m
+  values:
+   
+    # -- Configures service settings for the chart.
+    # @default -- See values.yaml
+    service:
+      main:
+        primary: true
+        annotations:
+          metallb.universe.tf/address-pool: dev-infra
+        ports:
+          http:
+            port: 80
+          websocket:
+            enabled: true
+            port: 3012
+        type: LoadBalancer
+        externalTrafficPolicy: Local
+
+    strategy:
+      type: Recreate
+    
+    image:
+      repository: vaultwarden/server
+      #tag: 1.25.1
+      pullPolicy: IfNotPresent
+    
+    # -- environment variables.
+    env:
+      DATA_FOLDER: "config"
+      TZ: "America/Los_Angeles"
+      SIGNUPS_ALLOWED : false
+      WEBSOCKET_ENABLED : true
+      ADMIN_TOKEN: NMfH7jATM4tP9xbMucSzCz53DGmQvC50CWnGU5hyJu5kUc3CVChUIpv4kdgwIAuP
+    
+    # -- Configure persistence settings for the chart under this key.
+    # @default -- See values.yaml
+    persistence:
+      config:
+        enabled: true
+        existingClaim: "vaultwarden-config-volume"
+    
+    mariadb:
+      enabled: false
+
+    postgresql:
+      enabled: false
+
+    ingress:
+      main:
+        enabled: true
+        ingressClassName: "traefik"
+        annotations:
+          hajimari.io/enable: "true"
+          hajimari.io/icon: "shield-key"
+          hajimari.io/group: "Utilities"
+          cert-manager.io/cluster-issuer: "letsencrypt-production"
+          #cert-manager.io/cluster-issuer: "ca-issuer"
+          traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
+          traefik.ingress.kubernetes.io/router.middlewares: networking-chain-no-auth@kubernetescrd
+        hosts:
+          - host: &uri "vault.${SECRET_DEV_DOMAIN}"
+            paths:
+              - path: /
+                pathType: Prefix
+                service:
+                  port: 80
+              - path: /notifications/hub/negotiate
+                pathType: Prefix
+                service:
+                  port: 80
+              - path: /notifications/hub
+                pathType: Prefix
+                service:
+                  port: 3012
+          - host: "vault.${SECRET_PROD_DOMAIN_MGO}"
+            paths:
+              - path: /
+                pathType: Prefix
+                service:
+                  port: 80
+              - path: /notifications/hub/negotiate
+                pathType: Prefix
+                service:
+                  port: 80
+              - path: /notifications/hub
+                pathType: Prefix
+                service:
+                  port: 3012
+        tls:
+          - hosts:
+            - *uri
+            secretName: *uri
+      secondary:
+        enabled: true
+        ingressClassName: "traefik"
+        annotations:
+          cert-manager.io/cluster-issuer: "letsencrypt-production"
+          #cert-manager.io/cluster-issuer: "ca-issuer"
+          traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
+          traefik.ingress.kubernetes.io/router.middlewares: networking-chain-no-auth@kubernetescrd
+        hosts:
+          - host: &uri2 "vault.${SECRET_PROD_DOMAIN_MGO}"
+            paths:
+              - path: /
+                pathType: Prefix
+                service:
+                  port: 80
+              - path: /notifications/hub/negotiate
+                pathType: Prefix
+                service:
+                  port: 80
+              - path: /notifications/hub
+                pathType: Prefix
+                service:
+                  port: 3012
+        tls:
+          - hosts:
+            - *uri2
+            secretName: *uri2
