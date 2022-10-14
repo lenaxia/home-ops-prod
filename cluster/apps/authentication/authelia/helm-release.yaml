@@ -274,6 +274,13 @@ spec:
             - "guac.${SECRET_DEV_DOMAIN}"
             - "amole.${SECRET_DEV_DOMAIN}"
           policy: two_factor
+        # Vaultwarden admin auth
+        - domain: 
+            - "vault.${SECRET_DEV_DOMAIN}"
+            - "vault.${SECRET_DEV_DOMAIN_MGO}"
+          resources:
+            - "^/admin/.*$"
+          policy: two_factor
         # Local only bypass policies
         - domain: 
             - "ldap.${SECRET_DEV_DOMAIN}"
@@ -295,7 +302,6 @@ spec:
             - "vault.${SECRET_DEV_DOMAIN}"
             #storage
             - "s3.${SECRET_DEV_DOMAIN}"
-
           policy: bypass
         # Local only policies
         - domain: 
