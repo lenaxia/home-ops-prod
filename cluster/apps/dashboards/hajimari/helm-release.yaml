@@ -1,5 +1,5 @@
 ---
-apiVersion: helm.toolkit.fluxcd.io/v2beta1
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: &app hajimari
@@ -27,7 +27,7 @@ spec:
       app: *app
     image:
       repository: ghcr.io/toboshii/hajimari
-      #tag: v0.2.0
+      tag: v0.3.1
     podSecurityContext:
       fsGroup: 101
     hajimari:
