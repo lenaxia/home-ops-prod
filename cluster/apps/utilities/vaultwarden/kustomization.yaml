@@ -7,5 +7,5 @@ commonLabels:
 resources:
   - config-pvc.yaml
   - helm-release.yaml
-  - cronjob.yaml
+    #- cronjob.yaml
   - secret.sops.yaml
