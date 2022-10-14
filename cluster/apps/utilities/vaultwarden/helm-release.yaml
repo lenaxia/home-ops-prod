@@ -117,7 +117,13 @@ spec:
           traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
           traefik.ingress.kubernetes.io/router.middlewares: "networking-chain-authelia@kubernetescrd"
         hosts:
-        - host: *host
+        - host: *uri
+          paths:
+          - path: /admin
+            pathType: Prefix
+            service:
+              port: 8080
+        - host: *uri2
           paths:
           - path: /admin
             pathType: Prefix
@@ -125,7 +131,8 @@ spec:
               port: 8080
         tls:
         - hosts:
-          - *host
+          - *uri
+          - *uri2
     persistence:
       config:
         enabled: true
