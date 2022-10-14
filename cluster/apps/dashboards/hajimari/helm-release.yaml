@@ -34,6 +34,7 @@ spec:
       defaultEnable: false
       lightTheme: paper
       darkTheme: chalk
+      showGlobalBookmarks: true
       showAppGroups: true
       defaultSearchProvider: "Bing"
       namespaceSelector:
