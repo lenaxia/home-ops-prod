@@ -277,7 +277,6 @@ spec:
         # Vaultwarden admin auth
         - domain: 
             - "vault.${SECRET_DEV_DOMAIN}"
-            - "vault.${SECRET_DEV_DOMAIN_MGO}"
           resources:
             - "^/admin/.*$"
             - "^/admin"
@@ -299,8 +298,8 @@ spec:
               #- "moments.${SECRET_PROD_DOMAIN_KF}"
             #utilities
             - "status.${SECRET_DEV_DOMAIN}"
-            - "vault.${SECRET_PROD_DOMAIN_MGO}"
             - "vault.${SECRET_DEV_DOMAIN}"
+            - "speed.${SECRET_DEV_DOMAIN}"
             #storage
             - "s3.${SECRET_DEV_DOMAIN}"
           policy: bypass
@@ -310,7 +309,7 @@ spec:
           policy: one_factor
           networks:
             - private
-        # Public services - 2 Factor
+        # Admin services - 2 Factor
         - domain:
             - "traefik.${SECRET_DEV_DOMAIN}"
             #media
@@ -343,9 +342,9 @@ spec:
             - "longhorn.${SECRET_DEV_DOMAIN}"
             #iot
             - "nodered.${SECRET_DEV_DOMAIN}"
-
-
           policy: two_factor
+          subject:
+          - "group:administrators"
         # Public services - 1 Factor
         - domain:
             #media
@@ -353,7 +352,6 @@ spec:
             - "plex.${SECRET_DEV_DOMAIN}"
             #utilitie
             - "hajimari.${SECRET_DEV_DOMAIN}"
-            - "speed.${SECRET_DEV_DOMAIN}"
           policy: one_factor
         # rules:
         # - domain_regex: '^.*\.example.com$'
