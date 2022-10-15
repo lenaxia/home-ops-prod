@@ -280,6 +280,7 @@ spec:
             - "vault.${SECRET_DEV_DOMAIN_MGO}"
           resources:
             - "^/admin/.*$"
+            - "^/admin"
           policy: two_factor
         # Local only bypass policies
         - domain: 
