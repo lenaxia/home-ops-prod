@@ -70,25 +70,10 @@ spec:
           hajimari.io/icon: "shield-key"
           hajimari.io/group: "Utilities"
           cert-manager.io/cluster-issuer: "letsencrypt-production"
-          #cert-manager.io/cluster-issuer: "ca-issuer"
           traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
-          traefik.ingress.kubernetes.io/router.middlewares: networking-chain-no-auth@kubernetescrd
+          traefik.ingress.kubernetes.io/router.middlewares: networking-chain-authelia@kubernetescrd
         hosts:
           - host: &uri "vault.${SECRET_DEV_DOMAIN}"
-            paths:
-              - path: /
-                pathType: Prefix
-                service:
-                  port: 80
-              - path: /notifications/hub/negotiate
-                pathType: Prefix
-                service:
-                  port: 80
-              - path: /notifications/hub
-                pathType: Prefix
-                service:
-                  port: 3012
-          - host: "vault.${SECRET_PROD_DOMAIN_MGO}"
             paths:
               - path: /
                 pathType: Prefix
@@ -111,7 +96,6 @@ spec:
         ingressClassName: "traefik"
         annotations:
           cert-manager.io/cluster-issuer: "letsencrypt-production"
-          #cert-manager.io/cluster-issuer: "ca-issuer"
           traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
           traefik.ingress.kubernetes.io/router.middlewares: networking-chain-no-auth@kubernetescrd
         hosts:
@@ -129,6 +113,10 @@ spec:
                 pathType: Prefix
                 service:
                   port: 3012
+              - path: /admin
+                pathType: Prefix
+                service:
+                  port: 80
         tls:
           - hosts:
             - *uri2
