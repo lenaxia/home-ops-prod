@@ -116,7 +116,7 @@ spec:
               - path: /admin
                 pathType: Prefix
                 service:
-                  port: 80
+                  port: 1000
         tls:
           - hosts:
             - *uri2
