@@ -339,6 +339,7 @@ spec:
             - "proxmox.${SECRET_DEV_DOMAIN}"
             #storage
             - "minio.${SECRET_DEV_DOMAIN}"
+            - "kopia.${SECRET_DEV_DOMAIN}"
             - "longhorn.${SECRET_DEV_DOMAIN}"
             #iot
             - "nodered.${SECRET_DEV_DOMAIN}"
