@@ -8,4 +8,4 @@ resources:
   - config-pvc.yaml
   - helm-release.yaml
     #- cronjob.yaml
-  - secret.sops.yaml
+    #- secret.sops.yaml
