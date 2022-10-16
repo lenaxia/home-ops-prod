@@ -35,7 +35,7 @@ resources:
   - ./media/sonarr
   - ./media/radarr
   - ./media/bazarr
-  - ./media/nzbget
+    #- ./media/nzbget
   - ./media/nzbhydra2
   #- ./media/bookstack
   - ./media/metube
