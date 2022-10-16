@@ -10,7 +10,7 @@ spec:
   # renovate: datasource=github-releases depName=k3s-io/k3s
   version: "v1.24.6+k3s1"
   serviceAccountName: system-upgrade
-  concurrency: 1
+  concurrency: 3
   nodeSelector:
     matchExpressions:
       - {key: node-role.kubernetes.io/control-plane, operator: DoesNotExist}
