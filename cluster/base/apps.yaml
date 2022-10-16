@@ -5,7 +5,7 @@ metadata:
   name: apps
   namespace: flux-system
 spec:
-  interval: 30s
+  interval: 5m 
   dependsOn:
     - name: core
   sourceRef:
