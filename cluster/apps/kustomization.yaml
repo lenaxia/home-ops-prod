@@ -29,29 +29,29 @@ resources:
   #- ./monitoring/tobs
 
   # Default Namespace
-  - ./dashboards/hajimari
+  #- ./dashboards/hajimari
 
   # Media Namespace
-  - ./media/sonarr
-  - ./media/radarr
-  - ./media/bazarr
+  #- ./media/sonarr
+    #- ./media/radarr
+    #- ./media/bazarr
     #- ./media/nzbget
-  - ./media/nzbhydra2
+    #- ./media/nzbhydra2
   #- ./media/bookstack
-  - ./media/metube
-  - ./media/overseerr
-  - ./media/calibre
+  #- ./media/metube
+  #- ./media/overseerr
+    #- ./media/calibre
   - ./media/calibre-web
   - ./media/tautulli
   - ./media/outline
 
   # IOT Namespace
-  - ./iot/mosquitto
-  - ./iot/nodered
+  #- ./iot/mosquitto
+  #- ./iot/nodered
 
   # Utilities Namespace
-  - ./utilities/vaultwarden
-  - ./utilities/uptimekuma
+  #- ./utilities/vaultwarden
+  #- ./utilities/uptimekuma
   - ./utilities/smokeping
   - ./utilities/changedetection
   - ./utilities/librespeed

@@ -1,0 +1,11 @@
+apiVersion: storage.k8s.io/v1
+kind: VolumeAttachment
+metadata:
+  annotations:
+    csi.alpha.kubernetes.io/node-id: k3-agent-01
+  name: csi-0a30a06ecdfa892bae27ae1f3d53c1af4b84f525751911449b2f6258fa2a582d
+spec:
+  attacher: driver.longhorn.io
+  nodeName: k3-agent-01
+  source:
+    persistentVolumeName: pvc-4b0b62ec-dacc-4237-b0f8-41d70d925ffa
