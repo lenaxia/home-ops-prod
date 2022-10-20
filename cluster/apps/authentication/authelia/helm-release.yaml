@@ -56,7 +56,7 @@ spec:
     image:
       repository: ghcr.io/authelia/authelia
       tag: 4.36.1
-      pullPolicy: IfNotPresent
+      pullPolicy: Always
     deployment:
       kind: Deployment
       replicas: 1

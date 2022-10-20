@@ -30,7 +30,7 @@ spec:
     image:
       repository: ghcr.io/dgtlmoon/changedetection.io
       #tag: "0.39.4"
-      pullPolicy: IfNotPresent
+      pullPolicy: Always
     
     env:
       TZ: ${TIMEZONE}

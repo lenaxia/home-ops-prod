@@ -33,7 +33,7 @@ spec:
     image:
       repository: louislam/uptime-kuma
       tag: 
-      pullPolicy: IfNotPresent
+      pullPolicy: Always
     
     # -- environment variables.
     env:

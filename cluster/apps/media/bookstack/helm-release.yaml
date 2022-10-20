@@ -19,7 +19,7 @@ spec:
   values:
     image:
       repository: ghcr.io/linuxserver/bookstack
-      pullPolicy: IfNotPresent
+      pullPolicy: Always
     podLabels:
       app: *appname
     ingress:

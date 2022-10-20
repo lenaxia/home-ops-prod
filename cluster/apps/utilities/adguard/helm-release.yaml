@@ -53,7 +53,7 @@ spec:
       # -- image tag
       tag: v0.106.3
       # -- image pull policy
-      pullPolicy: IfNotPresent
+      pullPolicy: Always
     
     # -- environment variables.
     # @default -- See below
