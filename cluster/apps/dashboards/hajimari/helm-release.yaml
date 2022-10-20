@@ -28,6 +28,7 @@ spec:
     image:
       repository: ghcr.io/toboshii/hajimari
       tag: v0.3.1
+      pullPolicy: Always
     podSecurityContext:
       fsGroup: 101
     hajimari:

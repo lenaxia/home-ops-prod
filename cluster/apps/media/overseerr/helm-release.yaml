@@ -25,6 +25,7 @@ spec:
     image:
       repository: ghcr.io/linuxserver/overseerr
       tag: latest
+      pullPolicy: Always
     env:
       TZ: "${TIMEZONE}"
       PUID: 1000

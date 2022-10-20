@@ -25,6 +25,7 @@ spec:
     image:
       repository: linuxserver/bazarr
       tag: latest
+      pullPolicy: Always
     env:
       TZ: "${TIMEZONE}"
       PUID: 911

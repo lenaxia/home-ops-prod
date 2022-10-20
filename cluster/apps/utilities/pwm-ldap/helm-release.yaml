@@ -25,6 +25,7 @@ spec:
     image:
       repository: docker.io/fjudith/pwm
       tag: latest
+      pullPolicy: Always
     env:
       TZ: "${TIMEZONE}"
     service:

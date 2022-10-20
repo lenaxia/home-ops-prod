@@ -56,7 +56,7 @@ resources:
   - ./utilities/changedetection
   - ./utilities/librespeed
   - ./utilities/phpmyadmin
-  - ./utilities/guacamole
+    #- ./utilities/guacamole
   - ./utilities/firefox
     #- ./utilities/ltb-project
   - ./utilities/pgadmin

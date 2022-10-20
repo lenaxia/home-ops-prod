@@ -17,6 +17,8 @@ spec:
     enable: false
   interval: 5m
   values:
+    image:
+      pullPolicy: Always
     #cache: redis-master.redis:6379
     service:
       type: ClusterIP

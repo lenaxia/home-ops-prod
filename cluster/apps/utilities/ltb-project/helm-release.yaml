@@ -25,6 +25,7 @@ spec:
     image:
       repository: docker.io/ltbproject/self-service-password
       tag: latest
+      pullPolicy: Always
     env:
       TZ: "${TIMEZONE}"
     envFrom:

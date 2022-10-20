@@ -25,6 +25,7 @@ spec:
     image:
       repository: docker.io/minio/minio
       tag: RELEASE.2022-09-25T15-44-53Z
+      pullPolicy: Always
     env:
       TZ: "America/Los_Angeles"
       MINIO_UPDATE: "off"
