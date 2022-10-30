@@ -6,7 +6,7 @@ metadata:
     hajimari.io/enable: "true"
     hajimari.io/icon: "cow"
     hajimari.io/appName: "Longhorn"
-    cert-manager.io/cluster-issuer: letsencrypt-production
+    cert-manager.io/cluster-issuer: "letsencrypt-production"
     traefik.ingress.kubernetes.io/router.entrypoints: websecure
     traefik.ingress.kubernetes.io/router.middlewares: networking-chain-authelia@kubernetescrd
   name: &appname longhorn-frontend
