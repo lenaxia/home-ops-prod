@@ -437,7 +437,7 @@ spec:
         ## MySQL (Storage Provider)
         ##
         mysql:
-          enabled: true
+          enabled: false
           host: ${RURI_ADDR}
           port: 3306
           database: authelia-k3s
@@ -446,7 +446,7 @@ spec:
           timeout: 10s
 
         postgres:
-          enabled: false
+          enabled: true 
           host: defaultpg-rw.databases.svc.cluster.local
           port: 5432
           database: authelia
