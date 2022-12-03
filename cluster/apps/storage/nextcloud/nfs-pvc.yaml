@@ -1,0 +1,36 @@
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: &name nextcloud-nfs
+spec:
+  storageClassName: *name
+  capacity:
+    storage: 1Mi
+  accessModes:
+    - ReadWriteMany
+  persistentVolumeReclaimPolicy: Retain
+  nfs:
+    server: ${NAS_ADDR}
+    path: /volume3/nextcloud/prod
+  mountOptions:
+    - nfsvers=4
+    - tcp
+    - intr
+    - hard
+    - noatime
+    - nodiratime
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: &name nextcloud-nfs
+  namespace: storage
+spec:
+  accessModes:
+    - ReadWriteMany
+  storageClassName: *name
+  resources:
+    requests:
+      storage: 1Mi

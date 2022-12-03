@@ -1,0 +1,247 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: &app nextcloud
+  namespace: storage
+spec:
+  interval: 15m
+  chart:
+    spec:
+      chart: nextcloud
+      version: 3.3.3
+      sourceRef:
+        kind: HelmRepository
+        name: nextcloud-charts
+        namespace: flux-system
+      interval: 15m
+  install:
+    createNamespace: true
+    remediation:
+      retries: 5
+  upgrade:
+    remediation:
+      retries: 5
+  values:
+    fullnameOverride: *app
+    image:
+      repository: nextcloud
+      tag: 25.0.1-fpm-alpine
+      flavor: fpm-alpine
+    ingress:
+      enabled: true
+      className: traefik
+      annotations:
+        hajimari.io/enable: "true"
+        hajimari.io/icon: "cloud"
+        hajimari.io/appName: "NextCloud"
+        cert-manager.io/cluster-issuer: "letsencrypt-production"
+        traefik.ingress.kubernetes.io/router.entrypoints: websecure
+        traefik.ingress.kubernetes.io/router.middlewares: networking-chain-authelia-nextcloud@kubernetescrd
+      path: /
+      pathType: Prefix
+
+      tls:
+        - hosts:
+            - &host "drive.${SECRET_DEV_DOMAIN}"
+          secretName: *host
+
+#    lifecycle:
+#      postStart:
+#        exec:
+#          command:
+#            - /bin/bash
+#            - -c
+#            - /postStart.sh
+
+    nextcloud:
+      host: *host
+      existingSecret:
+        enabled: true
+        secretName: nextcloud-config
+        usernameKey: nextcloud-username
+        passwordKey: nextcloud-password  # secretName: nameofsecret
+      datadir: /var/www/data
+      extraEnv:
+        - name: REDIS_HOST
+          valueFrom:
+            secretKeyRef:
+              name: redis-secret
+              key: host
+          #value: &redisHost redis-master.databases.svc.cluster.local
+        - name: REDIS_HOST_PORT
+          valueFrom:
+            secretKeyRef:
+              name: redis-secret
+              key: port
+          #value: "6379"
+        - name: REDIS_HOST_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: redis-secret
+              key: password
+      extraInitContainers:
+        - name: wait-database
+          image: alpine:3.17.0
+          imagePullPolicy: IfNotPresent
+          command:
+            - sh
+          args:
+            - -c
+            - >-
+              until nc -w 1 -v $MYSQL_HOST:3306 || nc -w 1 -v $POSTGRES_HOST:5432;
+              do echo "Waiting for database";
+              done
+          env:
+            - name: POSTGRES_HOST
+              value: &postgresHost defaultpg-rw.databases.svc.cluster.local
+        - name: wait-redis
+          image: alpine:3.17.0
+          imagePullPolicy: IfNotPresent
+          command:
+            - sh
+          args:
+            - -c
+            - >-
+              until nc -w 1 -v $REDIS_HOST:$REDIS_HOST_PORT;
+              do echo "Waiting for Redis";
+              done
+          env:
+            - name: REDIS_HOST
+              valueFrom:
+                secretKeyRef:
+                  name: redis-secret
+                  key: host
+              #value: *redisHost
+            - name: REDIS_HOST_PORT
+              valueFrom:
+                secretKeyRef:
+                  name: redis-secret
+                  key: port
+              #value: "6379"
+        - name: init-db
+          image: ghcr.io/onedr0p/postgres-initdb:14.5
+          env:
+            - name: POSTGRES_HOST
+              value: *postgresHost
+            - name: POSTGRES_DB
+              value: nextcloud
+            - name: POSTGRES_SUPER_PASS
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-superuser
+                  key: password
+            - name: POSTGRES_USER
+              valueFrom:
+                secretKeyRef:
+                  name: nextcloud-config
+                  key: postgres_username
+            - name: POSTGRES_PASS
+              valueFrom:
+                secretKeyRef:
+                  name: nextcloud-config
+                  key: postgres_password
+
+      configs:
+        custom.config.php: |-
+          <?php
+          $CONFIG = array (
+            'overwriteprotocol' => 'https',
+            'overwrite.cli.url' => 'https://drive.${SECRET_DEV_DOMAIN}',
+            'filelocking.enabled' => 'true',
+            'default_phone_region' => 'US',
+            'loglevel' => '2',
+            'enable_previews' => true,
+            'trusted_domains' =>
+               [
+                'nextcloud',
+                'drive.${SECRET_DEV_DOMAIN}'
+               ],
+            'trusted_proxies' =>
+               [
+                '192.168.12.10'
+               ]
+          );
+
+          #        s3.config.php: |-
+          #          <?php
+          #          $CONFIG = array (
+          #            'objectstore' => array(
+          #              'class' => '\\OC\\Files\\ObjectStore\\S3',
+          #              'arguments' => array(
+          #                'bucket'     => 'nextcloud-oh7iqq',
+          #                'autocreate' => true,
+          #                'key'        => 'nextcloud-hss3fs',
+          #                'secret'     => 's4G2d6N33FE5NhYa',
+          #                'region'     => 'local',
+          #                'hostname'   => 's3.thekao.cloud',
+          #                'use_ssl'    => true,
+          #                'use_path_style' => true
+          #              )
+          #            )
+          #          );
+
+    nginx:
+      enabled: true
+      image:
+        repository: nginx
+        tag: 1.23-alpine
+    internalDatabase:
+      enabled: false
+
+    externalDatabase:
+      enabled: true
+      type: postgresql
+      host: *postgresHost
+      database: nextcloud
+      existingSecret:
+        enabled: true
+        secretName: nextcloud-config
+        usernameKey: postgres_username
+        passwordKey: postgres_password
+
+    cronjob:
+      enabled: true
+      schedule: "*/5 * * * *"
+      curlInsecure: false
+      failedJobsHistoryLimit: 5
+      successfulJobsHistoryLimit: 2
+
+    persistence:
+      enabled: true
+      existingClaim: nextcloud-config
+      
+      nextcloudData:
+        enabled: true
+        existingClaim: nextcloud-nfs
+
+    ## Liveness and readiness probe values
+    ## Ref: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/#container-probes
+    ##
+    livenessProbe:
+      enabled: false
+      initialDelaySeconds: 10
+      periodSeconds: 10
+      timeoutSeconds: 5
+      failureThreshold: 3
+      successThreshold: 1
+    readinessProbe:
+      enabled: false
+      initialDelaySeconds: 10
+      periodSeconds: 10
+      timeoutSeconds: 5
+      failureThreshold: 3
+      successThreshold: 1
+    startupProbe:
+      enabled: false
+      initialDelaySeconds: 1920
+      periodSeconds: 10
+      timeoutSeconds: 5
+      failureThreshold: 30
+      successThreshold: 1
+
+#    resources:
+#      requests:
+#        cpu: 34m
+#        memory: 203Mi
+#      limits:
+#        memory: 363Mi
