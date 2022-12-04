@@ -28,3 +28,4 @@ resources:
   - skater-charts.yaml
   - csi-driver-nfs-charts.yaml
   - kyverno-charts.yaml
+  - nextcloud-charts.yaml
