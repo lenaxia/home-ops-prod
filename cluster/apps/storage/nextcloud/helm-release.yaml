@@ -109,13 +109,11 @@ spec:
                 secretKeyRef:
                   name: redis-secret
                   key: host
-              #value: *redisHost
             - name: REDIS_HOST_PORT
               valueFrom:
                 secretKeyRef:
                   name: redis-secret
                   key: port
-              #value: "6379"
         - name: init-db
           image: ghcr.io/onedr0p/postgres-initdb:14.5
           env:
