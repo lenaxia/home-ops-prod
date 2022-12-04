@@ -67,13 +67,11 @@ spec:
             secretKeyRef:
               name: redis-secret
               key: host
-          #value: &redisHost redis-master.databases.svc.cluster.local
         - name: REDIS_HOST_PORT
           valueFrom:
             secretKeyRef:
               name: redis-secret
               key: port
-          #value: "6379"
         - name: REDIS_HOST_PASSWORD
           valueFrom:
             secretKeyRef:
@@ -149,7 +147,7 @@ spec:
             'overwrite.cli.url' => 'https://drive.${SECRET_DEV_DOMAIN}',
             'filelocking.enabled' => 'true',
             'default_phone_region' => 'US',
-            'loglevel' => '2',
+            'loglevel' => '0',
             'enable_previews' => true,
             'trusted_domains' =>
                [
@@ -158,7 +156,7 @@ spec:
                ],
             'trusted_proxies' =>
                [
-                '192.168.12.10'
+                '192.168.5.10'
                ]
           );
 
@@ -208,7 +206,7 @@ spec:
 
     persistence:
       enabled: true
-      existingClaim: nextcloud-config
+        #existingClaim: nextcloud-config
       
       nextcloudData:
         enabled: true
