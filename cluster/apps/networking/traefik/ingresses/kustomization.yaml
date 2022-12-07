@@ -11,3 +11,4 @@ resources:
   - phpmyadmin.yaml
   - plex.yaml
   - omoikane-ldap.yaml
+  - overseerr-oidc.yaml
