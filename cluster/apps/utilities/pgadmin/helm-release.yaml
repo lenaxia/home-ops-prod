@@ -83,3 +83,4 @@ spec:
         type: configMap
         name: serversjson
         mountPath: /pgadmin4
+        subPath: servers.json
