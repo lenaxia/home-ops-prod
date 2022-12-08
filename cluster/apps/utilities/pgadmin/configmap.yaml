@@ -1,3 +1,4 @@
+---
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -5,4 +6,25 @@ metadata:
 data:
   PGADMIN_DEFAULT_EMAIL: mike@kao.family
   PGADMIN_DEFAULT_PASSWORD: faith6510
-
+  PGADMIN_SERVER_JSON_FILE: /pgadmin4/servers.json
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: serversjson
+  namespace: media
+data:
+  servers.json: |
+    {
+    "Servers": {
+        "1": {
+            "Name": "defaultpg",
+            "Group": "Servers",
+            "Port": 5432,
+            "Username": "postgres",
+            "Host": "defaultpg-rw.databases.svc.cluster.local",
+            "SSLMode": "prefer",
+            "MaintenanceDB": "postgres"
+        },
+      }
+    }
