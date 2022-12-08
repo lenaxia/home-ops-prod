@@ -76,8 +76,8 @@ spec:
       startup:
         enabled: false
     persistence:
-      config:
-        enabled: true
+      #config:
+      #  enabled: true
       envconfig:
         enabled: true
         type: configMap
