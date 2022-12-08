@@ -284,6 +284,7 @@ spec:
         # Local only bypass policies
         - domain: 
             - "ldap.${SECRET_DEV_DOMAIN}"
+            - "collabora.${SECRET_DEV_DOMAIN}"
           policy: bypass
           networks:
             - private
