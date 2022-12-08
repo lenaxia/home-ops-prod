@@ -76,8 +76,8 @@ spec:
       startup:
         enabled: false
     persistence:
-      #config:
-      #  enabled: true
+      pgadmin4:
+        enabled: true
       envconfig:
         enabled: true
         type: custom
