@@ -76,14 +76,14 @@ spec:
       startup:
         enabled: false
     persistence:
-      pgadmin4:
-        enabled: true
-      envconfig:
-        enabled: true
-        type: custom
-        volumeSpec:
-          configMap:
-            name: serversjson
-        subPath: 
-          - path: servers.json
-            mountPath: /pgadmin4/servers.json
+      #pgadmin4:
+      #  enabled: true
+      #envconfig:
+      #  enabled: true
+      #  type: custom
+      #  volumeSpec:
+      #    configMap:
+      #      name: serversjson
+      #  subPath: 
+      #    - path: servers.json
+      #      mountPath: /pgadmin4/servers.json
