@@ -80,7 +80,10 @@ spec:
       #  enabled: true
       envconfig:
         enabled: true
-        type: configMap
-        name: serversjson
-        mountPath: /pgadmin4
-        subPath: servers.json
+        type: custom
+        volumeSpec:
+          configMap:
+            name: serversjson
+        subPath: 
+          - path: servers.json
+            mountPath: /pgadmin4/servers.json
