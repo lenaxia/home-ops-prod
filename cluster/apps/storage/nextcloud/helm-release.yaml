@@ -155,7 +155,7 @@ spec:
             'trusted_proxies' =>
                [
                 '192.168.5.10'
-               ]
+               ],
             'enabledPreviewProviders' =>
               array (
                 ... => 'OC\\Preview\\HEIC',
