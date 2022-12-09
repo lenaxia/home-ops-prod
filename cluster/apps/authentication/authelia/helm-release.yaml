@@ -352,6 +352,7 @@ spec:
             #media
             - "library.${SECRET_DEV_DOMAIN}"
             - "plex.${SECRET_DEV_DOMAIN}"
+            - "request.${SECRET_DEV_DOMAIN}"
             #utilitie
             - "hajimari.${SECRET_DEV_DOMAIN}"
           policy: one_factor
