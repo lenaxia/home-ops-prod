@@ -137,6 +137,14 @@ spec:
                   name: nextcloud-config
                   key: postgres_password
 
+      phpConfigs:
+        uploadLimit.ini: |
+          upload_max_filesize = 16G
+          post_max_size = 16G
+          max_input_time = 3600
+          max_execution_time = 3600
+          default_phone_region = US
+
       configs:
         custom.config.php: |-
           <?php
