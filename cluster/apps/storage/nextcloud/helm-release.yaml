@@ -244,6 +244,19 @@ spec:
       failureThreshold: 30
       successThreshold: 1
 
+    affinity:
+      podAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          - labelSelector:
+              matchExpressions:
+                - key: app.kubernetes.io/name
+                  operator: In
+                  values: ["redis"]
+                - key: app.kubernetes.io/component
+                  operator: In
+                  values: ["master"]
+            topologyKey: kubernetes.io/hostname
+
 #    resources:
 #      requests:
 #        cpu: 34m
