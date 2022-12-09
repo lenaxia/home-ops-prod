@@ -26,4 +26,4 @@ spec:
               command:
                 - curl
               args:
-                - https://drive.${SECRET_DEV_DOMAIN}/cron.php
+                - https://hub.${SECRET_DEV_DOMAIN}/cron.php

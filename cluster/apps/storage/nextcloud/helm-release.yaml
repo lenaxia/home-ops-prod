@@ -42,7 +42,7 @@ spec:
 
       tls:
         - hosts:
-            - &host "drive.${SECRET_DEV_DOMAIN}"
+            - &host "hub.${SECRET_DEV_DOMAIN}"
           secretName: *host
 
 #    lifecycle:
@@ -142,7 +142,7 @@ spec:
           <?php
           $CONFIG = array (
             'overwriteprotocol' => 'https',
-            'overwrite.cli.url' => 'https://drive.${SECRET_DEV_DOMAIN}',
+            'overwrite.cli.url' => 'https://hub.${SECRET_DEV_DOMAIN}',
             'filelocking.enabled' => 'true',
             'default_phone_region' => 'US',
             'loglevel' => '0',
@@ -150,12 +150,21 @@ spec:
             'trusted_domains' =>
                [
                 'nextcloud',
-                'drive.${SECRET_DEV_DOMAIN}'
+                'hub.${SECRET_DEV_DOMAIN}'
                ],
             'trusted_proxies' =>
                [
                 '192.168.5.10'
                ]
+            'enabledPreviewProviders' =>
+              array (
+                ... => 'OC\\Preview\\HEIC',
+                ... => 'OC\\Preview\\TIFF',
+                ... => 'OC\\Preview\\Movie',
+                ... => 'OC\\Preview\\MKV',
+                ... => 'OC\\Preview\\MP4',
+                ... => 'OC\\Preview\\AVI',
+              ),
           );
 
           #        s3.config.php: |-
