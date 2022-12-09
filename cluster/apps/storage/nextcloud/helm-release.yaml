@@ -158,12 +158,12 @@ spec:
                ],
             'enabledPreviewProviders' =>
               array (
-                ... => 'OC\\Preview\\HEIC',
-                ... => 'OC\\Preview\\TIFF',
-                ... => 'OC\\Preview\\Movie',
-                ... => 'OC\\Preview\\MKV',
-                ... => 'OC\\Preview\\MP4',
-                ... => 'OC\\Preview\\AVI',
+                0 => 'OC\\Preview\\HEIC',
+                1 => 'OC\\Preview\\TIFF',
+                2 => 'OC\\Preview\\Movie',
+                3 => 'OC\\Preview\\MKV',
+                4 => 'OC\\Preview\\MP4',
+                5 => 'OC\\Preview\\AVI',
               ),
           );
 
