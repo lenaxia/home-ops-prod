@@ -151,10 +151,10 @@ spec:
           listen = 127.0.0.1:9000
           
           pm = dynamic
-          pm.max_children = 100
-          pm.start_servers = 2
-          pm.min_spare_servers = 4
-          pm.max_spare_servers = 8
+          pm.max_children = 150
+          pm.start_servers = 12
+          pm.min_spare_servers = 6
+          pm.max_spare_servers = 18
           pm.max_requests = 500
           pm.process_idle_timeout = 10s
 
