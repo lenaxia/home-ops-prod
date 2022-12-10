@@ -58,6 +58,6 @@ resources:
   - ./utilities/phpmyadmin
   - ./utilities/guacamole
   - ./utilities/firefox
-  #- ./utilities/ltb-project
+  - ./utilities/ltb-project
   - ./utilities/pgadmin
 
