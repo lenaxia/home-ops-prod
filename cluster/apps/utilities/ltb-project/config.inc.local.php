@@ -8,6 +8,8 @@ $ldap_base = getenv('SECRET_LTB_LDAP_BASE');
 $ldap_filter = "(&(objectClass=posixAccount)(uid={login}))";
 $who_change_password = "user";
 
+$use_sms = false;
+
 $hash = "clear";
 #$logo = "images/ltb-logo.png";
 $logo = getenv('SECRET_LTB_LOGO');
