@@ -7,12 +7,19 @@ metadata:
     policies.kyverno.io/title: Snapshot CronJob controller
     policies.kyverno.io/subject: PersistentVolumeClaim
     policies.kyverno.io/description: |
-      This policy creates a Kopia snapshot CronJob for labeled PersistentVolumeClaims.
-      The following label on PVCs are required for this to run:
+      This policy creates a Kopia snapshot CronJob for labeled PersistentVolumeClaims
+
+      The following labels on PVCs with their respective labels are required for this to run:
         - snapshot.home.arpa/enabled
+        - app.kubernetes.io/name
+        - app.kubernetes.io/instance
+
+      An optional label of "snapshot.home.arpa/ignoreAffinity" may be set on the PVC
+      if the pod is guaranteed to not run during the time of this jobs execution
 spec:
   generateExistingOnPolicyUpdate: true
   mutateExistingOnPolicyUpdate: true
+
   rules:
     - name: create-snapshot-cronjob
       match:
@@ -22,9 +29,9 @@ spec:
                 - PersistentVolumeClaim
               selector:
                 matchLabels:
+                  snapshot.home.arpa/enabled: "true"
                   app.kubernetes.io/name: "*"
                   app.kubernetes.io/instance: "*"
-                  snapshot.home.arpa/enabled: "true"
       context:
         - name: appName
           variable:
@@ -32,14 +39,13 @@ spec:
         - name: claimName
           variable:
             jmesPath: "request.object.metadata.name"
-            # TODO(kyverno): https://github.com/kyverno/kyverno/pull/4767
-            # jmesPath: "{{ regex_replace_all('^([^-]*)', {{ request.object.metadata.name }}, '${1}') }}" # 'config' instead of 'config-home-assistant-0'
         - name: namespace
           variable:
             jmesPath: "request.object.metadata.namespace"
         - name: nodeAffinity
           variable:
             value:
+              ignored: "{{ (request.object.metadata.labels.\"snapshot.home.arpa/ignoreAffinity\" || 'false') == 'false' }}"
               labels:
                 - key: app.kubernetes.io/name
                   operator: "In"
@@ -53,7 +59,7 @@ spec:
         synchronize: true
         apiVersion: batch/v1
         kind: CronJob
-        name: "{{ appName }}-{{ claimName }}-snapshot"
+        name: "{{ appName }}-snap"
         namespace: "{{ request.object.metadata.namespace }}"
         data:
           metadata:
@@ -66,7 +72,7 @@ spec:
                 name: "{{ request.object.metadata.name }}"
                 uid: "{{ request.object.metadata.uid }}"
           spec:
-            schedule: "0 3 * * *"
+            schedule: "0 10 * * *"
             suspend: false
             concurrencyPolicy: Forbid
             successfulJobsHistoryLimit: 1
@@ -82,12 +88,12 @@ spec:
                     # Stagger jobs to run randomly within X seconds to avoid bringing down all apps at once
                     initContainers:
                       - name: wait
-                        image: ghcr.io/onedr0p/kopia:0.12.1@sha256:a1c6971f9cc24b4f1f03db0558b09bd2310d4d335f3f78f785c5bced4d4a9d19
+                        image: ghcr.io/onedr0p/kopia:0.12.1@sha256:e333295b519ce586e7c050c970b2255d87bdb2979298ff87ebdb1113e381ba3b
                         command: ["/scripts/sleep.sh"]
-                        args: ["1", "1800"]
+                        args: ["1", "900"]
                     containers:
-                      - name: snapshot
-                        image: ghcr.io/onedr0p/kopia:0.12.1@sha256:a1c6971f9cc24b4f1f03db0558b09bd2310d4d335f3f78f785c5bced4d4a9d19
+                      - name: snapshot 
+                        image: ghcr.io/onedr0p/kopia:0.12.1@sha256:e333295b519ce586e7c050c970b2255d87bdb2979298ff87ebdb1113e381ba3b
                         env:
                           - name: KOPIA_CACHE_DIRECTORY
                             value: /snapshots/{{ namespace }}/{{ appName }}/{{ claimName }}/cache
@@ -129,4 +135,4 @@ spec:
                         requiredDuringSchedulingIgnoredDuringExecution:
                           - topologyKey: kubernetes.io/hostname
                             labelSelector:
-                              matchExpressions: "{{ nodeAffinity.labels }}"
+                              matchExpressions: "{{ nodeAffinity.ignored && [] || nodeAffinity.labels }}"
