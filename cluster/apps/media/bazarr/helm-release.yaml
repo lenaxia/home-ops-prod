@@ -117,14 +117,14 @@ spec:
             server: ${NAS_ADDR}
             path: /volume2/downloads
         mountPath: /downloads
-          #      backups:
-          #        enabled: true
-          #        type: custom
-          #        volumeSpec:
-          #          nfs:
-          #            server: ${NAS_ADDR}
-          #            path: /volume1/backups/bazarr
-          #        mountPath: /config/backup
+      backups:
+        enabled: true
+        type: custom
+        volumeSpec:
+          nfs:
+            server: ${NAS_ADDR}
+            path: /volume1/backups/bazarr
+        mountPath: /config/backup
 #    resources:
 #      requests:
 #        cpu: 10m
