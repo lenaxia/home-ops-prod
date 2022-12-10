@@ -30,7 +30,7 @@ $use_tokens = true;
 $mail_address_use_ldap = true;
 $crypt_answers = true;
 $token_lifetime = "3600";
-$reset_request_log = "/config/self-service-password";
+$reset_request_log = "/var/backups/self-service-password";
 $reset_url = getenv('SECRET_LTB_PASSWORD_RESET_URL');
 
 $mail_from = getenv('SECRET_LTB_SMTP_MAIL_FROM');
