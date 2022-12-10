@@ -83,12 +83,9 @@ spec:
       startup:
         enabled: false
     persistence:
-      #      config:
-      #        enabled: true
-      #        existingClaim: ltb-config-volume
-      #        mountPath: /var/www/html/images
-      #        defaultMode: 0777
-      #        readOnly: false
+     config:
+       enabled: true
+       existingClaim: ltb-config-volume
       poststart:
         enabled: true
         type: configMap
