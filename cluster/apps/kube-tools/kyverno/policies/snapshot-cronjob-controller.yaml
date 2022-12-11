@@ -14,7 +14,7 @@ spec:
   generateExistingOnPolicyUpdate: true
   mutateExistingOnPolicyUpdate: true
   rules:
-    - name: create-snapshot-cronjob
+    - name: create-snapshot-cronjob2
       match:
         any:
           - resources:
