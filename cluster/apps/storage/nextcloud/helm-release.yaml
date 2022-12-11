@@ -186,15 +186,29 @@ spec:
                [
                 '192.168.5.10'
                ],
-               #            'enabledPreviewProviders' =>
-               #              array (
-               #                0 => 'OC\\Preview\\HEIC',
-               #                1 => 'OC\\Preview\\TIFF',
-               #                2 => 'OC\\Preview\\Movie',
-               #                3 => 'OC\\Preview\\MKV',
-               #                4 => 'OC\\Preview\\MP4',
-               #                5 => 'OC\\Preview\\AVI',
-               #              ),
+            'enabledPreviewProviders' =>
+               [
+                'OC\\Preview\\TIFF',
+                'OC\\Preview\\TXT',
+                'OC\\Preview\\MarkDown',
+                'OC\\Preview\\PDF',
+                'OC\\Preview\\MSOfficeDoc',
+                'OC\\Preview\\JPEG',
+                'OC\\Preview\\PNG',
+                'OC\\Preview\\GIF',
+                'OC\\Preview\\BMP',
+                'OC\\Preview\\XBitmap',
+                'OC\\Preview\\MP3',
+                'OC\\Preview\\HEIC',
+                'OC\\Preview\\Movie',
+                'OC\\Preview\\MKV',
+                'OC\\Preview\\MP4',
+                'OC\\Preview\\AVI',
+                'OC\\Preview\\MP3',
+                'OC\\Preview\\OpenDocument',
+                'OC\\Preview\\Krita',
+                #'OC\\Preview\\Imaginary',
+              ],
           );
 
           #        s3.config.php: |-
