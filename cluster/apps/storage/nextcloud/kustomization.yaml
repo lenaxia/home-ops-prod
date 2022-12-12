@@ -1,7 +1,7 @@
 ---
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
-namespace: storage
+  #namespace: storage
 commonLabels:
   app.kubernetes.io/name: &app nextcloud
   app.kubernetes.io/instance: *app
@@ -13,11 +13,11 @@ resources:
   - secret.sops.yaml
   - middlewares.yaml
     #- cronjob.yaml
-configMapGenerator:
-  - name: poststart-sh
-    files:
-      - postStart.sh
-generatorOptions:
-  disableNameSuffixHash: true
-  annotations:
-    kustomize.toolkit.fluxcd.io/substitute: disabled
+    #configMapGenerator:
+    #  - name: poststart-sh
+    #    files:
+    #      - postStart.sh
+    #generatorOptions:
+    #  disableNameSuffixHash: true
+    #  annotations:
+    #    kustomize.toolkit.fluxcd.io/substitute: disabled

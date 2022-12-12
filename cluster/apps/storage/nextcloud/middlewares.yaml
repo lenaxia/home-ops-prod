@@ -2,7 +2,7 @@ apiVersion: traefik.containo.us/v1alpha1
 kind: Middleware
 metadata:
   name: middlewares-nextcloud-wellknown1
-  namespace: storage
+  namespace: networking
   labels:
     app.kubernetes.io/name: nextcloud
 spec:
@@ -16,7 +16,7 @@ apiVersion: traefik.containo.us/v1alpha1
 kind: Middleware
 metadata:
   name: middlewares-nextcloud-wellknown2
-  namespace: storage
+  namespace: networking
   labels:
     app.kubernetes.io/name: nextcloud
 spec:
@@ -29,7 +29,7 @@ apiVersion: traefik.containo.us/v1alpha1
 kind: Middleware
 metadata:
   name: middlewares-nextcloud-headers
-  namespace: storage
+  namespace: networking
 spec:
   headers:
     accessControlAllowMethods:
@@ -62,7 +62,7 @@ apiVersion: traefik.containo.us/v1alpha1
 kind: Middleware
 metadata:
   name: chain-nextcloud-headers
-  namespace: storage
+  namespace: networking
 spec:
   chain:
     middlewares:
