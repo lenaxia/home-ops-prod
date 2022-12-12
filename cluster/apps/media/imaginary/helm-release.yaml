@@ -1,0 +1,65 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: &app imaginary
+  namespace: media
+spec:
+  interval: 15m
+  chart:
+    spec:
+      chart: app-template
+      version: 0.2.2
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s-charts
+        namespace: flux-system
+  install:
+    createNamespace: true
+    remediation:
+      retries: 5
+  upgrade:
+    remediation:
+      retries: 5
+  values:
+    image:
+      repository: docker.io/h2non/imaginary
+      tag: latest
+      pullPolicy: Always
+
+    args:
+      - -enable-url-source=true
+      - -concurrency=10
+      - -url-signature-key=averylongandsecurekeywithmin32chars
+      - -enable-url-signature=true
+      - -return-size
+
+    service:
+      main:
+        type: LoadBalancer
+        ports:
+          http:
+            port: &port 9000
+
+    probes:
+      liveness: &probes
+        enabled: false
+        custom: true
+        spec:
+          httpGet:
+            path: /
+            port: *port
+          initialDelaySeconds: 0
+          periodSeconds: 10
+          timeoutSeconds: 1
+          failureThreshold: 3
+      readiness: *probes
+      startup:
+        enabled: false
+ 
+#    resources:
+#      requests:
+#        cpu: 10m
+#        memory: 50Mi
+#      limits:
+#        memory: 500Mi

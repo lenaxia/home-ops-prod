@@ -44,6 +44,7 @@ resources:
   - ./media/calibre-web
   - ./media/tautulli
   - ./media/outline
+  - ./media/imaginary
 
   # IOT Namespace
   - ./iot/mosquitto

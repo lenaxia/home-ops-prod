@@ -209,6 +209,7 @@ spec:
                 'OC\\Preview\\Krita',
                 #'OC\\Preview\\Imaginary',
               ],
+            'preview_imaginary_url' => 'http://imaginary:9000',
           );
 
           #        s3.config.php: |-
