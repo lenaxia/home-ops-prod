@@ -210,9 +210,9 @@ spec:
                 'OC\\Preview\\MP3',
                 'OC\\Preview\\OpenDocument',
                 'OC\\Preview\\Krita',
-                'OC\\Preview\\Imaginary',
+                #'OC\\Preview\\Imaginary',
               ],
-            'preview_imaginary_url' => 'http://imaginary.media.svc.cluster.local:9000',
+            #'preview_imaginary_url' => 'http://imaginary.media.svc.cluster.local:9000',
           );
 
           #        s3.config.php: |-
