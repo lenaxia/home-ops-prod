@@ -61,7 +61,7 @@ spec:
 apiVersion: traefik.containo.us/v1alpha1
 kind: Middleware
 metadata:
-  name: chain-authelia-nextcloud
+  name: chain-nextcloud-headers
   namespace: networking
 spec:
   chain:

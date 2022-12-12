@@ -36,7 +36,7 @@ spec:
         hajimari.io/appName: "NextCloud"
         cert-manager.io/cluster-issuer: "letsencrypt-production"
         traefik.ingress.kubernetes.io/router.entrypoints: websecure
-        traefik.ingress.kubernetes.io/router.middlewares: networking-middlewares-nextcloud-headers@kubernetescrd
+        traefik.ingress.kubernetes.io/router.middlewares: networking-chain-nextcloud-headers@kubernetescrd
       path: /
       pathType: Prefix
 
