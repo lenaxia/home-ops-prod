@@ -42,16 +42,16 @@ spec:
 
       tls:
         - hosts:
-            - &host "nc-test.${SECRET_DEV_DOMAIN}"
+            - &host "hub.${SECRET_DEV_DOMAIN}"
           secretName: *host
 
-#    lifecycle:
-#      postStart:
-#        exec:
-#          command:
-#            - /bin/bash
-#            - -c
-#            - /postStart.sh
+    lifecycle:
+      postStart:
+        exec:
+          command:
+            - /bin/sh
+            - -c
+            - add apk ffmpeg
 
     nextcloud:
       host: *host
@@ -120,7 +120,7 @@ spec:
             - name: POSTGRES_HOST
               value: *postgresHost
             - name: POSTGRES_DB
-              value: &pgdbname nextcloud-temp
+              value: &pgdbname nextcloud
             - name: POSTGRES_SUPER_PASS
               valueFrom:
                 secretKeyRef:
@@ -158,7 +158,7 @@ spec:
           user = www-data
           group = www-data
           listen = 127.0.0.1:9000
-          
+
           pm = dynamic
           pm.max_children = 300
           pm.start_servers = 10
@@ -172,19 +172,20 @@ spec:
           <?php
           $CONFIG = array (
             'overwriteprotocol' => 'https',
-            'overwrite.cli.url' => 'https://nc-test.${SECRET_DEV_DOMAIN}',
+            'overwrite.cli.url' => 'https://hub.${SECRET_DEV_DOMAIN}',
             'filelocking.enabled' => 'true',
             'default_phone_region' => 'US',
-            'loglevel' => '0',
+            'loglevel' => '2',
             'enable_previews' => true,
             'trusted_domains' =>
                [
                 'nextcloud',
-                'nc-test.${SECRET_DEV_DOMAIN}'
+                'hub.${SECRET_DEV_DOMAIN}'
                ],
             'trusted_proxies' =>
                [
-                '192.168.5.10'
+                '192.168.5.10',
+                '192.168.5.10',
                ],
             'enabledPreviewProviders' =>
                [
@@ -211,29 +212,12 @@ spec:
               ],
           );
 
-          #        s3.config.php: |-
-          #          <?php
-          #          $CONFIG = array (
-          #            'objectstore' => array(
-          #              'class' => '\\OC\\Files\\ObjectStore\\S3',
-          #              'arguments' => array(
-          #                'bucket'     => 'nextcloud-oh7iqq',
-          #                'autocreate' => true,
-          #                'key'        => 'nextcloud-hss3fs',
-          #                'secret'     => 's4G2d6N33FE5NhYa',
-          #                'region'     => 'local',
-          #                'hostname'   => 's3.thekao.cloud',
-          #                'use_ssl'    => true,
-          #                'use_path_style' => true
-          #              )
-          #            )
-          #          );
-
     nginx:
       enabled: true
       image:
         repository: nginx
         tag: 1.23-alpine
+
     internalDatabase:
       enabled: false
 
@@ -291,16 +275,12 @@ spec:
         #    affinity:
         #      podAffinity:
         #        requiredDuringSchedulingIgnoredDuringExecution:
-        #          - labelSelector:
-        #              matchExpressions:
-        #                - key: app.kubernetes.io/name
-        #                  operator: In
-        #                  values: ["redis"]
-        #                - key: app.kubernetes.io/component
-        #                  operator: In
-        #                  values: ["master"]
-        #            topologyKey: kubernetes.io/hostname
-
+        #        - topologyKey: kubernetes.io/hostname
+        #          labelSelector:
+        #            matchLabels:
+        #              - app.kubernetes.io/name: redis
+        #                #- app.kubernetes.io/component: master
+            
 #    resources:
 #      requests:
 #        cpu: 34m
