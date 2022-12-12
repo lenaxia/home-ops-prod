@@ -271,8 +271,8 @@ spec:
 
     extraVolumeMounts:
       - name: postStart-sh
-        mountPath: /scripts
-        readOnly: true
+        mountPath: /scripts/postStart.sh
+        subPath: postStart.sh
 
     ## Liveness and readiness probe values
     ## Ref: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/#container-probes
