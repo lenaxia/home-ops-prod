@@ -42,7 +42,7 @@ spec:
 
       tls:
         - hosts:
-            - &host "hub.${SECRET_DEV_DOMAIN}"
+            - &host "nc-test.${SECRET_DEV_DOMAIN}"
           secretName: *host
 
 #    lifecycle:
@@ -172,7 +172,7 @@ spec:
           <?php
           $CONFIG = array (
             'overwriteprotocol' => 'https',
-            'overwrite.cli.url' => 'https://hub.${SECRET_DEV_DOMAIN}',
+            'overwrite.cli.url' => 'https://nc-test.${SECRET_DEV_DOMAIN}',
             'filelocking.enabled' => 'true',
             'default_phone_region' => 'US',
             'loglevel' => '0',
@@ -180,7 +180,7 @@ spec:
             'trusted_domains' =>
                [
                 'nextcloud',
-                'hub.${SECRET_DEV_DOMAIN}'
+                'nc-test.${SECRET_DEV_DOMAIN}'
                ],
             'trusted_proxies' =>
                [
