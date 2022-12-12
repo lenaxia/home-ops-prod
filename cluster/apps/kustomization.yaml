@@ -13,7 +13,7 @@ resources:
   - ./kube-tools/kyverno
   - ./storage/minio
   - ./storage/kopia-web
-    #  - ./storage/nextcloud
+  - ./storage/nextcloud
     #- ./kube-tools/metrics-server  # k3s already comes with a metrics server
 
   # Security
