@@ -266,7 +266,7 @@ spec:
 
     extraVolumes:
       - configMap:
-          name: postStart-sh
+          name: poststart-sh
         name: postStart-sh
 
     extraVolumeMounts:
