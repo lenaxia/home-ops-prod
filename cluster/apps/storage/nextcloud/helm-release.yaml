@@ -27,6 +27,8 @@ spec:
       repository: nextcloud
       tag: 25.0.2-fpm-alpine
       flavor: fpm-alpine
+    env:
+      PHP_MEMORY_LIMIT: 512M
     ingress:
       enabled: true
       className: traefik
@@ -273,15 +275,15 @@ spec:
         enabled: true
         existingClaim: nextcloud-nfs
 
-    extraVolumes:
-      - configMap:
-          name: poststart-sh
-        name: postStart-sh
-
-    extraVolumeMounts:
-      - name: postStart-sh
-        mountPath: /scripts/postStart.sh
-        subPath: postStart.sh
+          #    extraVolumes:
+          #      - configMap:
+          #          name: poststart-sh
+          #        name: postStart-sh
+          #
+          #    extraVolumeMounts:
+          #      - name: postStart-sh
+          #        mountPath: /scripts/postStart.sh
+          #        subPath: postStart.sh
 
     ## Liveness and readiness probe values
     ## Ref: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/#container-probes
