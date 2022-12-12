@@ -12,7 +12,7 @@ spec:
   persistentVolumeReclaimPolicy: Retain
   nfs:
     server: ${NAS_ADDR}
-    path: /volume1/nextcloud/prod
+    path: /volume1/nextcloud/temp
   mountOptions:
     - nfsvers=4
     - tcp
