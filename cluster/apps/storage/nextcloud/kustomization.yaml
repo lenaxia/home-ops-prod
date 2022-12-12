@@ -14,7 +14,7 @@ resources:
   - middlewares.yaml
     #- cronjob.yaml
 configMapGenerator:
-  - name: poststart-sh
+  - name: postStart-sh
     files:
       - postStart.sh
 generatorOptions:
