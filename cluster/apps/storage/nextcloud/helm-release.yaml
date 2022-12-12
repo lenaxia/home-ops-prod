@@ -181,6 +181,7 @@ spec:
                [
                 'nextcloud',
                 'hub.${SECRET_DEV_DOMAIN}'
+                '192.168.0.0./24'
                ],
             'trusted_proxies' =>
                [
