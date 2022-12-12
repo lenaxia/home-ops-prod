@@ -241,6 +241,17 @@ spec:
       auth:
         enabled: true
         password: 'blahblah'
+      master:
+        persistence:
+          enabled: true
+          storageClass: local-path
+          size: 2Gi
+      replica:
+        replicaCount: 1
+        persistence:
+          enabled: true
+          storageClass: local-path
+          size: 2Gi
 
     internalDatabase:
       enabled: false
