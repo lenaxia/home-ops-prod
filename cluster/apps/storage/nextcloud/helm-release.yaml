@@ -45,13 +45,13 @@ spec:
             - &host "hub.${SECRET_DEV_DOMAIN}"
           secretName: *host
 
-    lifecycle:
-      postStart:
-        exec:
-          command:
-            - /bin/sh
-            - -c
-            - /scripts/postStart.sh
+            #    lifecycle:
+            #      postStart:
+            #        exec:
+            #          command:
+            #            - /bin/sh
+            #            - -c
+            #            - /scripts/postStart.sh
 
     nextcloud:
       host: *host
