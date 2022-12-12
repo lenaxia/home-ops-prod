@@ -30,7 +30,7 @@ resources:
   #- ./monitoring/tobs
 
   # Default Namespace
-  - ./dashboards/hajimari
+  #- ./dashboards/hajimari
 
   # Media Namespace
   - ./media/sonarr
