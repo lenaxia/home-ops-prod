@@ -138,15 +138,15 @@ spec:
                   key: postgres_password
 
       phpConfigs:
-        opcache.conf: |
-          php_admin_value[opcache.enable] = 1
-          php_admin_value[opcache.save_comments] = 1
-          php_admin_value[opcache.interned_strings_buffer] = 16
-          php_admin_value[opcache.memory_consumption] = 256
-          php_admin_value[opcache.max_accelerated_files] = 10000
-          php_admin_value[opcache.validate_timestamps] = 0
-          php_admin_value[opcache.revalidate_freq] = 60
-          php_admin_value[memory_limit] = -1
+        #opcache.conf: |
+        #  php_admin_value[opcache.enable] = 1
+        #  php_admin_value[opcache.save_comments] = 1
+        #  php_admin_value[opcache.interned_strings_buffer] = 16
+        #  php_admin_value[opcache.memory_consumption] = 256
+        #  php_admin_value[opcache.max_accelerated_files] = 10000
+        #  php_admin_value[opcache.validate_timestamps] = 0
+        #  php_admin_value[opcache.revalidate_freq] = 60
+        #  php_admin_value[memory_limit] = -1
         uploadLimit.ini: |
           upload_max_filesize = 16G
           post_max_size = 16G
@@ -188,29 +188,6 @@ spec:
                 '192.168.5.10',
                 '10.43.244.212',
                ],
-            'enabledPreviewProviders' =>
-               [
-                'OC\\Preview\\TIFF',
-                'OC\\Preview\\TXT',
-                'OC\\Preview\\MarkDown',
-                'OC\\Preview\\PDF',
-                'OC\\Preview\\MSOfficeDoc',
-                'OC\\Preview\\JPEG',
-                'OC\\Preview\\PNG',
-                'OC\\Preview\\GIF',
-                'OC\\Preview\\BMP',
-                'OC\\Preview\\XBitmap',
-                'OC\\Preview\\MP3',
-                'OC\\Preview\\HEIC',
-                'OC\\Preview\\Movie',
-                'OC\\Preview\\MKV',
-                'OC\\Preview\\MP4',
-                'OC\\Preview\\AVI',
-                'OC\\Preview\\MP3',
-                'OC\\Preview\\OpenDocument',
-                'OC\\Preview\\Krita',
-                #'OC\\Preview\\Imaginary',
-              ],
           );
 
     nginx:
@@ -242,11 +219,11 @@ spec:
 
     persistence:
       enabled: true
-      existingClaim: nextcloud-config
+        #existingClaim: nextcloud-config
       
       nextcloudData:
         enabled: true
-        existingClaim: nextcloud-nfs
+          #existingClaim: nextcloud-nfs
 
     ## Liveness and readiness probe values
     ## Ref: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/#container-probes
