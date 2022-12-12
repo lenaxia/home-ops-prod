@@ -32,7 +32,6 @@ spec:
       - -concurrency=10
       - -url-signature-key=averylongandsecurekeywithmin32chars
       - -enable-url-signature=true
-      - -return-size
 
     service:
       main:
