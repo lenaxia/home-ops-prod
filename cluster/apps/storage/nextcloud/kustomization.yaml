@@ -12,3 +12,11 @@ resources:
   - secret.sops.yaml
   - middlewares.yaml
     #- cronjob.yaml
+configMapGenerator:
+  - name: poststart-sh
+    files:
+      - postStart.sh
+generatorOptions:
+  disableNameSuffixHash: true
+  annotations:
+    kustomize.toolkit.fluxcd.io/substitute: disabled

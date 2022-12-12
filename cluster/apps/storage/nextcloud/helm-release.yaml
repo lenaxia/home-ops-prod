@@ -264,13 +264,15 @@ spec:
         enabled: true
         existingClaim: nextcloud-nfs
 
-      poststart:
-        enabled: true
-        type: configMap
-        name: poststart-sh
-        subPath: postStart.sh
-        mountPath: /scripts/postStart.sh
-        defaultMode: 0777
+    extraVolumes:
+      - configMap:
+          name: postStart-sh
+        name: postStart-sh
+
+    extraVolumeMounts:
+      - name: postStart-sh
+        mountPath: /scripts
+        readOnly: true
 
     ## Liveness and readiness probe values
     ## Ref: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/#container-probes
