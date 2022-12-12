@@ -27,8 +27,6 @@ spec:
       repository: nextcloud
       tag: 25.0.2-fpm-alpine
       flavor: fpm-alpine
-    env:
-      PHP_MEMORY_LIMIT: 512M
     ingress:
       enabled: true
       className: traefik
@@ -47,13 +45,13 @@ spec:
             - &host "hub.${SECRET_DEV_DOMAIN}"
           secretName: *host
 
-            #    lifecycle:
-            #      postStart:
-            #        exec:
-            #          command:
-            #            - /bin/sh
-            #            - -c
-            #            - /scripts/postStart.sh
+#    lifecycle:
+#      postStart:
+#        exec:
+#          command:
+#            - /bin/bash
+#            - -c
+#            - /postStart.sh
 
     nextcloud:
       host: *host
@@ -183,7 +181,6 @@ spec:
                [
                 'nextcloud',
                 'hub.${SECRET_DEV_DOMAIN}'
-                '192.168.0.0./24'
                ],
             'trusted_proxies' =>
                [
@@ -212,7 +209,6 @@ spec:
                 'OC\\Preview\\Krita',
                 #'OC\\Preview\\Imaginary',
               ],
-            #'preview_imaginary_url' => 'http://imaginary.media.svc.cluster.local:9000',
           );
 
           #        s3.config.php: |-
@@ -238,14 +234,6 @@ spec:
       image:
         repository: nginx
         tag: 1.23-alpine
-
-          #    redis:
-          #      enabled: true
-          #      auth:
-          #        enabled: true
-          #        password: 'blahblah'
-          #      replicaCount: 1
-
     internalDatabase:
       enabled: false
 
@@ -274,16 +262,6 @@ spec:
       nextcloudData:
         enabled: true
         existingClaim: nextcloud-nfs
-
-          #    extraVolumes:
-          #      - configMap:
-          #          name: poststart-sh
-          #        name: postStart-sh
-          #
-          #    extraVolumeMounts:
-          #      - name: postStart-sh
-          #        mountPath: /scripts/postStart.sh
-          #        subPath: postStart.sh
 
     ## Liveness and readiness probe values
     ## Ref: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/#container-probes
