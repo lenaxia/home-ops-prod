@@ -235,6 +235,13 @@ spec:
       image:
         repository: nginx
         tag: 1.23-alpine
+
+    redis:
+      enabled: true
+      auth:
+        enabled: true
+        password: 'blahblah'
+
     internalDatabase:
       enabled: false
 
