@@ -236,12 +236,12 @@ spec:
         repository: nginx
         tag: 1.23-alpine
 
-    redis:
-      enabled: true
-      auth:
-        enabled: true
-        password: 'blahblah'
-      replicaCount: 1
+          #    redis:
+          #      enabled: true
+          #      auth:
+          #        enabled: true
+          #        password: 'blahblah'
+          #      replicaCount: 1
 
     internalDatabase:
       enabled: false
