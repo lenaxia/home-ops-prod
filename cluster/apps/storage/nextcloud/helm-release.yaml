@@ -120,7 +120,7 @@ spec:
             - name: POSTGRES_HOST
               value: *postgresHost
             - name: POSTGRES_DB
-              value: nextcloud
+              value: &pgdbname nextcloud-temp
             - name: POSTGRES_SUPER_PASS
               valueFrom:
                 secretKeyRef:
@@ -241,7 +241,7 @@ spec:
       enabled: true
       type: postgresql
       host: *postgresHost
-      database: nextcloud
+      database: *pgdbname
       existingSecret:
         enabled: true
         secretName: nextcloud-config
