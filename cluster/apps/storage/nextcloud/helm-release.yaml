@@ -120,7 +120,7 @@ spec:
             - name: POSTGRES_HOST
               value: *postgresHost
             - name: POSTGRES_DB
-              value: &pgdbname nextcloud-temp
+              value: &pgdbname nextcloud
             - name: POSTGRES_SUPER_PASS
               valueFrom:
                 secretKeyRef:
