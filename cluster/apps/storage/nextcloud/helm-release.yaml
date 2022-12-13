@@ -51,7 +51,7 @@ spec:
           command:
             - /bin/sh
             - -c
-            - add apk ffmpeg
+            - apk add ffmpeg
 
     nextcloud:
       host: *host
@@ -265,7 +265,7 @@ spec:
       failureThreshold: 3
       successThreshold: 1
     startupProbe:
-      enabled: false
+      enabled: true
       initialDelaySeconds: 1920
       periodSeconds: 10
       timeoutSeconds: 5
