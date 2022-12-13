@@ -17,10 +17,10 @@ spec:
   install:
     createNamespace: true
     remediation:
-      retries: 7
+      retries: 5
   upgrade:
     remediation:
-      retries: 6
+      retries: 5
   values:
     fullnameOverride: *app
     image:
@@ -45,10 +45,10 @@ spec:
             - &host "hub.${SECRET_DEV_DOMAIN}"
           secretName: *host
 
-            #    lifecycle:
-            #      postStartCommand:
-            #        exec:
-            #          command: ["/bin/sh","-c","apk add ffmpeg"]
+    lifecycle:
+      postStartCommand:
+        exec:
+          command: ["/bin/sh","-c","apk add ffmpeg"]
 
     nextcloud:
       host: *host
