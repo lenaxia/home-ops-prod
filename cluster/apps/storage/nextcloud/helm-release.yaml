@@ -46,7 +46,7 @@ spec:
           secretName: *host
 
     lifecycle:
-      postStart:
+      postStartCommand:
         exec:
           command:
             - /bin/sh
