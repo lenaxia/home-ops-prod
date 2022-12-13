@@ -37,15 +37,15 @@ spec:
       fsGroupChangePolicy: "OnRootMismatch"
       supplementalGroups:
         - 100
-          #    lifecycle:
-          #      postStart:
-          #        exec:
-          #          command:
-          #            - /bin/bash
-          #            - -c
-          #            - /poststart.sh
+    lifecycle:
+      postStart:
+        exec:
+          command:
+            - /bin/bash
+            - -c
+            - /poststart.sh
     podAnnotations:
-      configmap.reloader.stakater.com/reload: "poststart-sh"
+      configmap.reloader.stakater.com/reload: "bazarr-poststart-sh"
 #    initContainers:
 #      config-permissions:
 #        image: busybox
