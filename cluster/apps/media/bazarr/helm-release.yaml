@@ -37,6 +37,15 @@ spec:
       fsGroupChangePolicy: "OnRootMismatch"
       supplementalGroups:
         - 100
+    lifecycle:
+      postStart:
+        exec:
+          command:
+            - /bin/bash
+            - -c
+            - /poststart.sh
+    podAnnotations:
+      configmap.reloader.stakater.com/reload: "poststart-sh"
 #    initContainers:
 #      config-permissions:
 #        image: busybox
@@ -117,14 +126,21 @@ spec:
             server: ${NAS_ADDR}
             path: /volume2/downloads
         mountPath: /downloads
-          #      backups:
-          #        enabled: true
-          #        type: custom
-          #        volumeSpec:
-          #          nfs:
-          #            server: ${NAS_ADDR}
-          #            path: /volume1/backups/bazarr
-          #        mountPath: /config/backup
+      backups:
+        enabled: true
+        type: custom
+        volumeSpec:
+          nfs:
+            server: ${NAS_ADDR}
+            path: /volume1/backups/bazarr
+        mountPath: /backups
+      poststart:
+        enabled: true
+        type: configMap
+        name: bazarr-poststart-sh
+        subPath: poststart.sh
+        mountPath: /poststart.sh
+        defaultMode: 0777
 #    resources:
 #      requests:
 #        cpu: 10m

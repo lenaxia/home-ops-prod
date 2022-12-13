@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: bazarr-poststart
+  namespace: media
+data:
+  poststart.sh: |
+    #!/bin/bash
+    
+    sed 's/\/config\/backup/\/backups/g' /config/config/config.ini -i
+    
