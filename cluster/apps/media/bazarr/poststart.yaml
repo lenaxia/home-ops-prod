@@ -7,5 +7,5 @@ data:
   poststart.sh: |
     #!/bin/bash
     
-    sed 's/\/config\/backup/\/backups/' /config/config/config.ini -i
+    sed 's/\\/config\\/backup/\\/backups/' /config/config/config.ini -i
     
