@@ -23,15 +23,11 @@ spec:
       retries: 5
   values:
     image:
-      repository: docker.io/h2non/imaginary
+      repository: docker.io/nextcloud/aio-imaginary
       tag: latest
       pullPolicy: Always
 
-    args:
-      - -enable-url-source=true
-      - -concurrency=10
-      - -url-signature-key=averylongandsecurekeywithmin32chars
-      - -enable-url-signature=true
+    command: ["/usr/local/bin/imaginary", "-return-size"]
 
     service:
       main:
