@@ -48,10 +48,7 @@ spec:
     lifecycle:
       postStartCommand:
         exec:
-          command:
-            - /bin/sh
-            - -c
-            - apk add ffmpeg
+          command: ["/bin/sh","-c","apk add ffmpeg"]
 
     nextcloud:
       host: *host
