@@ -110,3 +110,10 @@ metadata:
   name: storage
   labels:
     app.kubernetes.io/component: storage
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: home
+  labels:
+    app.kubernetes.io/component: home
