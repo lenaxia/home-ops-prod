@@ -39,7 +39,7 @@ spec:
           TZ: ${TIMEZONE}
           BASE_URL: https://meals.${SECRET_DEV_DOMAIN}
           DB_TYPE: postgres 
-          TOKEN_TIME: 360
+          TOKEN_TIME: 361
           LDAP_AUTH_ENABLED: true
               #- name: API_PORT
               #  value: "9000"
