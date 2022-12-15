@@ -50,7 +50,7 @@ spec:
         volumeMounts:
         - name: api-data
           mountPath: /app/data/
-        - name: mealie-poststart-sh
+        - name: poststart
           mountPath: /poststart.sh
           subPath: poststart.sh
 
