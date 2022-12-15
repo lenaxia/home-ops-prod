@@ -20,15 +20,6 @@ spec:
       repository: docker.io/hkotel/mealie
       tag: frontend-v1.0.0beta-5
 
-    lifecycle:
-      postStart:
-        exec:
-          command:
-            - /bin/sh
-            - -c
-            - apt-get update &&
-            - apt-get install -y --no-install-recommends libldap-2.4-2
-    
     additionalContainers:
       api:
         name: mealie-api
@@ -56,6 +47,15 @@ spec:
         volumeMounts:
         - name: api-data
           mountPath: /app/data/
+
+        lifecycle:
+          postStart:
+            exec:
+              command:
+                - /bin/sh
+                - -c
+                - apt update &&
+                - apt install -y --no-install-recommends libldap-2.4-2
 
     env:
       TZ: ${TIMEZONE}
