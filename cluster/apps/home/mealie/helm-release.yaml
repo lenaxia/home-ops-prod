@@ -89,6 +89,7 @@ spec:
         name: mealie-security-py
         subPath: security.py
         mountPath: /security.py
+        defaultMode: 0777
 
     # -- Configures service settings for the chart.
     # @default -- See values.yaml
