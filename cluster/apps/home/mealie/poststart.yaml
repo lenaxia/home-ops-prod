@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-    name: mealie
+    name: mealie-poststart-sh
     labels:
       app: mealie
 data:
