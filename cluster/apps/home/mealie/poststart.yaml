@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-    name: mealievolume
+    name: mealie
     labels:
       app: mealie
 data:
