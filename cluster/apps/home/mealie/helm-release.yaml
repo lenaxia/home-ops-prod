@@ -24,7 +24,7 @@ spec:
       postStart:
         exec:
           command:
-            - /bin/bash
+            - /bin/sh
             - -c
             - apt-get update
             - apt-get install -y --no-install-recommends libldap-2.4-2
