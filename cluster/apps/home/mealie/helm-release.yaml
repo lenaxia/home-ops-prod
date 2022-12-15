@@ -22,6 +22,7 @@ spec:
 
     podAnnotations:
       secret.reloader.stakater.com/reload: *appname
+      configmap.reloader.stakater.com/reload: mealie-poststart-sh
 
     additionalContainers:
       api:
