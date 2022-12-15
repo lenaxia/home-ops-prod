@@ -23,7 +23,7 @@ resources:
   - ./authentication/authelia
   
   # Home
-  - ./home/mealie
+  #- ./home/mealie
 
   # Monitoring Namespace
   #- ./monitoring/prometheus-stack
