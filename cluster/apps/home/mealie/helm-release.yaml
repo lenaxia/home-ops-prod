@@ -50,6 +50,9 @@ spec:
         volumeMounts:
         - name: api-data
           mountPath: /app/data/
+        - name: mealie-poststart-sh
+          mountPath: /poststart.sh
+          subPath: poststart.sh
 
         lifecycle:
           postStart:
@@ -57,7 +60,7 @@ spec:
               command:
                 - /bin/sh
                 - -c
-                - "apt update && apt install -y --no-install-recommends libldap-2.4-2 && sed 's/(&(objectClass=user)(|(cn={username})(sAMAccountName={username})(mail={username})))/(&(objectClass=posixAccount)(\|(uid={username})(mail={username})(cn={username})))/g' /app/mealie/core/security/security.py -i"
+                - /poststart.sh
 
     env:
       TZ: ${TIMEZONE}
@@ -69,6 +72,13 @@ spec:
         mountPath: /app/data/
         accessMode: ReadWriteOnce
         existingClaim: mealie-volume
+      poststart:
+        enabled: true
+        type: configMap
+        name: mealie-poststart-sh
+        subPath: poststart.sh
+        mountPath: /poststart.sh
+        defaultMode: 0777
 
     # -- Configures service settings for the chart.
     # @default -- See values.yaml
