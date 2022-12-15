@@ -1,11 +1,11 @@
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
-  name: vaultwarden
+  name: &app vaultwarden
   namespace: utilities
 
 spec:
-  releaseName: vaultwarden
+  releaseName: *app
   chart:
     spec:
       chart: vaultwarden
@@ -43,10 +43,13 @@ spec:
     # -- environment variables.
     env:
       DATA_FOLDER: "config"
-      TZ: "America/Los_Angeles"
+      TZ: ${TIMEZONE}
       SIGNUPS_ALLOWED : false
       WEBSOCKET_ENABLED : true
-      ADMIN_TOKEN: NMfH7jATM4tP9xbMucSzCz53DGmQvC50CWnGU5hyJu5kUc3CVChUIpv4kdgwIAuP
+
+    envFrom:
+      - secretRef:
+          name: *app
     
     # -- Configure persistence settings for the chart under this key.
     # @default -- See values.yaml
