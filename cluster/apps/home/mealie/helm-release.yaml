@@ -54,9 +54,6 @@ spec:
         - name: poststart-sh
           mountPath: /poststart.sh
           subPath: poststart.sh
-        - name: security-py 
-          mountPath: /app/mealie/core/security/security.py
-          subPath: security.py
 
         lifecycle:
           postStart:
@@ -82,13 +79,6 @@ spec:
         name: mealie-poststart-sh
         subPath: poststart.sh
         mountPath: /poststart.sh
-        defaultMode: 0777
-      security-py:
-        enabled: true
-        type: configMap
-        name: mealie-security-py
-        subPath: security.py
-        mountPath: /security.py
         defaultMode: 0777
 
     # -- Configures service settings for the chart.
