@@ -26,12 +26,21 @@ spec:
         image: docker.io/hkotel/mealie:api-v1.0.0beta-5
         imagePullPolicy: IfNotPresent
         env:
-          - name: API_PORT
-            value: "9000"
-          - name: TZ
-            value: ${TIMEZONE}
-          - name: BASE_URL
-            value: https://meals.${SECRET_DEV_DOMAIN}
+          API_PORT: "9000"
+          TZ: ${TIMEZONE}
+          BASE_URL: https://meals.${SECRET_DEV_DOMAIN}
+          DB_TYPE: postgres 
+          TOKEN_TIME: 360
+          LDAP_AUTH_ENABLED: true
+              #- name: API_PORT
+              #  value: "9000"
+              #- name: TZ
+              #  value: ${TIMEZONE}
+              #- name: BASE_URL
+              #  value: https://meals.${SECRET_DEV_DOMAIN}
+        envFrom:
+          - secretRef:
+              name: *appname
         ports:
           - name: api
             containerPort: 9000
@@ -42,14 +51,7 @@ spec:
     env:
       TZ: ${TIMEZONE}
       # -- Set the application database type
-      DB_TYPE: postgres 
-      TOKEN_TIME: 360
-      LDAP_AUTH_ENABLED: true
 
-    envFrom:
-      - secretRef:
-          name: *appname
-    
     persistence:
       api-data:
         enabled: true
