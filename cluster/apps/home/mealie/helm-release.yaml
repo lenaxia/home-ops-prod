@@ -51,9 +51,12 @@ spec:
         volumeMounts:
         - name: api-data
           mountPath: /app/data/
-        - name: poststart
+        - name: poststart-sh
           mountPath: /poststart.sh
           subPath: poststart.sh
+        - name: security-py 
+          mountPath: /app/mealie/core/security/security.py
+          subPath: security.py
 
         lifecycle:
           postStart:
@@ -73,13 +76,19 @@ spec:
         mountPath: /app/data/
         accessMode: ReadWriteOnce
         existingClaim: mealie-volume
-      poststart:
+      poststart-sh:
         enabled: true
         type: configMap
         name: mealie-poststart-sh
         subPath: poststart.sh
         mountPath: /poststart.sh
         defaultMode: 0777
+      security-py:
+        enabled: true
+        type: configMap
+        name: mealie-security-py
+        subPath: security.py
+        mountPath: /security.py
 
     # -- Configures service settings for the chart.
     # @default -- See values.yaml
