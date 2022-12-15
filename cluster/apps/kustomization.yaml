@@ -22,6 +22,8 @@ resources:
   - ./networking/traefik/ingresses
   - ./authentication/authelia
   
+  # Home
+  - ./home/mealie
 
   # Monitoring Namespace
   #- ./monitoring/prometheus-stack
