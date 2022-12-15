@@ -13,7 +13,7 @@ spec:
         kind: HelmRepository
         name: k8s-at-home
         namespace: flux-system
-  interval: 5m
+  interval: 6m
   values:
    
     # -- Configures service settings for the chart.
