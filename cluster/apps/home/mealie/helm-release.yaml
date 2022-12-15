@@ -48,14 +48,13 @@ spec:
         - name: api-data
           mountPath: /app/data/
 
-            #        lifecycle:
-            #          postStart:
-            #            exec:
-            #              command:
-            #                - /bin/sh
-            #                - -c
-            #                - apt update &&
-            #                - apt install -y --no-install-recommends libldap-2.4-2
+        lifecycle:
+          postStart:
+            exec:
+              command:
+                - /bin/sh
+                - -c
+                - "apt update && apt install -y --no-install-recommends libldap-2.4-2"
 
     env:
       TZ: ${TIMEZONE}
