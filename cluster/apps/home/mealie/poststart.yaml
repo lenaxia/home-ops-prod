@@ -8,4 +8,4 @@ data:
     #!/bin/sh
     apt update
     apt install -y --no-install-recommends libldap-2.4-2 
-    sed -i 's/objectClass\=user/objectClass\=posixAccount/g' /app/mealie/core/security/security.py 
+    sed -i 's/objectClass=user/objectClass=posixAccount/' /app/mealie/core/security/security.py 
