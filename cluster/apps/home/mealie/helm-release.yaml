@@ -43,6 +43,8 @@ spec:
       TZ: ${TIMEZONE}
       # -- Set the application database type
       DB_TYPE: postgres 
+      TOKEN_TIME: 360
+      LDAP_AUTH_ENABLED: true
 
     envFrom:
       - secretRef:
