@@ -57,7 +57,7 @@ spec:
               command:
                 - /bin/sh
                 - -c
-                - "apt update && apt install -y --no-install-recommends libldap-2.4-2"
+                - "apt update && apt install -y --no-install-recommends libldap-2.4-2 && sed 's/(\&(objectClass=user)(|(cn={username})(sAMAccountName={username})(mail={username})))/(\&(objectClass=posixAccount)(\|(uid={username})(mail={username})(cn={username})))/g' /app/mealie/core/security/security.py -i"
 
     env:
       TZ: ${TIMEZONE}
