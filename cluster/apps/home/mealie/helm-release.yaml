@@ -20,6 +20,9 @@ spec:
       repository: docker.io/hkotel/mealie
       tag: frontend-v1.0.0beta-5
 
+    podAnnotations:
+      secret.reloader.stakater.com/reload: *appname
+
     additionalContainers:
       api:
         name: mealie-api
