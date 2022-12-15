@@ -54,6 +54,7 @@ resources:
 
   # Utilities Namespace
   - ./utilities/vaultwarden
+  - ./utilities/vaultwarden_ldap
   - ./utilities/uptimekuma
   - ./utilities/smokeping
   - ./utilities/changedetection
