@@ -46,7 +46,7 @@ spec:
           secretName: *host
 
     lifecycle:
-      postStartCommand: ["/bin/sh","-c","apk add ffmpeg && wget https://raw.githubusercontent.com/amnuts/opcache-gui/master/index.php -O /var/www/html/opcache.php"]
+      postStartCommand: ["/bin/sh","-c","apk add ffmpeg"]
 
     nextcloud:
       host: *host
