@@ -25,8 +25,8 @@ spec:
     fullnameOverride: *app
     image:
       repository: nextcloud
-      tag: 25.0.2-fpm-alpine
-      flavor: fpm-alpine
+      tag: 25.0.2-fpm
+        #flavor: fpm-alpine
     ingress:
       enabled: true
       className: traefik
