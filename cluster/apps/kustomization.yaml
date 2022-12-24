@@ -14,7 +14,7 @@ resources:
   - ./storage/minio
   - ./storage/kopia-web
   - ./storage/nextcloud
-    #  - ./storage/nextcloud/redis
+  - ./storage/nextcloud/redis
     #- ./kube-tools/metrics-server  # k3s already comes with a metrics server
 
   # Security
