@@ -3,7 +3,7 @@ apiVersion: databases.spotahome.com/v1
 kind: RedisFailover
 metadata:
   name: nextcloud-redis
-  namespace: default
+  namespace: storage
 spec:
   #  auth:
   #    secretPath: nextcloud-config
