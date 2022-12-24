@@ -2,7 +2,7 @@ apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
   name: &app nextcloud
-  namespace: storage
+  namespace: &namespace storage
 spec:
   interval: 15m
   chart:
@@ -14,13 +14,16 @@ spec:
         name: nextcloud-charts
         namespace: flux-system
       interval: 15m
+  dependsOn:
+    - name: nextcloud-redis
+      namespace: *namespace
   install:
     createNamespace: true
     remediation:
-      retries: 8
+      retries: 5
   upgrade:
     remediation:
-      retries: 8
+      retries: 5
   values:
     fullnameOverride: *app
     image:
@@ -57,16 +60,16 @@ spec:
         passwordKey: nextcloud-password  # secretName: nameofsecret
       datadir: /var/www/data
       extraEnv:
-        - name: REDIS_HOST
-          valueFrom:
-            secretKeyRef:
-              name: redis-secret
-              key: host
-        - name: REDIS_HOST_PORT
-          valueFrom:
-            secretKeyRef:
-              name: redis-secret
-              key: port
+        #- name: REDIS_HOST
+        #  valueFrom:
+        #    secretKeyRef:
+        #      name: redis-secret
+        #      key: host
+        #- name: REDIS_HOST_PORT
+        #  valueFrom:
+        #    secretKeyRef:
+        #      name: redis-secret
+        #      key: port
         - name: REDIS_HOST_PASSWORD
           valueFrom:
             secretKeyRef:
@@ -95,20 +98,23 @@ spec:
           args:
             - -c
             - >-
-              until nc -w 1 -v $REDIS_HOST:$REDIS_HOST_PORT;
+              # until nc -w 1 -v $REDIS_HOST:$REDIS_HOST_PORT;
+
+              # Socket version of wait
+              until nc -w 1 -lU /var/run/redis/redis.sock
               do echo "Waiting for Redis";
               done
-          env:
-            - name: REDIS_HOST
-              valueFrom:
-                secretKeyRef:
-                  name: redis-secret
-                  key: host
-            - name: REDIS_HOST_PORT
-              valueFrom:
-                secretKeyRef:
-                  name: redis-secret
-                  key: port
+          #env:
+          #  - name: REDIS_HOST
+          #    valueFrom:
+          #      secretKeyRef:
+          #        name: redis-secret
+          #        key: host
+          #  - name: REDIS_HOST_PORT
+          #    valueFrom:
+          #      secretKeyRef:
+          #        name: redis-secret
+          #        key: port
         - name: init-db
           image: ghcr.io/onedr0p/postgres-initdb:14.5
           env:
@@ -163,6 +169,20 @@ spec:
           pm.process_idle_timeout = 10s
 
       configs:
+        redis.config.php: |-
+          <?php
+            $CONFIG = array (
+              'memcache.local' => '\OC\Memcache\APCu',
+              'memcache.distributed' => '\OC\Memcache\Redis',
+              'redis' => [
+                   'host'     => '/run/redis/redis.sock',
+                   'port'     => 0,
+                   'dbindex'  => 0,
+                   'password' => '',
+                   'timeout'  => 1.5,
+              ],
+            );
+    
         custom.config.php: |-
           <?php
           $CONFIG = array (
@@ -206,6 +226,15 @@ spec:
               ],
             'preview_imaginary_url' => 'http://imaginary.media.svc.cluster.local:9000',
           );
+
+      extraVolumes:
+        - name: redis-socks
+          persistentVolumeClaim:
+            claimName: redis-socks-pvc
+      extraVolumeMounts:
+        - name: redis-socks
+          mountPath: "/run/redis"
+          readOnly: false
 
     nginx:
       enabled: true
