@@ -1,0 +1,10 @@
+---
+apiVersion: source.toolkit.fluxcd.io/v1beta1
+kind: HelmRepository
+metadata:
+  name: spotahome-redis-operator-charts
+  namespace: flux-system
+spec:
+  interval: 30m
+  url: https://spotahome.github.io/redis-operator
+  timeout: 3m

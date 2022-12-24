@@ -29,3 +29,4 @@ resources:
   - csi-driver-nfs-charts.yaml
   - kyverno-charts.yaml
   - nextcloud-charts.yaml
+  - spotahome-redis-operator-charts.yaml
