@@ -165,6 +165,22 @@ spec:
           pm.max_requests = 500
           pm.process_idle_timeout = 10s
 
+      defaultConfigs:
+        # To protect /var/www/html/config
+        .htaccess: true
+        # Redis default configuration
+        redis.config.php: false
+        # Apache configuration for rewrite urls
+        apache-pretty-urls.config.php: true
+        # Define APCu as local cache
+        apcu.config.php: true
+        # Apps directory configs
+        apps.config.php: true
+        # Used for auto configure database
+        autoconfig.php: true
+        # SMTP default configuration
+        smtp.config.php: true
+    
       configs:
         redis.config.php: |-
           <?php
