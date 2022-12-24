@@ -52,7 +52,7 @@ tasks:
     preconditions: *preconditions
 
   restore:
-    desc: Spawn a job to restore an app from a snapshot (task snapshot:restore APP=plex [SNAPSHOT=(latest|<snapshot-id>) KOPIA_NAMESPACE=<namespace> TIMEOUT=<timeout>])
+    desc: Spawn a job to restore an app from a snapshot (task snapshot:restore APP=plex VOLUME=volumename [SNAPSHOT=(latest|<snapshot-id>) KOPIA_NAMESPACE=<namespace> TIMEOUT=<timeout>])
     cmds:
       - flux -n {{.NAMESPACE}} suspend helmrelease {{.APP}}
       - kubectl -n {{.NAMESPACE}} scale {{.NAME}} --replicas 0
