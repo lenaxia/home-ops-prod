@@ -249,6 +249,12 @@ spec:
           mountPath: "/run/redis"
           readOnly: false
 
+      extraSecurityContext:
+        runAsUser: "33"
+        runAsGroup: "33"
+        runAsNonRoot: true
+        readOnlyRootFilesystem: true
+
     nginx:
       enabled: true
       image:
