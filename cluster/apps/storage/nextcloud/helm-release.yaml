@@ -26,7 +26,6 @@ spec:
     image:
       repository: nextcloud
       tag: 25.0.2-fpm
-        #flavor: fpm-alpine
     ingress:
       enabled: true
       className: traefik
@@ -45,8 +44,8 @@ spec:
             - &host "hub.${SECRET_DEV_DOMAIN}"
           secretName: *host
 
-            #lifecycle:
-            #  postStartCommand: ["/bin/sh","-c","apk add ffmpeg"]
+    lifecycle:
+      postStartCommand: ["/bin/sh","-c","apt update && apt install ffmpeg procps -y"]
 
     nextcloud:
       host: *host
