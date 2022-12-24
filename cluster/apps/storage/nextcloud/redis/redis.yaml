@@ -1,0 +1,46 @@
+---
+apiVersion: databases.spotahome.com/v1
+kind: RedisFailover
+metadata:
+  name: nextcloud-redis
+  namespace: default
+spec:
+  #  auth:
+  #    secretPath: nextcloud-config
+  sentinel:
+    replicas: 1
+    image: redis:7.0.7
+    imagePullPolicy: Always
+    resources:
+      requests:
+        cpu: 100m
+      limits:
+        memory: 100Mi
+  redis:
+    replicas: 1
+    image: redis:7.0.7
+    imagePullPolicy: Always
+    command:
+      - "redis-server"
+      - "/run/redis.conf"
+    containerSecurityContext:
+      runAsUser: 33
+      runAsGroup: 33
+    securityContext:
+      runAsUser: 33
+      runAsGroup: 33
+      fsGroup: 33
+    extraVolumes:
+    - name: socks-pvc
+      persistentVolumeClaim:
+        claimName: redis-socks-pvc
+    - name: redis-configmap
+      configMap:
+        name: redis-config
+    extraVolumeMounts:
+    - name: socks-pvc
+      mountPath: "/run/redis"
+      readOnly: false
+    - name: redis-configmap
+      mountPath: "/run/redis.conf"
+      subPath: "redis.conf"

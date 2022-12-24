@@ -1,0 +1,17 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  labels:
+  name: redis-config
+  namespace: storage
+data:
+  redis.conf: |
+    slaveof 127.0.0.1 6379
+    port 6379
+    tcp-keepalive 60
+    save 900 1
+    save 300 10
+    user pinger -@all +ping on >pingpass
+    unixsocket /run/redis/redis.sock
+    unixsocketperm 770
