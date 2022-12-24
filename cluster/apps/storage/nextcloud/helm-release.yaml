@@ -15,7 +15,7 @@ spec:
         namespace: flux-system
       interval: 15m
   dependsOn:
-    - name: nextcloud-redis
+    - name: rfr-nextcloud-redis-0
       namespace: *namespace
   install:
     createNamespace: true
