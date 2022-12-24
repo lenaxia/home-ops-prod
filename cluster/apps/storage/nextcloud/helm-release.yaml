@@ -181,20 +181,20 @@ spec:
         # SMTP default configuration
         smtp.config.php: true
     
-          #configs:
-          #  redis.config.php: |-
-          #    <?php
-          #      $CONFIG = array (
-          #        'memcache.local' => '\OC\Memcache\APCu',
-          #        'memcache.distributed' => '\OC\Memcache\Redis',
-              'redis' => [
-                   'host'     => '/run/redis/redis.sock',
-                   'port'     => 0,
-                   'dbindex'  => 0,
-                   'password' => '',
-                   'timeout'  => 1.5,
-              ],
-            );
+      configs:
+        redis.config.php: |-
+          <?php
+            $CONFIG = array (
+              'memcache.local' => '\OC\Memcache\APCu',
+              'memcache.distributed' => '\OC\Memcache\Redis',
+            'redis' => [
+                 'host'     => '/run/redis/redis.sock',
+                 'port'     => 0,
+                 'dbindex'  => 0,
+                 'password' => '',
+                 'timeout'  => 1.5,
+            ],
+          );
     
         custom.config.php: |-
           <?php
