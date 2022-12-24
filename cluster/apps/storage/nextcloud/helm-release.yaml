@@ -25,7 +25,8 @@ spec:
     fullnameOverride: *app
     image:
       repository: nextcloud
-      tag: 25.0.2-fpm
+      tag: 25.0.2-fpm-alpine
+      flavor: fpm-alpine
     ingress:
       enabled: true
       className: traefik
@@ -45,7 +46,7 @@ spec:
           secretName: *host
 
     lifecycle:
-      postStartCommand: ["/bin/sh","-c","apt update && apt install ffmpeg procps -y"]
+      postStartCommand: ["/bin/sh","-c","apk app ffmpeg"]
 
     nextcloud:
       host: *host
@@ -248,12 +249,12 @@ spec:
           mountPath: "/run/redis"
           readOnly: false
 
-      extraSecurityContext:
-        runAsUser: "33"
-        runAsGroup: "33"
-        runAsNonRoot: true
-        fsGroup: 33
-        readOnlyRootFilesystem: true
+      #extraSecurityContext:
+      #  runAsUser: "33"
+      #  runAsGroup: "33"
+      #  runAsNonRoot: true
+      #  fsGroup: 33
+      #  readOnlyRootFilesystem: true
 
     nginx:
       enabled: true
