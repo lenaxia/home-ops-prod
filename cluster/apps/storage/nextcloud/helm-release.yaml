@@ -144,6 +144,7 @@ spec:
           php_admin_value[opcache.max_accelerated_files] = 30000
           php_admin_value[opcache.validate_timestamps] = 0
           php_admin_value[opcache.revalidate_freq] = 60
+          php_admin_value[opcache.jit_buffer_size] = 200M
           php_admin_value[memory_limit] = -1
         uploadLimit.ini: |
           upload_max_filesize = 16G
