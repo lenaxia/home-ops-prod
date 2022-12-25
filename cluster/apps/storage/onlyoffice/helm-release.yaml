@@ -39,12 +39,12 @@ spec:
         mountPath: /var/www/onlyoffice/Data
         accessMode: ReadWriteOnce
         size: 128Mi
-      default-json:
-        enabled: true
-        type: configMap
-        name: default-json
-        subPath: default.json
-        mountPath: /etc/onlyoffice/documentserver/default.json
+#      default-json:
+#        enabled: true
+#        type: configMap
+#        name: default-json
+#        subPath: default.json
+#        mountPath: /etc/onlyoffice/documentserver/default.json
 
     # -- Configures service settings for the chart.
     # @default -- See values.yaml
