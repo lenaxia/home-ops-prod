@@ -6,8 +6,8 @@ commonLabels:
   app.kubernetes.io/instance: *app
 resources:
   - helm-release.yaml
-  - config-pvc.yaml
-  - poststart.yaml
+    #- config-pvc.yaml
+    #- poststart.yaml
     #configMapGenerator:
     #  - name: bazarr-config
     #    files:
