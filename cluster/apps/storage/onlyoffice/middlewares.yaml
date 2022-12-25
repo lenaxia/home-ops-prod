@@ -6,7 +6,7 @@ metadata:
   namespace: networking
 spec:
   headers:
-    accessControlAllowOriginList: "*"
+#    accessControlAllowOriginList: "*"
     customrequestheaders:
       X-Forwarded-Proto: "https"
 ---
