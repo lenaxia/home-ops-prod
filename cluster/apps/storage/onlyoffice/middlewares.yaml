@@ -1,0 +1,25 @@
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:
+  name: middlewares-onlyoffice-headers
+  namespace: networking
+spec:
+  headers:
+    accessControlAllowOrigin: "*"
+    customrequestheaders:
+      X-Forwarded-Proto: "https"
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:
+  name: chain-onlyoffice-headers
+  namespace: networking
+spec:
+  chain:
+    middlewares:
+      - name: middlewares-authelia
+      - name: middlewares-secure-headers
+      - name: middlewares-rate-limit
+      - name: middlewares-onlyoffice-headers
+    
