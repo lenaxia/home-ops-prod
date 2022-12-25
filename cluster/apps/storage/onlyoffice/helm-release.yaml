@@ -32,9 +32,11 @@ spec:
       logs:
         enabled: true
         mountPath: /var/log/onlyoffice
+        accessMode: ReadWriteOnce
       cert:
         enabled: true
         mountPath: /var/www/onlyoffice/Data
+        accessMode: ReadWriteOnce
 
     # -- Configures service settings for the chart.
     # @default -- See values.yaml
