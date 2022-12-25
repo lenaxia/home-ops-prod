@@ -18,7 +18,7 @@ spec:
   values:
     image:
       repository: docker.io/onlyoffice/documentserver
-      tag: 7.1.1
+      tag: 7.1.1.23
 
 #    podAnnotations:
 #      secret.reloader.stakater.com/reload: *appname
@@ -39,6 +39,12 @@ spec:
         mountPath: /var/www/onlyoffice/Data
         accessMode: ReadWriteOnce
         size: 128Mi
+      default-json:
+        enabled: true
+        type: configMap
+        name: default-json
+        subPath: default.json
+        mountPath: /etc/onlyoffice/documentserver/default.json
 
     # -- Configures service settings for the chart.
     # @default -- See values.yaml
