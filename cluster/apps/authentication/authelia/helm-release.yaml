@@ -285,6 +285,7 @@ spec:
         - domain: 
             - "ldap.${SECRET_DEV_DOMAIN}"
             - "collabora.${SECRET_DEV_DOMAIN}"
+            - "office.${SECRET_DEV_DOMAIN}"
           policy: bypass
           networks:
             - private
