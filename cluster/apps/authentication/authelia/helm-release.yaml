@@ -291,7 +291,6 @@ spec:
             - private
         # Public bypass policies
         - domain: 
-            - "office.${SECRET_DEV_DOMAIN}"          
             #media
             - "w.${SECRET_DEV_DOMAIN}"
             #synology

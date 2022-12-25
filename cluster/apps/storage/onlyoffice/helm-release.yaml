@@ -34,6 +34,8 @@ spec:
           secretKeyRef:
             name: *appname
             key: JWT_SECRET
+        # fetch the secret using:
+        # kce onlyoffice-5cc59f85-fs7wp -- /usr/bin/cat /etc/onlyoffice/documentserver/local.json
 
       # -- Set the application database type
 
