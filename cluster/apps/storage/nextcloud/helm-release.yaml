@@ -166,6 +166,7 @@ spec:
           pm.max_spare_servers = 18
           pm.max_requests = 500
           pm.process_idle_timeout = 10s
+          pm.status_path = "/status"
 
       defaultConfigs:
         # To protect /var/www/html/config
