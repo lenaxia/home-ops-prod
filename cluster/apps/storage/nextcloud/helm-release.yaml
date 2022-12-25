@@ -46,7 +46,7 @@ spec:
           secretName: *host
 
     lifecycle:
-      postStartCommand: ["/bin/sh","-c","apk add ffmpeg"]
+      postStartCommand: ["/bin/sh","-c","apk add ffmpeg php81-pecl-apcu"]
 
     nextcloud:
       host: *host
@@ -185,7 +185,7 @@ spec:
         redis.config.php: |-
           <?php
             $CONFIG = array (
-              'memcache.local' => '\OC\Memcache\APCu',
+              'memcache.local' => '\OC\Memcache\Redis',
               'memcache.distributed' => '\OC\Memcache\Redis',
             'redis' => [
                  'host'     => '/run/redis/redis.sock',
