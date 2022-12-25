@@ -2,7 +2,7 @@ apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
   name: &appname onlyoffice
-  namespace: home
+  namespace: storage
 spec:
   interval: 6m
   chart:
@@ -25,7 +25,16 @@ spec:
 #      configmap.reloader.stakater.com/reload: onlyoffice-poststart-sh
 
     env:
-      TZ: ${TIMEZONE}
+      - name: TZ 
+        value: ${TIMEZONE}
+      - name: JWT_ENABLED
+        value: true
+      - name: JWT_SECRET
+        valueFrom:
+          secretKeyRef:
+            name: *appname
+            key: JWT_SECRET
+
       # -- Set the application database type
 
     persistence:
