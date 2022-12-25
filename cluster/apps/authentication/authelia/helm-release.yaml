@@ -285,7 +285,6 @@ spec:
         - domain: 
             - "ldap.${SECRET_DEV_DOMAIN}"
             - "collabora.${SECRET_DEV_DOMAIN}"
-            - "office.${SECRET_DEV_DOMAIN}"
           policy: bypass
           networks:
             - private
@@ -293,6 +292,7 @@ spec:
         - domain: 
             #media
             - "w.${SECRET_DEV_DOMAIN}"
+            - "office.${SECRET_DEV_DOMAIN}"
             #synology
             - "drive.${SECRET_DEV_DOMAIN}"
               #- "drive.${ SECRET_PROD_DOMAIN_KF}"
