@@ -185,9 +185,10 @@ spec:
         redis.config.php: |-
           <?php
             $CONFIG = array (
-              'memcache.local' => '\OC\Memcache\Redis',
+              'memcache.local' => '\OC\Memcache\APCu',
               'memcache.distributed' => '\OC\Memcache\Redis',
-            'redis' => [
+              'memcache.locking' => '\OC\Memcache\Redis',
+              'redis' => [
                  'host'     => '/run/redis/redis.sock',
                  'port'     => 0,
                  'dbindex'  => 0,
