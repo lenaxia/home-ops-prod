@@ -4,7 +4,7 @@ metadata:
   name: &appname onlyoffice
   namespace: home
 spec:
-  interval: 5m
+  interval: 6m
   chart:
     spec:
       chart: app-template
