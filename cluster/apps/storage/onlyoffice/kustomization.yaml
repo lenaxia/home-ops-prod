@@ -6,13 +6,8 @@ commonLabels:
   app.kubernetes.io/instance: *app
 resources:
   - helm-release.yaml
-    #- config-pvc.yaml
-    #- poststart.yaml
-    #configMapGenerator:
-    #  - name: bazarr-config
-    #    files:
-    #      - config.ini
-    #generatorOptions:
-    #  disableNameSuffixHash: true
-    #  annotations:
-    #    kustomize.toolkit.fluxcd.io/substitute: disabled
+#  - secret.sops.yaml
+#  - config-pvc.yaml
+#  - poststart.yaml
+#patchesStrategicMerge:
+#  - patches/patch-postgres.yaml

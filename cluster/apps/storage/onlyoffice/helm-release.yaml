@@ -1,106 +1,66 @@
----
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
-  name: &app onlyoffice
-  namespace: storage
+  name: &appname onlyoffice
+  namespace: home
 spec:
-  interval: 15m
+  interval: 5m
   chart:
     spec:
       chart: app-template
       version: 1.2.0
+      interval: 15m
       sourceRef:
         kind: HelmRepository
         name: bjw-s-charts
         namespace: flux-system
-  install:
-    createNamespace: true
-    remediation:
-      retries: 5
-  upgrade:
-    remediation:
-      retries: 5
+  # See https://github.com/bjw-s/helm-charts/blob/main/charts/library/common/values.yaml
   values:
     image:
       repository: docker.io/onlyoffice/documentserver
       tag: 7.2.2
-      pullPolicy: Always
+
+#    podAnnotations:
+#      secret.reloader.stakater.com/reload: *appname
+#      configmap.reloader.stakater.com/reload: onlyoffice-poststart-sh
+
     env:
-      TZ: "${TIMEZONE}"
-        #    podSecurityContext:
-        #      runAsUser: 0
-        #      runAsGroup: 0
-        #      fsGroup: 1001
-        #      fsGroupChangePolicy: "OnRootMismatch"
-        #      supplementalGroups:
-        #        - 100
-        #    lifecycle:
-        #      postStart:
-        #        exec:
-        #          command:
-        #            - /bin/bash
-        #            - -c
-        #            - /poststart.sh
-        #    podAnnotations:
-      #      configmap.reloader.stakater.com/reload: "bazarr-poststart-sh"
-    service:
-      main:
-        ports:
-          http:
-            port: &port 80
-    ingress:
-      main:
-        enabled: true
-        ingressClassName: "traefik"
-        annotations:
-          hajimari.io/enable: "true"
-          hajimari.io/icon: "office"
-          hajimari.io/group: "Office"
-          cert-manager.io/cluster-issuer: "letsencrypt-production"
-          traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
-          traefik.ingress.kubernetes.io/router.middlewares: networking-chain-authelia@kubernetescrd
-        hosts:
-          - host: &uri "office.${SECRET_DEV_DOMAIN}"
-            paths:
-              - path: /
-                pathType: Prefix
-        tls:
-          - hosts:
-              - *uri
-            secretName: *uri
-#    probes:
-#      liveness: &probes
-#        enabled: true
-#        custom: true
-#        spec:
-#          httpGet:
-#            path: /health
-#            port: *port
-#          initialDelaySeconds: 0
-#          periodSeconds: 10
-#          timeoutSeconds: 1
-#          failureThreshold: 3
-#      readiness: *probes
-#      startup:
-#        enabled: false
+      TZ: ${TIMEZONE}
+      # -- Set the application database type
+
     persistence:
       logs:
         enabled: true
         mountPath: /var/log/onlyoffice
-      certs:
+      cert:
         enabled: true
         mountPath: /var/www/onlyoffice/Data
-#      poststart:
-#        enabled: true
-#        type: configMap
-#        name: bazarr-poststart-sh
-#        subPath: poststart.sh
-#        mountPath: /poststart.sh
-#        defaultMode: 0777
-#    resources:
-#      requests:
-#        cpu: 10m
-#        memory: 50Mi
-#      limits:
-#        memory: 500Mi
+
+    # -- Configures service settings for the chart.
+    # @default -- See values.yaml
+    service:
+      main:
+        ports:
+          http:
+            port: 80
+
+    ingress:
+      main:
+        enabled: true
+        annotations:
+          hajimari.io/enable: "true"
+          hajimari.io/icon: office
+          hajimari.io/info: Only Office
+          hajimari.io/group: Office
+          cert-manager.io/cluster-issuer: "letsencrypt-production"
+          traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
+          traefik.ingress.kubernetes.io/router.middlewares: networking-chain-authelia@kubernetescrd
+        hosts:
+        - host: &uri office.${SECRET_DEV_DOMAIN}
+          paths:
+          - path: /
+            pathType: Prefix
+        tls:
+        - hosts:
+            - *uri
+          secretName: *uri

@@ -1,10 +1,9 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-    name: bazarr-config-volume
-    namespace: media
+    name: mealie-volume
     labels:
-      app: bazarr 
+      app: mealie
       snapshot.home.arpa/enabled: "true"
 spec:
     accessModes:
@@ -12,5 +11,5 @@ spec:
     storageClassName: longhorn
     resources:
         requests:
-            storage: 256Mi
+            storage: 4Gi
 
