@@ -24,7 +24,7 @@ spec:
   values:
     image:
       repository: docker.io/onlyoffice/documentserver
-      tag: latest
+      tag: 7.2.2
       pullPolicy: Always
     env:
       TZ: "${TIMEZONE}"
