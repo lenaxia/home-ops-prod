@@ -46,7 +46,7 @@ spec:
           secretName: *host
 
     lifecycle:
-      postStartCommand: ["/bin/sh","-c","apk add ffmpeg php81-pecl-apcu"]
+      postStartCommand: ["/bin/sh","-c","apk add ffmpeg && apk add php81-pecl-apcu"]
 
     nextcloud:
       host: *host
