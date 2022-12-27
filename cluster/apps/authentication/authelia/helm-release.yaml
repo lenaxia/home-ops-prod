@@ -416,7 +416,7 @@ spec:
         ## Redis Provider
         ##
         redis:
-          enabled: false
+          enabled: true 
           enabledSecret: false
           host: ${RURI_ADDR}
           port: 6379
@@ -465,9 +465,6 @@ spec:
           ssl:
             mode: disable
             
-        #encryption_key: pPubSmumpvj8vyZhMEfH1OHSsk6HoZiU9YPYBklCiYyjtOwCE8LXIEj6B2iQsyJh
-        #local:
-        #  path: /config/db.sqlite3
     
       ##
       ## Notification Provider
@@ -482,11 +479,11 @@ spec:
         smtp:
           enabled: true
           enabledSecret: true
-          host: smtp.gmail.com
-          port: 587
+          host: ${SECRET_SMTP_HOST}
+          port: ${SECRET_SMTP_PORT}
           timeout: 5s
-          username: ruri@lenaxia.net
-          sender: ruri@lenaxia.net
+          username: ${SECRET_SMTP_USERNAME}
+          sender: ${SECRET_SMTP_FROM_ADDR}
           identifier: localhost
           subject: "[TheKaoCloud] {title}"
     
