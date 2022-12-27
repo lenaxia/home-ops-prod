@@ -416,7 +416,7 @@ spec:
         ## Redis Provider
         ##
         redis:
-          enabled: true 
+          enabled: false 
           enabledSecret: false
           host: ${RURI_ADDR}
           port: 6379
