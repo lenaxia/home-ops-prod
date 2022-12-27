@@ -1,0 +1,326 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: &app nextcloud
+  namespace: &namespace test
+spec:
+  interval: 15m
+  chart:
+    spec:
+      chart: nextcloud
+      version: 3.3.3
+      sourceRef:
+        kind: HelmRepository
+        name: nextcloud-charts
+        namespace: flux-system
+      interval: 15m
+  install:
+    createNamespace: true
+    remediation:
+      retries: 6
+  upgrade:
+    remediation:
+      retries: 8
+  values:
+    fullnameOverride: *app
+    image:
+      repository: nextcloud
+      tag: 25.0.2-fpm
+        #flavor: fpm-alpine
+    ingress:
+      enabled: true
+      className: traefik
+      annotations:
+        hajimari.io/enable: "true"
+        hajimari.io/icon: "cloud"
+        hajimari.io/appName: "NextCloud"
+        cert-manager.io/cluster-issuer: "letsencrypt-production"
+        traefik.ingress.kubernetes.io/router.entrypoints: websecure
+        traefik.ingress.kubernetes.io/router.middlewares: networking-chain-nextcloud-test-headers@kubernetescrd
+      path: /
+      pathType: Prefix
+
+      tls:
+        - hosts:
+            - &host "hub-test.${SECRET_DEV_DOMAIN}"
+          secretName: *host
+
+    lifecycle:
+      postStartCommand: ["/bin/sh","-c","apk add ffmpeg && apk add php81-pecl-apcu"]
+
+    nextcloud:
+      host: *host
+      existingSecret:
+        enabled: true
+        secretName: nextcloud-config
+        usernameKey: nextcloud-username
+        passwordKey: nextcloud-password  # secretName: nameofsecret
+      datadir: /var/www/data
+      extraEnv:
+        #- name: REDIS_HOST
+        #  valueFrom:
+        #    secretKeyRef:
+        #      name: redis-secret
+        #      key: host
+        #- name: REDIS_HOST_PORT
+        #  valueFrom:
+        #    secretKeyRef:
+        #      name: redis-secret
+        #      key: port
+        - name: REDIS_HOST_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: redis-secret
+              key: password
+      extraInitContainers:
+        - name: wait-database
+          image: alpine:3.17.0
+          imagePullPolicy: IfNotPresent
+          command:
+            - sh
+          args:
+            - -c
+            - >-
+              until nc -w 1 -v $MYSQL_HOST:3306 || nc -w 1 -v $POSTGRES_HOST:5432;
+              do echo "Waiting for database";
+              done
+          env:
+            - name: POSTGRES_HOST
+              value: &postgresHost nc-pg.test.svc.cluster.local
+        - name: wait-redis
+          image: alpine:3.17.0
+          imagePullPolicy: IfNotPresent
+          command:
+            - sh
+          args:
+            - -c
+            - >-
+              # until nc -w 1 -v $REDIS_HOST:$REDIS_HOST_PORT;
+
+              # Socket version of wait
+              until nc -w 1 -lU /var/run/redis/redis.sock
+              do echo "Waiting for Redis";
+              done
+        - name: init-db
+          image: ghcr.io/onedr0p/postgres-initdb:14.5
+          env:
+            - name: POSTGRES_HOST
+              value: *postgresHost
+            - name: POSTGRES_DB
+              value: &pgdbname nextcloud
+            - name: POSTGRES_SUPER_PASS
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-superuser
+                  key: password
+            - name: POSTGRES_USER
+              valueFrom:
+                secretKeyRef:
+                  name: nextcloud-config
+                  key: postgres_username
+            - name: POSTGRES_PASS
+              valueFrom:
+                secretKeyRef:
+                  name: nextcloud-config
+                  key: postgres_password
+
+      phpConfigs:
+        opcache.conf: |
+          php_admin_value[opcache.enable] = 1
+          php_admin_value[opcache.save_comments] = 1
+          php_admin_value[opcache.interned_strings_buffer] = 1000
+          php_admin_value[opcache.memory_consumption] = 2048
+          php_admin_value[opcache.max_accelerated_files] = 30000
+          php_admin_value[opcache.validate_timestamps] = 0
+          php_admin_value[opcache.revalidate_freq] = 60
+          php_admin_value[opcache.jit_buffer_size] = "200M"
+          php_admin_value[opcache.jit] = tracing
+          php_admin_value[memory_limit] = -1
+        uploadLimit.ini: |
+          upload_max_filesize = 16G
+          post_max_size = 16G
+          max_input_time = 3600
+          max_execution_time = 3600
+          default_phone_region = US
+        www.conf: |
+          [www]
+          user = www-data
+          group = www-data
+          listen = 127.0.0.1:9000
+
+          pm = dynamic
+          pm.max_children = 300
+          pm.start_servers = 30
+          pm.min_spare_servers = 15 
+          pm.max_spare_servers = 40
+          pm.max_requests = 500
+          pm.process_idle_timeout = 10s
+
+      defaultConfigs:
+        # To protect /var/www/html/config
+        .htaccess: true
+        # Redis default configuration
+        redis.config.php: false
+        # Apache configuration for rewrite urls
+        apache-pretty-urls.config.php: true
+        # Define APCu as local cache
+        apcu.config.php: true
+        # Apps directory configs
+        apps.config.php: true
+        # Used for auto configure database
+        autoconfig.php: true
+        # SMTP default configuration
+        smtp.config.php: true
+    
+      configs:
+        redis.config.php: |-
+          <?php
+            $CONFIG = array (
+              'memcache.local' => '\OC\Memcache\APCu',
+              'memcache.distributed' => '\OC\Memcache\Redis',
+              'memcache.locking' => '\OC\Memcache\Redis',
+              'redis' => [
+                 'host'     => '/run/redis/redis.sock',
+                 'port'     => 0,
+                 'dbindex'  => 0,
+                 'password' => '',
+                 'timeout'  => 1.5,
+            ],
+          );
+    
+        custom.config.php: |-
+          <?php
+          $CONFIG = array (
+            'overwriteprotocol' => 'https',
+            'overwrite.cli.url' => 'https://hub-test.${SECRET_DEV_DOMAIN}',
+            'filelocking.enabled' => 'true',
+            'default_phone_region' => 'US',
+            'loglevel' => '2',
+            'enable_previews' => true,
+            'trusted_domains' =>
+               [
+                'nextcloud',
+                'hub-test.${SECRET_DEV_DOMAIN}',
+                "192.168.0.0/16",
+               ],
+            'trusted_proxies' =>
+               [
+                '192.168.5.10',
+               ],
+            'enabledPreviewProviders' =>
+               [
+                'OC\\Preview\\TIFF',
+                'OC\\Preview\\TXT',
+                'OC\\Preview\\MarkDown',
+                'OC\\Preview\\PDF',
+                'OC\\Preview\\MSOfficeDoc',
+                'OC\\Preview\\JPEG',
+                'OC\\Preview\\PNG',
+                'OC\\Preview\\GIF',
+                'OC\\Preview\\BMP',
+                'OC\\Preview\\XBitmap',
+                'OC\\Preview\\MP3',
+                'OC\\Preview\\HEIC',
+                'OC\\Preview\\Movie',
+                'OC\\Preview\\MKV',
+                'OC\\Preview\\MP4',
+                'OC\\Preview\\AVI',
+                'OC\\Preview\\MP3',
+                'OC\\Preview\\OpenDocument',
+                'OC\\Preview\\Krita',
+                'OC\\Preview\\Imaginary',
+              ],
+            'preview_imaginary_url' => 'http://imaginary.media.svc.cluster.local:9000',
+          );
+
+      extraVolumes:
+        - name: redis-socks
+          persistentVolumeClaim:
+            claimName: redis-socks-pvc
+      extraVolumeMounts:
+        - name: redis-socks
+          mountPath: "/run/redis"
+          readOnly: false
+
+            # extraSecurityContext:
+            #   runAsUser: "33"
+            #   runAsGroup: "33"
+            #   runAsNonRoot: true
+            #   fsGroup: 33
+            #   readOnlyRootFilesystem: true
+
+    nginx:
+      enabled: true
+      image:
+        repository: nginx
+        tag: 1.23-alpine
+
+    internalDatabase:
+      enabled: false
+
+    externalDatabase:
+      enabled: true
+      type: postgresql
+      host: *postgresHost
+      database: *pgdbname
+      existingSecret:
+        enabled: true
+        secretName: nextcloud-config
+        usernameKey: postgres_username
+        passwordKey: postgres_password
+
+    cronjob:
+      enabled: true
+      schedule: "*/5 * * * *"
+      curlInsecure: false
+      failedJobsHistoryLimit: 5
+      successfulJobsHistoryLimit: 2
+
+    persistence:
+      enabled: true
+      existingClaim: nextcloud-config
+      
+      nextcloudData:
+        enabled: true
+        existingClaim: nextcloud-nfs
+
+    ## Liveness and readiness probe values
+    ## Ref: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/#container-probes
+    ##
+    livenessProbe:
+      enabled: false
+      initialDelaySeconds: 10
+      periodSeconds: 10
+      timeoutSeconds: 5
+      failureThreshold: 3
+      successThreshold: 1
+    readinessProbe:
+      enabled: false
+      initialDelaySeconds: 10
+      periodSeconds: 10
+      timeoutSeconds: 5
+      failureThreshold: 3
+      successThreshold: 1
+    startupProbe:
+      enabled: true
+      initialDelaySeconds: 1920
+      periodSeconds: 10
+      timeoutSeconds: 5
+      failureThreshold: 30
+      successThreshold: 1
+
+        #    affinity:
+        #      podAffinity:
+        #        requiredDuringSchedulingIgnoredDuringExecution:
+        #        - topologyKey: kubernetes.io/hostname
+        #          labelSelector:
+        #            matchLabels:
+        #              - app.kubernetes.io/name: redis
+        #                #- app.kubernetes.io/component: master
+            
+#    resources:
+#      requests:
+#        cpu: 34m
+#        memory: 203Mi
+#      limits:
+#        memory: 363Mi

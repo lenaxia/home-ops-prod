@@ -1,0 +1,23 @@
+---
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: nc-pg
+  namespace: test
+spec:
+  instances: 1
+  primaryUpdateStrategy: unsupervised
+  storage:
+    size: 20Gi
+    storageClass: longhorn
+  superuserSecret:
+    name: postgres-superuser
+  bootstrap:
+    initdb:
+      database: default
+      owner: 3BK9XBSeNTKK7kFd 
+      secret:
+        name: postgres-superuser
+  monitoring:
+    enablePodMonitor: true
+
