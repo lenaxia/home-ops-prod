@@ -30,7 +30,7 @@ metadata:
 spec:
   accessModes:
     - ReadWriteMany
-  storageClassName: *name
+  storageClassName: nextcloud-test-nfs
   resources:
     requests:
       storage: 1Mi
