@@ -20,9 +20,9 @@ resources:
 
   # Security
   - ./networking/metallb
-  - ./networking/traefik
-  - ./networking/traefik/ingresses
-  - ./authentication/authelia
+  #- ./networking/traefik
+  #- ./networking/traefik/ingresses
+  #- ./authentication/authelia
   
   # Home
   - ./home/mealie
