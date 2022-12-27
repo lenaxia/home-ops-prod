@@ -12,3 +12,4 @@ resources:
   - middlewares.yaml
   - namespace.yaml
   - nc-pg.yaml
+  - redis
