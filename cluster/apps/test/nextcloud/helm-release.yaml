@@ -86,7 +86,7 @@ spec:
               done
           env:
             - name: POSTGRES_HOST
-              value: &postgresHost nc-pg.test.svc.cluster.local
+              value: &postgresHost nc-pg-rw.test.svc.cluster.local
         - name: wait-redis
           image: alpine:3.17.0
           imagePullPolicy: IfNotPresent
