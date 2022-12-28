@@ -24,12 +24,12 @@ spec:
       - "redis-server"
       - "/run/redis.conf"
     containerSecurityContext:
-      runAsUser: 82
-      runAsGroup: 82
+      runAsUser: 33
+      runAsGroup: 33
     securityContext:
-      runAsUser: 82
-      runAsGroup: 82
-      fsGroup: 82
+      runAsUser: 33
+      runAsGroup: 33
+      fsGroup: 33
     extraVolumes:
     - name: socks-pvc
       persistentVolumeClaim:
