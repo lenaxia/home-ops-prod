@@ -45,8 +45,8 @@ spec:
             - &host "hub-test.${SECRET_DEV_DOMAIN}"
           secretName: *host
 
-    lifecycle:
-      postStartCommand: ["/bin/sh","-c","apk add ffmpeg && apk add php81-pecl-apcu"]
+            #lifecycle:
+            #  postStartCommand: ["/bin/sh","-c","apk add ffmpeg && apk add php81-pecl-apcu"]
 
     nextcloud:
       host: *host
