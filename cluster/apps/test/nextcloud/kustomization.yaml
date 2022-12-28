@@ -11,5 +11,5 @@ resources:
   - secret.sops.yaml
   - middlewares.yaml
   - namespace.yaml
-    #- nc-pg.yaml
+  - nc-pg.yaml
   - redis
