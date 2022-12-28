@@ -201,7 +201,7 @@ spec:
                [
                 'nextcloud',
                 'hub-test.${SECRET_DEV_DOMAIN}',
-                "192.168.0.0/16",
+                "192.168.5.71",
                ],
             'trusted_proxies' =>
                [
