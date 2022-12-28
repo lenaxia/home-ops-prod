@@ -191,8 +191,8 @@ spec:
         custom.config.php: |-
           <?php
           $CONFIG = array (
-            'overwriteprotocol' => 'https',
-            'overwrite.cli.url' => 'https://hub-test.${SECRET_DEV_DOMAIN}',
+          #            'overwriteprotocol' => 'https',
+          #            'overwrite.cli.url' => 'https://hub-test.${SECRET_DEV_DOMAIN}',
             'filelocking.enabled' => 'true',
             'default_phone_region' => 'US',
             'loglevel' => '2',
