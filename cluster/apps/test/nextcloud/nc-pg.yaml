@@ -27,6 +27,10 @@ spec:
                 operator: In
                 values:
                   - nextcloud-test
+              - key: app.kubernetes.io/component
+                operator: In
+                values:
+                  - redis
           topologyKey: kubernetes.io/hostname
           namespaces:
             - test
