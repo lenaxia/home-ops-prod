@@ -18,6 +18,18 @@ spec:
       owner: 3BK9XBSeNTKK7kFd 
       secret:
         name: postgres-superuser
+  affinity:
+    additionalPodAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        - labelSelector:
+            matchExpressions:
+              - key: app.kubernetes.io/instance
+                operator: In
+                values:
+                  - nextcloud-test
+          topologyKey: kubernetes.io/hostname
+          namespaces:
+            - storage
   monitoring:
     enablePodMonitor: true
 
