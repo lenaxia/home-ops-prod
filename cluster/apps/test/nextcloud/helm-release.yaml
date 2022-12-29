@@ -310,7 +310,7 @@ spec:
       successThreshold: 1
 
     affinity:
-      additionalPodAffinity:
+      podAffinity:
         requiredDuringSchedulingIgnoredDuringExecution:
           - labelSelector:
               matchExpressions:
