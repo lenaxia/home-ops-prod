@@ -309,14 +309,22 @@ spec:
       failureThreshold: 30
       successThreshold: 1
 
-        #    affinity:
-        #      podAffinity:
-        #        requiredDuringSchedulingIgnoredDuringExecution:
-        #        - topologyKey: kubernetes.io/hostname
-        #          labelSelector:
-        #            matchLabels:
-        #              - app.kubernetes.io/name: redis
-        #                #- app.kubernetes.io/component: master
+    affinity:
+      additionalPodAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          - labelSelector:
+              matchExpressions:
+                - key: app.kubernetes.io/instance
+                  operator: In
+                  values:
+                    - nextcloud-test
+                - key: app.kubernetes.io/component
+                  operator: In
+                  values:
+                    - redis
+            topologyKey: kubernetes.io/hostname
+            namespaces:
+              - test
             
 #    resources:
 #      requests:
