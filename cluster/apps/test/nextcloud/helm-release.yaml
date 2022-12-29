@@ -17,7 +17,7 @@ spec:
   install:
     createNamespace: true
     remediation:
-      retries: 6
+      retries: 7
   upgrade:
     remediation:
       retries: 8
