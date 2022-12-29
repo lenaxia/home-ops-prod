@@ -29,7 +29,7 @@ spec:
                   - nextcloud-test
           topologyKey: kubernetes.io/hostname
           namespaces:
-            - storage
+            - test
   monitoring:
     enablePodMonitor: true
 
