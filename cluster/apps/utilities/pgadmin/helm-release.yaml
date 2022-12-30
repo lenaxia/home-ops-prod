@@ -40,11 +40,11 @@ spec:
           http:
             port: &port 80
         type: LoadBalancer
-    podSecurityContext:
-      runAsUser: 5050
-      runAsGroup: 5050
-      fsGroup: 5050
-      fsGroupChangePolicy: "OnRootMismatch"
+          #    podSecurityContext:
+          #      runAsUser: 5050
+          #      runAsGroup: 5050
+          #      fsGroup: 5050
+          #      fsGroupChangePolicy: "OnRootMismatch"
     ingress:
       main:
         enabled: true
@@ -86,9 +86,9 @@ spec:
       #  enabled: true
       #  existingClaim: pgadmin-config
       #  mountPath: "/var/lib/pgadmin"
-      server-json:
-        enabled: true
-        type: configMap
-        name: servers-json
-        subPath: servers.json
-        mountPath: /pgadmin4/servers.json
+      #server-json:
+      #  enabled: true
+      #  type: configMap
+      #  name: servers-json
+      #  subPath: servers.json
+      #  mountPath: /pgadmin4/servers.json
