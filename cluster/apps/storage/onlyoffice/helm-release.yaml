@@ -44,11 +44,13 @@ spec:
         enabled: true
         mountPath: /var/log/onlyoffice
         accessMode: ReadWriteOnce
+        storageClass: longhorn
         size: 2Gi
       cert:
         enabled: true
         mountPath: /var/www/onlyoffice/Data
         accessMode: ReadWriteOnce
+        storageClass: longhorn
         size: 128Mi
 #      default-json:
 #        enabled: true
