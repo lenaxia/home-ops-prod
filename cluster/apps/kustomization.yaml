@@ -66,5 +66,5 @@ resources:
   - ./utilities/guacamole
   - ./utilities/firefox
   - ./utilities/ltb-project
-    #- ./utilities/pgadmin
+  - ./utilities/pgadmin
 
