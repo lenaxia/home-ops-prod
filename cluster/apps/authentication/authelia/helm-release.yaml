@@ -302,6 +302,7 @@ spec:
             - "status.${SECRET_DEV_DOMAIN}"
             - "vault.${SECRET_DEV_DOMAIN}"
             - "speed.${SECRET_DEV_DOMAIN}"
+            - "password.${SECRET_DEV_DOMAIN}"
             #storage
             - "s3.${SECRET_DEV_DOMAIN}"
           policy: bypass
