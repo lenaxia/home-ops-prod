@@ -5,11 +5,12 @@ metadata:
   name: redis-socks-pvc
   namespace: storage
   annotations:
-    volumeType: local
+    volumeType: longhorn
 spec:
   accessModes:
     - ReadWriteOnce
-  storageClassName: local-path
+  #storageClassName: local-path
+  storageClassName: longhorn
   resources:
     requests:
       storage: 512Mi
