@@ -6,7 +6,7 @@ commonLabels:
   app.kubernetes.io/instance: *app
 resources:
   - helm-release.yaml
-  - configmap.yaml
+  - secret.sops.yaml
   - config-pvc.yaml
 configMapGenerator:
   - name: servers-json
