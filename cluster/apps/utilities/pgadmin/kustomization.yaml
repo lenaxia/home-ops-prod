@@ -6,13 +6,4 @@ commonLabels:
   app.kubernetes.io/instance: *app
 resources:
   - helm-release.yaml
-  - secret.sops.yaml
-  - config-pvc.yaml
-configMapGenerator:
-  - name: servers-json
-    files:
-      - config/servers.json
-generatorOptions:
-  disableNameSuffixHash: true
-  annotations:
-    kustomize.toolkit.fluxcd.io/substitute: disabled
+  - configmap.yaml
