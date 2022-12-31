@@ -11,20 +11,27 @@ data:
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: serversjson
+  name: servers-json
   namespace: media
 data:
   servers.json: |
     {
-    "Servers": {
-        "1": {
-            "Name": "defaultpg",
-            "Group": "Servers",
-            "Port": 5432,
-            "Username": "postgres",
-            "Host": "defaultpg-rw.databases.svc.cluster.local",
-            "SSLMode": "prefer",
-            "MaintenanceDB": "postgres"
-        },
+      "Servers": {
+          "1": {
+              "Name": "defaultpg",
+              "Group": "Servers",
+              "Host": "defaultpg-rw.databases.svc.cluster.local",
+              "Port": 5432,
+              "MaintenanceDB": "postgres",
+              "Username": "postgres",
+              "SSLMode": "prefer",
+              "SSLCert": "",
+              "SSLKey": "",
+              "SSLCompression": 0,
+              "Timeout": 10,
+              "UseSSHTunnel": 0,
+              "TunnelPort": "22",
+              "TunnelAuthentication": 0
+          }
       }
     }
