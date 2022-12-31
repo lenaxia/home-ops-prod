@@ -7,3 +7,4 @@ commonLabels:
 resources:
   - helm-release.yaml
   - configmap.yaml
+  - config-pvc.yaml
