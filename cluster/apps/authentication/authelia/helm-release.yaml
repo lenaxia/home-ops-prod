@@ -330,6 +330,7 @@ spec:
             - "loki.${SECRET_DEV_DOMAIN}"
             - "grafana.${SECRET_DEV_DOMAIN}"
             - "prom.${SECRET_DEV_DOMAIN}"
+            - "alerts.${SECRET_DEV_DOMAIN}"
             #utilities
             - "echo.${SECRET_DEV_DOMAIN}"
             - "firefox.${SECRET_DEV_DOMAIN}"
