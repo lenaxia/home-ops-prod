@@ -37,7 +37,13 @@ spec:
         # fetch the secret using:
         # kce onlyoffice-5cc59f85-fs7wp -- /usr/bin/cat /etc/onlyoffice/documentserver/local.json
 
-      # -- Set the application database type
+    lifecycle:
+      postStart:
+        exec:
+          command:
+            - /bin/bash
+            - -c
+            - sed -i 's/isSupportEditFeature=function(){return!1}/isSupportEditFeature=function(){return 1}/g'  /var/www/onlyoffice/documentserver/web-apps/apps/*/mobile/dist/js/app.js;/app/ds/run-document-server.sh;
 
     persistence:
       logs:
