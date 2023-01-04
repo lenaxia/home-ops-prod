@@ -29,9 +29,9 @@ resources:
   - ./home/mealie
 
   # Monitoring Namespace
-  - ./monitoring/prometheus-stack
-  - ./monitoring/grafana
-  - ./monitoring/flux
+  #- ./monitoring/prometheus-stack
+  #- ./monitoring/grafana
+  #- ./monitoring/flux
   #- ./monitoring/loki
   #- ./monitoring/tobs
 
