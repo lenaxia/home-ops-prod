@@ -2,8 +2,6 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
     name: timescaledb-config-volume
-    labels:
-      snapshot.home.arpa/enabled: "true"
 spec:
     accessModes:
         - ReadWriteOnce

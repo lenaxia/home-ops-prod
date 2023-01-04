@@ -4,70 +4,210 @@ metadata:
   name: kube-prometheus-stack
   namespace: monitoring
 spec:
-  releaseName: kube-prometheus-stack
+  interval: 5m
   chart:
     spec:
       chart: kube-prometheus-stack
+      version: 43.2.1
       sourceRef:
         kind: HelmRepository
         name: prometheus-community
         namespace: flux-system
-  interval: 5m0s
   install:
     remediation:
       retries: 6
     crds: Create
   upgrade:
     remediation:
-      retries: 6
+      retries: 7
     crds: CreateReplace
+  # https://github.com/prometheus-community/helm-charts/blob/main/charts/kube-prometheus-stack/values.yaml
   values:
-    enabled: false
     defaultRules:
+      create: true
       rules:
-        kubelet: false
-    kubelet:
-      enabled: false
-    prometheusOperator:
-      kubeletService:
-        enabled: false
+        alertmanager: true
+        etcd: true
+        configReloaders: true
+        general: true
+
+    alertmanager:
+      enabled: true
+      config:
+        global:
+          resolve_timeout: 5m
+        receivers:
+          - name: "null"
+          - name: "pushover"
+            pushover_configs:
+              - url_title: View in Alert Manager
+                token: "${SECRET_PUSHOVER_PROD_TOKEN}"
+                user_key: "${SECRET_PUSHOVER_USER_KEY}"
+                send_resolved: true
+                html: true
+                sound: gamelan
+                priority: |-
+                  {{ if eq .Status "firing" }}1{{ else }}0{{ end }}
+                title: |-
+                  [{{ .Status | toUpper }}{{ if eq .Status "firing" }}:{{ .Alerts.Firing | len }}{{ end }}] {{ .CommonLabels.alertname }}
+                message: |-
+                  {{- range .Alerts }}
+                    {{- if ne .Labels.severity "" }}
+                      <b>Severity:</b> <i>{{ .Labels.severity }}</i>
+                    {{- else }}
+                      <b>Severity:</b> <i>N/A</i>
+                    {{- end }}
+                    {{- if ne .Annotations.description "" }}
+                      <b>Description:</b> <i>{{ .Annotations.description }}</i>
+                    {{- else if ne .Annotations.summary "" }}
+                      <b>Summary:</b> <i>{{ .Annotations.summary }}</i>
+                    {{- else if ne .Annotations.message "" }}
+                      <b>Message:</b> <i>{{ .Annotations.message }}</i>
+                    {{- else }}
+                      <b>Description:</b> <i>N/A</i>
+                    {{- end }}
+                    {{- if gt (len .Labels.SortedPairs) 0 }}
+                      <b>Details:</b>
+                      {{- range .Labels.SortedPairs }}
+                        • <b>{{ .Name }}:</b> <i>{{ .Value }}</i>
+                      {{- end }}
+                    {{- end }}
+                  {{- end }}
+        route:
+          group_by: ["alertname", "job"]
+          group_wait: 30s
+          group_interval: 5m
+          repeat_interval: 6h
+          receiver: "pushover"
+          routes:
+            - receiver: "null"
+              matchers:
+                - alertname =~ "InfoInhibitor|Watchdog"
+            - receiver: "pushover"
+              matchers:
+                - severity = "critical"
+              continue: true
+            - receiver: "pushover"
+              matchers:
+                - alertname =~ "KubeNodeNotReady|KubeNodeUnreachable|KubeNodeReadinessFlapping"
+              continue: true
+            - receiver: "pushover"
+              matchers:
+                - alertname =~ "KubePodCrashLooping|KubePodNotReady"
+              continue: true
+        inhibit_rules:
+          - source_matchers:
+              - severity = "critical"
+            target_matchers:
+              - severity = "warning"
+            equal: ["alertname", "namespace"]
+
+      ingress:
+        enabled: true
+        ingressClassName: "traefik"
+        annotations:
+          hajimari.io/enable: "true"
+          hajimari.io/icon: "alpha-a-box"
+          hajimari.io/appName: "AlertManager"
+          cert-manager.io/cluster-issuer: "letsencrypt-production"
+          traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
+          traefik.ingress.kubernetes.io/router.middlewares: networking-chain-no-auth@kubernetescrd
+        hosts:
+          - &alertUri "alerts.${SECRET_DEV_DOMAIN}"
+        path: /
+        pathType: Prefix
+        tls:
+          - hosts:
+              - *alertUri
+            secretName: *alertUri
+
+      alertmanagerSpec:
+        replicas: 3
+        storage:
+          volumeClaimTemplate:
+            spec:
+              storageClassName: longhorn 
+              accessModes: ["ReadWriteOnce"]
+              resources:
+                requests:
+                  storage: 5Gi
+
     grafana:
       enabled: false
-    alertmanager:
-      enabled: false
+      forceDeployDashboards: true
+      sidecar:
+        dashboards:
+          enabled: true
+          label: grafana_dashboard
+          labelValue: "1"
+    
+          ## Annotations for Grafana dashboard configmaps
+          ##
+          annotations: {}
+          multicluster:
+            global:
+              enabled: true
+            etcd:
+              enabled: true
+          provider:
+            allowUiUpdates: false
+        datasources:
+          enabled: true
+          defaultDatasourceEnabled: true
+          isDefaultDatasource: true
+    
+          uid: prometheus
+
+    prometheusOperator:
+      enabled: true
+      tls:
+        enabled: false
+      prometheusConfigReloader:
+        resources:
+          limits:
+            cpu: 200m
+      admissionWebhooks:
+        enabled: true
+
+
     prometheus:
+      enabled: true
+      thanosService:
+        enabled: false
+      thanosServiceMonitor:
+        enabled: false
       prometheusSpec:
-        replicas: 1
+        replicas: 3
         shards: 1
         retention: 15d
-        podMonitorNamespaceSelector: {}
-        podMonitorSelector:
-          matchLabels:
-            app.kubernetes.io/component: monitoring
-
-    admissionWebhooks:
-      enabled: false
-      patch:
-        enabled: false
-
-    prometheus:
+        ruleSelectorNilUsesHelmValues: false
+        serviceMonitorSelectorNilUsesHelmValues: false
+        podMonitorSelectorNilUsesHelmValues: false
+        probeSelectorNilUsesHelmValues: false
+        storageSpec:
+          volumeClaimTemplate:
+            spec:
+              storageClassName: longhorn 
+              accessModes: ["ReadWriteOnce"]
+              resources:
+                requests:
+                  storage: 5Gi
+ 
       ingress:
-        main:
-          enabled: true
-          ingressClassName: "traefik"
-          annotations:
-            hajimari.io/enable: "true"
-            hajimari.io/icon: "alpha-p-box"
-            hajimari.io/appName: "Prometheus"
-            cert-manager.io/cluster-issuer: "letsencrypt-production"
-            traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
-            traefik.ingress.kubernetes.io/router.middlewares: networking-chain-authelia@kubernetescrd
-          hosts:
-            - host: &uri "prom.${SECRET_DEV_DOMAIN}"
-              paths:
-                - path: /
-                  pathType: Prefix
-          tls:
-            - hosts:
-                - *uri
-              secretName: *uri
+        enabled: true
+        ingressClassName: "traefik"
+        annotations:
+          hajimari.io/enable: "true"
+          hajimari.io/icon: "alpha-p-box"
+          hajimari.io/appName: "Prometheus"
+          cert-manager.io/cluster-issuer: "letsencrypt-production"
+          traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
+          traefik.ingress.kubernetes.io/router.middlewares: networking-chain-no-auth@kubernetescrd
+        hosts:
+          - &promUri "prom.${SECRET_DEV_DOMAIN}"
+        path: /
+        pathType: Prefix
+        tls:
+          - hosts:
+              - *promUri
+            secretName: *promUri

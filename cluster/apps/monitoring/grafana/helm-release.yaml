@@ -23,20 +23,6 @@ spec:
       retries: 10
   values:
     replicas: 1
-    ingress:
-      enabled: true
-      ingressClassName: "traefik"
-      annotations:
-        hajimari.io/enable: "true"
-        hajimari.io/icon: "chart-scatter-plot-hexbin"
-        cert-manager.io/cluster-issuer: "letsencrypt-production"
-        traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
-      hosts:
-        - &host "grafana.${SECRET_DEV_DOMAIN}"
-      tls:
-        - hosts:
-            - *host
-          secretName: *host
     env:
       GF_EXPLORE_ENABLED: true
       GF_PANELS_DISABLE_SANITIZE_HTML: true
@@ -60,35 +46,24 @@ spec:
         mode: console
       grafana_net:
         url: https://grafana.net
-      auth:
-        signout_redirect_url: "https://authelia.${SECRET_DEV_DOMAIN}/logout"
-        oauth_auto_login: true
-      auth.generic_oauth:
-        enabled: true
-        name: Authelia
-        client_id: grafana
-        client_secret: "${SECRET_GRAFANA_OAUTH_CLIENT_SECRET}"
-        scopes: "openid profile email groups"
-        empty_scopes: false
-        auth_url: "https://authelia.${SECRET_DEV_DOMAIN}/api/oidc/authorization"
-        token_url: "https://authelia.${SECRET_DEV_DOMAIN}/api/oidc/token"
-        api_url: "https://authelia.${SECRET_DEV_DOMAIN}/api/oidc/userinfo"
-        login_attribute_path: preferred_username
-        groups_attribute_path: groups
-        name_attribute_path: name
-        use_pkce: true
-      auth.generic_oauth.group_mapping:
-        role_attribute_path: |
-          contains(groups[*], 'admins') && 'Admin' || contains(groups[*], 'people') && 'Viewer'
-        org_id: 1
       auth.basic:
-        enabled: false
-        # disable_login_form: false
+        #disable_login_form: false
+        enabled: true
       auth.anonymous:
         enabled: true
         #org_name: HomeOps
         org_id: 1
         org_role: Viewer
+      auth.proxy:
+        enabled: true
+        header_name: Remote-User
+        header_property: username
+        auto_sign_up: false
+        sync_ttl: 60
+        #whitelist: 192.168.5.10/32
+        headers: Email:X-User-Email, Name:X-User-Name, Group:Remote-Groups
+        # Read the auth proxy docs for details on what the setting below enables
+        #enable_login_token: false
 #    dashboardProviders:
 #      dashboardproviders.yaml:
 #        apiVersion: 1
@@ -173,3 +148,17 @@ spec:
       enabled: true
     persistence:
       enabled: false
+    ingress:
+      enabled: true
+      ingressClassName: "traefik"
+      annotations:
+        hajimari.io/enable: "true"
+        hajimari.io/icon: "chart-scatter-plot-hexbin"
+        cert-manager.io/cluster-issuer: "letsencrypt-production"
+        traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
+      hosts:
+        - &host "grafana.${SECRET_DEV_DOMAIN}"
+      tls:
+        - hosts:
+            - *host
+          secretName: *host

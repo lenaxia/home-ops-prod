@@ -42,40 +42,16 @@ spec:
           retention_period: 12h
     gateway:
       enabled: false
-      #      ingress:
-      #        enabled: true
-      #        ingressClassName: "traefik"
-      #        annotations:
-      #          hajimari.io/enable: "true"
-      #          hajimari.io/icon: "mdiPlayNetwork"
-      #          cert-manager.io/cluster-issuer: "letsencrypt-production"
-      #          #cert-manager.io/cluster-issuer: "ca-issuer"
-      #          traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
-      #        hosts:
-      #          - &host "loki.${SECRET_DEV_DOMAIN}"
-      #        tls:
-      #          - hosts:
-      #              - *host
-      #            secretName: *host
-      #config:
-      #  #existingSecret:
-      #  auth_enabled: false
-      #  # Needed for Alerting: https://grafana.com/docs/loki/latest/rules/
-      #  # This is just a simple example, for more details: https://grafana.com/docs/loki/latest/configuration/#ruler_config
-      #  ruler:
-      #    storage:
-      #      type: local
-      #      local:
-      #        directory: /rules
-      #    rule_path: /tmp/scratch
-      #    alertmanager_url: http://alertmanager.svc.namespace:9093
-      #    ring:
-      #      kvstore:
-      #        store: inmemory
-      #    enable_api: true
-      #persistence:
-      #  enabled: true
-      #  existingClaim: loki-data-volume
-      #  size: 10Gi
-      #podLabels:
-      #  app: loki
+    ingress:
+      enabled: true
+      ingressClassName: "traefik"
+      annotations:
+        cert-manager.io/cluster-issuer: "letsencrypt-production"
+        traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
+        traefik.ingress.kubernetes.io/router.middlewares: networking-chain-no-auth@kubernetescrd
+      hosts:
+        - &host "loki.${SECRET_DEV_DOMAIN}"
+      tls:
+        - hosts:
+            - *host
+          secretName: *host

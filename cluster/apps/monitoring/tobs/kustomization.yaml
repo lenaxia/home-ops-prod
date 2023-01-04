@@ -1,9 +1,6 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 namespace: monitoring
-commonLabels:
-  app.kubernetes.io/name: &app tobs
-  app.kubernetes.io/instance: *app
 resources:
   #  - secret.sops.yaml
   - helm-release.yaml
