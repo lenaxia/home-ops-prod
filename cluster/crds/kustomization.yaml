@@ -5,3 +5,4 @@ resources:
   - metallb
   - traefik
   - cloudnative-pg
+  - kube-prometheus-stack
