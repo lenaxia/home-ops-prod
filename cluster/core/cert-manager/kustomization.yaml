@@ -6,3 +6,13 @@ resources:
   - letsencrypt-staging.yaml
   - letsencrypt-production.yaml
     #  - ca-issuer # commenting this out for right now because I've already distributed the kaocloud cert so dont need to do this again. If I need to start over will use this
+configMapGenerator:
+  - name: cert-manager-dashboard
+    files:
+      - cert-manager-dashboard.json=https://raw.githubusercontent.com/monitoring-mixins/website/master/assets/cert-manager/dashboards/cert-manager.json
+generatorOptions:
+  disableNameSuffixHash: true
+  annotations:
+    kustomize.toolkit.fluxcd.io/substitute: disabled
+  labels:
+    grafana_dashboard: "true"
