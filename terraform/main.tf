@@ -36,7 +36,7 @@ resource "proxmox_vm_qemu" "k3-server-lafiel" {
   cores = 3
   sockets = 1
   cpu = "host"
-  memory = 15872
+  memory = 12872
   scsihw = "virtio-scsi-pci"
   bootdisk = "scsi0"
   disk {
@@ -290,7 +290,7 @@ resource "proxmox_vm_qemu" "k3-dev-server-00" {
   bootdisk = "scsi0"
   disk {
     slot = 0
-    size = var.k3_server_disksize 
+    size = var.k3_dev_server00_disksize
     type = "scsi"
     storage = "local-zfs"
     iothread = 1
@@ -360,19 +360,19 @@ resource "proxmox_vm_qemu" "k3-dev-agent-00" {
 resource "proxmox_vm_qemu" "docker" {
   count = 1
   name = "docker"
-  target_node = "ifurita"
+  target_node = var.k3_dev_server00_host
   clone = var.template_name
   agent = 1
   os_type = "cloud-init"
-  cores = 4
+  cores = 2
   sockets = 1
   cpu = "host"
-  memory = "2048"
+  memory = "4000"
   scsihw = "virtio-scsi-pci"
   bootdisk = "scsi0"
   disk {
     slot = 0
-    size = "20G"
+    size = "80G"
     type = "scsi"
     storage = "local-zfs"
     iothread = 1
