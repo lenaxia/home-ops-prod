@@ -18,19 +18,17 @@ spec:
   dependsOn:
     - name: cert-manager
       namespace: cert-manager
-    - name: metallb
-      namespace: networking
   install:
     createNamespace: true
     remediation:
       retries: 4
   upgrade:
     remediation:
-      retries: 4
+      retries: 5
   values:
     image:
-      name: ghcr.io/k8s-at-home/traefik
-      pullPolicy: Always
+      name: traefik
+      tag: v2.9.6
     deployment:
       kind: Deployment
       replicas: 1
