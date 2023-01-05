@@ -44,8 +44,8 @@ spec:
       type: Recreate
     
     image:
-      repository: docker.io/vaultwarden/server
-      #tag: 1.25.1
+      repository: vaultwarden/server
+      tag: 1.27.0-alpinew
       pullPolicy: Always
     
     # -- environment variables.
