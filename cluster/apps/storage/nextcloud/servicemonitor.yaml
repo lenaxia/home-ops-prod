@@ -11,8 +11,9 @@ spec:
     scrapeTimeout: 10s
   jobLabel: ""
   namespaceSelector:
-    matchNames:
-    - storage
+    any: true
+    #    matchNames:
+    #    - storage
   selector:
     matchLabels:
       app.kubernetes.io/component: metrics

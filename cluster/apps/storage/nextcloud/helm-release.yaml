@@ -341,7 +341,7 @@ spec:
       # Use API token if set, otherwise fall back to password authentication
       # https://github.com/xperimental/nextcloud-exporter#token-authentication
       # Currently you still need to set the token manually in your nextcloud install
-      token: ""
+      token: "true"
       timeout: 5s
       # if set to true, exporter skips certificate verification of Nextcloud server.
       tlsSkipVerify: false
