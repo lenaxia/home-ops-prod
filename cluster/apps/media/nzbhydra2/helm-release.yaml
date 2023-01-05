@@ -7,11 +7,11 @@ spec:
   releaseName: *appname
   chart:
     spec:
-      chart: *appname
-      version: "10.4.1"
+      chart: app-template
+      version: 1.2.1
       sourceRef:
         kind: HelmRepository
-        name: k8s-at-home
+        name: bjw-s-charts
         namespace: flux-system
   interval: 5m
   values:
@@ -21,9 +21,8 @@ spec:
       fsGroup: 568
 
     image:
-      repository: ghcr.io/k8s-at-home/nzbhydra2
+      repository: lscr.io/linuxserver/nzbhydra2
       tag: v4.6.1
-        #tag: v3.14.2
       pullPolicy: Always
     
     env:

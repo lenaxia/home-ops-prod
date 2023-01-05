@@ -8,10 +8,11 @@ spec:
   releaseName: *app
   chart:
     spec:
-      chart: vaultwarden
+      chart: app-template
+      version: 1.2.1
       sourceRef:
         kind: HelmRepository
-        name: k8s-at-home
+        name: bjw-s-charts
         namespace: flux-system
   interval: 6m
   values:
@@ -36,7 +37,7 @@ spec:
       type: Recreate
     
     image:
-      repository: vaultwarden/server
+      repository: ghcr.io/vaultwarden/server
       #tag: 1.25.1
       pullPolicy: Always
     
