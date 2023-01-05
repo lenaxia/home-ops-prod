@@ -45,7 +45,7 @@ spec:
     
     image:
       repository: vaultwarden/server
-      tag: 1.27.0-alpinew
+      tag: 1.27.0-alpine
       pullPolicy: Always
     
     # -- environment variables.
