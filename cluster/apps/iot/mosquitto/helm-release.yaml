@@ -50,6 +50,7 @@ spec:
             allow_anonymous true
             persistence true
             persistence_location /mosquitto/data
+            password_file /mosquitto/configinc/mqttpassword
             connection_messages false
     persistence:
       config:
@@ -62,7 +63,7 @@ spec:
         enabled: true
         existingClaim: mosquitto-data
         mountPath: /mosquitto/data
-      password_file:
+      passwordfile:
         enabled: true
         type: secret
         name: *app
