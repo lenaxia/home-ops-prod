@@ -50,7 +50,6 @@ spec:
             allow_anonymous true
             persistence true
             persistence_location /mosquitto/data
-            password_file /mosquitto/config/mqttpassword
             connection_messages false
     persistence:
       config:
