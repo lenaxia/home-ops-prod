@@ -17,6 +17,11 @@ spec:
       interval: 10m
   install:
     createNamespace: true
+    remediation:
+      retries: 4
+  upgrade:
+    remediation:
+      retries: 4
   values:
     image:
       repository: eclipse-mosquitto
