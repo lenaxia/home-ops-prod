@@ -1,11 +1,9 @@
----
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
-  name: mosquitto
-  namespace: iot
+  name: &app mosquitto
 spec:
-  interval: 5m
+  interval: 15m
   chart:
     spec:
       chart: app-template
@@ -14,21 +12,22 @@ spec:
         kind: HelmRepository
         name: bjw-s-charts
         namespace: flux-system
-      interval: 10m
+      interval: 15m
   install:
     createNamespace: true
     remediation:
-      retries: 4
+      retries: 5
   upgrade:
     remediation:
-      retries: 4
+      retries: 5
   values:
+    global:
+      nameOverride: *app
     image:
       repository: eclipse-mosquitto
       tag: 2.0.15
-      pullPolicy: Always
-    env:
-      TZ: "${TIMEZONE}"
+    podAnnotations:
+      reloader.stakater.com/auto: "true"
     service:
       main:
         type: LoadBalancer
@@ -38,18 +37,42 @@ spec:
           metallb.universe.tf/address-pool: dev-infra
         ports:
           http:
+            enabled: false
+          mqtt:
+            enabled: true
             port: 1883
-    auth:
-      enabled: false
-    podAnnotations:
-      secret.reloader.stakater.com/reload: mosquitto
+    configMaps:
+      config:
+        enabled: true
+        data:
+          mosquitto.conf: |
+            listener 1883
+            allow_anonymous true
+            persistence true
+            persistence_location /mosquitto/data
+            connection_messages false
+            password_file /mosquitto/config/mqtt_password
     persistence:
+      config:
+        enabled: true
+        type: configMap
+        name: mosquitto-config
+        mountPath: /mosquitto/config/mosquitto.conf
+        subPath: mosquitto.conf
       data:
         enabled: true
-        existingClaim: mosquitto-config-volume
-      configinc:
+        existingClaim: mosquitto-data
+        mountPath: /mosquitto/data
+      password_file:
         enabled: true
-        type: custom
-        volumeSpec:
-          secret:
-            secretName: mosquitto-configmap
+        type: secret
+        name: *app
+        mountPath: /mosquitto/config/mqtt_password
+        subPath: mqtt_password
+        readOnly: true
+    resources:
+      requests:
+        cpu: 15m
+        memory: 105Mi
+      limits:
+        memory: 105Mi
