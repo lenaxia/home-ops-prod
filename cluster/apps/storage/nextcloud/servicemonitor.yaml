@@ -1,11 +1,17 @@
 apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
 metadata:
-  name: doesNotMatter
+  name: &app nextcloud
   namespace: storage
 spec:
   endpoints:
   - interval: 1m
-    path: /metrics
+    path: /
     port: metrics
     scrapeTimeout: 10s
+  jobLabel: ""
+  selector:
+    matchLabels:
+      app.kubernetes.io/component: metrics
+      app.kubernetes.io/instance: *app
+      app.kubernetes.io/name: *app

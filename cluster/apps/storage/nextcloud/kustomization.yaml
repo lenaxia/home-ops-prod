@@ -11,8 +11,3 @@ resources:
   - nfs-pvc.yaml
   - secret.sops.yaml
   - middlewares.yaml
-patches:
-  - path: servicemonitor.yaml
-    target:
-      kind: ServiceMonitor
-      name: ".*"
