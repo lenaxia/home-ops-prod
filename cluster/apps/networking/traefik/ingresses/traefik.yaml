@@ -6,7 +6,6 @@ metadata:
   namespace: networking
   annotations:
     cert-manager.io/cluster-issuer: "letsencrypt-production"
-    #cert-manager.io/cluster-issuer: "ca-issuer"
     hajimari.io/appName: "traefik"
     hajimari.io/enable: "true"
     hajimari.io/icon: "web"
@@ -30,22 +29,3 @@ spec:
                 port:
                   number: 9000
 ---
-#apiVersion: traefik.containo.us/v1alpha1
-#kind: IngressRoute
-#metadata:
-#  name: traefik-dashboard
-#  namespace: networking
-#spec:
-#  entryPoints:
-#    - web
-#    - websecure
-#  routes:
-#    - match: Host(`traefik.${SECRET_DEV_DOMAIN}`) 
-#      kind: Rule
-#      middlewares:
-#        - name: middlewares-basic-auth
-#          namespace: networking
-#      services:
-#        - name: api@internal
-#          kind: TraefikService
-#---

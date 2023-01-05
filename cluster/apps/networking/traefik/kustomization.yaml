@@ -6,4 +6,3 @@ commonLabels:
 resources:
   - helm-release.yaml
   - middlewares
-  - traefik.yaml
