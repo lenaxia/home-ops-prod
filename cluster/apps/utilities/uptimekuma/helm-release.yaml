@@ -31,8 +31,8 @@ spec:
       type: Recreate
     
     image:
-      repository: louislam/uptime-kuma
-      tag: 
+      repository: docker.io/louislam/uptime-kuma
+      tag: 1.19.3-debian
       pullPolicy: Always
     
     # -- environment variables.
