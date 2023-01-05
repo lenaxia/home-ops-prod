@@ -1,14 +1,7 @@
 apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
 metadata:
-  annotations:
-    meta.helm.sh/release-name: nextcloud
-    meta.helm.sh/release-namespace: storage
-  labels:
-    app.kubernetes.io/component: metrics
-    app.kubernetes.io/instance: nextcloud
-    app.kubernetes.io/name: nextcloud
-  name: nextcloud
+  name: doesNotMatter
   namespace: storage
 spec:
   endpoints:
@@ -16,9 +9,3 @@ spec:
     path: /metrics
     port: metrics
     scrapeTimeout: 10s
-  jobLabel: ""
-  selector:
-    matchLabels:
-      app.kubernetes.io/component: metrics
-      app.kubernetes.io/instance: nextcloud
-      app.kubernetes.io/name: nextcloud

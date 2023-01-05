@@ -11,13 +11,8 @@ resources:
   - nfs-pvc.yaml
   - secret.sops.yaml
   - middlewares.yaml
-  - servicemonitor.yaml
-#- cronjob.yaml
-#configMapGenerator:
-#  - name: poststart-sh
-#    files:
-#      - postStart.sh
-#generatorOptions:
-#  disableNameSuffixHash: true
-#  annotations:
-#    kustomize.toolkit.fluxcd.io/substitute: disabled
+patches:
+  - path: servicemonitor.yaml
+    target:
+      kind: ServiceMonitor
+      name: ".*"
