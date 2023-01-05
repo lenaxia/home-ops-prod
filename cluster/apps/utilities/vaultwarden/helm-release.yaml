@@ -37,7 +37,7 @@ spec:
       type: Recreate
     
     image:
-      repository: ghcr.io/vaultwarden/server
+      repository: docker.io/vaultwarden/server
       #tag: 1.25.1
       pullPolicy: Always
     
