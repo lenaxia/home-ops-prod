@@ -349,7 +349,7 @@ spec:
       ## Prometheus Operator ServiceMonitor configuration
       ##
       serviceMonitor:
-        enabled: true
+        enabled: false
         namespace: "storage"
         path: "/metrics"
         ## @param metrics.serviceMonitor.jobLabel The name of the label on the target service to use as the job name in prometheus.
