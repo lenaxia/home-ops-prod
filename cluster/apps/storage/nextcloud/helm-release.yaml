@@ -331,6 +331,31 @@ spec:
             topologyKey: kubernetes.io/hostname
             namespaces:
               - storage
+
+    ## Prometheus Exporter / Metrics
+    ##
+    metrics:
+      enabled: true
+      replicaCount: 1
+      https: true
+      # Use API token if set, otherwise fall back to password authentication
+      # https://github.com/xperimental/nextcloud-exporter#token-authentication
+      # Currently you still need to set the token manually in your nextcloud install
+      token: "UACsjGPOsWbQT5vLdbfzDituQDN4OkbHQ1VSFpZtUCCjYbtx2Pe8dwlsp9Z3VME6"
+      timeout: 5s
+      # if set to true, exporter skips certificate verification of Nextcloud server.
+      tlsSkipVerify: false
+
+      ## Prometheus Operator ServiceMonitor configuration
+      ##
+      serviceMonitor:
+        enabled: true
+        namespace: "storage"
+        ## @param metrics.serviceMonitor.jobLabel The name of the label on the target service to use as the job name in prometheus.
+        jobLabel: ""
+        interval: 1m
+        scrapeTimeout: 10s
+        labels: {}
             
 #    resources:
 #      requests:
