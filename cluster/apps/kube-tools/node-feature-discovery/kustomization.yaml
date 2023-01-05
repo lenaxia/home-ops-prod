@@ -5,5 +5,5 @@ commonLabels:
   app.kubernetes.io/name: &app node-feature-discovery
   app.kubernetes.io/instance: *app
 resources:
-  - github.com/kubernetes-sigs/node-feature-discovery//deployment/base/nfd-crds?ref=v0.11.2
+  - github.com/kubernetes-sigs/node-feature-discovery//deployment/base/nfd-crds?ref=v0.12.0
   - helm-release.yaml
