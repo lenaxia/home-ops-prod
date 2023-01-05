@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: *appname
-      version: 0.8.38
+      version: 0.8.51
       sourceRef:
         kind: HelmRepository
         name: authelia-charts
@@ -55,7 +55,7 @@ spec:
   values:
     image:
       repository: ghcr.io/authelia/authelia
-      tag: 4.36.1
+      tag: 4.37.5
       pullPolicy: Always
     deployment:
       kind: Deployment
