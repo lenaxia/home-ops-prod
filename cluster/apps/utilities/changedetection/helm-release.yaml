@@ -15,6 +15,13 @@ spec:
         name: bjw-s-charts
         namespace: flux-system
   interval: 5m
+  install:
+    createNamespace: true
+    remediation:
+      retries: 4
+  upgrade:
+    remediation:
+      retries: 4
   values:
     service:
       main:
@@ -29,7 +36,7 @@ spec:
 
     image:
       repository: ghcr.io/dgtlmoon/changedetection.io
-      #tag: "0.39.4"
+      tag: 0.40.0.4
       pullPolicy: Always
     
     env:
