@@ -26,3 +26,11 @@ spec:
   values:
     image:
       tag: v1.2.3
+    monitoring:
+      # Enable Prometheus PodMonitor to monitor the operator.
+      enabled: true
+      serviceMonitor: true
+      #serviceAnnotations:
+      #  app.kubernetes.io/component: controller
+      prometheus:
+        name: prometheus
