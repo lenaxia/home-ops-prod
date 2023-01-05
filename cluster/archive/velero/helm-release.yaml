@@ -25,7 +25,7 @@ spec:
     # enabling restic). Required.
     image:
       repository: velero/velero
-      tag: v1.9.0
+      tag: v1.10.0
       pullPolicy: IfNotPresent
 
     # Annotations to add to the Velero deployment's. Optional.
@@ -40,7 +40,7 @@ spec:
     # If the value is a string then it is evaluated as a template.
     initContainers:
        - name: velero-plugin-for-aws
-         image: velero/velero-plugin-for-aws:v1.5.0
+         image: velero/velero-plugin-for-aws:v1.6.0
          imagePullPolicy: IfNotPresent
          volumeMounts:
            - mountPath: /target
