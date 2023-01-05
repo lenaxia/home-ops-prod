@@ -53,7 +53,7 @@ resources:
   - ./media/imaginary
 
   # IOT Namespace
-  - ./iot/mosquitto
+  #- ./iot/mosquitto
   - ./iot/nodered
 
   # Utilities Namespace
