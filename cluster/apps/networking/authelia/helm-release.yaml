@@ -55,7 +55,7 @@ spec:
   values:
     image:
       repository: ghcr.io/authelia/authelia
-      tag: 4.36.1
+      tag: 4.37.5
       pullPolicy: Always
     deployment:
       kind: Deployment
