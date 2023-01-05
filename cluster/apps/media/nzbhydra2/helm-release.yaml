@@ -22,7 +22,7 @@ spec:
 
     image:
       repository: lscr.io/linuxserver/nzbhydra2
-      tag: v4.7.2-ls82
+      tag: v4.7.6-ls82
       pullPolicy: Always
     
     env:
