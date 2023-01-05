@@ -6,7 +6,7 @@ resources:
 configMapGenerator:
   - name: redis-operator-dashboard
     files:
-      - redis-operator-dashboard.json=https://raw.githubusercontent.com/spotahome/redis-operator/master/example/grafana-dashboard/redisfailover-health.json
+      - dashboard.json
 generatorOptions:
   disableNameSuffixHash: true
   annotations:
