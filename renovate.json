@@ -7,11 +7,7 @@
     ":semanticCommits",
     ":enablePreCommit",
     ":automergeDigest",
-    ":automergeBranch",
-    "github>lenaxia/home-ops-prod//.github/renovate/commitMessage.json5",
-    "github>lenaxia/home-ops-prod//.github/renovate/labels.json5",
-    "github>lenaxia/home-ops-prod//.github/renovate/autoMerge.json5",
-    "github>lenaxia/home-ops-prod//.github/renovate/semanticCommits.json5"
+    ":automergeBranch"
   ],
   "flux": {
     "fileMatch": ["cluster/.+\\.ya?ml$"]
