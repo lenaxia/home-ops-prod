@@ -21,8 +21,8 @@ resources:
 
   # Security
   - ./networking/metallb
-  - ./networking/traefik
-  - ./networking/traefik/ingresses
+    #- ./networking/traefik
+    #- ./networking/traefik/ingresses
   - ./authentication/authelia
   
   # Home
