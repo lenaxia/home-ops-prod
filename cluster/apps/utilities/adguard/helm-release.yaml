@@ -49,7 +49,7 @@ spec:
     
     image:
       # -- image repository
-      repository: ghcr.io/adguardteam/adguardhome
+      repository: adguard/adguardhome
       # -- image tag
       tag: v0.106.3
       # -- image pull policy
