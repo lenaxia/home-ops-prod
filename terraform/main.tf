@@ -39,6 +39,7 @@ resource "proxmox_vm_qemu" "k3-server-lafiel" {
   memory = 12872
   scsihw = "virtio-scsi-pci"
   bootdisk = "scsi0"
+  onboot = "true"
   disk {
     slot = 0
     size = var.k3_server_disksize 
@@ -80,6 +81,7 @@ resource "proxmox_vm_qemu" "k3-agent-lafiel" {
   memory = var.k3_agent00_mem
   scsihw = "virtio-scsi-pci"
   bootdisk = "scsi0"
+  onboot = "true"
   disk {
     slot = 0
     size = var.k3_agent00_disksize
@@ -123,6 +125,7 @@ resource "proxmox_vm_qemu" "k3-server-yurika" {
   memory = 4096
   scsihw = "virtio-scsi-pci"
   bootdisk = "scsi0"
+  onboot = "true"
   disk {
     slot = 0
     size = var.k3_server_disksize 
@@ -163,6 +166,7 @@ resource "proxmox_vm_qemu" "k3-agent-yurika" {
   memory = var.k3_agent01_mem
   scsihw = "virtio-scsi-pci"
   bootdisk = "scsi0"
+  onboot = "true"
   disk {
     slot = 0
     size = var.k3_agent01_disksize
@@ -206,6 +210,7 @@ resource "proxmox_vm_qemu" "k3-server-melfina" {
   memory = 4096
   scsihw = "virtio-scsi-pci"
   bootdisk = "scsi0"
+  onboot = "true"
   disk {
     slot = 0
     size = var.k3_server_disksize 
@@ -246,6 +251,7 @@ resource "proxmox_vm_qemu" "k3-agent-melfina" {
   memory = var.k3_agent02_mem
   scsihw = "virtio-scsi-pci"
   bootdisk = "scsi0"
+  onboot = "true"
   disk {
     slot = 0
     size = var.k3_agent02_disksize
@@ -288,6 +294,7 @@ resource "proxmox_vm_qemu" "k3-dev-server-00" {
   memory = var.k3_dev_server00_mem
   scsihw = "virtio-scsi-pci"
   bootdisk = "scsi0"
+  onboot = "true"
   disk {
     slot = 0
     size = var.k3_dev_server00_disksize
@@ -329,6 +336,7 @@ resource "proxmox_vm_qemu" "k3-dev-agent-00" {
   memory = var.k3_dev_agent00_mem
   scsihw = "virtio-scsi-pci"
   bootdisk = "scsi0"
+  onboot = "true"
   disk {
     slot = 0
     size = var.k3_dev_agent00_disksize
@@ -370,6 +378,7 @@ resource "proxmox_vm_qemu" "docker" {
   memory = "4000"
   scsihw = "virtio-scsi-pci"
   bootdisk = "scsi0"
+  onboot = "false"
   disk {
     slot = 0
     size = "80G"

@@ -5,7 +5,7 @@ metadata:
   name: defaultpg
   namespace: databases
 spec:
-  instances: 3
+  instances: 2
   primaryUpdateStrategy: unsupervised
   storage:
     size: 20Gi

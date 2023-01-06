@@ -50,7 +50,7 @@ variable "k3_dev_server00_disksize" { default = "100G" }
 variable "k3_dev_server00_host" { default = "melfina" }
 
 variable "k3_dev_agent00_offset" { default = 1 }
-variable "k3_dev_agent00_mem" { default = "10240" }
+variable "k3_dev_agent00_mem" { default = "24480" }
 variable "k3_dev_agent00_cores" { default = "4" }
 variable "k3_dev_agent00_disksize" { default = "200G" }
 variable "k3_dev_agent00_host" { default = "lafiel" }
