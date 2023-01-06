@@ -1,7 +1,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
-  name: &appname nodered
+  name: &appname node-red
   namespace: iot
 spec:
   releaseName: *appname

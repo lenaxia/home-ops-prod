@@ -54,7 +54,7 @@ resources:
 
   # IOT Namespace
   - ./iot/mosquitto
-  - ./iot/nodered
+  - ./iot/node-red
 
   # Utilities Namespace
   - ./utilities/vaultwarden
