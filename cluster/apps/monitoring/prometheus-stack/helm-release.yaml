@@ -30,6 +30,7 @@ spec:
         etcd: false
         configReloaders: true
         general: true
+        kubelet: false
         kubeProxy: false
         kubeSchedulerAlerting: false
 
