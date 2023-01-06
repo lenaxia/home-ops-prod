@@ -55,7 +55,7 @@ spec:
       endpoints:
         - 192.168.2.70
       service:
-        enabled: true
+        enabled: false
         port: 2381
         targetPort: 2381
 
