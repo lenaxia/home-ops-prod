@@ -27,7 +27,7 @@ spec:
       create: true
       rules:
         alertmanager: true
-        etcd: true
+        etcd: false
         configReloaders: true
         general: true
         kubeProxy: false
@@ -50,7 +50,7 @@ spec:
       endpoints:
         - 192.168.2.70
     kubeEtcd:
-      enabled: true
+      enabled: false
       endpoints:
         - 192.168.2.70
       service:
