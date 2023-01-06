@@ -5,7 +5,7 @@ metadata:
   name: defaultpg
   namespace: databases
 spec:
-  instances: 2
+  instances: 3
   primaryUpdateStrategy: unsupervised
   storage:
     size: 20Gi
@@ -51,8 +51,8 @@ spec:
 #  externalClusters:
 #    - name: defaultpgBackup
 #      barmanObjectStore:
-#        destinationPath: s3://cnpg-5wxuej/defaultpg
-#        endpointURL: http://192.168.0.120:9000
+#        destinationPath: s3://cnpg-5wxuej/
+#        endpointURL: https://s3.thekao.cloud 
 #        serverName: defaultpg
 #        s3Credentials:
 #          accessKeyId:
@@ -61,5 +61,8 @@ spec:
 #          secretAccessKey:
 #            name: postgres-minio
 #            key: MINIO_SECRET_KEY
+#          region:
+#            name: postgres-minio
+#            key: MINIO_REGION
 #        wal:
 #          maxParallel: 8
