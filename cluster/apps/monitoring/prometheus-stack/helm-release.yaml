@@ -30,15 +30,33 @@ spec:
         etcd: true
         configReloaders: true
         general: true
+        kubeProxy: false
+        kubeSchedulerAlerting: false
 
-    kubeProxy:
+    # how to enable scrape endpoints for these https://github.com/k3s-io/k3s/issues/3619
+    # Example in ansible: https://github.com/onedr0p/home-ops/blob/61ee0bb1a98cc427426cb98e91d1ea77c578a904/ansible/kubernetes/inventory/group_vars/master/k3s.yml
+    kubeApiServer:
       enabled: true
+    kubeControllerManager:
+      enabled: false
+      endpoints:
+        - 192.168.2.70
+    kubeProxy:
+      enabled: false
       endpoints:
         - 192.168.2.70
     kubeScheduler:
+      enabled: false
+      endpoints:
+        - 192.168.2.70
+    kubeEtcd:
       enabled: true
       endpoints:
         - 192.168.2.70
+      service:
+        enabled: true
+        port: 2381
+        targetPort: 2381
 
     alertmanager:
       enabled: true
