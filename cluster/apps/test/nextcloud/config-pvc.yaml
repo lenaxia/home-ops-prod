@@ -5,7 +5,7 @@ metadata:
     name: &name nextcloud-config
     namespace: test
     labels:
-      snapshot.home.arpa/enabled: "true"
+      snapshot.home.arpa/enabled: "false"
 spec:
     accessModes:
         - ReadWriteMany
