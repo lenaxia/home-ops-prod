@@ -7,8 +7,6 @@ resources:
   - ./diagnostics/echo-server
   - ./kube-tools/system-upgrade
   - ./kube-tools/node-feature-discovery
-  - ./kube-tools/intel-gpu-plugin
-    #- ./kube-tools/intel-gpu-exporter
   - ./kube-tools/reloader
   - ./kube-tools/descheduler
   - ./kube-tools/kyverno
