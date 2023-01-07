@@ -5,6 +5,7 @@ metadata:
   name: backup
   namespace: databases
 spec:
+  loglevel: debug
   instances: 3
   primaryUpdateStrategy: unsupervised
   storage:
