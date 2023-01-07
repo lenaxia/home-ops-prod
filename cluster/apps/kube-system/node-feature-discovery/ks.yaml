@@ -8,7 +8,7 @@ metadata:
   labels:
     substitution.flux.home.arpa/enabled: "true"
 spec:
-  path: ./cluster/apps/kube-tools/node-feature-discovery/app
+  path: ./cluster/apps/kube-system/node-feature-discovery/app
   prune: true
   sourceRef:
     kind: GitRepository
@@ -17,7 +17,7 @@ spec:
     - apiVersion: helm.toolkit.fluxcd.io/v2beta1
       kind: HelmRelease
       name: node-feature-discovery
-      namespace: kube-tools
+      namespace: kube-system
   interval: 30m
   retryInterval: 1m
   timeout: 3m
