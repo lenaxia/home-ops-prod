@@ -5,7 +5,6 @@ metadata:
   name: backup
   namespace: databases
 spec:
-  loglevel: debug
   instances: 3
   primaryUpdateStrategy: unsupervised
   storage:
@@ -28,7 +27,7 @@ spec:
       #        compression: bzip2
       #        maxParallel: 8
       #      destinationPath: s3://cnpg-5wxuej/
-      #      endpointURL: https://s3.thekao.cloud
+      #      endpointURL: https://s3.${SECRET_DEV_DOMAIN}
       #      serverName: defaultpg
       #      s3Credentials:
       #        accessKeyId:
@@ -55,7 +54,7 @@ spec:
           compression: bzip2
           maxParallel: 8
         destinationPath: s3://cnpg-5wxuej/
-        endpointURL: https://s3.thekao.cloud
+        endpointURL: https://s3.${SECRET_DEV_DOMAIN}
         serverName: defaultpg
         s3Credentials:
           accessKeyId:
