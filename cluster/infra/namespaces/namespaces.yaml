@@ -30,13 +30,6 @@ metadata:
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: kube-tools
-  labels:
-    app.kubernetes.io/component: kube-tools
----
-apiVersion: v1
-kind: Namespace
-metadata:
   name: longhorn-system
   labels:
     app.kubernetes.io/component: longhorn-system
