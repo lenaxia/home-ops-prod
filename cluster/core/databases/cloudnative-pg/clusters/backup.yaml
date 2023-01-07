@@ -20,26 +20,25 @@ spec:
 #        name: postgres-superuser
   monitoring:
     enablePodMonitor: true
-#  backup:
-#    retentionPolicy: 30d
-#    barmanObjectStore:
-#      wal:
-#        compression: bzip2
-#        maxParallel: 8
-#      destinationPath: s3://cnpg-5wxuej/
-#        #endpointURL: http://minio.utilities.svc.cluster.local:9000
-#      endpointURL: https://s3.thekao.cloud
-#      serverName: defaultpg
-#      s3Credentials:
-#        accessKeyId:
-#          name: postgres-minio
-#          key: MINIO_ACCESS_KEY
-#        secretAccessKey:
-#          name: postgres-minio
-#          key: MINIO_SECRET_KEY
-#        region:
-#          name: postgres-minio
-#          key: MINIO_REGION
+  backup:
+    retentionPolicy: 30d
+    barmanObjectStore:
+      wal:
+        compression: bzip2
+        maxParallel: 8
+      destinationPath: s3://cnpg-5wxuej/
+      endpointURL: https://s3.thekao.cloud
+      serverName: defaultpg
+      s3Credentials:
+        accessKeyId:
+          name: postgres-minio
+          key: MINIO_ACCESS_KEY
+        secretAccessKey:
+          name: postgres-minio
+          key: MINIO_SECRET_KEY
+        region:
+          name: postgres-minio
+          key: MINIO_REGION
 
 # CNPG Recovery
 # https://cloudnative-pg.io/documentation/1.15/bootstrap/#bootstrap-from-a-backup-recovery
@@ -51,8 +50,11 @@ spec:
   externalClusters:
     - name: defaultpgBackup
       barmanObjectStore:
-        destinationPath: s3://cnpg-5wxuej/defaultpg
-        endpointURL: https://s3.thekao.cloud 
+        wal:
+          compression: bzip2
+          maxParallel: 8
+        destinationPath: s3://cnpg-5wxuej/
+        endpointURL: https://s3.thekao.cloud
         serverName: defaultpg
         s3Credentials:
           accessKeyId:
@@ -64,5 +66,3 @@ spec:
           region:
             name: postgres-minio
             key: MINIO_REGION
-        wal:
-          maxParallel: 8
