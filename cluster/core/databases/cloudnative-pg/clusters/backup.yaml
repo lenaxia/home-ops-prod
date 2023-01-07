@@ -51,7 +51,7 @@ spec:
   externalClusters:
     - name: defaultpgBackup
       barmanObjectStore:
-        destinationPath: s3://cnpg-5wxuej/
+        destinationPath: s3://cnpg-5wxuej/defaultpg
         endpointURL: https://s3.thekao.cloud 
         serverName: defaultpg
         s3Credentials:
