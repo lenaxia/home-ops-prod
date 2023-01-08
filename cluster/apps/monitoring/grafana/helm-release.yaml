@@ -116,21 +116,19 @@ spec:
       datasources.yaml:
         apiVersion: 1
         # list of datasources that should be deleted from the database
-        #        deleteDatasources:
-        #          - name: Loki
-        #            orgId: 1
+        deleteDatasources:
+          - name: Loki
+            orgId: 1
         datasources:
           - name: Prometheus
             type: prometheus
             access: proxy
             url: http://kube-prometheus-stack-prometheus.monitoring.svc.cluster.local:9090/
-            # url: http://mimir-query-frontend.monitoring.svc.cluster.local:8080/prometheus
-            #            isDefault: true
-            #          - name: Loki
-            #            type: loki
-            #            access: proxy
-            #              #url: http://loki-gateway:80
-            #            url: http://10.43.58.178:3100
+            isDefault: true
+          - name: Loki
+            type: loki
+            access: proxy
+            url: http://loki-read:3100
 #    dashboards:
 #      default:
 #        # Ref: https://grafana.com/grafana/dashboards/7845
