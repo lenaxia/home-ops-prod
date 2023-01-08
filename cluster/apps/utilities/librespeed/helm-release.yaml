@@ -34,7 +34,7 @@ spec:
       TZ: ${TIMEZONE}
       PUID: "1001"
       PGID: "1001"
-      PASSWORD: thekaocloud
+      PASSWORD: librespeed
       CUSTOM_RESULTS: false
       DB_TYPE: sqlite
       DB_NAME: librespeed

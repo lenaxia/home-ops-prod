@@ -408,7 +408,7 @@ spec:
       ## Session Provider Configuration
       ##
       session:
-        name: thekaocloud_auth_session
+        name: authelia_auth_session
         same_site: lax
         expiration: 1h
         inactivity: 5m
@@ -516,7 +516,7 @@ spec:
             authorization_policy: one_factor
             pre_configured_consent_duration: 1y
             scopes: ["openid", "profile", "groups", "email"]
-            redirect_uris: ["https://oidcdebugger.com/debug", "https://openidconnect.net/callback", "https://w.${SECRET_DEV_DOMAIN}/oidc/callback", "https://oauth-debug.thekao.cloud/callback"]
+            redirect_uris: ["https://oidcdebugger.com/debug", "https://openidconnect.net/callback", "https://w.${SECRET_DEV_DOMAIN}/oidc/callback", "https://oauth-debug.${SECRET_DEV_DOMAIN}/callback"]
             userinfo_signing_algorithm: none
           - id: vdsm7
             description: vdsm7 
