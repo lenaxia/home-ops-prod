@@ -46,16 +46,18 @@ spec:
           secretKeyRef:
             name: *app
             key: POSTGRES_PASSWORD
-      - name: GF_SECURITY_ADMIN_USER
-        valueFrom:
-          secretKeyRef:
-            name: *app
-            key: admin-user
-      - name: GF_SECURITY_ADMIN_PASSWORD
-        valueFrom:
-          secretKeyRef:
-            name: *app
-            key: admin-password
+              #      - name: GF_SECURITY_ADMIN_USER
+              #        valueFrom:
+              #          secretKeyRef:
+              #            name: *app
+              #            key: admin-user
+              #      - name: GF_SECURITY_ADMIN_PASSWORD
+              #        valueFrom:
+              #          secretKeyRef:
+              #            name: *app
+              #            key: admin-password
+    admin:
+      existingSecret: grafana-admin-creds
     extraInitContainers:
       - name: init-db
         image: ghcr.io/onedr0p/postgres-initdb:14.6
