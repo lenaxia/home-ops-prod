@@ -28,8 +28,8 @@ spec:
         value: true
       - name: GF_PANELS_DISABLE_SANITIZE_HTML
         value: true
-      - name: GF_LOG_FILTERS: rendering
-        value: debug
+      - name: GF_LOG_FILTERS
+        value: "rendering:debug"
       - name: GF_DATE_FORMATS_FULL_DATE
         value: "MMM Do, YYYY hh:mm:ss a"
       - name: GF_SECURITY_ALLOW_EMBEDDING
