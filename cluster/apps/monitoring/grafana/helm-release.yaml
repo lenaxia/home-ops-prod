@@ -17,10 +17,10 @@ spec:
   install:
     createNamespace: true
     remediation:
-      retries: 11
+      retries: 12
   upgrade:
     remediation:
-      retries: 11
+      retries: 12
   values:
     replicas: 1
     env:
