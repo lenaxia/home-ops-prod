@@ -6,7 +6,8 @@ metadata:
 spec:
   values:
     extraInitContainers:
-      - image: ghcr.io/onedr0p/postgres-initdb:14.6
+      - name: init-db
+        image: ghcr.io/onedr0p/postgres-initdb:14.6
         env:
           - name: POSTGRES_HOST
             value: defaultpg-rw.databases.svc.cluster.local
