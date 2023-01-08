@@ -1,7 +1,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
-  name: grafana
+  name: &app grafana
   namespace: monitoring
 spec:
   interval: 15m
@@ -31,7 +31,7 @@ spec:
       GF_SECURITY_ALLOW_EMBEDDING: true
       GF_SECURITY_COOKIE_SAMESITE: grafana
     admin:
-      existingSecret: grafana-admin-creds
+      existingSecret: *app
     grafana.ini:
       server:
         root_url: "https://grafana.${SECRET_DEV_DOMAIN}"
@@ -47,8 +47,6 @@ spec:
       database:
         type: postgres
         host: defaultpg-rw.databases.svc.cluster.local
-        user: 
-        password:
         max_idle_conn: 200
         max_open_conn: 300
         ssl_mode: disable
@@ -170,3 +168,13 @@ spec:
         - hosts:
             - *host
           secretName: *host
+  valuesFrom:
+    - targetPath: grafana.ini.database.username
+      kind: Secret
+      name: *app
+      valuesKey: POSTGRES_USERNAME
+    - targetPath: grafana.ini.database.password
+      kind: Secret
+      name: *app
+      valuesKey: POSTGRES_USERNAME
+
