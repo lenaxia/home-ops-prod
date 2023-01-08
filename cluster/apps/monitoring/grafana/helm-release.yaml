@@ -30,18 +30,6 @@ spec:
       GF_DATE_FORMATS_FULL_DATE: "MMM Do, YYYY hh:mm:ss a"
       GF_SECURITY_ALLOW_EMBEDDING: true
       GF_SECURITY_COOKIE_SAMESITE: grafana
-        #POSTGRES_USERNAME: grafana
-        #POSTGRES_PASSWORD: sClL35wMrwpUqPlcxfKGz7P6WcFEKyuY2GB3sdrtjY0VWAWqHZG390gSlaB5cNqd
-        #- name: POSTGRES_USERNAME
-        #  valueFrom:
-        #    secretKeyRef:
-        #      name: *app
-        #      key: POSTGRES_USERNAME
-        #- name: POSTGRES_PASSWORD
-        #  valueFrom:
-        #    secretKeyRef:
-        #      name: *app
-        #      key: POSTGRES_PASSWORD
     envFromSecret: *app
     admin:
       existingSecret: grafana-admin-creds
@@ -128,9 +116,9 @@ spec:
       datasources.yaml:
         apiVersion: 1
         # list of datasources that should be deleted from the database
-        deleteDatasources:
-          - name: Loki
-            orgId: 1
+        #        deleteDatasources:
+        #          - name: Loki
+        #            orgId: 1
         datasources:
           - name: Prometheus
             type: prometheus
