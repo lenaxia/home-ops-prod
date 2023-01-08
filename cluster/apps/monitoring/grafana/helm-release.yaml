@@ -32,16 +32,17 @@ spec:
       GF_SECURITY_COOKIE_SAMESITE: grafana
         #POSTGRES_USERNAME: grafana
         #POSTGRES_PASSWORD: sClL35wMrwpUqPlcxfKGz7P6WcFEKyuY2GB3sdrtjY0VWAWqHZG390gSlaB5cNqd
-      - name: POSTGRES_USERNAME
-        valueFrom:
-          secretKeyRef:
-            name: *app
-            key: POSTGRES_USERNAME
-      - name: POSTGRES_PASSWORD
-        valueFrom:
-          secretKeyRef:
-            name: *app
-            key: POSTGRES_PASSWORD
+        #- name: POSTGRES_USERNAME
+        #  valueFrom:
+        #    secretKeyRef:
+        #      name: *app
+        #      key: POSTGRES_USERNAME
+        #- name: POSTGRES_PASSWORD
+        #  valueFrom:
+        #    secretKeyRef:
+        #      name: *app
+        #      key: POSTGRES_PASSWORD
+    envFromSecret: *app
     admin:
       existingSecret: grafana-admin-creds
     extraInitContainers:
