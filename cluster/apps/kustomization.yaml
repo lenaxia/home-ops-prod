@@ -29,9 +29,9 @@ resources:
 
   # Monitoring Namespace
   - ./monitoring/prometheus-stack
-  - ./monitoring/grafana
+    #- ./monitoring/grafana
   - ./monitoring/flux
-    #- ./monitoring/loki
+  - ./monitoring/loki
   #- ./monitoring/tobs
 
   # Default Namespace

@@ -1,0 +1,53 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: grafana
+  namespace: monitoring
+data:
+  datasources.yaml: |
+    apiVersion: 1
+    datasources:
+    - access: proxy
+      name: Prometheus
+      type: prometheus
+      url: http://kube-prometheus-stack-prometheus.monitoring.svc.cluster.local:9090/
+    deleteDatasources:
+    - name: Loki
+      orgId: 1
+  grafana.ini: |
+    [analytics]
+    check_for_updates = false
+    [database]
+    type = postgres
+    host = defaultpg-rw.databases.svc.cluster.local
+    user = 
+    password =
+    max_idle_conn = 200
+    max_open_conn = 300
+    ssl_mode = disable
+    [auth.anonymous]
+    enabled = true
+    org_id = 1
+    org_role = Viewer
+    [auth.basic]
+    enabled = true
+    [auth.proxy]
+    auto_sign_up = false
+    enabled = true
+    header_name = Remote-User
+    header_property = username
+    headers = Email:X-User-Email, Name:X-User-Name, Group:Remote-Groups
+    sync_ttl = 60
+    [grafana_net]
+    url = https://grafana.net
+    [log]
+    mode = console
+    [paths]
+    data = /var/lib/grafana/data
+    logs = /var/log/grafana
+    plugins = /var/lib/grafana/plugins
+    provisioning = /etc/grafana/provisioning
+    [server]
+    domain = grafana.${SECRET_DEV_DOMAIN}
+    root_url = https://grafana.${SECRET_DEV_DOMAIN}
+  plugins: natel-discrete-panel,pr0ps-trackmap-panel,grafana-piechart-panel,vonage-status-panel,grafana-worldmap-panel,grafana-clock-panel

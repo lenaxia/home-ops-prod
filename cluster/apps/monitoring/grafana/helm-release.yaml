@@ -44,6 +44,14 @@ spec:
         check_for_updates: false
       log:
         mode: console
+      database:
+        type: postgres
+        host: defaultpg-rw.databases.svc.cluster.local
+        user: 
+        password:
+        max_idle_conn: 200
+        max_open_conn: 300
+        ssl_mode: disable
       grafana_net:
         url: https://grafana.net
       auth.basic:
