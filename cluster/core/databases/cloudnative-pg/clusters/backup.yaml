@@ -6,6 +6,7 @@ metadata:
   namespace: databases
 spec:
   instances: 3
+  imageName: ghcr.io/cloudnative-pg/postgresql:14.5
   primaryUpdateStrategy: unsupervised
   storage:
     size: 20Gi
@@ -55,6 +56,7 @@ spec:
           maxParallel: 8
         destinationPath: s3://cnpg-5wxuej/
         endpointURL: https://s3.${SECRET_DEV_DOMAIN}
+        serverName: defaultpg
         s3Credentials:
           accessKeyId:
             name: postgres-minio
