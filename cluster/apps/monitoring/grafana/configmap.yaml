@@ -20,8 +20,8 @@ data:
     [database]
     type = postgres
     host = defaultpg-rw.databases.svc.cluster.local
-    user = 
-    password =
+    user = ${POSTGRES_USERNAME}
+    password = ${POSTGRES_PASSWORD}
     max_idle_conn = 200
     max_open_conn = 300
     ssl_mode = disable
