@@ -63,6 +63,7 @@ spec:
             s3:
               s3: null
               endpoint: https://s3.${SECRET_DEV_DOMAIN}
+              region: local
               bucketnames: loki-9fy7zg
               insecure: true
               s3forcepathstyle: true
