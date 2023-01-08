@@ -66,3 +66,16 @@ spec:
 #            key: MINIO_REGION
 #        wal:
 #          maxParallel: 8
+#
+
+---
+apiVersion: postgresql.cnpg.io/v1
+kind: ScheduledBackup
+metadata:
+  name: defaultpg-scheduled-backup
+spec:
+  schedule: "0 0 0 * * *"
+  backupOwnerReference: self
+  immediate: true
+  cluster:
+    name: defaultpg
