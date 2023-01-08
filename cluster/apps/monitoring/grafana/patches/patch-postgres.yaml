@@ -9,10 +9,10 @@ spec:
       - name: init-db
         image: ghcr.io/onedr0p/postgres-initdb:14.6
         env:
-          - name: POSTGRES_RESET # True - drops the table upon init if it exists
-            value: false
-          - name: POSTGRES_RESET_CONFIRM # Are you sure you want to do this? 
-            value: "NO"
+          #- name: POSTGRES_RESET # True - drops the table upon init if it exists
+          #  value: "false"
+          #- name: POSTGRES_RESET_CONFIRM # Are you sure you want to do this? 
+          #  value: "NO"
           - name: POSTGRES_HOST
             value: defaultpg-rw.databases.svc.cluster.local
           - name: POSTGRES_DB
