@@ -4,3 +4,4 @@ namespace: monitoring
 resources:
   - helm-release.yaml
   - secret.sops.yaml
+  - configmap.yaml
