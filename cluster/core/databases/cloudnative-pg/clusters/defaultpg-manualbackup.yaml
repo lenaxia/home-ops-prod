@@ -1,8 +1,0 @@
-apiVersion: postgresql.cnpg.io/v1
-kind: Backup
-metadata:
-  name: defaultpg-backup
-  namespace: databases
-spec:
-  cluster:
-    name: defaultpg

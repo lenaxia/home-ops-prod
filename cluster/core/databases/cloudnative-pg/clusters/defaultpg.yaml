@@ -12,14 +12,12 @@ spec:
     storageClass: longhorn
   superuserSecret:
     name: postgres-superuser
-  bootstrap:
-    initdb:
-      database: default
-      owner: 3BK9XBSeNTKK7kFd 
-      secret:
-        name: postgres-superuser
   monitoring:
     enablePodMonitor: true
+  postgresql:
+    parameters:
+      max_connections: "300"
+      shared_buffers: 512MB
   backup:
     retentionPolicy: 30d
     barmanObjectStore:
@@ -27,7 +25,6 @@ spec:
         compression: bzip2
         maxParallel: 8
       destinationPath: s3://cnpg-5wxuej/
-        #endpointURL: http://minio.utilities.svc.cluster.local:9000
       endpointURL: https://s3.${SECRET_DEV_DOMAIN}
       serverName: defaultpg
       s3Credentials:
@@ -41,32 +38,39 @@ spec:
           name: postgres-minio
           key: MINIO_REGION
 
+#  bootstrap:
+#    initdb:
+#      database: default
+#      owner: 3BK9XBSeNTKK7kFd 
+#      secret:
+#        name: postgres-superuser
+
 # CNPG Recovery
 # https://cloudnative-pg.io/documentation/1.15/bootstrap/#bootstrap-from-a-backup-recovery
-#
-#  bootstrap:
-#    recovery:
-#      source: defaultpgBackup
-#
-#  externalClusters:
-#    - name: defaultpgBackup
-#      barmanObjectStore:
-#        destinationPath: s3://cnpg-5wxuej/
-#        endpointURL: https://s3.${SECRET_DEV_DOMAIN}
-#        serverName: defaultpg
-#        s3Credentials:
-#          accessKeyId:
-#            name: postgres-minio
-#            key: MINIO_ACCESS_KEY
-#          secretAccessKey:
-#            name: postgres-minio
-#            key: MINIO_SECRET_KEY
-#          region:
-#            name: postgres-minio
-#            key: MINIO_REGION
-#        wal:
-#          maxParallel: 8
-#
+
+  bootstrap:
+    recovery:
+      source: defaultpgBackup
+
+  externalClusters:
+    - name: defaultpgBackup
+      barmanObjectStore:
+        wal:
+          compression: bzip2
+          maxParallel: 8
+        destinationPath: s3://cnpg-5wxuej/
+        endpointURL: https://s3.thekao.cloud
+        serverName: defaultpg
+        s3Credentials:
+          accessKeyId:
+            name: postgres-minio
+            key: MINIO_ACCESS_KEY
+          secretAccessKey:
+            name: postgres-minio
+            key: MINIO_SECRET_KEY
+          region:
+            name: postgres-minio
+            key: MINIO_REGION
 
 ---
 apiVersion: postgresql.cnpg.io/v1
@@ -75,8 +79,8 @@ metadata:
   name: defaultpg-scheduled-backup
   namespace: databases
 spec:
-  schedule: "0 0 0 * * *"
-  backupOwnerReference: self
+  schedule: "@daily"
   immediate: true
+  backupOwnerReference: self
   cluster:
     name: defaultpg

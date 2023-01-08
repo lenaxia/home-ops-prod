@@ -3,7 +3,6 @@ kind: Kustomization
 namespace: databases
 resources:
   - helm-release.yaml
-    #- scheduled-backup.yaml
   - secret.sops.yaml
 configMapGenerator:
   - name: cloudnative-pg-dashboard
