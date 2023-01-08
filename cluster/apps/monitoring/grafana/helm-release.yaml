@@ -24,12 +24,28 @@ spec:
   values:
     replicas: 1
     env:
-      GF_EXPLORE_ENABLED: true
-      GF_PANELS_DISABLE_SANITIZE_HTML: true
-      GF_LOG_FILTERS: rendering:debug
-      GF_DATE_FORMATS_FULL_DATE: "MMM Do, YYYY hh:mm:ss a"
-      GF_SECURITY_ALLOW_EMBEDDING: true
-      GF_SECURITY_COOKIE_SAMESITE: grafana
+      - name: GF_EXPLORE_ENABLED
+        value: true
+      - name: GF_PANELS_DISABLE_SANITIZE_HTML
+        value: true
+      - name: GF_LOG_FILTERS: rendering
+        value: debug
+      - name: GF_DATE_FORMATS_FULL_DATE
+        value: "MMM Do, YYYY hh:mm:ss a"
+      - name: GF_SECURITY_ALLOW_EMBEDDING
+        value: true
+      - name: GF_SECURITY_COOKIE_SAMESITE
+        value: grafana
+      - name: POSTGRES_USERNAME
+        valueFrom:
+          secretKeyRef:
+            name: *app
+            key: POSTGRES_USERNAME
+      - name: POSTGRES_PASSWORD
+        valueFrom:
+          secretKeyRef:
+            name: *app
+            key: POSTGRES_PASSWORD
     envFrom:
       - secretRef:
           name: *app
