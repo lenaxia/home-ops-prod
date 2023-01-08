@@ -50,7 +50,7 @@ spec:
       database:
         type: postgres
         host: defaultpg-rw.databases.svc.cluster.local
-        username: $__env{POSTGRES_USERNAME}
+        user: $__env{POSTGRES_USERNAME}
         password: $__env{POSTGRES_PASSWORD}
         max_idle_conn: 200
         max_open_conn: 300
