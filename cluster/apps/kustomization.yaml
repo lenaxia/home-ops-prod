@@ -39,6 +39,7 @@ resources:
   - ./dashboards/hajimari
 
   # Media Namespace
+  - ./media/plex
   - ./media/sonarr
   - ./media/radarr
   - ./media/bazarr
