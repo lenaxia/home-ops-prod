@@ -367,6 +367,7 @@ spec:
           policy: bypass
           resources:
             - "^/api/.*$"
+            - "^/api"
 
         # rules:
         # - domain_regex: '^.*\.example.com$'
