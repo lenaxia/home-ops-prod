@@ -57,9 +57,6 @@ spec:
       repository: ghcr.io/authelia/authelia
       tag: 4.37.5
       pullPolicy: Always
-    deployment:
-      kind: Deployment
-      replicas: 3
     service:
       enabled: true
       type: LoadBalancer
@@ -71,7 +68,7 @@ spec:
         metallb.universe.tf/address-pool: dev-infra
     pod:
       # Must be Deployment, DaemonSet, or StatefulSet.
-      kind: Deployment
+      kind: Daemonset
       replicas: 3
 
     envFrom:
