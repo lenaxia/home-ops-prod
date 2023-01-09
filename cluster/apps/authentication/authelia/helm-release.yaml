@@ -361,6 +361,13 @@ spec:
             #utilities
             - "hajimari.${SECRET_DEV_DOMAIN}"
           policy: one_factor
+        # Baby API
+        - domain:
+            - "baby.${SECRET_DEV_DOMAIN}"
+          policy: bypass
+          resources:
+            - "^/api/.*$"
+
         # rules:
         # - domain_regex: '^.*\.example.com$'
         #   policy: bypass
