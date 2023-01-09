@@ -24,7 +24,7 @@ spec:
       retries: 4
   upgrade:
     remediation:
-      retries: 6
+      retries: 4
   postRenderers:
   - kustomize: 
       patchesStrategicMerge:
