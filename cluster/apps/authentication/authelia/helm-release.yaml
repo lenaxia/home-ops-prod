@@ -281,6 +281,13 @@ spec:
             - "^/admin/.*$"
             - "^/admin"
           policy: two_factor
+        # Baby API
+        - domain:
+            - "baby.${SECRET_DEV_DOMAIN}"
+          policy: bypass
+          resources:
+            - "^/api/.*$"
+            - "^/api"
         # Local only bypass policies
         - domain: 
             - "ldap.${SECRET_DEV_DOMAIN}"
@@ -361,13 +368,6 @@ spec:
             #utilities
             - "hajimari.${SECRET_DEV_DOMAIN}"
           policy: one_factor
-        # Baby API
-        - domain:
-            - "baby.${SECRET_DEV_DOMAIN}"
-          policy: bypass
-          resources:
-            - "^/api/.*$"
-            - "^/api"
 
         # rules:
         # - domain_regex: '^.*\.example.com$'
