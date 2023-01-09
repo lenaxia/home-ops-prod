@@ -26,6 +26,7 @@ resources:
   
   # Home
   - ./home/mealie
+  - ./home/babybuddy
 
   # Monitoring Namespace
   - ./monitoring/prometheus-stack
