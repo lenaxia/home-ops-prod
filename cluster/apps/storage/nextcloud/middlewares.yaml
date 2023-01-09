@@ -70,4 +70,4 @@ spec:
       - name: middlewares-rate-limit
       - name: middlewares-nextcloud-wellknown1
       - name: middlewares-nextcloud-wellknown2
-        #- name: middlewares-authelia
+      - name: middlewares-authelia

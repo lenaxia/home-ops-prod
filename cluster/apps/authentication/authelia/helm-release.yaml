@@ -289,6 +289,7 @@ spec:
         - domain: 
             - "ldap.${SECRET_DEV_DOMAIN}"
             - "collabora.${SECRET_DEV_DOMAIN}"
+            - "hub.${SECRET_DEV_DOMAIN}"
           policy: bypass
           networks:
             - private
