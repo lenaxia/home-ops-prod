@@ -22,7 +22,7 @@ spec:
     remediation:
       retries: 12
   values:
-    replicas: 1
+    replicas: 3
     env:
       GF_EXPLORE_ENABLED: true
       GF_PANELS_DISABLE_SANITIZE_HTML: true
