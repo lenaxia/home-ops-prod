@@ -72,7 +72,7 @@ spec:
     pod:
       # Must be Deployment, DaemonSet, or StatefulSet.
       kind: Deployment
-      replicas: 1
+      replicas: 3
 
     envFrom:
       - secretRef:
