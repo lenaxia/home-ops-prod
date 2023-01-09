@@ -68,7 +68,7 @@ spec:
         metallb.universe.tf/address-pool: dev-infra
     pod:
       # Must be Deployment, DaemonSet, or StatefulSet.
-      kind: Daemonset
+      kind: Deployment
       replicas: 3
 
     envFrom:
