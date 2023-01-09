@@ -425,9 +425,9 @@ spec:
         ## Redis Provider
         ##
         redis:
-          enabled: false 
-          enabledSecret: false
-          host: ${RURI_ADDR}
+          enabled: true
+          enabledSecret: true
+          host: redis-master.databases.svc.cluster.local
           port: 6379
           username: ""
           database_index: 0
