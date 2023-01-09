@@ -74,7 +74,7 @@ spec:
               key: password
       extraInitContainers:
         - name: wait-database
-          image: alpine:3.17.0
+          image: alpine:3.17.1
           imagePullPolicy: IfNotPresent
           command:
             - sh
@@ -88,7 +88,7 @@ spec:
             - name: POSTGRES_HOST
               value: &postgresHost defaultpg-rw.databases.svc.cluster.local
         - name: wait-redis
-          image: alpine:3.17.0
+          image: alpine:3.17.1
           imagePullPolicy: IfNotPresent
           command:
             - sh
