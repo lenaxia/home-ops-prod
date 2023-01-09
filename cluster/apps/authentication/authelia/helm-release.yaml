@@ -352,11 +352,13 @@ spec:
           - "group:administrators"
         # Public services - 1 Factor
         - domain:
+            #home
+            - "baby.${SECRET_DEV_DOMAIN}"
             #media
             - "library.${SECRET_DEV_DOMAIN}"
             - "plex.${SECRET_DEV_DOMAIN}"
             - "request.${SECRET_DEV_DOMAIN}"
-            #utilitie
+            #utilities
             - "hajimari.${SECRET_DEV_DOMAIN}"
           policy: one_factor
         # rules:
