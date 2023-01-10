@@ -39,7 +39,7 @@ variable "k3_agent01_disksize" { default = "150G" }
 variable "k3_agent01_host" { default = "nono" }
 
 variable "k3_agent02_offset" { default = 2 }
-variable "k3_agent02_mem" { default = "11312" }
+variable "k3_agent02_mem" { default = "26624" }
 variable "k3_agent02_disksize" { default = "700G" }
 variable "k3_agent02_host" { default = "ifurita" }
 
