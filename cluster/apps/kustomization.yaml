@@ -11,10 +11,10 @@ resources:
   - ./kube-system/reloader
   - ./kube-system/descheduler
     #- ./kube-system/metrics-server  # k3s already comes with a metrics server
-  - .//kyverno
+  - ./kyverno
   - ./storage/minio
-  - ./storage/kopia-web
-  - ./storage/nextcloud
+    #  - ./storage/kopia-web
+    #  - ./storage/nextcloud
   - ./storage/nextcloud/redis
   - ./storage/onlyoffice
 
@@ -25,21 +25,21 @@ resources:
   - ./authentication/authelia
   
   # Home
-  - ./home/mealie
-  - ./home/babybuddy
+  #  - ./home/mealie
+  #  - ./home/babybuddy
 
   # Monitoring Namespace
   - ./monitoring/prometheus-stack
-  - ./monitoring/grafana
+    #  - ./monitoring/grafana
   - ./monitoring/flux
-  - ./monitoring/loki
+    #  - ./monitoring/loki
   #- ./monitoring/tobs
 
   # Default Namespace
   - ./dashboards/hajimari
 
   # Media Namespace
-  - ./media/plex
+  #  - ./media/plex
   - ./media/sonarr
   - ./media/radarr
   - ./media/bazarr
@@ -50,11 +50,11 @@ resources:
   - ./media/calibre
   - ./media/calibre-web
   - ./media/tautulli
-  - ./media/outline
+    #  - ./media/outline
   - ./media/imaginary
 
   # IOT Namespace
-  - ./iot/mosquitto
+  #  - ./iot/mosquitto
   - ./iot/node-red
 
   # Utilities Namespace
