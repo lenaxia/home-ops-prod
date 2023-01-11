@@ -96,7 +96,7 @@ spec:
       existingConfigMap: ""
     
       log:
-        level: debug
+        level: info 
         format: text
         ## File path where the logs will be written. If not set logs are written to stdout.
         # file_path: /config/authelia.log
