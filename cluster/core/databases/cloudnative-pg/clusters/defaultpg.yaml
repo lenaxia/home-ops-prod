@@ -18,25 +18,25 @@ spec:
     parameters:
       max_connections: "300"
       shared_buffers: 512MB
-  backup:
-    retentionPolicy: 30d
-    barmanObjectStore:
-      wal:
-        compression: bzip2
-        maxParallel: 8
-      destinationPath: s3://cnpg-5wxuej/
-      endpointURL: https://s3.${SECRET_DEV_DOMAIN}
-      serverName: defaultpg
-      s3Credentials:
-        accessKeyId:
-          name: postgres-minio
-          key: MINIO_ACCESS_KEY
-        secretAccessKey:
-          name: postgres-minio
-          key: MINIO_SECRET_KEY
-        region:
-          name: postgres-minio
-          key: MINIO_REGION
+#  backup:
+#    retentionPolicy: 30d
+#    barmanObjectStore:
+#      wal:
+#        compression: bzip2
+#        maxParallel: 8
+#      destinationPath: s3://cnpg-5wxuej/
+#      endpointURL: https://s3.${SECRET_DEV_DOMAIN}
+#      serverName: defaultpg
+#      s3Credentials:
+#        accessKeyId:
+#          name: postgres-minio
+#          key: MINIO_ACCESS_KEY
+#        secretAccessKey:
+#          name: postgres-minio
+#          key: MINIO_SECRET_KEY
+#        region:
+#          name: postgres-minio
+#          key: MINIO_REGION
 
 #  bootstrap:
 #    initdb:
@@ -71,15 +71,15 @@ spec:
           region:
             name: postgres-minio
             key: MINIO_REGION
-              #---
-              #apiVersion: postgresql.cnpg.io/v1
-              #kind: ScheduledBackup
-              #metadata:
-              #  name: defaultpg-scheduled-backup
-              #  namespace: databases
-              #spec:
-              #  schedule: "@daily"
-              #  immediate: true
-              #  backupOwnerReference: self
-              #  cluster:
-              #    name: defaultpg
+#---
+#apiVersion: postgresql.cnpg.io/v1
+#kind: ScheduledBackup
+#metadata:
+#  name: defaultpg-scheduled-backup
+#  namespace: databases
+#spec:
+#  schedule: "@daily"
+#  immediate: true
+#  backupOwnerReference: self
+#  cluster:
+#    name: defaultpg
