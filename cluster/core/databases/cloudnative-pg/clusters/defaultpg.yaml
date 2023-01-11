@@ -2,7 +2,7 @@
 apiVersion: postgresql.cnpg.io/v1
 kind: Cluster
 metadata:
-  name: defaultpg
+  name: postgres
   namespace: databases
 spec:
   instances: 3
