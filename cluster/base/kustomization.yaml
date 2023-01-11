@@ -1,9 +1,0 @@
-apiversion: kustomize.config.k8s.io/v1beta1
-kind: Kustomization
-resources:
-  - apps.yaml
-  - crds.yaml
-  - config.yaml
-  - core.yaml
-  - manifests.yaml
-  - infrastructure.yaml
