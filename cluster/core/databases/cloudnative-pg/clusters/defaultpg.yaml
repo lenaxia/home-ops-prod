@@ -26,7 +26,7 @@ spec:
 #        maxParallel: 8
 #      destinationPath: s3://cnpg-5wxuej/
 #      endpointURL: https://s3.${SECRET_DEV_DOMAIN}
-#      serverName: defaultpg
+#      serverName: defaultpg-backup
 #      s3Credentials:
 #        accessKeyId:
 #          name: postgres-minio
