@@ -459,9 +459,9 @@ spec:
           enabled: true
           host: ${RURI_ADDR}
           port: 3306
-          database: authelia-k3s-2
-          username: authelia-k3s-2
-          password: authelia123
+          database: auth
+          username: auth
+          password: authelia
           timeout: 10s
 
         postgres:
