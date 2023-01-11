@@ -25,14 +25,14 @@ resources:
   - ./authentication/authelia
   
   # Home
-  #  - ./home/mealie
-  #  - ./home/babybuddy
+  - ./home/mealie
+  - ./home/babybuddy
 
   # Monitoring Namespace
   - ./monitoring/prometheus-stack
   - ./monitoring/grafana
   - ./monitoring/flux
-    #  - ./monitoring/loki
+  - ./monitoring/loki
   #- ./monitoring/tobs
 
   # Default Namespace
@@ -54,7 +54,7 @@ resources:
   - ./media/imaginary
 
   # IOT Namespace
-  #  - ./iot/mosquitto
+  - ./iot/mosquitto
   - ./iot/node-red
 
   # Utilities Namespace
