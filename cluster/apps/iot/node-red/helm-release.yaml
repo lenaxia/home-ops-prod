@@ -27,6 +27,7 @@ spec:
             - -c
             - >
               cp /package.json /data &&
+              cp /flows_cred.json /data &&
               cd /data &&
               npm install
     
@@ -64,6 +65,13 @@ spec:
         name: packagejson
         subPath: package.json
         mountPath: /package.json
+        defaultMode: 0644
+      packagejson:
+        enabled: true
+        type: secret
+        name: flowscredjson
+        subPath: flows_cred.json
+        mountPath: /flows_cred.json
         defaultMode: 0644
 
     ingress:
