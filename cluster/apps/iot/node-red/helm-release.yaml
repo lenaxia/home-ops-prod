@@ -25,7 +25,10 @@ spec:
           command:
             - /bin/bash
             - -c
-            - cp /package.json /data
+            - >
+              cp /package.json /data
+              cd /data
+              npm install
     
     # -- environment variables.
     # @default -- See below
