@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: *appname
-      version: 0.8.52
+      version: 0.8.38
       sourceRef:
         kind: HelmRepository
         name: authelia-charts
@@ -459,8 +459,8 @@ spec:
           enabled: true
           host: ${RURI_ADDR}
           port: 3306
-          database: auth
-          username: auth
+          database: authelia-k3s
+          username: authelia-k3s
           password: authelia
           timeout: 10s
 
