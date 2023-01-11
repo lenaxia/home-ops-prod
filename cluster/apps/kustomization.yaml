@@ -13,7 +13,7 @@ resources:
     #- ./kube-system/metrics-server  # k3s already comes with a metrics server
   - ./kyverno
   - ./storage/minio
-    #  - ./storage/kopia-web
+  - ./storage/kopia-web
     #  - ./storage/nextcloud
   - ./storage/nextcloud/redis
   - ./storage/onlyoffice
@@ -30,7 +30,7 @@ resources:
 
   # Monitoring Namespace
   - ./monitoring/prometheus-stack
-    #  - ./monitoring/grafana
+  - ./monitoring/grafana
   - ./monitoring/flux
     #  - ./monitoring/loki
   #- ./monitoring/tobs
@@ -50,7 +50,7 @@ resources:
   - ./media/calibre
   - ./media/calibre-web
   - ./media/tautulli
-    #  - ./media/outline
+  - ./media/outline
   - ./media/imaginary
 
   # IOT Namespace
