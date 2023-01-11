@@ -2,7 +2,7 @@
 apiVersion: postgresql.cnpg.io/v1
 kind: Cluster
 metadata:
-  name: defaultpg2
+  name: defaultpg
   namespace: databases
 spec:
   instances: 3
@@ -18,25 +18,25 @@ spec:
     parameters:
       max_connections: "300"
       shared_buffers: 512MB
-#  backup:
-#    retentionPolicy: 30d
-#    barmanObjectStore:
-#      wal:
-#        compression: bzip2
-#        maxParallel: 8
-#      destinationPath: s3://cnpg-5wxuej/
-#      endpointURL: https://s3.${SECRET_DEV_DOMAIN}
-#      serverName: defaultpg-backup
-#      s3Credentials:
-#        accessKeyId:
-#          name: postgres-minio
-#          key: MINIO_ACCESS_KEY
-#        secretAccessKey:
-#          name: postgres-minio
-#          key: MINIO_SECRET_KEY
-#        region:
-#          name: postgres-minio
-#          key: MINIO_REGION
+  backup:
+    retentionPolicy: 30d
+    barmanObjectStore:
+      wal:
+        compression: bzip2
+        maxParallel: 8
+      destinationPath: s3://cnpg-5wxuej/
+      endpointURL: https://s3.${SECRET_DEV_DOMAIN}
+      serverName: defaultpg-backup-v2
+      s3Credentials:
+        accessKeyId:
+          name: postgres-minio
+          key: MINIO_ACCESS_KEY
+        secretAccessKey:
+          name: postgres-minio
+          key: MINIO_SECRET_KEY
+        region:
+          name: postgres-minio
+          key: MINIO_REGION
 
 #  bootstrap:
 #    initdb:
@@ -60,7 +60,7 @@ spec:
           maxParallel: 8
         destinationPath: s3://cnpg-5wxuej/
         endpointURL: https://s3.${SECRET_DEV_DOMAIN}
-        serverName: defaultpg
+        serverName: defaultpg-backup-v1
         s3Credentials:
           accessKeyId:
             name: postgres-minio
