@@ -49,7 +49,7 @@ spec:
           metallb.universe.tf/address-pool: dev-infra
 
     replica:
-      replicaCount: 3
+      replicaCount: 2
       persistence: 
         enabled: true
         storageClass: local-path
