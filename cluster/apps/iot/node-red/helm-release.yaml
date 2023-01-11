@@ -19,6 +19,13 @@ spec:
       repository: nodered/node-red
       tag: 3.0.2
       pullPolicy: Always
+    lifecycle:
+      postStart:
+        exec:
+          command:
+            - /bin/bash
+            - -c
+            - mv /package.json /data
     
     # -- environment variables.
     # @default -- See below
@@ -48,6 +55,13 @@ spec:
       data:
         enabled: true
         existingClaim: "nodered-config-volume"
+      packagejson:
+        enabled: true
+        type: configMap
+        name: packagejson
+        subPath: package.json
+        mountPath: /package.json
+        defaultMode: 0644
 
     ingress:
       main:

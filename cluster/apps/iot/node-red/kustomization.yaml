@@ -7,3 +7,9 @@ commonLabels:
 resources:
   - config-pvc.yaml
   - helm-release.yaml
+configMapGenerator:
+  - name: packagejson
+    files:
+      - ./config/package.json
+generatorOptions:
+  disableNameSuffixHash: true
