@@ -25,33 +25,33 @@ spec:
   upgrade:
     remediation:
       retries: 4
-  postRenderers:
-  - kustomize: 
-      patchesStrategicMerge:
-        - kind: Deployment
-          apiVersion: apps/v1
-          metadata:
-            name: authelia
-          spec:
-            template:
-              spec:
-                initContainers:
-                - name: init-db
-                  image: ghcr.io/onedr0p/postgres-initdb:14.6
-                  env:
-                    - name: POSTGRES_HOST
-                      value: defaultpg-rw.databases.svc.cluster.local
-                    - name: POSTGRES_DB
-                      value: authelia
-                    - name: POSTGRES_SUPER_PASS
-                      valueFrom:
-                        secretKeyRef:
-                          name: postgres-superuser
-                          key: password
-                    - name: POSTGRES_USER
-                      value: authelia
-                    - name: POSTGRES_PASS
-                      value: authelia
+        #  postRenderers:
+        #  - kustomize: 
+        #      patchesStrategicMerge:
+        #        - kind: Deployment
+        #          apiVersion: apps/v1
+        #          metadata:
+        #            name: authelia
+        #          spec:
+        #            template:
+        #              spec:
+        #                initContainers:
+        #                - name: init-db
+        #                  image: ghcr.io/onedr0p/postgres-initdb:14.6
+        #                  env:
+        #                    - name: POSTGRES_HOST
+        #                      value: defaultpg-rw.databases.svc.cluster.local
+        #                    - name: POSTGRES_DB
+        #                      value: authelia
+        #                    - name: POSTGRES_SUPER_PASS
+        #                      valueFrom:
+        #                        secretKeyRef:
+        #                          name: postgres-superuser
+        #                          key: password
+        #                    - name: POSTGRES_USER
+        #                      value: authelia
+        #                    - name: POSTGRES_PASS
+        #                      value: authelia
   values:
     image:
       repository: ghcr.io/authelia/authelia
