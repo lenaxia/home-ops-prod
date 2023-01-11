@@ -9,7 +9,7 @@ resources:
   - ./cert-manager
 
   # Databases
-  #- ./databases/redis
+  - ./databases/redis
   - ./databases/redis-operator
   - ./databases/cloudnative-pg
   - ./databases/cloudnative-pg/clusters
