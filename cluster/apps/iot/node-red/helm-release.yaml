@@ -66,13 +66,6 @@ spec:
         subPath: package.json
         mountPath: /package.json
         defaultMode: 0644
-      flowscredjson:
-        enabled: true
-        type: secret
-        name: flowscredjson
-        subPath: flows_cred.json
-        mountPath: /flows_cred.json
-        defaultMode: 0644
 
     ingress:
       main:
