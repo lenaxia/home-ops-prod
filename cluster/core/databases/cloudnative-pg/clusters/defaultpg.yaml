@@ -5,7 +5,7 @@ metadata:
   name: defaultpg
   namespace: databases
 spec:
-  instances: 3
+  instances: 2
   imageName: ghcr.io/cloudnative-pg/postgresql:14.5
   primaryUpdateStrategy: unsupervised
   storage:
@@ -53,8 +53,6 @@ spec:
   bootstrap:
     recovery:
       source: defaultpgBackup
-      recoveryTarget:
-        targetTime: "2023-01-10 00:00:27.425144+00:00"
 
   externalClusters:
     - name: defaultpgBackup
@@ -65,7 +63,7 @@ spec:
         destinationPath: s3://cnpg-5wxuej/
           #endpointURL: https://s3.${SECRET_DEV_DOMAIN}
         endpointURL: http://minio.storage.svc.cluster.local:9000
-        serverName: defaultpg-backup-v1
+        serverName: backup-backup
         s3Credentials:
           accessKeyId:
             name: postgres-minio
