@@ -6,6 +6,7 @@ metadata:
   namespace: databases
 spec:
   instances: 3
+  imageName: ghcr.io/cloudnative-pg/postgresql:14.5
   primaryUpdateStrategy: unsupervised
   storage:
     size: 20Gi
@@ -18,25 +19,25 @@ spec:
     parameters:
       max_connections: "300"
       shared_buffers: 512MB
-        #  backup:
-        #    retentionPolicy: 30d
-        #    barmanObjectStore:
-        #      wal:
-        #        compression: bzip2
-        #        maxParallel: 8
-        #      destinationPath: s3://cnpg-5wxuej/
-        #      endpointURL: https://s3.${SECRET_DEV_DOMAIN}
-        #      serverName: defaultpg-backup-v2
-        #      s3Credentials:
-        #        accessKeyId:
-        #          name: postgres-minio
-        #          key: MINIO_ACCESS_KEY
-        #        secretAccessKey:
-        #          name: postgres-minio
-        #          key: MINIO_SECRET_KEY
-        #        region:
-        #          name: postgres-minio
-        #          key: MINIO_REGION
+  backup:
+    retentionPolicy: 30d
+    barmanObjectStore:
+      wal:
+        compression: bzip2
+        maxParallel: 8
+      destinationPath: s3://cnpg-5wxuej/
+      endpointURL: https://s3.${SECRET_DEV_DOMAIN}
+      serverName: defaultpg-backup-v2
+      s3Credentials:
+        accessKeyId:
+          name: postgres-minio
+          key: MINIO_ACCESS_KEY
+        secretAccessKey:
+          name: postgres-minio
+          key: MINIO_SECRET_KEY
+        region:
+          name: postgres-minio
+          key: MINIO_REGION
 
 #  bootstrap:
 #    initdb:
