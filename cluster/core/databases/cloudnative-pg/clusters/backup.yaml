@@ -21,26 +21,26 @@ spec:
 #        name: postgres-superuser
   monitoring:
     enablePodMonitor: true
-  backup:
-    retentionPolicy: 30d
-    barmanObjectStore:
-      wal:
-        compression: bzip2
-        maxParallel: 8
-      destinationPath: s3://cnpg-5wxuej/
-      #endpointURL: https://s3.${SECRET_DEV_DOMAIN}
-      endpointURL: http://minio.storage.svc.cluster.local:9000
-      serverName: backup-backup
-      s3Credentials:
-        accessKeyId:
-          name: postgres-minio
-          key: MINIO_ACCESS_KEY
-        secretAccessKey:
-          name: postgres-minio
-          key: MINIO_SECRET_KEY
-        region:
-          name: postgres-minio
-          key: MINIO_REGION
+      #  backup:
+      #    retentionPolicy: 30d
+      #    barmanObjectStore:
+      #      wal:
+      #        compression: bzip2
+      #        maxParallel: 8
+      #      destinationPath: s3://cnpg-5wxuej/
+      #      #endpointURL: https://s3.${SECRET_DEV_DOMAIN}
+      #      endpointURL: http://minio.storage.svc.cluster.local:9000
+      #      serverName: backup-backup
+      #      s3Credentials:
+      #        accessKeyId:
+      #          name: postgres-minio
+      #          key: MINIO_ACCESS_KEY
+      #        secretAccessKey:
+      #          name: postgres-minio
+      #          key: MINIO_SECRET_KEY
+      #        region:
+      #          name: postgres-minio
+      #          key: MINIO_REGION
   
 # CNPG Recovery
 # https://cloudnative-pg.io/documentation/1.15/bootstrap/#bootstrap-from-a-backup-recovery

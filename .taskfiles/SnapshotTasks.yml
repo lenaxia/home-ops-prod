@@ -2,15 +2,15 @@
 version: "3"
 
 x-preconditions: &preconditions
-  #  - &has-app
-  #    sh: kubectl get deploy,sts -A | awk '/{{.APP}}\s/{print $1}' | grep .
-  #    msg: "App '{{.APP}}' not found"
+  - &has-app
+    sh: kubectl get deploy,sts -A | awk '/{{.APP}}\s/{print $1}' | grep .
+    msg: "App '{{.APP}}' not found"
   #  - &has-cronjob
   #    sh: kubectl get cronjob -n {{.NAMESPACE}} {{.APP}}-{{.VOLUME}}-snapshot
   #    msg: "CronJob '{{.APP}}-{{.VOLUME}}-snapshot' in namespace '{{.NAMESPACE}}' not found"
-  #  - &has-volume
-  #    sh: kubectl get pvc -n {{.NAMESPACE}} {{.VOLUME}}
-  #    msg: "PersistentVolumeClaim '{{.VOLUME}}' in namespace '{{.NAMESPACE}}' not found"
+  - &has-volume
+    sh: kubectl get pvc -n {{.NAMESPACE}} {{.VOLUME}}
+    msg: "PersistentVolumeClaim '{{.VOLUME}}' in namespace '{{.NAMESPACE}}' not found"
   #  - &has-restore-job
   #    msg: "File '{{.PROJECT_DIR}}/hack/restore-job.yaml' not found"
   #    sh: "test -f {{.PROJECT_DIR}}/hack/restore-job.yaml"
@@ -71,7 +71,7 @@ tasks:
       SNAPSHOT:
         sh: |
           if [[ {{.SNAPSHOT}} == "latest" ]]; then
-            kubectl exec deployment/kopia -n {{.KOPIA_NAMESPACE | default "default"}} -- kopia snapshot list /data/{{.NAMESPACE}}/{{.APP}} --json | jq --raw-output '.[-1] | .id'
+            kubectl exec deployment/kopia -n {{.KOPIA_NAMESPACE | default "storage"}} -- kopia snapshot list /data/{{.NAMESPACE}}/{{.APP}} --json | jq --raw-output '.[-1] | .id'
           else
             echo {{.SNAPSHOT}}
           fi
