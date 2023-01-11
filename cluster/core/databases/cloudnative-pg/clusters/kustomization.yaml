@@ -3,4 +3,4 @@ kind: Kustomization
 resources:
   #- defaultpg.yaml
   #- defaultpg2.yaml
-  #- backup.yaml
+  - backup.yaml

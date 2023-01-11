@@ -47,6 +47,8 @@ spec:
   bootstrap:
     recovery:
       source: defaultpgBackup
+      recoveryTarget:
+        targetTime: "2023-01-10 00:00:27.425144+00:00"
 
   externalClusters:
     - name: defaultpgBackup

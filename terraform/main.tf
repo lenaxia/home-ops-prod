@@ -26,7 +26,7 @@ provider "proxmox" {
 ## Server 00 
 ##########
 
-resource "proxmox_vm_qemu" "k3-server-lafiel" {
+resource "proxmox_vm_qemu" "k3-server-00" {
   count = var.k3_server_count
   name = "${format("k3-server-%02s", count.index + var.k3_server00_offset)}"
   target_node = var.k3_server00_host 
@@ -68,7 +68,7 @@ resource "proxmox_vm_qemu" "k3-server-lafiel" {
 ## Agent 00 
 ##########
 
-resource "proxmox_vm_qemu" "k3-agent-lafiel" {
+resource "proxmox_vm_qemu" "k3-agent-00" {
   count = var.k3_agent_count
   name = "${format("k3-agent-%02s", count.index + var.k3_agent00_offset)}"
   target_node = var.k3_agent00_host
@@ -111,7 +111,7 @@ resource "proxmox_vm_qemu" "k3-agent-lafiel" {
 ## Server 01
 ##########
 
-resource "proxmox_vm_qemu" "k3-server-yurika" {
+resource "proxmox_vm_qemu" "k3-server-01" {
   count = 0
   #count = var.k3_server_count
   name = "${format("k3-server-%02s", count.index + var.k3_server01_offset)}"
@@ -153,7 +153,7 @@ resource "proxmox_vm_qemu" "k3-server-yurika" {
 ## Agent 01
 ##########
 
-resource "proxmox_vm_qemu" "k3-agent-yurika" {
+resource "proxmox_vm_qemu" "k3-agent-01" {
   count = var.k3_agent_count
   name = "${format("k3-agent-%02s", count.index + var.k3_agent01_offset)}"
   target_node = var.k3_agent01_host
@@ -196,7 +196,7 @@ resource "proxmox_vm_qemu" "k3-agent-yurika" {
 ## Server 02
 ##########
 
-resource "proxmox_vm_qemu" "k3-server-melfina" {
+resource "proxmox_vm_qemu" "k3-server-02" {
   count = 0
   #count = var.k3_server_count
   name = "${format("k3-server-%02s", count.index + var.k3_server02_offset)}"
@@ -238,7 +238,7 @@ resource "proxmox_vm_qemu" "k3-server-melfina" {
 ## Agent 02
 ##########
 
-resource "proxmox_vm_qemu" "k3-agent-melfina" {
+resource "proxmox_vm_qemu" "k3-agent-02" {
   count = var.k3_agent_count
   name = "${format("k3-agent-%02s", count.index + var.k3_agent02_offset)}"
   target_node = var.k3_agent02_host
@@ -282,7 +282,7 @@ resource "proxmox_vm_qemu" "k3-agent-melfina" {
 ##########
 
 resource "proxmox_vm_qemu" "k3-dev-server-00" {
-  count = 1
+  count = 0
   name = "${format("k3-dev-server-%02s", count.index + var.k3_dev_server00_offset)}"
   target_node = var.k3_dev_server00_host 
   clone = var.template_name
@@ -324,7 +324,7 @@ resource "proxmox_vm_qemu" "k3-dev-server-00" {
 ##########
 
 resource "proxmox_vm_qemu" "k3-dev-agent-00" {
-  count = 1
+  count = 0
   name = "${format("k3-dev-agent-%02s", count.index + var.k3_dev_agent00_offset)}"
   target_node = var.k3_dev_agent00_host
   clone = var.template_name
