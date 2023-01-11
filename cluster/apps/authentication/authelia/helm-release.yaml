@@ -21,10 +21,10 @@ spec:
   install:
     createNamespace: true
     remediation:
-      retries: 5
+      retries: 6
   upgrade:
     remediation:
-      retries: 4
+      retries: 5
         #  postRenderers:
         #  - kustomize: 
         #      patchesStrategicMerge:
