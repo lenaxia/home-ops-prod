@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+    name: ersatztv-config-volume
+    namespace: media
+    labels:
+      app: ersatztv
+      snapshot.home.arpa/enabled: "true"
+spec:
+    accessModes:
+        - ReadWriteOnce
+    storageClassName: longhorn
+    resources:
+        requests:
+            storage: 5Gi
+
