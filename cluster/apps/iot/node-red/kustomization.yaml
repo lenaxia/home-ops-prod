@@ -12,5 +12,8 @@ configMapGenerator:
   - name: packagejson
     files:
       - ./config/package.json
+  - name: settingsjs
+    files:
+      - ./config/settings.js
 generatorOptions:
   disableNameSuffixHash: true

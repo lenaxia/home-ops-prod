@@ -27,6 +27,7 @@ spec:
             - -c
             - >
               cp /package.json /data &&
+              cp /settings.js /data &&
               cd /data &&
               npm install
     
@@ -69,6 +70,13 @@ spec:
         name: packagejson
         subPath: package.json
         mountPath: /package.json
+        defaultMode: 0644
+      settingsjs:
+        enabled: true
+        type: configMap
+        name: settingsjs
+        subPath: settings.js
+        mountPath: /settings.js
         defaultMode: 0644
 
     ingress:
