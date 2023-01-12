@@ -33,6 +33,7 @@ resources:
   - ./monitoring/grafana
   - ./monitoring/flux
   - ./monitoring/loki
+  - ./monitoring/vector/ks.yaml
   #- ./monitoring/tobs
 
   # Default Namespace
