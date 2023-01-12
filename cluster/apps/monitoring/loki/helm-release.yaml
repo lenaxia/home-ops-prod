@@ -111,7 +111,7 @@ spec:
         repository: nginxinc/nginx-unprivileged
         tag: 1.23-alpine
       ingress:
-        enabled: false
+        enabled: true
         ingressClassName: "traefik"
         annotations:
           hajimari.io/enable: "true"
