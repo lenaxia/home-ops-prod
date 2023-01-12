@@ -40,7 +40,7 @@ resources:
   - ./dashboards/hajimari
 
   # Media Namespace
-  #- ./media/plex
+  - ./media/plex
   - ./media/ersatztv
   - ./media/sonarr
   - ./media/radarr
