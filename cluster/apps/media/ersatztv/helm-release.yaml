@@ -96,9 +96,9 @@ spec:
       transcode:
         enabled: true
         type: emptyDir
-          #    nodeSelector:
-          #      node-role.kubernetes.io/worker: "true"
-          #      intel.feature.node.kubernetes.io/gpu: "true"
+    nodeSelector:
+      node-role.kubernetes.io/worker: "true"
+      intel.feature.node.kubernetes.io/gpu: "true"
     affinity:
       podAntiAffinity:
         requiredDuringSchedulingIgnoredDuringExecution:
@@ -108,11 +108,11 @@ spec:
                   operator: In
                   values: ["plex"]
             topologyKey: kubernetes.io/hostname
-              #    resources:
-              #      requests:
-              #        gpu.intel.com/i915: 3
-              #        cpu: 100m
-              #        memory: 2000Mi
-              #      limits:
-              #        gpu.intel.com/i915: 3
-              #        memory: 10000Mi
+    resources:
+      requests:
+        gpu.intel.com/i915: 3
+        cpu: 100m
+        memory: 2000Mi
+      limits:
+        gpu.intel.com/i915: 3
+        memory: 10000Mi
