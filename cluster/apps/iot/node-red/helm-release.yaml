@@ -78,6 +78,13 @@ spec:
         subPath: settings.js
         mountPath: /settings.js
         defaultMode: 0644
+      flowscredjson:
+        enabled: false
+        type: secret
+        name: flowscredjson
+        subPath: flows_cred.json
+        mountPath: /flows_cred.json
+        defaultMode: 0644
 
     ingress:
       main:
