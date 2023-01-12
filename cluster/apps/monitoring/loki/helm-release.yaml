@@ -103,6 +103,8 @@ spec:
           reporting_enabled: false
       podAnnotations:
         secret.reloader.stakater.com/reload: loki-secret
+    ingress:
+      enabled: false
     gateway:
       enabled: true
       replicas: 3
@@ -119,7 +121,9 @@ spec:
           cert-manager.io/cluster-issuer: "letsencrypt-production"
           traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
         hosts:
-          - &host "loki.${SECRET_DEV_DOMAIN}"
+          - host: &host "loki.${SECRET_DEV_DOMAIN}"
+            paths:
+              - path: /
         tls:
           - hosts:
               - *host
