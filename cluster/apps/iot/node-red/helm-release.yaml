@@ -27,7 +27,6 @@ spec:
             - -c
             - >
               cp /package.json /data &&
-              cp /flows_cred.json /data &&
               cd /data &&
               npm install
     
@@ -45,6 +44,11 @@ spec:
       # -- Location of the flows configuration file.
       # If you set `FLOWS: ""` then the flow file can be set via the `flowFile` property in the `settings.js` file.
       FLOWS: flows.json
+      NODE_RED_CREDENTIAL_SECRET:
+        valueFrom:
+          secretKeyRef:
+            name: *appname
+            key: credential-secret
     
     # -- Configures service settings for the chart.
     # @default -- See values.yaml
