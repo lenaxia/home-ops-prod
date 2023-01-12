@@ -16,7 +16,7 @@ spec:
   interval: 5m
   install:
     remediation:
-      retries: 4
+      retries: 5
   upgrade:
     remediation:
       retries: 5
@@ -29,7 +29,7 @@ spec:
   values:
     service:
       ui:
-        type: LoadBalancer
+        #type: LoadBalancer
         nodePort: null
 
     persistence:
