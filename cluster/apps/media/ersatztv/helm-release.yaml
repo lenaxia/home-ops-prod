@@ -30,6 +30,7 @@ spec:
       TZ: "${TIMEZONE}"
     service:
       main:
+        type: LoadBalancer
         ports:
           http:
             port: &port 8409
