@@ -13,14 +13,14 @@ variable "kube_agent_disksize" {
 
 variable "k3_server_count" { default = 1 }
 variable "k3_agent_count" { default = 1 }
-variable "k3_server_disksize" { default = "30G" }
+variable "k3_server_disksize" { default = "50G" }
 variable "k3_server_base_offset" { default = 50 } # IP base offset, start counting from x.x.x.50
 variable "k3_agent_disksize" { default = "80G" }
 variable "k3_agent_base_offset" { default = 60 } # IP base offset, start counting from x.x.x.60
 variable "k3_dev_offset" { default = 70 } # IP base offset, start counting from x.x.x.70
 
 variable "k3_server00_offset" { default = 0 }
-variable "k3_server00_host" { default = "yurika" }
+variable "k3_server00_host" { default = "lafiel" }
 
 variable "k3_server01_offset" { default = 1 }
 variable "k3_server01_host" { default = "yurika" }
@@ -57,7 +57,7 @@ variable "k3_dev_agent00_host" { default = "lafiel" }
 
 variable "ssh_key_worklaptop" {
   default = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC+ZxDKfNmtdDEbYUNl4pQfYlatwD75uhcNkl5S/b/IdOT4Km/x1mpmkkaOonSUoPgucjgWHWebgNDYeJ3yoWjSMu4jzi5zBByXH9n2GsH50rQ/E7qwTogEfivIrzhxkHPCLy85Uy1Z7/FhZoe+B9YGmt9NHrI2Wy4FJd2pyfXg7YqeG2uaHy4ix2VAHS0kqbWfCnT13L1RO592CN3aINUAC8s54/DrLw1NKDBkN8S/c/FXNRwRQ84Auy4M5l+MXAMQl2EXab4rdaiwWN+Is00BANcckFZraQX9GgQYTWLlFTN+9CSEbQohRABYBpmeSizgDYM5e2SbVObbXBzWaztB mikekao@SEA-1800428659H"
-}
+} 
 variable "ssh_key_terraform" {
   default = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCVnuGiYRF0KdNfaBmrUgU2gaS7zC2e7tWgOg65wSod7lfCNuKV8j7Hdg53mF2cc6WIiOV14oWNNpo5wqFNJf4hP9ytecASTsoLEheCIFY+6bTfQHAirF5LoaHHplF0xa11V0SWzehcSB+bFsS9KiRlIY99YXyZ+uoSiJ5eLkUfBMxoS1zu2p3a/M+eaFxropdDY3yXZ2C3p0UpaRyM4Kpom4mHSUQz07Ii5PaT11B7FExb+xMKATf30n85sziH3kbBbWQ5emD9SAhHeetOO5QLJPNJwbYYW7R8j25R1v9mDQSrYQ96u2vwTIq6dUaC3rxHHtFm6CwVQ71MLqUrP9eG5F07+UH29tOlCVqwkBfnKyME+J4ZInQXc2qxWt6gGZigCMF4Kcl3GDxxLvJZlh+AiQpwjnacX6v5xY8HL31JgiMQf2x8nUakmAJ2+LWpdhYFmp8c+HWNXp6b9MIs02TNkDC2sK2h9lyDEz+8oKfwTAYGMWZQYFS51egVlloIEpE= ubuntu@terraform"
 }

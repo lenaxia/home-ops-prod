@@ -32,9 +32,9 @@ resource "proxmox_vm_qemu" "k3-server-00" {
   target_node = var.k3_server00_host 
   clone = var.template_name
   agent = 1
-  os_type = "cloud-init"
   disk_gb = null
-  qemu_os = null
+  os_type = "cloud-init"
+  qemu_os = "Linux"
   cores = 3
   sockets = 1
   cpu = "host"
@@ -52,12 +52,12 @@ resource "proxmox_vm_qemu" "k3-server-00" {
   network {
     model = "virtio"
     bridge = "vmbr0"
-    mtu = null
+    mtu = 0
   }
 
   lifecycle {
     ignore_changes = [
-      network,
+      network, disk_gb, network[0].mtu
     ]
   }
   ipconfig0 = "${format("ip=192.168.2.%02s/22,gw=192.168.0.1", count.index + var.k3_server00_offset + var.k3_server_base_offset)}"
@@ -77,7 +77,9 @@ resource "proxmox_vm_qemu" "k3-agent-00" {
   target_node = var.k3_agent00_host
   clone = var.template_name
   agent = 1
+  disk_gb = null
   os_type = "cloud-init"
+  qemu_os = "Linux"
   cores = 8
   sockets = 1
   cpu = "host"
@@ -94,7 +96,8 @@ resource "proxmox_vm_qemu" "k3-agent-00" {
   }
   network {
     model = "virtio"
-    bridge = "vmbr0"
+    bridge = "vmbr0"  
+    mtu = 0
   }
 
   lifecycle {
@@ -121,7 +124,9 @@ resource "proxmox_vm_qemu" "k3-server-01" {
   target_node = var.k3_server01_host
   clone = var.template_name
   agent = 1
+  disk_gb = null
   os_type = "cloud-init"
+  qemu_os = "Linux"
   cores = 1
   sockets = 1
   cpu = "host"
@@ -139,6 +144,7 @@ resource "proxmox_vm_qemu" "k3-server-01" {
   network {
     model = "virtio"
     bridge = "vmbr0"
+    mtu = 0
   }
 
   lifecycle {
@@ -162,7 +168,9 @@ resource "proxmox_vm_qemu" "k3-agent-01" {
   target_node = var.k3_agent01_host
   clone = var.template_name
   agent = 1
+  disk_gb = null
   os_type = "cloud-init"
+  qemu_os = "Linux"
   cores = 8
   sockets = 1
   cpu = "host"
@@ -180,6 +188,7 @@ resource "proxmox_vm_qemu" "k3-agent-01" {
   network {
     model = "virtio"
     bridge = "vmbr0"
+    mtu = 0
   }
 
   lifecycle {
@@ -206,7 +215,9 @@ resource "proxmox_vm_qemu" "k3-server-02" {
   target_node = var.k3_server02_host
   clone = var.template_name
   agent = 1
+  disk_gb = null
   os_type = "cloud-init"
+  qemu_os = "Linux"
   cores = 2
   sockets = 1
   cpu = "host"
@@ -224,6 +235,7 @@ resource "proxmox_vm_qemu" "k3-server-02" {
   network {
     model = "virtio"
     bridge = "vmbr0"
+    mtu = 0
   }
 
   lifecycle {
@@ -247,7 +259,9 @@ resource "proxmox_vm_qemu" "k3-agent-02" {
   target_node = var.k3_agent02_host
   clone = var.template_name
   agent = 1
+  disk_gb = null
   os_type = "cloud-init"
+  qemu_os = "Linux"
   cores = 8
   sockets = 1
   cpu = "host"
@@ -265,6 +279,7 @@ resource "proxmox_vm_qemu" "k3-agent-02" {
   network {
     model = "virtio"
     bridge = "vmbr0"
+    mtu = 0
   }
 
   lifecycle {
@@ -291,6 +306,7 @@ resource "proxmox_vm_qemu" "k3-dev-server-00" {
   clone = var.template_name
   agent = 1
   os_type = "cloud-init"
+  qemu_os = "Linux"
   cores = var.k3_dev_server00_cores
   sockets = 1
   cpu = "host"
@@ -308,6 +324,7 @@ resource "proxmox_vm_qemu" "k3-dev-server-00" {
   network {
     model = "virtio"
     bridge = "vmbr0"
+    mtu = 0
   }
 
   lifecycle {
@@ -333,6 +350,7 @@ resource "proxmox_vm_qemu" "k3-dev-agent-00" {
   clone = var.template_name
   agent = 1
   os_type = "cloud-init"
+  qemu_os = "Linux"
   cores = var.k3_dev_agent00_cores 
   sockets = 1
   cpu = "host"
@@ -369,12 +387,13 @@ resource "proxmox_vm_qemu" "k3-dev-agent-00" {
 ##########
 
 resource "proxmox_vm_qemu" "docker" {
-  count = 1
+  count = 0
   name = "docker"
   target_node = var.k3_dev_server00_host
   clone = var.template_name
   agent = 1
   os_type = "cloud-init"
+  qemu_os = "Linux"
   cores = 2
   sockets = 1
   cpu = "host"
