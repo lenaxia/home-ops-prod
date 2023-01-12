@@ -62,7 +62,7 @@ spec:
           storage:
             s3:
               s3: null
-              endpoint: https://s3.${SECRET_DEV_DOMAIN}
+              endpoint: http://minio.storage.svc.cluster.local:9000
               region: local
               bucketnames: loki-9fy7zg
               insecure: true
