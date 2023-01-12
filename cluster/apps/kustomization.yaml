@@ -32,7 +32,7 @@ resources:
   - ./monitoring/prometheus-stack
   - ./monitoring/grafana
   - ./monitoring/flux
-  #- ./monitoring/loki
+  - ./monitoring/loki
   #- ./monitoring/tobs
 
   # Default Namespace
