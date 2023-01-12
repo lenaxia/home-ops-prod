@@ -33,6 +33,8 @@ resource "proxmox_vm_qemu" "k3-server-00" {
   clone = var.template_name
   agent = 1
   os_type = "cloud-init"
+  disk_gb = null
+  qemu_os = null
   cores = 3
   sockets = 1
   cpu = "host"
@@ -50,6 +52,7 @@ resource "proxmox_vm_qemu" "k3-server-00" {
   network {
     model = "virtio"
     bridge = "vmbr0"
+    mtu = null
   }
 
   lifecycle {

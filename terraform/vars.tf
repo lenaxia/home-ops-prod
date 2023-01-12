@@ -30,7 +30,7 @@ variable "k3_server02_host" { default = "melfina" }
 
 variable "k3_agent00_offset" { default =0 }
 variable "k3_agent00_mem" { default = "26624" }
-variable "k3_agent00_disksize" { default = "200G" }
+variable "k3_agent00_disksize" { default = "400G" }
 variable "k3_agent00_host" { default = "eclair" }
 
 variable "k3_agent01_offset" { default = 1 }
@@ -40,7 +40,7 @@ variable "k3_agent01_host" { default = "nono" }
 
 variable "k3_agent02_offset" { default = 2 }
 variable "k3_agent02_mem" { default = "26624" }
-variable "k3_agent02_disksize" { default = "200G" }
+variable "k3_agent02_disksize" { default = "400G" }
 variable "k3_agent02_host" { default = "ifurita" }
 
 variable "k3_dev_server00_offset" { default = 0 }
