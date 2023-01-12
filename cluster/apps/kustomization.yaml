@@ -41,7 +41,7 @@ resources:
 
   # Media Namespace
   #- ./media/plex
-  #- ./media/ersatztv
+  - ./media/ersatztv
   - ./media/sonarr
   - ./media/radarr
   - ./media/bazarr
