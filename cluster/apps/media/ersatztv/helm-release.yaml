@@ -32,7 +32,7 @@ spec:
       main:
         ports:
           http:
-            port: &port 8081
+            port: &port 8409
     ingress:
       main:
         enabled: true
