@@ -14,7 +14,7 @@ spec:
   path: ./cluster/core
   prune: true
   wait: true
-  timeout: 3m0s
+  timeout: 10m0s
   decryption:
     provider: sops
     secretRef:
