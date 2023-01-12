@@ -12,7 +12,6 @@ resources:
   - ./kube-system/descheduler
     #- ./kube-system/metrics-server  # k3s already comes with a metrics server
   - ./kyverno
-  - ./storage/minio
   - ./storage/kopia-web
   - ./storage/nextcloud
   - ./storage/nextcloud/redis

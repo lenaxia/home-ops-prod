@@ -3,6 +3,7 @@ kind: Kustomization
 resources:
   # Storage
   - ./storage/longhorn
+  - ./storage/minio
   - ./storage/csi-driver-nfs
 
   # Networking
