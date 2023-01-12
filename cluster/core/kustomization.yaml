@@ -13,5 +13,5 @@ resources:
   - ./databases/redis
   - ./databases/redis-operator
   - ./databases/cloudnative-pg
-  - ./databases/cloudnative-pg/clusters
+    #- ./databases/cloudnative-pg/clusters
   - ./databases/influxdb
