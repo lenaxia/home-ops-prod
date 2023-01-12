@@ -7,7 +7,8 @@ resources:
   - ./storage/csi-driver-nfs
 
   # Networking
-  - ./cert-manager
+  - ./networking/cert-manager
+  - ./networking/metallb
 
   # Databases
   - ./databases/redis
