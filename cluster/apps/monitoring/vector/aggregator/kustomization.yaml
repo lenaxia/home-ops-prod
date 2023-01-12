@@ -5,6 +5,7 @@ kind: Kustomization
 namespace: monitoring
 resources:
   - ./helmrelease.yaml
+  - ./secret.sops.yaml
 patchesStrategicMerge:
   - ./patches/geoip.yaml
 configMapGenerator:
