@@ -20,12 +20,12 @@ spec:
   upgrade:
     remediation:
       retries: 5
-  valuesFrom:
-    - kind: Secret
-      targetPath: defaultSettings.backupTarget
-      name: longhorn-minio-secret
-      valuesKey: AWS_ENDPOINTS
-      optional: false
+  #valuesFrom:
+  #  - kind: Secret
+  #    targetPath: defaultSettings.backupTarget
+  #    name: longhorn-minio-secret
+  #    valuesKey: AWS_ENDPOINTS
+  #    optional: false
   values:
     service:
       ui:
