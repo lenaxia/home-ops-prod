@@ -71,7 +71,7 @@ tasks:
       SNAPSHOT:
         sh: |
           if [[ {{.SNAPSHOT}} == "latest" ]]; then
-            kubectl exec deployment/kopia -n {{.KOPIA_NAMESPACE | default "storage"}} -- kopia snapshot list /data/{{.NAMESPACE}}/{{.APP}} --json | jq --raw-output '.[-1] | .id'
+            kubectl exec deployment/kopia -n {{.KOPIA_NAMESPACE | default "storage"}} -- kopia snapshot list /data/{{.NAMESPACE}}/{{.APP}}/{{.VOLUME}} --json | jq --raw-output '.[-1] | .id'
           else
             echo {{.SNAPSHOT}}
           fi
