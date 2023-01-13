@@ -18,7 +18,6 @@ resources:
   - ./storage/onlyoffice
 
   # Security
-  - ./networking/metallb
   - ./networking/traefik
   - ./networking/traefik/ingresses
   - ./authentication/authelia
