@@ -295,7 +295,6 @@ spec:
             - private
         # Public bypass policies
         - domain: 
-            - "tv.${SECRET_DEV_DOMAIN}"
             #media
             - "w.${SECRET_DEV_DOMAIN}"
             - "office.${SECRET_DEV_DOMAIN}"
