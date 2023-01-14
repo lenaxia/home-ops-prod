@@ -55,6 +55,12 @@ variable "k3_dev_agent00_cores" { default = "4" }
 variable "k3_dev_agent00_disksize" { default = "200G" }
 variable "k3_dev_agent00_host" { default = "lafiel" }
 
+variable "docker_offset" { default = 1 }
+variable "docker_mem" { default = "12240" }
+variable "docker_cores" { default = "4" }
+variable "docker_disksize" { default = "50G" }
+variable "docker_host" { default = "melfina" }
+
 variable "ssh_key_worklaptop" {
   default = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC+ZxDKfNmtdDEbYUNl4pQfYlatwD75uhcNkl5S/b/IdOT4Km/x1mpmkkaOonSUoPgucjgWHWebgNDYeJ3yoWjSMu4jzi5zBByXH9n2GsH50rQ/E7qwTogEfivIrzhxkHPCLy85Uy1Z7/FhZoe+B9YGmt9NHrI2Wy4FJd2pyfXg7YqeG2uaHy4ix2VAHS0kqbWfCnT13L1RO592CN3aINUAC8s54/DrLw1NKDBkN8S/c/FXNRwRQ84Auy4M5l+MXAMQl2EXab4rdaiwWN+Is00BANcckFZraQX9GgQYTWLlFTN+9CSEbQohRABYBpmeSizgDYM5e2SbVObbXBzWaztB mikekao@SEA-1800428659H"
 } 

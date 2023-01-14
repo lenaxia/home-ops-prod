@@ -96,6 +96,8 @@ spec:
       transcode:
         enabled: true
         type: emptyDir
+        mountPath: /root/.local/share/etv-transcode
+        medium: Memory
     nodeSelector:
       node-role.kubernetes.io/worker: "true"
       intel.feature.node.kubernetes.io/gpu: "true"

@@ -387,23 +387,23 @@ resource "proxmox_vm_qemu" "k3-dev-agent-00" {
 ##########
 
 resource "proxmox_vm_qemu" "docker" {
-  count = 0
+  count = 1
   name = "docker"
-  target_node = var.k3_dev_server00_host
+  target_node = var.docker_host
   clone = var.template_name
   agent = 1
   os_type = "cloud-init"
   qemu_os = "Linux"
-  cores = 2
+  cores = var.docker_cores
   sockets = 1
   cpu = "host"
-  memory = "4000"
+  memory = var.docker_mem
   scsihw = "virtio-scsi-pci"
   bootdisk = "scsi0"
   onboot = "false"
   disk {
     slot = 0
-    size = "80G"
+    size = var.docker_disksize
     type = "scsi"
     storage = "local-zfs"
     iothread = 1
