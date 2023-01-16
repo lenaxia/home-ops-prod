@@ -6,7 +6,7 @@ commonLabels:
   app.kubernetes.io/instance: *app
 resources:
   - helm-release.yaml
-  - config-pvc.yaml
+  #- config-pvc.yaml
   - secret.sops.yaml
 patchesStrategicMerge:
   - ./patches/addons.yaml
