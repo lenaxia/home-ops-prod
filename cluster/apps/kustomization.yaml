@@ -23,7 +23,7 @@ resources:
   
   # Home
   - ./home/mealie
-    #- ./home/babybuddy
+  - ./home/babybuddy
   - ./home/home-assistant
   - ./home/zwavejs
 
