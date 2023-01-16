@@ -18,7 +18,6 @@ spec:
   dependsOn:
     - name: mosquitto
       namespace: iot 
-  maxHistory: 3
   install:
     createNamespace: true
     remediation:
@@ -30,16 +29,6 @@ spec:
       retries: 7
   uninstall:
     keepHistory: false
-  values:
-    global:
-      nameOverride: *app
-    image:
-      repository: ghcr.io/zwave-js/zwave-js-ui
-      tag: 8.6.2
-    env:
-      TZ: ${TIMEZONE}
-      KEY_S0_Legacy:
-        valueFrom:
   values:
     global:
       nameOverride: *app
