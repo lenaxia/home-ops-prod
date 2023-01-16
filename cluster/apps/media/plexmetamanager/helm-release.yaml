@@ -1,0 +1,128 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: &app plexmetamanager
+  namespace: media
+spec:
+  interval: 15m
+  chart:
+    spec:
+      chart: app-template
+      version: 1.2.1
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s-charts
+        namespace: flux-system
+  install:
+    createNamespace: true
+    remediation:
+      retries: 5
+  upgrade:
+    remediation:
+      retries: 5
+  values:
+    image:
+      repository: meisnate12/plex-meta-manager
+      tag: v1.18.2
+      pullPolicy: Always
+    env:
+      TZ: "${TIMEZONE}"
+#    podSecurityContext:
+#      runAsUser: 0
+#      runAsGroup: 0
+#      fsGroup: 1001
+#      fsGroupChangePolicy: "OnRootMismatch"
+#      supplementalGroups:
+#        - 100
+    lifecycle:
+      postStart:
+        exec:
+          command:
+            - /bin/bash
+            - -c
+            - cp /config.yml /config/config.yml
+    podAnnotations:
+      secret.reloader.stakater.com/reload: "plexmetamanager-config"
+    service:
+      main:
+        ports:
+          http:
+            port: &port 6767
+    ingress:
+      main:
+        enabled: true
+        ingressClassName: "traefik"
+        annotations:
+          hajimari.io/enable: "true"
+          hajimari.io/icon: "subtitles"
+          hajimari.io/group: "Media"
+          cert-manager.io/cluster-issuer: "letsencrypt-production"
+          traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
+          traefik.ingress.kubernetes.io/router.middlewares: networking-chain-authelia@kubernetescrd
+        hosts:
+          - host: &uri "plexmetamanager.${SECRET_DEV_DOMAIN}"
+            paths:
+              - path: /
+                pathType: Prefix
+        tls:
+          - hosts:
+              - *uri
+            secretName: *uri
+#    probes:
+#      liveness: &probes
+#        enabled: true
+#        custom: true
+#        spec:
+#          httpGet:
+#            path: /health
+#            port: *port
+#          initialDelaySeconds: 0
+#          periodSeconds: 10
+#          timeoutSeconds: 1
+#          failureThreshold: 3
+#      readiness: *probes
+#      startup:
+#        enabled: false
+    persistence:
+      config:
+        enabled: true
+        existingClaim: plexmetamanager-config-volume
+        readOnly: false
+#      omoikane:
+#        enabled: true
+#        type: custom
+#        volumeSpec:
+#          nfs:
+#            server: ${NAS_ADDR}
+#            path: /volume1/omoikane
+#        mountPath: /omoikane
+#      downloads:
+#        enabled: true
+#        type: custom
+#        volumeSpec:
+#          nfs:
+#            server: ${NAS_ADDR}
+#            path: /volume2/downloads
+#        mountPath: /downloads
+#      backups:
+#        enabled: true
+#        type: custom
+#        volumeSpec:
+#          nfs:
+#            server: ${NAS_ADDR}
+#            path: /volume1/backups/plexmetamanager
+#        mountPath: /backups
+      configyml:
+        enabled: true
+        type: secret
+        name: plexmetamanager-config
+        subPath: config.yml
+        mountPath: /config.yml
+        defaultMode: 0644
+#    resources:
+#      requests:
+#        cpu: 10m
+#        memory: 50Mi
+#      limits:
+#        memory: 500Mi
