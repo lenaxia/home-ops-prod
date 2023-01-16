@@ -112,7 +112,6 @@ spec:
       - key: low-mem
         operator: Exists
         effect: NoSchedule
-    priorityClassName: high-priority
     resources:
       limits:
         memory: 350M
