@@ -1,0 +1,102 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: &app zwavejs
+  namespace: home
+spec:
+  interval: 12h
+  maxHistory: 3
+  chart:
+    spec:
+      chart: app-template
+      version: 1.2.1
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s-charts
+        namespace: flux-system
+  dependsOn:
+    - name: mosquitto
+      namespace: iot 
+  upgrade:
+    remediation:
+      remediateLastFailure: true
+  values:
+    global:
+      nameOverride: *app
+    image:
+      repository: ghcr.io/zwave-js/zwave-js-ui
+      tag: 8.6.2
+    env:
+      TZ: ${TIMEZONE}
+      KEY_S0_Legacy:
+        valueFrom:
+          secretKeyRef:
+            name: *app
+            value: ZWAVEJS_S0_LEGACY_KEY 
+      KEY_S2_Unauthenticated: 
+        valueFrom:
+          secretKeyRef:
+            name: *app
+            value: ZWAVEJS_S2_UNAUTHENTICATED_KEY
+      KEY_S2_Authenticated:
+        valueFrom:
+          secretKeyRef:
+            name: *app
+            value: ZWAVEJS_S2_AUTHENTICATED_KEY
+      KEY_S2_AccessControl:
+        valueFrom:
+          secretKeyRef:
+            name: *app
+            value: ZWAVEJS_S2_ACCESS_CONTROL_KEY
+    service:
+      main:
+        ports:
+          http:
+            port: 8091
+          websocket:
+            enabled: true
+            port: 3000
+    ingress:
+      main:
+        enabled: true
+        ingressClassName: traefik
+        annotations:
+          cert-manager.io/cluster-issuer: letsencrypt-production
+          hajimari.io/enable: "true"
+          hajimari.io/icon: home-assistant
+          traefik.ingress.kubernetes.io/router.entrypoints: websecure
+        hosts:
+          - host: &host zwave.${SECRET_DEV_DOMAIN}
+            paths:
+              - path: /
+                pathType: Prefix
+        tls:
+          - hosts:
+              - *host
+            secretName: *host
+    securityContext:
+      privileged: true
+    persistence:
+      data:
+        enabled: true
+        existingClaim: zwavejs-config
+        mountPath: /usr/src/app/store
+#      usb:
+#        enabled: true
+#        type: hostPath
+#        hostPath: /dev/serial/by-id/usb-Silicon_Labs_CP2102N_USB_to_UART_Bridge_Controller_ee8903ec48e5ea11b68584d5994a5d01-if00-port0
+#        hostPathType: CharDevice
+#    nodeSelector:
+#      aeotec.feature.node.kubernetes.io/zwave: "true"
+    tolerations:
+      - key: low-mem
+        operator: Exists
+        effect: NoSchedule
+    priorityClassName: high-priority
+    resources:
+      limits:
+        memory: 350M
+      requests:
+        cpu: 15m
+        memory: 128M
