@@ -55,8 +55,8 @@ resources:
   - ./media/imaginary
 
   # IOT Namespace
-  - ./iot/mosquitto
-  - ./iot/node-red
+  - ./home/mosquitto
+  - ./home/node-red
 
   # Utilities Namespace
   - ./utilities/vaultwarden
