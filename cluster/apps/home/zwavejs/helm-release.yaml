@@ -22,12 +22,12 @@ spec:
   install:
     createNamespace: true
     remediation:
-      retries: 6
+      retries: 7
   upgrade:
     cleanupOnFail: true
     remediation:
       remediateLastFailure: true
-      retries: 6
+      retries: 7
   uninstall:
     keepHistory: false
   values:
