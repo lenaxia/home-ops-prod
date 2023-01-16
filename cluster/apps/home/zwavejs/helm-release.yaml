@@ -33,22 +33,22 @@ spec:
         valueFrom:
           secretKeyRef:
             name: *app
-            value: ZWAVEJS_S0_LEGACY_KEY 
+            key: ZWAVEJS_S0_LEGACY_KEY 
       KEY_S2_Unauthenticated: 
         valueFrom:
           secretKeyRef:
             name: *app
-            value: ZWAVEJS_S2_UNAUTHENTICATED_KEY
+            key: ZWAVEJS_S2_UNAUTHENTICATED_KEY
       KEY_S2_Authenticated:
         valueFrom:
           secretKeyRef:
             name: *app
-            value: ZWAVEJS_S2_AUTHENTICATED_KEY
+            key: ZWAVEJS_S2_AUTHENTICATED_KEY
       KEY_S2_AccessControl:
         valueFrom:
           secretKeyRef:
             name: *app
-            value: ZWAVEJS_S2_ACCESS_CONTROL_KEY
+            key: ZWAVEJS_S2_ACCESS_CONTROL_KEY
     service:
       main:
         ports:
