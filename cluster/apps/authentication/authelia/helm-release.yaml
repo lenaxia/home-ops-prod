@@ -322,6 +322,7 @@ spec:
         - domain:
             - "traefik.${SECRET_DEV_DOMAIN}"
             #media
+            - "tv.${SECRET_DEV_DOMAIN}"
             - "tautulli.${SECRET_DEV_DOMAIN}"
             - "bazarr.${SECRET_DEV_DOMAIN}"
             - "sonarr.${SECRET_DEV_DOMAIN}"
