@@ -298,7 +298,7 @@ spec:
             #media
             - "w.${SECRET_DEV_DOMAIN}"
             - "office.${SECRET_DEV_DOMAIN}"
-            - "hub.${SECRET_DEV_DOMAIN}"
+              #- "hub.${SECRET_DEV_DOMAIN}"
             #synology
             - "drive.${SECRET_DEV_DOMAIN}"
               #- "drive.${ SECRET_PROD_DOMAIN_KF}"
