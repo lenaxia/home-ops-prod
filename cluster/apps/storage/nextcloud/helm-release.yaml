@@ -364,6 +364,10 @@ spec:
                   operator: In
                   values:
                     - nextcloud-redis
+                - key: app.kubernetes.io/component
+                  operator: In
+                  values:
+                    - redis
             topologyKey: kubernetes.io/hostname
             namespaces:
               - storage
