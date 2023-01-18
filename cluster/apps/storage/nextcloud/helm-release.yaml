@@ -202,7 +202,8 @@ spec:
         custom.config.php: |-
           <?php
           $CONFIG = array (
-            'forwarded_for_headers' => array('HTTP_X_REAL_IP'),
+          #'forwarded_for_headers' => array('HTTP_X_REAL_IP'),
+            'forwarded_for_headers' => array('HTTP_X_FORWARDED_FOR'),
             'overwriteprotocol' => 'https',
             'overwrite.cli.url' => 'https://hub.${SECRET_DEV_DOMAIN}',
             'filelocking.enabled' => 'true',
