@@ -72,7 +72,7 @@ spec:
             secretKeyRef:
               name: redis-secret
               key: password
-      extraSidecarContainers: []
+      extraSidecarContainers:
         - name: nextcloud-logger
           image: busybox
           command: [/bin/sh, -c, 'while ! test -f "/run/nextcloud/data/nextcloud.log"; do sleep 1; done; tail -n+1 -f /run/nextcloud/data/nextcloud.log']
