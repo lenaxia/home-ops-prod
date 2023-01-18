@@ -17,10 +17,10 @@ spec:
   install:
     createNamespace: true
     remediation:
-      retries: 3
+      retries: 15 
   upgrade:
     remediation:
-      retries: 10
+      retries: 15
   values:
     fullnameOverride: *app
     image:
