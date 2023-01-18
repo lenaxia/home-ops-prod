@@ -135,9 +135,9 @@ spec:
                   name: nextcloud-config
                   key: postgres_password
 
+          #php_admin_value[opcache.enable] = 1
       phpConfigs:
         opcache.conf: |
-          #php_admin_value[opcache.enable] = 1
           php_admin_value[opcache.save_comments] = 1
           php_admin_value[opcache.interned_strings_buffer] = 1000
           php_admin_value[opcache.memory_consumption] = 2048
