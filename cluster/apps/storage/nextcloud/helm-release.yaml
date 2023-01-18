@@ -79,12 +79,30 @@ spec:
           volumeMounts:
           - name: nextcloud-data
             mountPath: /run/nextcloud
-              #        - name: vector-logger
-              #          image: docker.io/timberio/vector:0.26.0-debian
-              #          args: ["--config", "/etc/vector/vector.yaml"] 
-              #          volumeMounts:
-              #          - name: nextcloud-data
-              #            mountPath: /run/nextcloud/data
+        - name: vector-logger
+          image: docker.io/timberio/vector:0.26.0-debian
+          args: ["--config", "/run/vector.yaml"] 
+          env:
+            PROCFS_ROOT: /host/proc
+            SYSFS_ROOT: /host/sys
+            VECTOR_SELF_NODE_NAME:
+              valueFrom:
+                fieldRef:
+                  apiVersion: v1
+                  fieldPath: spec.nodeName
+            VECTOR_SELF_POD_NAME:
+              valueFrom:
+                fieldRef:
+                  apiVersion: v1
+                  fieldPath: metadata.name
+            VECTOR_SELF_POD_NAMESPACE:
+              valueFrom:
+                fieldRef:
+                  apiVersion: v1
+                  fieldPath: metadata.namespace
+          volumeMounts:
+          - name: nextcloud-data
+            mountPath: /run/nextcloud
       extraInitContainers:
         - name: wait-database
           image: alpine:3.17.0
@@ -263,10 +281,13 @@ spec:
         - name: redis-socks
           persistentVolumeClaim:
             claimName: redis-socks-pvc
+        - name: vector-sidecar
+          configMap:
+            name: vector-sidecar
       extraVolumeMounts:
-        - name: redis-socks
-          mountPath: "/run/redis"
-          readOnly: false
+        - name: vector-sidecar
+          mountPath: "/run/vector.yaml"
+          subPath: "vector.yaml"
 
             # extraSecurityContext:
             #   runAsUser: "33"
