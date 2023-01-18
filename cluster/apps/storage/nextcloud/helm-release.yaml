@@ -260,11 +260,11 @@ spec:
             #   fsGroup: 33
             #   readOnlyRootFilesystem: true
 
-    nginx:
-      enabled: true
-      image:
-        repository: nginx
-        tag: 1.23-alpine
+            #    nginx:
+            #      enabled: true
+            #      image:
+            #        repository: nginx
+            #        tag: 1.23-alpine
           #      config:
           #        default: false
           #        custom: |-
