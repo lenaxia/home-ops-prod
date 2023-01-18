@@ -5,7 +5,7 @@ metadata:
   name: vector-sidecar
   namespace: storage
 data:
-  .env: |
+  vector.yaml: |
     Data_dir: /vector-data-dir
     
     Sources:
