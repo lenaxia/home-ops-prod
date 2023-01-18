@@ -20,7 +20,7 @@ spec:
       retries: 8
   upgrade:
     remediation:
-      retries: 6
+      retries: 8
   values:
     image:
       repository: docker.io/alexta69/metube
