@@ -103,6 +103,9 @@ spec:
           volumeMounts:
           - name: nextcloud-data
             mountPath: /run/nextcloud
+          - name: vector-sidecar
+            mountPath: /run/vector.yaml
+            subPath: vector.yaml
       extraInitContainers:
         - name: wait-database
           image: alpine:3.17.0
