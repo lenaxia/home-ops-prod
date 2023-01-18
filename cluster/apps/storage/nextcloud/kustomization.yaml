@@ -11,3 +11,4 @@ resources:
   - secret.sops.yaml
   - middlewares.yaml
   - servicemonitor.yaml
+  - config/vector.yaml
