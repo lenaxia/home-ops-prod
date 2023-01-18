@@ -77,7 +77,7 @@ spec:
           image: busybox
           command: [/bin/sh, -c, 'while ! test -f "/run/nextcloud/data/nextcloud.log"; do sleep 1; done; tail -n+1 -f /run/nextcloud/data/nextcloud.log']
           volumeMounts:
-          - name: nextcloud-nfs
+          - name: nextcloud-data
             mountPath: /run/nextcloud/data
       extraInitContainers:
         - name: wait-database
