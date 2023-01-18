@@ -215,12 +215,11 @@ spec:
                 'nextcloud',
                 'hub.${SECRET_DEV_DOMAIN}',
                ],
-            'trusted_proxies' =>
-               [
-                '192.168.5.10',
-                '127.0.0.1',
-                '10.0.0.0/8',
-               ],
+            'trusted_proxies' => array(
+               0 => '127.0.0.1',
+               1 => '10.0.0.0/8',
+               2 => '192.168.5.10',
+               ),
             'enabledPreviewProviders' =>
                [
                 'OC\\Preview\\TIFF',
