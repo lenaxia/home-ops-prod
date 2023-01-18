@@ -32,6 +32,8 @@ spec:
       YTDL_OPTIONS: '{"writethumbnail": true, "writesubtitles": true, "subtitleslangs": ["en", "-live_chat"], "merge_output_format": "mp4", "postprocessors": [{"key": "Exec", "exec_cmd": "chmod 0664", "when": "after_move"}, {"key": "FFmpegEmbedSubtitle", "already_have_subtitle": false}, {"key": "FFmpegMetadata", "add_metadata": true, "add_chapters": true}, { "key": "EmbedThumbnail", "already_have_thumbnail": true}]}'
     service:
       main:
+        type: LoadBalancer
+        externalTrafficPolicy: local
         ports:
           http:
             port: &port 8081
