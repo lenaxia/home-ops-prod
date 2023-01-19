@@ -1,0 +1,23 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: vector-sidecar
+  namespace: storage
+data:
+  vector.yaml: |
+    data_dir: /vector-data-dir
+    
+    sources:
+      sidecar_source:
+        type: file
+        include: ["/run/nextcloud/data/nextcloud.log"]
+        ignore_older: 86400
+    
+    sinks:
+      sidecar:
+        type: vector
+        version: "2"
+        address: vector-aggregator.monitoring.svc.cluster.local:6010
+        inputs:
+          - sidecar_source

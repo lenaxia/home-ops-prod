@@ -24,7 +24,7 @@ spec:
   values:
     image:
       repository: meisnate12/plex-meta-manager
-      tag: v1.18.2
+      tag: v1.18.3
       pullPolicy: Always
     env:
       TZ: "${TIMEZONE}"
