@@ -25,7 +25,7 @@ spec:
   values:
     image:
       repository: docker.io/ealen/echo-server
-      tag: 0.6.0
+      tag: 0.7.0
       pullPolicy: Always
     service:
       type: LoadBalancer
