@@ -69,7 +69,6 @@ spec:
             - "redis-server"
             - "/run/redis.conf"
           securityContext:
-            fsGroup: 82
             runAsGroup: 82
             runAsUser: 82
           lifecycle:
