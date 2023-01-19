@@ -244,13 +244,17 @@ spec:
         custom.config.php: |-
           <?php
           $CONFIG = array (
-          #'forwarded_for_headers' => array('HTTP_X_REAL_IP'),
             'forwarded_for_headers' => array('HTTP_X_FORWARDED_FOR'),
             'overwriteprotocol' => 'https',
             'overwrite.cli.url' => 'https://hub.${SECRET_DEV_DOMAIN}',
             'filelocking.enabled' => 'true',
             'default_phone_region' => 'US',
             'loglevel' => '2',
+            'log.condition' => [
+                'apps' => ['admin_audit'],
+               ],
+            'log_type_audit' => "file",
+            'logfile_audit' => "audit.log",
             'enable_previews' => true,
             'trusted_domains' =>
                [
@@ -405,7 +409,7 @@ spec:
     metrics:
       enabled: true
       replicaCount: 1
-      https: false
+      https: true
       # Use API token if set, otherwise fall back to password authentication
       # https://github.com/xperimental/nextcloud-exporter#token-authentication
       # Currently you still need to set the token manually in your nextcloud install
