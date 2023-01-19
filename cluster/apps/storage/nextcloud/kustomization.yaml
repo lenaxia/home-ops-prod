@@ -12,3 +12,4 @@ resources:
   - middlewares.yaml
   - servicemonitor.yaml
   - config/vector.yaml
+  - config/redis.yaml
