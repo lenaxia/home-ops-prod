@@ -6,7 +6,7 @@ metadata:
   namespace: storage
 data:
   vector.yaml: |
-    data_dir: /run/vector
+    data_dir: /vector-data-dir
     
     sources:
       sidecar_source:
