@@ -20,7 +20,7 @@ spec:
       retries: 3 
   upgrade:
     remediation:
-      retries: 7
+      retries: 3
   values:
     fullnameOverride: *app
     image:
