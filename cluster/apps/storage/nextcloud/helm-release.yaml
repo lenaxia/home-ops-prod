@@ -79,35 +79,17 @@ spec:
         #          volumeMounts:
         #          - name: nextcloud-data
         #            mountPath: /run/nextcloud
-        - name: vector-logger
-          image: docker.io/timberio/vector:0.26.0-debian
-          args: ["--config", "/run/vector.yaml"] 
-            #          env:
-            #            - PROCFS_ROOT: /host/proc
-            #            - SYSFS_ROOT: /host/sys
-            #            - VECTOR_SELF_NODE_NAME:
-            #              valueFrom:
-            #                fieldRef:
-            #                  apiVersion: v1
-            #                  fieldPath: spec.nodeName
-            #            - VECTOR_SELF_POD_NAME:
-            #              valueFrom:
-            #                fieldRef:
-            #                  apiVersion: v1
-            #                  fieldPath: metadata.name
-            #            - VECTOR_SELF_POD_NAMESPACE:
-            #              valueFrom:
-            #                fieldRef:
-            #                  apiVersion: v1
-            #                  fieldPath: metadata.namespace
-          volumeMounts:
-          - name: nextcloud-data
-            mountPath: /run/nextcloud
-          - name: vector-sidecar
-            mountPath: /run/vector.yaml
-            subPath: vector.yaml
-          - name: vector-datadir
-            mountPath: /vector-data-dir
+        #        - name: vector-logger
+        #          image: docker.io/timberio/vector:0.26.0-debian
+        #          args: ["--config", "/run/vector.yaml"] 
+        #          volumeMounts:
+        #          - name: nextcloud-data
+        #            mountPath: /run/nextcloud
+        #          - name: vector-sidecar
+        #            mountPath: /run/vector.yaml
+        #            subPath: vector.yaml
+        #          - name: vector-datadir
+        #            mountPath: /vector-data-dir
       extraInitContainers:
         - name: wait-database
           image: alpine:3.17.0
