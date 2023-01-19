@@ -48,8 +48,8 @@ resources:
   - ./media/nzbhydra2
   - ./media/metube
   - ./media/overseerr
-  - ./media/calibre
-  - ./media/calibre-web
+    #  - ./media/calibre
+    #  - ./media/calibre-web
   - ./media/tautulli
   - ./media/outline
   - ./media/imaginary
