@@ -106,6 +106,8 @@ spec:
           - name: vector-sidecar
             mountPath: /run/vector.yaml
             subPath: vector.yaml
+          - name: vector-datadir
+            mountPath: /vector-data-dir
       extraInitContainers:
         - name: wait-database
           image: alpine:3.17.0
@@ -287,10 +289,15 @@ spec:
         - name: vector-sidecar
           configMap:
             name: vector-sidecar
+        - name: vector-data-dir
+          emptyDir: {}
       extraVolumeMounts:
         - name: vector-sidecar
           mountPath: "/run/vector.yaml"
           subPath: "vector.yaml"
+        - name: vector-data-dir
+          mountPath: /vector-data-dir
+
 
             # extraSecurityContext:
             #   runAsUser: "33"
