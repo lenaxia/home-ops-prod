@@ -63,37 +63,37 @@ spec:
               name: redis-secret
               key: password
       extraSidecarContainers:
-        - name: nextcloud-redis
-          image: redis:7.0.7 
-          command: 
-            - "redis-server"
-            - "/run/redis.conf"
-          securityContext:
-            runAsGroup: 82
-            runAsUser: 82
-          lifecycle:
-            preStop:
-              exec:
-                command:
-                - /bin/sh
-                - /redis-shutdown/shutdown.sh
-          livenessProbe:
-            exec:
-              command:
-              - sh
-              - -c
-              - redis-cli -h $(hostname) -p 6379 ping --user pinger --pass pingpass --no-auth-warning
-            failureThreshold: 6
-            initialDelaySeconds: 30
-            periodSeconds: 15
-            successThreshold: 1
-            timeoutSeconds: 5
-          volumeMounts:
-          - name: redis-config
-            mountPath: /run/redis.conf
-            subPath: redis.conf
-          - name: redis-socket
-            mountPath: /run/redis
+        #        - name: nextcloud-redis
+        #          image: redis:7.0.7 
+        #          command: 
+        #            - "redis-server"
+        #            - "/run/redis.conf"
+        #          securityContext:
+        #            runAsGroup: 82
+        #            runAsUser: 82
+        #          lifecycle:
+        #            preStop:
+        #              exec:
+        #                command:
+        #                - /bin/sh
+        #                - /redis-shutdown/shutdown.sh
+        #          livenessProbe:
+        #            exec:
+        #              command:
+        #              - sh
+        #              - -c
+        #              - redis-cli -h $(hostname) -p 6379 ping --user pinger --pass pingpass --no-auth-warning
+        #            failureThreshold: 6
+        #            initialDelaySeconds: 30
+        #            periodSeconds: 15
+        #            successThreshold: 1
+        #            timeoutSeconds: 5
+        #          volumeMounts:
+        #          - name: redis-config
+        #            mountPath: /run/redis.conf
+        #            subPath: redis.conf
+        #          - name: redis-socket
+        #            mountPath: /run/redis
         - name: nextcloud-logger
           image: docker.io/timberio/vector:0.26.0-debian
           args: ["--config", "/run/vector.yaml"] 
@@ -140,20 +140,20 @@ spec:
           env:
             - name: POSTGRES_HOST
               value: &postgresHost defaultpg-rw.databases.svc.cluster.local
-                #        - name: wait-redis
-                #          image: alpine:3.17.0
-                #          imagePullPolicy: IfNotPresent
-                #          command:
-                #            - sh
-                #          args:
-                #            - -c
-                #            - >-
-                #              # until nc -w 1 -v $REDIS_HOST:$REDIS_HOST_PORT;
-                #
-                #              # Socket version of wait
-                #              until nc -w 1 -lU /var/run/redis/redis.sock
-                #              do echo "Waiting for Redis";
-                #              done
+        - name: wait-redis
+          image: alpine:3.17.0
+          imagePullPolicy: IfNotPresent
+          command:
+            - sh
+          args:
+            - -c
+            - >-
+              # until nc -w 1 -v $REDIS_HOST:$REDIS_HOST_PORT;
+
+              # Socket version of wait
+              until nc -w 1 -lU /var/run/redis/redis.sock
+              do echo "Waiting for Redis";
+              done
         - name: init-db
           image: ghcr.io/onedr0p/postgres-initdb:14.6
           env:
@@ -289,29 +289,31 @@ spec:
           );
 
       extraVolumes:
-        #        - name: redis-socks
-        #          persistentVolumeClaim:
-        #            claimName: redis-socks-pvc
+        - name: redis-socks
+          persistentVolumeClaim:
+            claimName: redis-socks-pvc
         - name: vector-sidecar
           configMap:
             name: vector-sidecar
         - name: vector-data-dir
           emptyDir: {}
-        - name: redis-config
-          configMap:
-            name: redis-config
-        - name: redis-socket
-          emptyDir: 
-            medium: Memory
-            sizeLimit: 500Mi
+            #        - name: redis-config
+            #          configMap:
+            #            name: redis-config
+            #        - name: redis-socket
+            #          emptyDir: 
+            #            medium: Memory
+            #            sizeLimit: 500Mi
       extraVolumeMounts:
+        - name: redis-socks
+          mountPath: /run/redis
         - name: vector-sidecar
           mountPath: "/run/vector.yaml"
           subPath: "vector.yaml"
         - name: vector-data-dir
           mountPath: /vector-data-dir
-        - name: redis-socket
-          mountPath: /run/redis/
+            #        - name: redis-socket
+            #          mountPath: /run/redis/
 
 
             # extraSecurityContext:
@@ -381,22 +383,22 @@ spec:
       failureThreshold: 30
       successThreshold: 1
 
-        #    affinity:
-        #      podAffinity:
-        #        requiredDuringSchedulingIgnoredDuringExecution:
-        #          - labelSelector:
-        #              matchExpressions:
-        #                - key: app.kubernetes.io/instance
-        #                  operator: In
-        #                  values:
-        #                    - nextcloud-redis
-        #                - key: app.kubernetes.io/component
-        #                  operator: In
-        #                  values:
-        #                    - redis
-        #            topologyKey: kubernetes.io/hostname
-        #            namespaces:
-        #              - storage
+    affinity:
+      podAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          - labelSelector:
+              matchExpressions:
+                - key: app.kubernetes.io/instance
+                  operator: In
+                  values:
+                    - nextcloud-redis
+                - key: app.kubernetes.io/component
+                  operator: In
+                  values:
+                    - redis
+            topologyKey: kubernetes.io/hostname
+            namespaces:
+              - storage
 
     ## Prometheus Exporter / Metrics
     ##
