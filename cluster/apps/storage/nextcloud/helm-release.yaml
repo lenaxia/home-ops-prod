@@ -81,7 +81,7 @@ spec:
         #            mountPath: /run/nextcloud
         - name: vector-logger
           image: docker.io/timberio/vector:0.26.0-debian
-          args: ["--config", "/run/vector.yaml"] 
+            #          args: ["--config", "/run/vector.yaml"] 
             #          env:
             #            - PROCFS_ROOT: /host/proc
             #            - SYSFS_ROOT: /host/sys
