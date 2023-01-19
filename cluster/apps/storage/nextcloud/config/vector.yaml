@@ -6,15 +6,15 @@ metadata:
   namespace: storage
 data:
   vector.yaml: |
-    Data_dir: /vector-data-dir
+    data_dir: /vector-data-dir
     
-    Sources:
+    sources:
       sidecar_source:
         type: file
         include: ["/run/nextcloud/data/nextcloud.log"]
         ignore_older: 86400
     
-    Sinks:
+    sinks:
       sidecar:
         type: vector
         version: "2"
