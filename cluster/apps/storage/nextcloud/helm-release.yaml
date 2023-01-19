@@ -249,7 +249,7 @@ spec:
             'overwrite.cli.url' => 'https://hub.${SECRET_DEV_DOMAIN}',
             'filelocking.enabled' => 'true',
             'default_phone_region' => 'US',
-            'loglevel' => '2',
+            'loglevel' => '1',
             'log.condition' => [
                 'apps' => ['admin_audit'],
                ],
