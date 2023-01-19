@@ -72,18 +72,18 @@ spec:
             secretKeyRef:
               name: redis-secret
               key: password
-                #      extraSidecarContainers:
-        #        - name: nextcloud-logger
-        #          image: busybox
-        #          command: [/bin/sh, -c, 'while ! test -f "/run/nextcloud/data/nextcloud.log"; do sleep 1; done; tail -n+1 -f /run/nextcloud/data/nextcloud.log']
-        #          volumeMounts:
-        #          - name: nextcloud-data
-        #            mountPath: /run/nextcloud
-        #          - name: vector-sidecar
-        #            mountPath: /run/vector.yaml
-        #            subPath: vector.yaml
-        #          - name: vector-data-dir
-        #            mountPath: /vector-data-dir
+      extraSidecarContainers:
+        - name: nextcloud-logger
+          image: busybox
+          command: [/bin/sh, -c, 'while ! test -f "/run/nextcloud/data/nextcloud.log"; do sleep 1; done; tail -n+1 -f /run/nextcloud/data/nextcloud.log']
+          volumeMounts:
+          - name: nextcloud-data
+            mountPath: /run/nextcloud
+          - name: vector-sidecar
+            mountPath: /run/vector.yaml
+            subPath: vector.yaml
+          - name: vector-data-dir
+            mountPath: /vector-data-dir
               #        - name: vector-logger
               #          image: docker.io/timberio/vector:0.26.0-debian
               #          args: ["--config", "/run/vector.yaml"] 
