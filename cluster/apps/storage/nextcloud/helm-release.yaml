@@ -413,6 +413,11 @@ spec:
       # Use API token if set, otherwise fall back to password authentication
       # https://github.com/xperimental/nextcloud-exporter#token-authentication
       # Currently you still need to set the token manually in your nextcloud install
+        # # Generate random value (for example using openssl)
+        # TOKEN=$(openssl rand -hex 32)
+        # # Set token (using the occ console application)
+        # occ config:app:set serverinfo token --value "$TOKEN"
+        # # Set token value in `nextcloud.existingSecret` as `nextcloud-token`
       token: "true"
       timeout: 5s
       # if set to true, exporter skips certificate verification of Nextcloud server.
