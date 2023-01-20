@@ -48,6 +48,7 @@ resources:
   - ./media/nzbhydra2
   - ./media/metube
   - ./media/overseerr
+  - ./media/jellyseerr
     #  - ./media/calibre
     #  - ./media/calibre-web
   - ./media/tautulli
