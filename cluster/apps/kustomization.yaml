@@ -39,15 +39,15 @@ resources:
   - ./dashboards/hajimari
 
   # Media Namespace
-  - ./media/plex
-  - ./media/ersatztv
+  #  - ./media/plex
+  #  - ./media/ersatztv
   - ./media/sonarr
   - ./media/radarr
   - ./media/bazarr
   - ./media/nzbget
   - ./media/nzbhydra2
   - ./media/metube
-  - ./media/overseerr
+    #  - ./media/overseerr
   - ./media/jellyseerr
     #  - ./media/calibre
     #  - ./media/calibre-web
@@ -62,10 +62,10 @@ resources:
   # Utilities Namespace
   - ./utilities/vaultwarden
   - ./utilities/vaultwarden_ldap
-  - ./utilities/uptimekuma
-  - ./utilities/smokeping
-  - ./utilities/changedetection
-  - ./utilities/librespeed
+    #  - ./utilities/uptimekuma
+    #  - ./utilities/smokeping
+    #  - ./utilities/changedetection
+    #  - ./utilities/librespeed
   - ./utilities/phpmyadmin
   - ./utilities/guacamole
     #- ./utilities/firefox
