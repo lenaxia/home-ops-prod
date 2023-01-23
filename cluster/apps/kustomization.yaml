@@ -24,7 +24,7 @@ resources:
   # Home
   - ./home/mealie
   - ./home/babybuddy
-  - ./home/home-assistant
+    #  - ./home/home-assistant
   - ./home/zwavejs
 
   # Monitoring Namespace
