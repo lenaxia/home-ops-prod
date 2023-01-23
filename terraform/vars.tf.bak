@@ -11,8 +11,8 @@ variable "kube_agent_disksize" {
   default = "20G"
 }
 
-variable "k3_server_count" { default = 1 }
-variable "k3_agent_count" { default = 1 }
+variable "k3_server_count" { default = 0 }
+variable "k3_agent_count" { default = 0 }
 variable "k3_server_disksize" { default = "50G" }
 variable "k3_server_base_offset" { default = 50 } # IP base offset, start counting from x.x.x.50
 variable "k3_agent_disksize" { default = "80G" }

@@ -2,7 +2,7 @@ terraform {
   required_providers {
     proxmox = {
       source = "telmate/proxmox"
-      version = "2.9.11"
+      version = "2.7.4"
     }
   }
 }
@@ -32,15 +32,14 @@ resource "proxmox_vm_qemu" "k3-server-00" {
   target_node = var.k3_server00_host 
   clone = var.template_name
   agent = 1
-  disk_gb = null
   os_type = "cloud-init"
-  qemu_os = "Linux"
   cores = 3
   sockets = 1
   cpu = "host"
-  memory = 15872
+  memory = 12872
   scsihw = "virtio-scsi-pci"
   bootdisk = "scsi0"
+  onboot = "true"
   disk {
     slot = 0
     size = var.k3_server_disksize 
@@ -55,7 +54,7 @@ resource "proxmox_vm_qemu" "k3-server-00" {
 
   lifecycle {
     ignore_changes = [
-      network,
+      network
     ]
   }
   ipconfig0 = "${format("ip=192.168.2.%02s/22,gw=192.168.0.1", count.index + var.k3_server00_offset + var.k3_server_base_offset)}"
@@ -75,15 +74,14 @@ resource "proxmox_vm_qemu" "k3-agent-00" {
   target_node = var.k3_agent00_host
   clone = var.template_name
   agent = 1
-  disk_gb = null
   os_type = "cloud-init"
-  qemu_os = "Linux"
   cores = 8
   sockets = 1
   cpu = "host"
   memory = var.k3_agent00_mem
   scsihw = "virtio-scsi-pci"
   bootdisk = "scsi0"
+  onboot = "true"
   disk {
     slot = 0
     size = var.k3_agent00_disksize
@@ -93,7 +91,7 @@ resource "proxmox_vm_qemu" "k3-agent-00" {
   }
   network {
     model = "virtio"
-    bridge = "vmbr0"
+    bridge = "vmbr0"  
   }
 
   lifecycle {
@@ -120,15 +118,14 @@ resource "proxmox_vm_qemu" "k3-server-01" {
   target_node = var.k3_server01_host
   clone = var.template_name
   agent = 1
-  disk_gb = null
   os_type = "cloud-init"
-  qemu_os = "Linux"
   cores = 1
   sockets = 1
   cpu = "host"
   memory = 4096
   scsihw = "virtio-scsi-pci"
   bootdisk = "scsi0"
+  onboot = "true"
   disk {
     slot = 0
     size = var.k3_server_disksize 
@@ -162,15 +159,14 @@ resource "proxmox_vm_qemu" "k3-agent-01" {
   target_node = var.k3_agent01_host
   clone = var.template_name
   agent = 1
-  disk_gb = null
   os_type = "cloud-init"
-  qemu_os = "Linux"
   cores = 8
   sockets = 1
   cpu = "host"
   memory = var.k3_agent01_mem
   scsihw = "virtio-scsi-pci"
   bootdisk = "scsi0"
+  onboot = "true"
   disk {
     slot = 0
     size = var.k3_agent01_disksize
@@ -207,15 +203,14 @@ resource "proxmox_vm_qemu" "k3-server-02" {
   target_node = var.k3_server02_host
   clone = var.template_name
   agent = 1
-  disk_gb = null
   os_type = "cloud-init"
-  qemu_os = "Linux"
   cores = 2
   sockets = 1
   cpu = "host"
   memory = 4096
   scsihw = "virtio-scsi-pci"
   bootdisk = "scsi0"
+  onboot = "true"
   disk {
     slot = 0
     size = var.k3_server_disksize 
@@ -249,15 +244,14 @@ resource "proxmox_vm_qemu" "k3-agent-02" {
   target_node = var.k3_agent02_host
   clone = var.template_name
   agent = 1
-  disk_gb = null
   os_type = "cloud-init"
-  qemu_os = "Linux"
   cores = 8
   sockets = 1
   cpu = "host"
   memory = var.k3_agent02_mem
   scsihw = "virtio-scsi-pci"
   bootdisk = "scsi0"
+  onboot = "true"
   disk {
     slot = 0
     size = var.k3_agent02_disksize
@@ -281,6 +275,8 @@ resource "proxmox_vm_qemu" "k3-agent-02" {
   EOF
 }
 
+
+
 ##########
 ## Dev Server 00 
 ##########
@@ -291,18 +287,17 @@ resource "proxmox_vm_qemu" "k3-dev-server-00" {
   target_node = var.k3_dev_server00_host 
   clone = var.template_name
   agent = 1
-  disk_gb = null
   os_type = "cloud-init"
-  qemu_os = "Linux"
   cores = var.k3_dev_server00_cores
   sockets = 1
   cpu = "host"
   memory = var.k3_dev_server00_mem
   scsihw = "virtio-scsi-pci"
   bootdisk = "scsi0"
+  onboot = "true"
   disk {
     slot = 0
-    size = var.k3_server_disksize 
+    size = var.k3_dev_server00_disksize
     type = "scsi"
     storage = "local-zfs"
     iothread = 1
@@ -334,15 +329,14 @@ resource "proxmox_vm_qemu" "k3-dev-agent-00" {
   target_node = var.k3_dev_agent00_host
   clone = var.template_name
   agent = 1
-  disk_gb = null
   os_type = "cloud-init"
-  qemu_os = "Linux"
   cores = var.k3_dev_agent00_cores 
   sockets = 1
   cpu = "host"
   memory = var.k3_dev_agent00_mem
   scsihw = "virtio-scsi-pci"
   bootdisk = "scsi0"
+  onboot = "true"
   disk {
     slot = 0
     size = var.k3_dev_agent00_disksize
@@ -371,24 +365,23 @@ resource "proxmox_vm_qemu" "k3-dev-agent-00" {
 ## Docker Host
 ##########
 
-resource "proxmox_vm_qemu" "dockertf" {
+resource "proxmox_vm_qemu" "docker" {
   count = 0
-  name = "dockertf"
-  target_node = "ifurita"
+  name = "docker"
+  target_node = var.docker_host
   clone = var.template_name
   agent = 1
   os_type = "cloud-init"
-  disk_gb = null
-  qemu_os = "Linux"
-  cores = 4
+  cores = var.docker_cores
   sockets = 1
   cpu = "host"
-  memory = "2048"
+  memory = var.docker_mem
   scsihw = "virtio-scsi-pci"
   bootdisk = "scsi0"
+  onboot = "false"
   disk {
     slot = 0
-    size = "20G"
+    size = var.docker_disksize
     type = "scsi"
     storage = "local-zfs"
     iothread = 1
@@ -409,40 +402,3 @@ resource "proxmox_vm_qemu" "dockertf" {
   EOF
 }
 
-resource "proxmox_vm_qemu" "test_server" {
-  count = 0 
-  name = "test-vm-00" 
-  target_node = "ifurita"
-  clone = var.template_name
-  agent = 1
-  os_type = "cloud-init"
-  cores = 2
-  sockets = 1
-  cpu = "host"
-  memory = 2048
-  scsihw = "virtio-scsi-pci"
-  bootdisk = "scsi0"
-  disk {
-    slot = 0
-    size = "10G"
-    type = "scsi"
-    storage = "local-zfs"
-    iothread = 1
-  }
-
-  network {
-    model = "virtio"
-    bridge = "vmbr0"
-  }
-  lifecycle {
-    ignore_changes = [
-      network,
-    ]
-  }
-
-  ipconfig0 = "ip=192.168.2.121/32,gw=192.168.0.1"
-
-  sshkeys = <<EOF
-  ${var.ssh_key_terraform}
-  EOF
-}
