@@ -24,7 +24,7 @@ resources:
   # Home
   - ./home/mealie
   - ./home/babybuddy
-    #  - ./home/home-assistant
+  - ./home/home-assistant
   - ./home/zwavejs
 
   # Monitoring Namespace
@@ -33,7 +33,6 @@ resources:
   - ./monitoring/flux
   - ./monitoring/loki
   - ./monitoring/vector/ks.yaml
-  #- ./monitoring/tobs
 
   # Default Namespace
   - ./dashboards/hajimari
@@ -47,7 +46,7 @@ resources:
   - ./media/nzbget
   - ./media/nzbhydra2
   - ./media/metube
-    #  - ./media/overseerr
+  - ./media/overseerr
   - ./media/jellyseerr
     #  - ./media/calibre
     #  - ./media/calibre-web
@@ -62,13 +61,12 @@ resources:
   # Utilities Namespace
   - ./utilities/vaultwarden
   - ./utilities/vaultwarden_ldap
-    #  - ./utilities/uptimekuma
-    #  - ./utilities/smokeping
-    #  - ./utilities/changedetection
-    #  - ./utilities/librespeed
+  - ./utilities/uptimekuma
+  - ./utilities/smokeping
+  - ./utilities/changedetection
+  - ./utilities/librespeed
   - ./utilities/phpmyadmin
   - ./utilities/guacamole
-    #- ./utilities/firefox
   - ./utilities/ltb-project
   - ./utilities/pgadmin
 
