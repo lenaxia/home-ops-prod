@@ -21,10 +21,10 @@ spec:
   install:
     createNamespace: true
     remediation:
-      retries: 4
+      retries: 6
   upgrade:
     remediation:
-      retries: 4
+      retries: 6
   values:
     image:
       repository: ghcr.io/authelia/authelia
