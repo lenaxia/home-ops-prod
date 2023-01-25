@@ -35,7 +35,7 @@ resource "proxmox_vm_qemu" "k3-server-00" {
   disk_gb = null
   os_type = "cloud-init"
   qemu_os = "Linux"
-  cores = 3
+  cores = 4
   sockets = 1
   cpu = "host"
   memory = 15872

@@ -38,6 +38,7 @@ resources:
   - ./dashboards/hajimari
 
   # Media Namespace
+  - ./media/jellyfin
   #  - ./media/plex
   #  - ./media/ersatztv
   - ./media/sonarr
