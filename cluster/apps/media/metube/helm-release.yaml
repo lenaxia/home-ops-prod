@@ -85,6 +85,8 @@ spec:
             server: ${NAS_ADDR}
             path: "/volume2/downloads/[Plex Temp Library]/YouTube"
         mountPath: /downloads
+    nodeSelector:
+      node-role.kubernetes.io/worker: "true"
 #    resources:
 #      requests:
 #        cpu: 10m

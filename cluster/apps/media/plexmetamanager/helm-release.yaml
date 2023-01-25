@@ -120,6 +120,8 @@ spec:
         subPath: config.yml
         mountPath: /config.yml
         defaultMode: 0644
+    nodeSelector:
+      node-role.kubernetes.io/worker: "true"
 #    resources:
 #      requests:
 #        cpu: 10m

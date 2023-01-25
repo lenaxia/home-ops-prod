@@ -101,6 +101,8 @@ spec:
         storageClass: longhorn
         labels:
           snapshot.home.arpa/enabled: "true"
+    nodeSelector:
+      node-role.kubernetes.io/worker: "true"
     resources:
       requests:
         cpu: 10m

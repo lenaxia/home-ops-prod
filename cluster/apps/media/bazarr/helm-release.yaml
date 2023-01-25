@@ -141,6 +141,8 @@ spec:
         subPath: poststart.sh
         mountPath: /poststart.sh
         defaultMode: 0777
+    nodeSelector:
+      node-role.kubernetes.io/worker: "true"
 #    resources:
 #      requests:
 #        cpu: 10m

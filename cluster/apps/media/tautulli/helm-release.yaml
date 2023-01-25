@@ -90,6 +90,8 @@ spec:
             path: /volume1/backups/tautulli
         mountPath: /config/backups
  
+    nodeSelector:
+      node-role.kubernetes.io/worker: "true"
 #    resources:
 #      requests:
 #        cpu: 10m

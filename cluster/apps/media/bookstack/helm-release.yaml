@@ -102,3 +102,5 @@ spec:
             #                      operator: "Equal"
             #                      value: "cluster-services"
             #                      effect: "NoSchedule"
+    nodeSelector:
+      node-role.kubernetes.io/worker: "true"

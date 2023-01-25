@@ -101,6 +101,8 @@ spec:
       - key: low-mem
         operator: Exists
         effect: NoSchedule
+    nodeSelector:
+      node-role.kubernetes.io/worker: "true"
     resources:
       limits:
         memory: 350M

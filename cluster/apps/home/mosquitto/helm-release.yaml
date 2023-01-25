@@ -70,6 +70,8 @@ spec:
         mountPath: /mosquitto/config/mqttpassword
         subPath: mqttpassword
         readOnly: true
+    nodeSelector:
+      node-role.kubernetes.io/worker: "true"
     resources:
       requests:
         cpu: 15m

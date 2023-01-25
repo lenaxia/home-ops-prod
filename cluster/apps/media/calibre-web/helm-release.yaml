@@ -76,6 +76,8 @@ spec:
         existingClaim: calibre-media-volume
         namespace: media
         mountPath: /library
+    nodeSelector:
+      node-role.kubernetes.io/worker: "true"
     resources:
       requests:
         cpu: 15m

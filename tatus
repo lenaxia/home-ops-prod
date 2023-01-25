@@ -1,0 +1,301 @@
+[1mdiff --git a/cluster/apps/home/babybuddy/helm-release.yaml b/cluster/apps/home/babybuddy/helm-release.yaml[m
+[1mindex 2bf249e..eca070c 100644[m
+[1m--- a/cluster/apps/home/babybuddy/helm-release.yaml[m
+[1m+++ b/cluster/apps/home/babybuddy/helm-release.yaml[m
+[36m@@ -72,3 +72,5 @@[m [mspec:[m
+         - hosts:[m
+             - *uri[m
+           secretName: *uri[m
+[32m+[m[32m    nodeSelector:[m
+[32m+[m[32m      node-role.kubernetes.io/worker: "true"[m
+[1mdiff --git a/cluster/apps/home/home-assistant/helm-release.yaml b/cluster/apps/home/home-assistant/helm-release.yaml[m
+[1mindex 8c4a618..5a4223f 100644[m
+[1m--- a/cluster/apps/home/home-assistant/helm-release.yaml[m
+[1m+++ b/cluster/apps/home/home-assistant/helm-release.yaml[m
+[36m@@ -101,6 +101,8 @@[m [mspec:[m
+         storageClass: longhorn[m
+         labels:[m
+           snapshot.home.arpa/enabled: "true"[m
+[32m+[m[32m    nodeSelector:[m
+[32m+[m[32m      node-role.kubernetes.io/worker: "true"[m
+     resources:[m
+       requests:[m
+         cpu: 10m[m
+[1mdiff --git a/cluster/apps/home/mealie/helm-release.yaml b/cluster/apps/home/mealie/helm-release.yaml[m
+[1mindex d165fc1..e0040eb 100644[m
+[1m--- a/cluster/apps/home/mealie/helm-release.yaml[m
+[1m+++ b/cluster/apps/home/mealie/helm-release.yaml[m
+[36m@@ -112,3 +112,5 @@[m [mspec:[m
+         - hosts:[m
+             - *uri[m
+           secretName: *uri[m
+[32m+[m[32m    nodeSelector:[m
+[32m+[m[32m      node-role.kubernetes.io/worker: "true"[m
+[1mdiff --git a/cluster/apps/home/mosquitto/helm-release.yaml b/cluster/apps/home/mosquitto/helm-release.yaml[m
+[1mindex 9c9715e..600d6bb 100644[m
+[1m--- a/cluster/apps/home/mosquitto/helm-release.yaml[m
+[1m+++ b/cluster/apps/home/mosquitto/helm-release.yaml[m
+[36m@@ -70,6 +70,8 @@[m [mspec:[m
+         mountPath: /mosquitto/config/mqttpassword[m
+         subPath: mqttpassword[m
+         readOnly: true[m
+[32m+[m[32m    nodeSelector:[m
+[32m+[m[32m      node-role.kubernetes.io/worker: "true"[m
+     resources:[m
+       requests:[m
+         cpu: 15m[m
+[1mdiff --git a/cluster/apps/home/node-red/helm-release.yaml b/cluster/apps/home/node-red/helm-release.yaml[m
+[1mindex 9dbcdfd..eb7846d 100644[m
+[1m--- a/cluster/apps/home/node-red/helm-release.yaml[m
+[1m+++ b/cluster/apps/home/node-red/helm-release.yaml[m
+[36m@@ -108,3 +108,5 @@[m [mspec:[m
+           - hosts:[m
+             - *uri[m
+             secretName: *uri[m
+[32m+[m[32m    nodeSelector:[m
+[32m+[m[32m      node-role.kubernetes.io/worker: "true"[m
+[1mdiff --git a/cluster/apps/home/zwavejs/helm-release.yaml b/cluster/apps/home/zwavejs/helm-release.yaml[m
+[1mindex 3ecdf70..6e3ebbd 100644[m
+[1m--- a/cluster/apps/home/zwavejs/helm-release.yaml[m
+[1m+++ b/cluster/apps/home/zwavejs/helm-release.yaml[m
+[36m@@ -101,6 +101,8 @@[m [mspec:[m
+       - key: low-mem[m
+         operator: Exists[m
+         effect: NoSchedule[m
+[32m+[m[32m    nodeSelector:[m
+[32m+[m[32m      node-role.kubernetes.io/worker: "true"[m
+     resources:[m
+       limits:[m
+         memory: 350M[m
+[1mdiff --git a/cluster/apps/media/bazarr/helm-release.yaml b/cluster/apps/media/bazarr/helm-release.yaml[m
+[1mindex e049017..1b3442a 100644[m
+[1m--- a/cluster/apps/media/bazarr/helm-release.yaml[m
+[1m+++ b/cluster/apps/media/bazarr/helm-release.yaml[m
+[36m@@ -141,6 +141,8 @@[m [mspec:[m
+         subPath: poststart.sh[m
+         mountPath: /poststart.sh[m
+         defaultMode: 0777[m
+[32m+[m[32m    nodeSelector:[m
+[32m+[m[32m      node-role.kubernetes.io/worker: "true"[m
+ #    resources:[m
+ #      requests:[m
+ #        cpu: 10m[m
+[1mdiff --git a/cluster/apps/media/bookstack/helm-release.yaml b/cluster/apps/media/bookstack/helm-release.yaml[m
+[1mindex 11dec3b..41dcc47 100644[m
+[1m--- a/cluster/apps/media/bookstack/helm-release.yaml[m
+[1m+++ b/cluster/apps/media/bookstack/helm-release.yaml[m
+[36m@@ -102,3 +102,5 @@[m [mspec:[m
+             #                      operator: "Equal"[m
+             #                      value: "cluster-services"[m
+             #                      effect: "NoSchedule"[m
+[32m+[m[32m    nodeSelector:[m
+[32m+[m[32m      node-role.kubernetes.io/worker: "true"[m
+[1mdiff --git a/cluster/apps/media/calibre-web/helm-release.yaml b/cluster/apps/media/calibre-web/helm-release.yaml[m
+[1mindex 37ed980..8f533b6 100644[m
+[1m--- a/cluster/apps/media/calibre-web/helm-release.yaml[m
+[1m+++ b/cluster/apps/media/calibre-web/helm-release.yaml[m
+[36m@@ -76,6 +76,8 @@[m [mspec:[m
+         existingClaim: calibre-media-volume[m
+         namespace: media[m
+         mountPath: /library[m
+[32m+[m[32m    nodeSelector:[m
+[32m+[m[32m      node-role.kubernetes.io/worker: "true"[m
+     resources:[m
+       requests:[m
+         cpu: 15m[m
+[1mdiff --git a/cluster/apps/media/calibre/helm-release.yaml b/cluster/apps/media/calibre/helm-release.yaml[m
+[1mindex 011ce23..a8b13f8 100644[m
+[1m--- a/cluster/apps/media/calibre/helm-release.yaml[m
+[1m+++ b/cluster/apps/media/calibre/helm-release.yaml[m
+[36m@@ -76,6 +76,8 @@[m [mspec:[m
+         enabled: true[m
+         existingClaim: calibre-media-volume [m
+         mountPath: /media[m
+[32m+[m[32m    nodeSelector:[m
+[32m+[m[32m      node-role.kubernetes.io/worker: "true"[m
+     resources:[m
+       requests:[m
+         cpu: 15m[m
+[1mdiff --git a/cluster/apps/media/ersatztv/helm-release.yaml b/cluster/apps/media/ersatztv/helm-release.yaml[m
+[1mindex 879a008..6c8b589 100644[m
+[1m--- a/cluster/apps/media/ersatztv/helm-release.yaml[m
+[1m+++ b/cluster/apps/media/ersatztv/helm-release.yaml[m
+[36m@@ -110,6 +110,8 @@[m [mspec:[m
+                   operator: In[m
+                   values: ["plex"][m
+             topologyKey: kubernetes.io/hostname[m
+[32m+[m[32m    nodeSelector:[m
+[32m+[m[32m      node-role.kubernetes.io/worker: "true"[m
+     resources:[m
+       requests:[m
+         gpu.intel.com/i915: 3[m
+[1mdiff --git a/cluster/apps/media/imaginary/helm-release.yaml b/cluster/apps/media/imaginary/helm-release.yaml[m
+[1mindex 7a90d44..d58d0c0 100644[m
+[1m--- a/cluster/apps/media/imaginary/helm-release.yaml[m
+[1m+++ b/cluster/apps/media/imaginary/helm-release.yaml[m
+[36m@@ -73,6 +73,8 @@[m [mspec:[m
+       startup:[m
+         enabled: false[m
+  [m
+[32m+[m[32m    nodeSelector:[m
+[32m+[m[32m      node-role.kubernetes.io/worker: "true"[m
+ #    resources:[m
+ #      requests:[m
+ #        cpu: 10m[m
+[1mdiff --git a/cluster/apps/media/jellyseerr/helm-release.yaml b/cluster/apps/media/jellyseerr/helm-release.yaml[m
+[1mindex 6a637b2..7044850 100644[m
+[1m--- a/cluster/apps/media/jellyseerr/helm-release.yaml[m
+[1m+++ b/cluster/apps/media/jellyseerr/helm-release.yaml[m
+[36m@@ -81,4 +81,6 @@[m [mspec:[m
+           - hosts:[m
+               - *uri[m
+             secretName: *uri[m
+[32m+[m[32m    nodeSelector:[m
+[32m+[m[32m      node-role.kubernetes.io/worker: "true"[m
+ ---[m
+[1mdiff --git a/cluster/apps/media/metube/helm-release.yaml b/cluster/apps/media/metube/helm-release.yaml[m
+[1mindex dc3abff..991d014 100644[m
+[1m--- a/cluster/apps/media/metube/helm-release.yaml[m
+[1m+++ b/cluster/apps/media/metube/helm-release.yaml[m
+[36m@@ -85,6 +85,8 @@[m [mspec:[m
+             server: ${NAS_ADDR}[m
+             path: "/volume2/downloads/[Plex Temp Library]/YouTube"[m
+         mountPath: /downloads[m
+[32m+[m[32m    nodeSelector:[m
+[32m+[m[32m      node-role.kubernetes.io/worker: "true"[m
+ #    resources:[m
+ #      requests:[m
+ #        cpu: 10m[m
+[1mdiff --git a/cluster/apps/media/nzbget/helm-release.yaml b/cluster/apps/media/nzbget/helm-release.yaml[m
+[1mindex f1ac249..a0f0bbd 100644[m
+[1m--- a/cluster/apps/media/nzbget/helm-release.yaml[m
+[1m+++ b/cluster/apps/media/nzbget/helm-release.yaml[m
+[36m@@ -79,3 +79,5 @@[m [mspec:[m
+           - hosts:[m
+             - *uri[m
+             secretName: *uri[m
+[32m+[m[32m    nodeSelector:[m
+[32m+[m[32m      node-role.kubernetes.io/worker: "true"[m
+[1mdiff --git a/cluster/apps/media/nzbhydra2/helm-release.yaml b/cluster/apps/media/nzbhydra2/helm-release.yaml[m
+[1mindex d6a9c74..fff0e73 100644[m
+[1m--- a/cluster/apps/media/nzbhydra2/helm-release.yaml[m
+[1m+++ b/cluster/apps/media/nzbhydra2/helm-release.yaml[m
+[36m@@ -92,3 +92,5 @@[m [mspec:[m
+           - hosts:[m
+             - *uri[m
+             secretName: *uri[m
+[32m+[m[32m    nodeSelector:[m
+[32m+[m[32m      node-role.kubernetes.io/worker: "true"[m
+[1mdiff --git a/cluster/apps/media/outline/helm-release.yaml b/cluster/apps/media/outline/helm-release.yaml[m
+[1mindex 239cd05..a45a835 100644[m
+[1m--- a/cluster/apps/media/outline/helm-release.yaml[m
+[1m+++ b/cluster/apps/media/outline/helm-release.yaml[m
+[36m@@ -74,9 +74,12 @@[m [mspec:[m
+         labelSelector:[m
+           matchLabels:[m
+             app.kubernetes.io/name: *app[m
+[32m+[m[32m    nodeSelector:[m
+[32m+[m[32m      node-role.kubernetes.io/worker: "true"[m
+     resources:[m
+       requests:[m
+         cpu: 10m[m
+         memory: 50Mi[m
+       limits:[m
+         memory: 500Mi[m
+[41m+[m
+[1mdiff --git a/cluster/apps/media/overseerr/helm-release.yaml b/cluster/apps/media/overseerr/helm-release.yaml[m
+[1mindex 7108eb6..a6010b9 100644[m
+[1m--- a/cluster/apps/media/overseerr/helm-release.yaml[m
+[1m+++ b/cluster/apps/media/overseerr/helm-release.yaml[m
+[36m@@ -54,6 +54,8 @@[m [mspec:[m
+       config:[m
+         enabled: true[m
+         existingClaim: overseerr-config-volume[m
+[32m+[m[32m    nodeSelector:[m
+[32m+[m[32m      node-role.kubernetes.io/worker: "true"[m
+ #    resources:[m
+ #      requests:[m
+ #        cpu: 10m[m
+[1mdiff --git a/cluster/apps/media/plexmetamanager/helm-release.yaml b/cluster/apps/media/plexmetamanager/helm-release.yaml[m
+[1mindex d64c2b8..33d614c 100644[m
+[1m--- a/cluster/apps/media/plexmetamanager/helm-release.yaml[m
+[1m+++ b/cluster/apps/media/plexmetamanager/helm-release.yaml[m
+[36m@@ -120,6 +120,8 @@[m [mspec:[m
+         subPath: config.yml[m
+         mountPath: /config.yml[m
+         defaultMode: 0644[m
+[32m+[m[32m    nodeSelector:[m
+[32m+[m[32m      node-role.kubernetes.io/worker: "true"[m
+ #    resources:[m
+ #      requests:[m
+ #        cpu: 10m[m
+[1mdiff --git a/cluster/apps/media/radarr/helm-release.yaml b/cluster/apps/media/radarr/helm-release.yaml[m
+[1mindex 384f0ee..d1910cb 100644[m
+[1m--- a/cluster/apps/media/radarr/helm-release.yaml[m
+[1m+++ b/cluster/apps/media/radarr/helm-release.yaml[m
+[36m@@ -89,3 +89,5 @@[m [mspec:[m
+           - hosts:[m
+               - *uri[m
+             secretName: *uri[m
+[32m+[m[32m    nodeSelector:[m
+[32m+[m[32m      node-role.kubernetes.io/worker: "true"[m
+[1mdiff --git a/cluster/apps/media/sonarr/helm-release.yaml b/cluster/apps/media/sonarr/helm-release.yaml[m
+[1mindex f95bf2d..fa93e9b 100644[m
+[1m--- a/cluster/apps/media/sonarr/helm-release.yaml[m
+[1m+++ b/cluster/apps/media/sonarr/helm-release.yaml[m
+[36m@@ -90,4 +90,6 @@[m [mspec:[m
+           - hosts:[m
+               - *uri[m
+             secretName: *uri[m
+[32m+[m[32m    nodeSelector:[m
+[32m+[m[32m      node-role.kubernetes.io/worker: "true"[m
+ ---[m
+[1mdiff --git a/cluster/apps/media/tautulli/helm-release.yaml b/cluster/apps/media/tautulli/helm-release.yaml[m
+[1mindex 7abf498..e509499 100644[m
+[1m--- a/cluster/apps/media/tautulli/helm-release.yaml[m
+[1m+++ b/cluster/apps/media/tautulli/helm-release.yaml[m
+[36m@@ -90,6 +90,8 @@[m [mspec:[m
+             path: /volume1/backups/tautulli[m
+         mountPath: /config/backups[m
+  [m
+[32m+[m[32m    nodeSelector:[m
+[32m+[m[32m      node-role.kubernetes.io/worker: "true"[m
+ #    resources:[m
+ #      requests:[m
+ #        cpu: 10m[m
+[1mdiff --git a/cluster/apps/storage/kopia-web/helm-release.yaml b/cluster/apps/storage/kopia-web/helm-release.yaml[m
+[1mindex 33a4868..060f09c 100644[m
+[1m--- a/cluster/apps/storage/kopia-web/helm-release.yaml[m
+[1m+++ b/cluster/apps/storage/kopia-web/helm-release.yaml[m
+[36m@@ -100,6 +100,8 @@[m [mspec:[m
+         mountPath: /snapshots[m
+     podAnnotations:[m
+       configmap.reloader.stakater.com/reload: *app[m
+[32m+[m[32m    nodeSelector:[m
+[32m+[m[32m      node-role.kubernetes.io/worker: "true"[m
+     resources:[m
+       requests:[m
+         cpu: 10m[m
+[1mdiff --git a/cluster/apps/storage/nextcloud/helm-release.yaml b/cluster/apps/storage/nextcloud/helm-release.yaml[m
+[1mindex 758fdc4..7620b4f 100644[m
+[1m--- a/cluster/apps/storage/nextcloud/helm-release.yaml[m
+[1m+++ b/cluster/apps/storage/nextcloud/helm-release.yaml[m
+[36m@@ -435,6 +435,8 @@[m [mspec:[m
+         scrapeTimeout: 10s[m
+         labels: {}[m
+             [m
+[32m+[m[32m    nodeSelector:[m
+[32m+[m[32m      node-role.kubernetes.io/worker: "true"[m
+ #    resources:[m
+ #      requests:[m
+ #        cpu: 34m[m
+[1mdiff --git a/cluster/apps/storage/onlyoffice/helm-release.yaml b/cluster/apps/storage/onlyoffice/helm-release.yaml[m
+[1mindex 95c04b6..c711dd1 100644[m
+[1m--- a/cluster/apps/storage/onlyoffice/helm-release.yaml[m
+[1m+++ b/cluster/apps/storage/onlyoffice/helm-release.yaml[m
+[36m@@ -94,3 +94,5 @@[m [mspec:[m
+         - hosts:[m
+             - *uri[m
+           secretName: *uri[m
+[32m+[m[32m    nodeSelector:[m
+[32m+[m[32m      node-role.kubernetes.io/worker: "true"[m
