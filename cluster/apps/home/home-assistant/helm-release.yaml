@@ -97,7 +97,7 @@ spec:
       - name: config
         mountPath: /config
         accessMode: ReadWriteOnce
-        size: 5Gi
+        size: 20Gi
         storageClass: longhorn
         labels:
           snapshot.home.arpa/enabled: "true"
