@@ -1,0 +1,70 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: &appname fasten
+  namespace: home
+spec:
+  interval: 5m
+  chart:
+    spec:
+      chart: app-template
+      version: 1.2.1
+      interval: 16m
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s-charts
+        namespace: flux-system
+  # See https://github.com/bjw-s/helm-charts/blob/main/charts/library/common/values.yaml
+  values:
+    image:
+      repository: ghcr.io/fastenhealth/fasten-onprem
+      tag: v0.0.6
+
+    podAnnotations:
+      secret.reloader.stakater.com/reload: *appname
+
+    env:
+      TZ: ${TIMEZONE}
+
+      # -- Set the application database type
+    envFrom:
+      - secretRef:
+          name: *appname 
+
+    persistence:
+      config:
+        enabled: true
+        accessMode: ReadWriteOnce
+        existingClaim: fasten-volume
+        mountPath: /opt/fasten/
+
+    # -- Configures service settings for the chart.
+    # @default -- See values.yaml
+    service:
+      main:
+        ports:
+          http:
+            port: 8080
+
+    ingress:
+      main:
+        enabled: true
+        annotations:
+          hajimari.io/enable: "true"
+          hajimari.io/icon: game-icons:meal
+          hajimari.io/info: Meal Recipes
+          hajimari.io/group: documents
+          cert-manager.io/cluster-issuer: "letsencrypt-production"
+          traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
+          traefik.ingress.kubernetes.io/router.middlewares: networking-chain-authelia@kubernetescrd
+        hosts:
+        - host: &uri health.${SECRET_DEV_DOMAIN}
+          paths:
+          - path: /
+            pathType: Prefix
+        tls:
+        - hosts:
+            - *uri
+          secretName: *uri
+    nodeSelector:
+      node-role.kubernetes.io/worker: "true"
