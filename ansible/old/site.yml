@@ -19,6 +19,5 @@
     user: root
     group: root
   roles:
-    #    - { role: docker, tags: docker }
     - role: k3s/node
     - role: longhorn

@@ -6,7 +6,7 @@ ansible_user: ubuntu
 systemd_dir: /etc/systemd/system
 master_ip: "{{ hostvars[groups['master'][0]]['ansible_host'] | default(groups['master'][0]) }}"
 extra_server_args: " --disable servicelb --disable traefik --cluster-init"
-  #extra_agent_args: " --docker"
+#extra_agent_args: " --docker"
 
 metal_lb_prefix: 192.168.2
 metal_lb_primary: "{{metal_lb_prefix}}.153"

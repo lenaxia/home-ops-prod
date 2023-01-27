@@ -1,0 +1,32 @@
+---
+timezone: America/Los_Angeles
+public_ssh_keys:
+  - "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCVnuGiYRF0KdNfaBmrUgU2gaS7zC2e7tWgOg65wSod7lfCNuKV8j7Hdg53mF2cc6WIiOV14oWNNpo5wqFNJf4hP9ytecASTsoLEheCIFY+6bTfQHAirF5LoaHHplF0xa11V0SWzehcSB+bFsS9KiRlIY99YXyZ+uoSiJ5eLkUfBMxoS1zu2p3a/M+eaFxropdDY3yXZ2C3p0UpaRyM4Kpom4mHSUQz07Ii5PaT11B7FExb+xMKATf30n85sziH3kbBbWQ5emD9SAhHeetOO5QLJPNJwbYYW7R8j25R1v9mDQSrYQ96u2vwTIq6dUaC3rxHHtFm6CwVQ71MLqUrP9eG5F07+UH29tOlCVqwkBfnKyME+J4ZInQXc2qxWt6gGZigCMF4Kcl3GDxxLvJZlh+AiQpwjnacX6v5xY8HL31JgiMQf2x8nUakmAJ2+LWpdhYFmp8c+HWNXp6b9MIs02TNkDC2sK2h9lyDEz+8oKfwTAYGMWZQYFS51egVlloIEpE= ubuntu@terraform"
+ubuntu:
+  packages:
+    - apt-transport-https
+    - arptables
+    - ca-certificates
+    - curl
+    - ebtables
+    - gdisk
+    - hdparm
+    - htop
+    - iputils-ping
+    - ipvsadm
+    - lm-sensors
+    - lvm2
+    - nano
+    - nano
+    - net-tools
+    - nfs-common
+    - ntpdate
+    - nvme-cli
+    - open-iscsi
+    - psmisc
+    - python3-kubernetes
+    - python3-yaml
+    - smartmontools
+    - socat
+    - software-properties-common
+    - unzip

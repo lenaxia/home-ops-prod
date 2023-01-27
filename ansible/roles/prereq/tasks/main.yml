@@ -1,11 +1,11 @@
 ---
-#- name: Install any required packages 
-#  apt:
-#    pkg: "{{ item }}"
-#    state: present
-#  loop:
-#    - cifs-utils
-#    - nfs-common
+- name: Install any required packages 
+  apt:
+    pkg: "{{ item }}"
+    state: present
+  loop:
+    - cifs-utils
+    - nfs-common
 
 - name: Set SELinux to disabled state
   selinux:
