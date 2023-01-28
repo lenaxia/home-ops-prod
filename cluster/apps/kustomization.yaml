@@ -19,7 +19,7 @@ resources:
   # Security
   - ./networking/traefik
   - ./networking/traefik/ingresses
-    #- ./networking/multus
+  - ./networking/multus
   - ./authentication/authelia
   
   # Home
