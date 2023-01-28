@@ -31,3 +31,4 @@ resources:
   - nextcloud-charts.yaml
   - spotahome-redis-operator-charts.yaml
   - intel.yaml
+  - angelnu.yaml
