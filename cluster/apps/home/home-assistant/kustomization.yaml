@@ -7,6 +7,6 @@ commonLabels:
 resources:
   - helm-release.yaml
   - secret.sops.yaml
-  - networkattachmentdefinition.yaml
+    #  - networkattachmentdefinition.yaml
 patchesStrategicMerge:
   - ./patches/addons.yaml
