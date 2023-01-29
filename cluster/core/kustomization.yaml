@@ -10,7 +10,7 @@ resources:
 
   # Networking
   - ./networking/cert-manager
-    #- ./networking/metallb
+  - ./networking/metallb
 
   # Databases
   - ./databases/redis
