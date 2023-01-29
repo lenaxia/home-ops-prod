@@ -1,9 +1,8 @@
 apiversion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
-  #- ./test/nextcloud
   # Utilities Namespace
-  - ./diagnostics/podinfo
+  #- ./diagnostics/podinfo
   - ./diagnostics/echo-server
   - ./system-upgrade
   - ./kube-system/node-feature-discovery/ks.yaml
@@ -26,7 +25,7 @@ resources:
   - ./home/mealie
   - ./home/fasten
   - ./home/babybuddy
-  - ./home/home-assistant
+    #- ./home/home-assistant
   - ./home/zwavejs
 
   # Monitoring Namespace
