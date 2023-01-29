@@ -17,10 +17,10 @@ resources:
   - ./storage/onlyoffice
 
   # Security
-  #- ./networking/traefik
-  #- ./networking/traefik/ingresses
+  - ./networking/traefik
+  - ./networking/traefik/ingresses
     #- ./networking/multus
-    #- ./authentication/authelia
+  - ./authentication/authelia
   
   # Home
   - ./home/mealie
