@@ -8,11 +8,11 @@ kubernetes:
         ansible_ssh_common_args: "-o StrictHostKeyChecking=no"
       hosts:
         k3s-cp-00:
-          ansible_host: 192.168.2.70
-        k3s-cp-01:
-          ansible_host: 192.168.2.71
-        k3s-cp-02:
-          ansible_host: 192.168.2.72
+          ansible_host: 192.168.2.50
+#        k3s-cp-01:
+#          ansible_host: 192.168.2.71
+#        k3s-cp-02:
+#          ansible_host: 192.168.2.72
     worker:
       vars:
         ansible_user: ubuntu 
@@ -20,8 +20,8 @@ kubernetes:
         ansible_ssh_common_args: "-o StrictHostKeyChecking=no"
       hosts:
         k3s-worker-00:
-          ansible_host: 192.168.2.80
+          ansible_host: 192.168.2.60
         k3s-worker-01:
-          ansible_host: 192.168.2.81
+          ansible_host: 192.168.2.61
         k3s-worker-02:
-          ansible_host: 192.168.2.82
+          ansible_host: 192.168.2.62
