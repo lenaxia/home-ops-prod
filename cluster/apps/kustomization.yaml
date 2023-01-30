@@ -60,6 +60,6 @@ resources:
   - ./utilities/guacamole/ks.yaml
     #- ./utilities/ltb-project/ks.yaml
   - ./utilities/pgadmin/ks.yaml
-  - ./utilities/podinfo
-  - ./utilities/echo-server
+  - ./utilities/podinfo/ks.yaml
+  - ./utilities/echo-server/ks.yaml
 
