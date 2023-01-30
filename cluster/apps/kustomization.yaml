@@ -8,7 +8,7 @@ resources:
   - ./kube-system/reloader
   - ./kube-system/descheduler
     #- ./kube-system/metrics-server  # k3s already comes with a metrics server
-    #- ./storage/ks.yaml
+  - ./storage/ks.yaml
 
   # Security
   - ./networking/traefik/ks.yaml
@@ -18,7 +18,7 @@ resources:
   # Home
   - ./home/fasten/ks.yaml
   - ./home/babybuddy/ks.yaml
-    #- ./home/home-assistant/ks.yaml
+  - ./home/home-assistant/ks.yaml
   - ./home/zwavejs/ks.yaml
   - ./home/mosquitto/ks.yaml
   - ./home/node-red/ks.yaml
@@ -52,11 +52,11 @@ resources:
   - ./utilities/vaultwarden/ks.yaml
   - ./utilities/vaultwarden-ldap/ks.yaml
   - ./utilities/uptimekuma/ks.yaml
-    #- ./utilities/smokeping/ks.yaml
+  - ./utilities/smokeping/ks.yaml
   - ./utilities/changedetection/ks.yaml
-    #- ./utilities/librespeed/ks.yaml
+  - ./utilities/librespeed/ks.yaml
   - ./utilities/guacamole/ks.yaml
-    #- ./utilities/ltb-project/ks.yaml
+  - ./utilities/ltb-project/ks.yaml
   - ./utilities/pgadmin/ks.yaml
   - ./utilities/podinfo/ks.yaml
   - ./utilities/echo-server/ks.yaml
