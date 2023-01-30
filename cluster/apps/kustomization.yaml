@@ -8,7 +8,7 @@ resources:
   - ./kube-system/reloader
   - ./kube-system/descheduler
     #- ./kube-system/metrics-server  # k3s already comes with a metrics server
-  - ./storage/ks.yaml
+    #- ./storage/ks.yaml
 
   # Security
   - ./networking/traefik/ks.yaml
@@ -26,7 +26,7 @@ resources:
   # Monitoring Namespace
   - ./monitoring/flux
   - ./monitoring/prometheus-stack/ks.yaml
-  - ./monitoring/grafana/ks.yaml
+    #- ./monitoring/grafana/ks.yaml
     #- ./monitoring/loki/ks.yaml
   - ./monitoring/vector/ks.yaml
 
