@@ -32,6 +32,10 @@ spec:
     deployment:
       kind: Deployment
       replicas: 3
+
+    nodeSelector:
+      node-role.kubernetes.io/worker: "true"
+
     service:
       enabled: true
       type: LoadBalancer

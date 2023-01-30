@@ -28,3 +28,5 @@ spec:
       podMonitor:
         enabled: true
         namespace: *namespace
+    nodeSelector:
+      node-role.kubernetes.io/worker: "true"

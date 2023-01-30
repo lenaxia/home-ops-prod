@@ -30,3 +30,4 @@ spec:
         bin: /var/lib/rancher/k3s/data/ec00304416df58a8da2a883b1b87ab882b199ef11c4e01b28f07d643c8067d91
 
       version: "0.3.1"
+

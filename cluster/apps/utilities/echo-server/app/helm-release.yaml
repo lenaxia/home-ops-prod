@@ -35,6 +35,8 @@ spec:
         memory: 64Mi
       limits:
         memory: 96Mi
+    nodeSelector:
+      node-role.kubernetes.io/worker: "true"
     ingress:
       enabled: true
       ingressClassName: "traefik"

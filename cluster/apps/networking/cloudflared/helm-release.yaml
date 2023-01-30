@@ -27,6 +27,10 @@ spec:
     priorityClassName: system-cluster-critical
     controller:
       replicas: 1
+
+    nodeSelector:
+      node-role.kubernetes.io/worker: "true"
+
     # Example: https://github.com/cloudflare/postgres-postgrest-cloudflared-example
     image:
       # https://hub.docker.com/r/cloudflare/cloudflared

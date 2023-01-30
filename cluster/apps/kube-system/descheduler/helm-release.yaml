@@ -122,8 +122,8 @@ spec:
     
     priorityClassName: system-cluster-critical
     
-    nodeSelector: {}
-    #  foo: bar
+    nodeSelector:
+      node-role.kubernetes.io/worker: "true"
     
     affinity: {}
     # nodeAffinity:

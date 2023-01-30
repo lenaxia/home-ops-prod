@@ -9,10 +9,10 @@ kubernetes:
       hosts:
         k3s-cp-00:
           ansible_host: 192.168.2.50
-#        k3s-cp-01:
-#          ansible_host: 192.168.2.71
-#        k3s-cp-02:
-#          ansible_host: 192.168.2.72
+        k3s-cp-01:
+          ansible_host: 192.168.2.51
+        k3s-cp-02:
+          ansible_host: 192.168.2.52
     worker:
       vars:
         ansible_user: ubuntu 

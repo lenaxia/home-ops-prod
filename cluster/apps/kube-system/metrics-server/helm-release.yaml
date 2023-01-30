@@ -31,3 +31,5 @@ spec:
       enabled: true
     serviceMonitor:
       enabled: true
+    nodeSelector:
+      node-role.kubernetes.io/worker: "true"

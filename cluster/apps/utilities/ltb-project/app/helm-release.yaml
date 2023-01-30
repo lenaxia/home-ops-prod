@@ -40,6 +40,8 @@ spec:
             - /postStart.sh
     podAnnotations:
       configmap.reloader.stakater.com/reload: "poststart-sh,ltb-config,custom-css,ltb-secret"
+    nodeSelector:
+      node-role.kubernetes.io/worker: "true"
     service:
       main:
         ports:

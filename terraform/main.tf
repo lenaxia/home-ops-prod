@@ -38,7 +38,7 @@ resource "proxmox_vm_qemu" "k3-server-00" {
   cores = 4
   sockets = 1
   cpu = "host"
-  memory = 15872
+  memory = 12872
   scsihw = "virtio-scsi-pci"
   bootdisk = "scsi0"
   disk {
@@ -114,8 +114,7 @@ resource "proxmox_vm_qemu" "k3-agent-00" {
 ##########
 
 resource "proxmox_vm_qemu" "k3-server-01" {
-  count = 0
-  #count = var.k3_server_count
+  count = var.k3_server_count
   name = "${format("k3-server-%02s", count.index + var.k3_server01_offset)}"
   target_node = var.k3_server01_host
   clone = var.template_name
@@ -126,7 +125,7 @@ resource "proxmox_vm_qemu" "k3-server-01" {
   cores = 1
   sockets = 1
   cpu = "host"
-  memory = 4096
+  memory = 26000
   scsihw = "virtio-scsi-pci"
   bootdisk = "scsi0"
   disk {
@@ -201,8 +200,7 @@ resource "proxmox_vm_qemu" "k3-agent-01" {
 ##########
 
 resource "proxmox_vm_qemu" "k3-server-02" {
-  count = 0
-  #count = var.k3_server_count
+  count = var.k3_server_count
   name = "${format("k3-server-%02s", count.index + var.k3_server02_offset)}"
   target_node = var.k3_server02_host
   clone = var.template_name
@@ -213,7 +211,7 @@ resource "proxmox_vm_qemu" "k3-server-02" {
   cores = 2
   sockets = 1
   cpu = "host"
-  memory = 4096
+  memory = 13000
   scsihw = "virtio-scsi-pci"
   bootdisk = "scsi0"
   disk {

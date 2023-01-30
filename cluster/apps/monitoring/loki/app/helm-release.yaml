@@ -27,6 +27,8 @@ spec:
   uninstall:
     keepHistory: false
   values:
+    nodeSelector:
+      node-role.kubernetes.io/worker: "true"
     loki:
       structuredConfig:
         auth_enabled: false

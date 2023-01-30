@@ -41,19 +41,27 @@ spec:
     kubeControllerManager:
       enabled: false
       endpoints:
-        - 192.168.2.70
+        - 192.168.2.50
+        - 192.168.2.51
+        - 192.168.2.52
     kubeProxy:
       enabled: false
       endpoints:
-        - 192.168.2.70
+        - 192.168.2.50
+        - 192.168.2.51
+        - 192.168.2.52
     kubeScheduler:
       enabled: false
       endpoints:
-        - 192.168.2.70
+        - 192.168.2.50
+        - 192.168.2.51
+        - 192.168.2.52
     kubeEtcd:
       enabled: false
       endpoints:
-        - 192.168.2.70
+        - 192.168.2.50
+        - 192.168.2.51
+        - 192.168.2.52
       service:
         enabled: false
         port: 2381

@@ -434,6 +434,9 @@ spec:
         interval: 1m
         scrapeTimeout: 10s
         labels: {}
+
+    nodeSelector:
+      node-role.kubernetes.io/worker: "true"
             
 #    resources:
 #      requests:

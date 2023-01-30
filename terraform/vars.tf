@@ -23,10 +23,10 @@ variable "k3_server00_offset" { default = 0 }
 variable "k3_server00_host" { default = "melfina" }
 
 variable "k3_server01_offset" { default = 1 }
-variable "k3_server01_host" { default = "yurika" }
+variable "k3_server01_host" { default = "lafiel" }
 
 variable "k3_server02_offset" { default = 2 }
-variable "k3_server02_host" { default = "melfina" }
+variable "k3_server02_host" { default = "lumiere" }
 
 variable "k3_agent00_offset" { default =0 }
 variable "k3_agent00_mem" { default = "26624" }

@@ -110,8 +110,6 @@ spec:
                   operator: In
                   values: ["plex"]
             topologyKey: kubernetes.io/hostname
-    nodeSelector:
-      node-role.kubernetes.io/worker: "true"
     resources:
       requests:
         gpu.intel.com/i915: 3
