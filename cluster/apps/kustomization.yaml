@@ -8,7 +8,8 @@ resources:
   - ./kube-system/reloader
   - ./kube-system/descheduler
     #- ./kube-system/metrics-server  # k3s already comes with a metrics server
-  - ./storage/ks.yaml
+  - ./storage/nextcloud/ks.yaml
+  - ./storage/kopia-web/ks.yaml
 
   # Security
   - ./networking/traefik/ks.yaml
