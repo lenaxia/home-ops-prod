@@ -6,15 +6,14 @@ resources:
   # Storage
   - ./storage/longhorn
   - ./storage/minio
-  - ./storage/csi-driver-nfs
 
   # Networking
-  - ./networking/cert-manager
-  - ./networking/metallb
+  - ./networking/cert-manager/ks.yaml
+  - ./networking/metallb/ks.yaml
 
   # Databases
-  - ./databases/redis
-  - ./databases/redis-operator
-  - ./databases/cloudnative-pg
+  - ./databases/redis/ks.yaml
+  - ./databases/redis-operator/ks.yaml
+  - ./databases/cloudnative-pg/ks.yaml
   - ./databases/cloudnative-pg/clusters
-  - ./databases/influxdb
+  - ./databases/influxdb/ks.yaml

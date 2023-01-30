@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: hajimari
+  namespace: home
+spec:
+  selector:
+    app.kubernetes.io/instance: hajimari
+    app.kubernetes.io/name: hajimari
+  type: LoadBalancer
+status:
+  loadBalancer: {}
