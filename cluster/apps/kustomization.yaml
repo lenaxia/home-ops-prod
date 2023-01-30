@@ -34,7 +34,6 @@ resources:
   - ./home/hajimari/ks.yaml
 
   # Media Namespace
-  - ./media/mediarequest/ks.yaml
   #  - ./media/plex/ks.yaml
   #  - ./media/ersatztv/ks.yaml
   - ./media/sonarr/ks.yaml
