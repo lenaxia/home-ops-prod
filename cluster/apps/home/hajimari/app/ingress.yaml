@@ -1,0 +1,30 @@
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    hajimari.io/enable: "true"
+    hajimari.io/icon: "weather-sunset"
+      #cert-manager.io/cluster-issuer: letsencrypt-staging
+    cert-manager.io/cluster-issuer: ca-issuer
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
+    traefik.ingress.kubernetes.io/router.middlewares: networking-chain-authelia@kubernetescrd
+  namespace: home
+  name: &appname hajimari
+spec:
+  rules:
+  - host: &uri hajimari.${SECRET_DEV_DOMAIN}
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: *appname
+            port:
+              number: 3000
+  tls:
+  - hosts:
+    #- hajimari.${SECRET_DEV_DOMAIN}
+    - *uri
+    secretName: *appname

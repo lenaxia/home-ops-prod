@@ -1,9 +1,0 @@
-NAMESPACE      	NAME                        	REVISION	SUSPENDED	READY	MESSAGE                                                                          
-media          	ersatztv                    	        	False    	False	Helm install failed: timed out waiting for the condition                        	
-media          	nzbhydra2                   	        	False    	False	Helm install failed: timed out waiting for the condition                        	
-media          	plex                        	        	False    	False	Helm install failed: timed out waiting for the condition                        	
-storage        	kopia                       	        	False    	False	upgrade retries exhausted                                                       	
-storage        	nextcloud                   	        	False    	False	upgrade retries exhausted                                                       	
-storage        	onlyoffice                  	        	False    	False	Helm upgrade failed: another operation (install/upgrade/rollback) is in progress	
-utilities      	echo-server                 	        	False    	False	upgrade retries exhausted                                                       	
-utilities      	uptimekuma                  	        	False    	False	install retries exhausted                                                       	
