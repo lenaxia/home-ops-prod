@@ -10,6 +10,7 @@ metadata:
 spec:
   dependsOn:
     - name: cluster-storage-minio
+    - name: cluster-storage-longhorn
   path: ./cluster/core/databases/cloudnative-pg/app
   prune: true
   sourceRef:
