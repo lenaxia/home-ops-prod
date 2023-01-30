@@ -13,7 +13,7 @@ resources:
   # Security
   - ./networking/traefik/ks.yaml
     #- ./networking/multus/ks.yaml
-    #- ./networking/authelia/ks.yaml
+  - ./networking/authelia/ks.yaml
   
   # Home
   - ./home/fasten/ks.yaml
@@ -26,15 +26,15 @@ resources:
   # Monitoring Namespace
   - ./monitoring/flux
   - ./monitoring/prometheus-stack/ks.yaml
-    #- ./monitoring/grafana/ks.yaml
-    #- ./monitoring/loki/ks.yaml
+  - ./monitoring/grafana/ks.yaml
+  - ./monitoring/loki/ks.yaml
   - ./monitoring/vector/ks.yaml
 
   # Default Namespace
-  #- ./dashboards/hajimari
+  - ./home/hajimari/ks.yaml
 
   # Media Namespace
-  - ./media/jellyfin/ks.yaml
+  - ./media/mediarequest/ks.yaml
   #  - ./media/plex/ks.yaml
   #  - ./media/ersatztv/ks.yaml
   - ./media/sonarr/ks.yaml
@@ -56,7 +56,6 @@ resources:
     #- ./utilities/smokeping/ks.yaml
   - ./utilities/changedetection/ks.yaml
     #- ./utilities/librespeed/ks.yaml
-  - ./utilities/phpmyadmin/ks.yaml
   - ./utilities/guacamole/ks.yaml
     #- ./utilities/ltb-project/ks.yaml
   - ./utilities/pgadmin/ks.yaml
