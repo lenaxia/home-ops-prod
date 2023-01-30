@@ -30,6 +30,8 @@ spec:
       runAsUser: 82
       runAsGroup: 82
       fsGroup: 82
+    nodeSelector:
+      node-role.kubernetes.io/worker: "true"
     extraVolumes:
     - name: socks-pvc
       persistentVolumeClaim:
