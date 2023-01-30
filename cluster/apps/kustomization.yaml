@@ -50,7 +50,7 @@ resources:
 
   # Utilities Namespace
   - ./utilities/vaultwarden/ks.yaml
-  - ./utilities/vaultwarden_ldap/ks.yaml
+  - ./utilities/vaultwarden-ldap/ks.yaml
   - ./utilities/uptimekuma/ks.yaml
     #- ./utilities/smokeping/ks.yaml
   - ./utilities/changedetection/ks.yaml
