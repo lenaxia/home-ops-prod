@@ -12,7 +12,7 @@ spec:
     - name: cluster-databases-postgres-clusters
     - name: cluster-databases-redis-operator
     - name: cluster-storage-longhorn
-  path: ./cluster/apps/storage/nextcloud
+  path: ./cluster/apps/storage/nextcloud/app
   prune: true
   sourceRef:
     kind: GitRepository
@@ -38,7 +38,7 @@ metadata:
 spec:
   dependsOn:
     - name: cluster-storage-longhorn
-  path: ./cluster/apps/storage/onlyoffice
+  path: ./cluster/apps/storage/nextcloud/onlyoffice
   prune: true
   sourceRef:
     kind: GitRepository
