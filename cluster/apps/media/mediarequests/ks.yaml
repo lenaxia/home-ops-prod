@@ -10,7 +10,7 @@ metadata:
 spec:
   dependsOn:
     - name: cluster-storage-longhorn
-  path: ./cluster/apps/media/mediarequests/jellyseer/app
+  path: ./cluster/apps/media/mediarequests/jellyseerr
   prune: true
   sourceRef:
     kind: GitRepository
@@ -35,7 +35,7 @@ metadata:
 spec:
   dependsOn:
     - name: cluster-storage-longhorn
-  path: ./cluster/apps/media/mediarequests/overseerr/app
+  path: ./cluster/apps/media/mediarequests/overseerr
   prune: true
   sourceRef:
     kind: GitRepository
