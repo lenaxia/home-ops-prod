@@ -16,10 +16,10 @@ spec:
   interval: 5m
   install:
     remediation:
-      retries: 5
+      retries: 6
   upgrade:
     remediation:
-      retries: 5
+      retries: 6
   #valuesFrom:
   #  - kind: Secret
   #    targetPath: defaultSettings.backupTarget
