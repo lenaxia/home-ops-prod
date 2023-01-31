@@ -7,7 +7,8 @@ metadata:
 spec:
   interval: 5m 
   dependsOn:
-    - name: core
+    - name: infrastructure
+    - name: crds
   sourceRef:
     kind: GitRepository
     name: flux-system
