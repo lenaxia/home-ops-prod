@@ -75,9 +75,3 @@ resources:
   - ./utilities/echo-server/ks.yaml
 
 
-  # Databases
-  - ./databases/redis/ks.yaml
-  - ./databases/redis-operator/ks.yaml
-  - ./databases/cloudnative-pg/ks.yaml
-  - ./databases/cloudnative-pg/clusters
-    #- ./databases/influxdb/ks.yaml
