@@ -13,13 +13,13 @@ spec:
         kind: HelmRepository
         name: longhorn
         namespace: flux-system
-  interval: 5m
+  interval: 6m
   install:
     remediation:
-      retries: 6
+      retries: 7
   upgrade:
     remediation:
-      retries: 6
+      retries: 7
   #valuesFrom:
   #  - kind: Secret
   #    targetPath: defaultSettings.backupTarget
