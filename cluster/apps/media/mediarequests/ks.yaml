@@ -3,7 +3,7 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
 kind: Kustomization
 metadata:
-  name: cluster-media-jellyseer
+  name: cluster-media-jellyseerr
   namespace: flux-system
   labels:
     substitution.flux.home.arpa/enabled: "true"
@@ -18,7 +18,7 @@ spec:
   healthChecks:
     - apiVersion: helm.toolkit.fluxcd.io/v2beta1
       kind: HelmRelease
-      name: jellyseer
+      name: jellyseerr
       namespace: media
   interval: 30m
   retryInterval: 1m
