@@ -1,20 +1,32 @@
 apiversion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
+  - ./kyverno/ks.yaml
   - ./system-upgrade/ks.yaml
+
+  # Databases
+  - ./databases/redis/ks.yaml
+  - ./databases/redis-operator/ks.yaml
+  - ./databases/cloudnative-pg/ks.yaml
+  - ./databases/cloudnative-pg/clusters
+  #- ./databases/influxdb/ks.yaml
 
   - ./kube-system/node-feature-discovery/ks.yaml
   - ./kube-system/intel-device-plugin/ks.yaml
   - ./kube-system/reloader
   - ./kube-system/descheduler
-    #- ./kube-system/metrics-server  # k3s already comes with a metrics server
+  #- ./kube-system/metrics-server  # k3s already comes with a metrics server
   - ./storage/nextcloud/ks.yaml
   - ./storage/kopia-web/ks.yaml
+  - ./storage/longhorn/ks.yaml
+  - ./storage/minio/ks.yaml
 
   # Security
   - ./networking/traefik/ks.yaml
-    #- ./networking/multus/ks.yaml
+  #- ./networking/multus/ks.yaml
   - ./networking/authelia/ks.yaml
+  - ./networking/cert-manager/ks.yaml
+  - ./networking/metallb/ks.yaml
   
   # Home
   - ./home/fasten/ks.yaml
@@ -62,3 +74,10 @@ resources:
   - ./utilities/podinfo/ks.yaml
   - ./utilities/echo-server/ks.yaml
 
+
+  # Databases
+  - ./databases/redis/ks.yaml
+  - ./databases/redis-operator/ks.yaml
+  - ./databases/cloudnative-pg/ks.yaml
+  - ./databases/cloudnative-pg/clusters
+    #- ./databases/influxdb/ks.yaml
