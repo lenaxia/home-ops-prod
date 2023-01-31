@@ -8,7 +8,7 @@ metadata:
   labels:
     substitution.flux.home.arpa/enabled: "true"
 spec:
-  path: ./cluster/core/storage/minio/app
+  path: ./cluster/apps/storage/minio/app
   prune: true
   sourceRef:
     kind: GitRepository

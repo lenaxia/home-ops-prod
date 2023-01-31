@@ -11,7 +11,7 @@ spec:
   dependsOn:
     - name: cluster-storage-minio
     - name: cluster-storage-longhorn
-  path: ./cluster/core/databases/cloudnative-pg/app
+  path: ./cluster/apps/databases/cloudnative-pg/app
   prune: true
   sourceRef:
     kind: GitRepository
@@ -36,7 +36,7 @@ metadata:
 spec:
   dependsOn:
     - name: cluster-databases-postgres-operator
-  path: ./cluster/core/databases/cloudnative-pg/clusters
+  path: ./cluster/apps/databases/cloudnative-pg/clusters
   prune: true
   sourceRef:
     kind: GitRepository

@@ -8,7 +8,7 @@ metadata:
   labels:
     substitution.flux.home.arpa/enabled: "true"
 spec:
-  path: ./cluster/core/databases/influxdb/app
+  path: ./cluster/apps/databases/influxdb/app
   prune: true
   sourceRef:
     kind: GitRepository

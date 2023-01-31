@@ -10,7 +10,7 @@ metadata:
 spec:
   dependsOn:
     - name: cluster-storage-longhorn
-  path: ./cluster/core/databases/redis-operator/app
+  path: ./cluster/apps/databases/redis-operator/app
   prune: true
   sourceRef:
     kind: GitRepository

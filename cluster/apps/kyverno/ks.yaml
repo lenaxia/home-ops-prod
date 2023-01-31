@@ -8,7 +8,7 @@ metadata:
   labels:
     substitution.flux.home.arpa/enabled: "true"
 spec:
-  path: ./cluster/core/kyverno/app
+  path: ./cluster/apps/kyverno/app
   prune: true
   sourceRef:
     kind: GitRepository

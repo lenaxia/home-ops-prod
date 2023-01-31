@@ -10,7 +10,7 @@ metadata:
 spec:
   dependsOn:
     - name: cluster-networking-metallb
-  path: ./cluster/core/storage/longhorn/app
+  path: ./cluster/apps/storage/longhorn/app
   prune: true
   sourceRef:
     kind: GitRepository

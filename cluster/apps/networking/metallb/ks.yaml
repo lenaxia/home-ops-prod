@@ -8,7 +8,7 @@ metadata:
   labels:
     substitution.flux.home.arpa/enabled: "true"
 spec:
-  path: ./cluster/core/networking/metallb/app
+  path: ./cluster/apps/networking/metallb/app
   prune: true
   sourceRef:
     kind: GitRepository
