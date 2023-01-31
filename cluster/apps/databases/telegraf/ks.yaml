@@ -10,6 +10,7 @@ metadata:
 spec:
   dependsOn:
     - name: cluster-databases-influxdb
+    - name: cluster-storage-longhorn$
   path: ./cluster/core/databases/telegraf/app
   prune: true
   sourceRef:
