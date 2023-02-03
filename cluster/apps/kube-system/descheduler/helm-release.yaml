@@ -83,7 +83,7 @@ spec:
               targetThresholds:
                 cpu: 70
                 memory: 70
-                pods: 30
+                pods: 50 
         RemoveFailedPods:
           enabled: true
           params:
