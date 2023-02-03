@@ -1,0 +1,43 @@
+# Check for the presence of the SSH daemon. That way, if SSH dies, we prefer
+# the other node which remains remotely manageable.
+
+vrrp_script chk_sshd {
+   script "pkill -0 sshd"          # pkill -0 is cheaper than pidof
+   interval 5                      # check every 5 seconds
+   weight -4                       # remove 4 points of prio if missing
+   fall 2                          # check twice before setting down
+   rise 1                          # check once before setting up
+}
+
+{% for hc in healthchecks %}
+vrrp_script chk_{{ hc.name }} {
+   script "/etc/keepalived/scripts/{{ hc.name }}.sh"
+   interval {{ hc.interval | default('5') }}
+   weight {{ hc.weight | default('2') }}
+   fall {{ hc.fall | default('3') }}
+   rise {{ hc.rise | default('1') }}
+}
+{% endfor %}
+
+{% for vip in virtualIPs %}
+{% set outer_loop = loop %}
+vrrp_instance vrrp_{{ loop.index0 }} {
+   interface {{ virtualIPs[loop.index0].config.interface | default('eth0') }}
+   state {{ 'MASTER' if ansible_host == groups['loadbalancers'][loop.index0] else 'BACKUP' }}
+   virtual_router_id 5{{ loop.index0 }}
+   priority {{ '101' if ansible_host == groups['loadbalancers'][loop.index0] else '100' }}
+   virtual_ipaddress_excluded {
+       {{ virtualIPs[loop.index0].ip }}
+   }
+   track_interface {
+       {{ virtualIPs[loop.index0].config.interface | default('eth0') }} weight -2
+   }
+   track_script {
+      chk_sshd
+{% for healthcheck in virtualIPs[outer_loop.index0].healthchecks %}
+      chk_{{ virtualIPs[outer_loop.index0].healthchecks[loop.index0] }}
+{% endfor %}
+   }
+}
+{% endfor %}
+

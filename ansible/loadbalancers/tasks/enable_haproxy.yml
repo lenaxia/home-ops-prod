@@ -1,0 +1,17 @@
+- name: Install HAProxy
+  apt:
+    name: haproxy
+    state: latest
+
+- name: Create haproxy folder if it doesn't exist
+  ansible.builtin.file:
+    path: "/etc/haproxy"
+    state: directory
+    mode: '0755'
+
+- name: Copy HAProxy LoadBalancer Config
+  ansible.builtin.template:
+    src: templates/haproxy.cfg.j2
+    dest: "/etc/haproxy/haproxy.cfg"
+    mode: "0644"
+

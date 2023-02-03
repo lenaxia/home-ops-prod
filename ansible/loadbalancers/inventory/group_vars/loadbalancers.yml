@@ -1,0 +1,37 @@
+blocky_version: "0.20"
+
+loadbalancers:
+  - name: kube_cp_prod
+    group: controlplane
+    config:
+      traffic_mode: tcp
+      frontend_port: 6443   # health check will be created on port +1
+      backend_port: 6443
+      balance: roundrobin
+      monitor_uri: /healthz
+
+virtualIPs:
+  - ip: 192.168.0.10
+    healthchecks: 
+      - haproxy
+      - k3s_cp
+  - ip: 192.168.0.11
+    healthchecks: 
+      - haproxy
+      - k3s_cp
+
+healthchecks:
+  - name: haproxy
+    script: "/usr/bin/pkill -0 haproxy"  # pkill is cheaper than pidof (required)
+    weight: 6                            # add 6 points of priority on success (def: 2)
+    interval: 1                          # check every second (def: 5)
+    fall: 2                              # number of failures before setting DOWN (def: 3)
+    rise: 1                              # number of success before setting UP (def: 1)
+  - name: k3s_cp 
+    script: "curl -k 'http://127.0.0.1:6444/healthz' 2>&1 | grep -q '200 OK'"  # port is 6444 because healthcheck is http and is on frontend_port +1
+    weight: 2
+    interval: 1
+
+
+
+

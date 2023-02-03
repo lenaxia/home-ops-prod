@@ -1,0 +1,15 @@
+[Unit]
+Description=blocky dns proxy and ad blocker
+Documentation=https://0xerr0r.github.io/blocky/configuration/
+After=network.target
+
+[Service]
+ExecStart=/usr/local/bin/blocky/blocky --config /etc/blocky/config.yml
+KillMode=process
+Restart=on-failure
+RestartPreventExitStatus=255
+Type=simple
+
+[Install]
+WantedBy=multi-user.target
+Alias=blocky.service

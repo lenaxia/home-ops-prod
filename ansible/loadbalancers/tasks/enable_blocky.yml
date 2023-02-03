@@ -1,0 +1,73 @@
+## Commenting this out because right now blocky download formats aren't right
+## See: https://github.com/0xERR0R/blocky/issues/858
+#- name: Get Latest Blocky Version
+#  community.general.github_release:
+#    user: "0xERR0R"
+#    repo: "blocky"
+#    action: latest_release
+#  register: blocky_release
+
+- name: Download Latest Blocky Release
+  get_url: 
+    #url: https://github.com/0xERR0R/blocky/releases/download/{{ blocky_release['tag'] }}/blocky_{{ blocky_release['tag'] }}_Linux_arm64.tar.gz 
+    url: "https://github.com/0xERR0R/blocky/releases/download/v{{ blocky_version }}/blocky_{{ blocky_version }}_Linux_{{ blocky_arch_lookup[ansible_architecture].suffix }}.tar.gz"
+    dest: "/tmp/blocky_{{ blocky_version }}_Linux_{{ blocky_arch_lookup[ansible_architecture].suffix }}.tar.gz"
+
+- name: Create blocky install folder
+  ansible.builtin.file:
+    path: "{{ blocky_install_dir }}/blocky"
+    state: directory
+    mode: '0755'
+  become_user: root
+
+- name: Create blocky etc folder
+  ansible.builtin.file:
+    path: "/etc/blocky"
+    state: directory
+    mode: '0755'
+  become_user: root
+
+- name: Copy blocky config
+  ansible.builtin.copy:
+    src: templates/blocky.yml
+    dest: "/etc/blocky/config.yml"
+    mode: "0644"
+
+- name: Extract Blocky
+  ansible.builtin.unarchive:
+    src: "/tmp/blocky_{{ blocky_version }}_Linux_{{ blocky_arch_lookup[ansible_architecture].suffix }}.tar.gz"
+    dest: "{{ blocky_install_dir }}/blocky"
+    remote_src: yes
+  become_user: root
+
+- name: Chmod Blocky Executable
+  ansible.builtin.file:
+    dest: "{{ blocky_install_dir }}/blocky/blocky"
+    mode: 0755
+  become_user: root
+
+- name: Add cap_net_bind_service for blocky
+  community.general.capabilities:
+    path: "{{ blocky_install_dir }}/blocky/blocky"
+    capability: cap_net_bind_service+ep
+    state: present
+  become: yes
+  become_user: root
+
+- name: Copy blocky service definition
+  ansible.builtin.template:
+    src: templates/blocky.service
+    dest: "{{ systemd_service_dir }}/blocky.service"
+    mode: "0640"
+  become_user: root
+
+- name: Force systemd to reread configs
+  ansible.builtin.systemd:
+    daemon_reload: true
+  become_user: root
+
+- name: Make sure blocky service unit is running
+  ansible.builtin.systemd:
+    state: started
+    name: blocky
+  become_user: root

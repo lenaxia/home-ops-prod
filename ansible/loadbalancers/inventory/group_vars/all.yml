@@ -1,0 +1,23 @@
+---
+ansible_python_interpreter: /usr/bin/python
+
+ansible_user: pi 
+systemd_dir: /etc/systemd/system
+
+# Map ansible fact gathering architecture to a release name and suffix in github.
+blocky_arch_lookup:
+  x86_64:
+    arch: amd64
+    suffix: "x86_64"
+  aarch64:
+    arch: aarch64
+    suffix: "arm64"
+  arm64:
+    arch: arm64
+    suffix: "arm64"
+  armv6:
+    arch: arm
+    suffix: "armv6"
+  arm7:
+    arch: arm
+    suffix: "armv7"

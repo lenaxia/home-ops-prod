@@ -1,0 +1,13 @@
+frontend {{ item.name }}
+    bind 0.0.0.0:{{ item.frontend_port }}
+    mode {{ item.traffic_mode | default('tcp') }}
+    option tcplog
+    monitor-uri /healthz
+    monitor fail if { nbsrv({{ item.name }}_backend) eq 0 }
+    timeout client  10800s
+    default_backend {{ item.name }}_backend
+
+backend {{ item.name }}_backend
+    mode {{ item.traffic_mode | default('tcp') }}
+    balance {{ item.balance | default('roundrobin') }}
+    timeout server  10800s

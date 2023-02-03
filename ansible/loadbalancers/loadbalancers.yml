@@ -1,0 +1,21 @@
+---
+
+- hosts: loadbalancers
+  gather_facts: yes
+  become: yes
+  tasks:
+    - name: Install prereqs
+      include_tasks: tasks/prereqs.yml
+
+    - name: Install HAProxy
+      include_tasks: tasks/enable_haproxy.yml
+
+    - name: Install Blocky
+      include_tasks: tasks/enable_blocky.yml
+      vars:
+        blocky_install_dir: /usr/local/bin
+        systemd_service_dir: /etc/systemd/system/
+
+    - name: Install keepalived
+      include_tasks: tasks/enable_keepalived.yml
+ 

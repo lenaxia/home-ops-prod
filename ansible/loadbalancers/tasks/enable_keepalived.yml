@@ -1,0 +1,47 @@
+- name: Install keepalived
+  apt:
+    pkg: "{{ item }}"
+    state: present
+  loop:
+    - keepalived
+
+- name: Create keepalived folder if it doesn't exist
+  ansible.builtin.file:
+    path: "/etc/keepalived"
+    state: directory
+    mode: '0755'
+
+- name: Template keepalived config
+  ansible.builtin.template:
+    src: templates/keepalived.conf.j2
+    dest: "/etc/keepalived/keepalived.conf"
+    mode: "0644"
+
+- name: Create keepalived scripts folder 
+  ansible.builtin.file:
+    path: "/etc/keepalived/scripts"
+    state: directory
+    mode: '0755'
+
+- name: Template 
+  ansible.builtin.template:
+    src: templates/script.sh.j2
+    dest: "/etc/keepalived/scripts/{{ item.name }}.sh"
+    mode: "0755"
+  loop: "{{ healthchecks }}"
+
+- name: sysctl ip_nonlocal_bind 1 to enable binding to VIPs
+  ansible.posix.sysctl:
+    name: net.ipv4.ip_nonlocal_bind
+    value: 1
+    state: present
+    reload: yes
+
+- name: Just force systemd to reread configs (2.4 and above)
+  ansible.builtin.systemd:
+    daemon_reload: true
+
+- name: Make sure keepalived service unit is running
+  ansible.builtin.systemd:
+    state: started
+    name: keepalived 

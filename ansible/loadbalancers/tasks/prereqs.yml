@@ -1,0 +1,15 @@
+- name: Update apt
+  apt: update_cache=yes
+
+- name: Install any required packages
+  apt:
+    pkg: "{{ item }}"
+    state: present
+  loop:
+    - pip
+
+- name: Install github3 python package
+  ansible.builtin.pip:
+    name: "{{ item }}"
+  loop:
+    - github3.py

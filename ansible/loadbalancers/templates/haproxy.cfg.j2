@@ -1,0 +1,55 @@
+global
+    log /dev/log local0
+    log /dev/log local1 notice
+    chroot /var/lib/haproxy
+    stats socket /run/haproxy/admin.sock mode 660 level admin expose-fd listeners
+    stats timeout 30s
+    user haproxy
+    group haproxy
+    daemon
+    maxconn 256
+
+defaults
+    mode tcp
+    timeout connect 5000ms
+    timeout client 50000ms
+    timeout server 50000ms
+
+frontend http
+    bind :8080
+    default_backend stats
+
+backend stats
+    mode http
+    stats enable
+
+    stats enable
+    stats uri /
+    stats refresh 1s
+    stats show-legends
+    stats admin if TRUE
+
+{% for lb in loadbalancers %}
+frontend {{ lb.name}}_health
+    bind *:{{ lb.config.frontend_port +1 }}
+    mode http
+    monitor-uri {{ lb.config.monitor_uri | default('/healthz') }}
+    monitor fail if { nbsrv({{ lb.name }}_backend) eq 0 }
+
+frontend {{ lb.name }}
+    bind *:{{ lb.config.frontend_port }}
+    mode {{ lb.config.traffic_mode | default('tcp') }}
+    option tcplog
+    timeout client  10800s
+    default_backend {{ lb.name }}_backend
+
+backend {{ lb.name }}_backend
+    mode {{ lb.config.traffic_mode | default('tcp') }}
+    balance {{ lb.config.balance | default('roundrobin') }}
+    timeout server  10800s
+{% for host in groups[lb.group] %}
+    server {{ lb.name }}_{{ loop.index0 }} {{ host }}:{{ lb.config.backend_port | default(lb.config.frontend_port) }} check inter 1s
+{% endfor %}
+
+
+{% endfor %}
