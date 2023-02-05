@@ -22,9 +22,9 @@ resources:
   - ./storage/minio/ks.yaml
 
   # Security
-  #- ./networking/traefik/ks.yaml
-  #- ./networking/multus/ks.yaml
-  #- ./networking/authelia/ks.yaml
+  - ./networking/traefik/ks.yaml
+  - ./networking/multus/ks.yaml
+  - ./networking/authelia/ks.yaml
   - ./networking/cert-manager/ks.yaml
   - ./networking/metallb/ks.yaml
   
