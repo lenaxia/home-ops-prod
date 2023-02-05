@@ -37,11 +37,11 @@ resources:
   #- ./home/node-red/ks.yaml
 
   # Monitoring Namespace
-  #- ./monitoring/flux
-  #- ./monitoring/prometheus-stack/ks.yaml
-  #- ./monitoring/grafana/ks.yaml
+  - ./monitoring/flux
+  - ./monitoring/prometheus-stack/ks.yaml
+  - ./monitoring/grafana/ks.yaml
   #- ./monitoring/loki/ks.yaml
-  #- ./monitoring/vector/ks.yaml
+  - ./monitoring/vector/ks.yaml
 
   # Default Namespace
   #- ./home/hajimari/ks.yaml
