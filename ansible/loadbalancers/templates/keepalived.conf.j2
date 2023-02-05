@@ -1,6 +1,5 @@
 # Check for the presence of the SSH daemon. That way, if SSH dies, we prefer
 # the other node which remains remotely manageable.
-
 vrrp_script chk_sshd {
    script "pkill -0 sshd"          # pkill -0 is cheaper than pidof
    interval 5                      # check every 5 seconds
@@ -9,6 +8,11 @@ vrrp_script chk_sshd {
    rise 1                          # check once before setting up
 }
 
+# Create a script for each of healthchecks defined 
+# Creates a shell script to execute the healthcheck
+# TODO: Enable a script_file refernece which will point to an external file
+#       that would be loaded into the hc.name.sh. This would enable
+#       health checks that are longer than a single line.
 {% for hc in healthchecks %}
 vrrp_script chk_{{ hc.name }} {
    script "/etc/keepalived/scripts/{{ hc.name }}.sh"
@@ -19,13 +23,23 @@ vrrp_script chk_{{ hc.name }} {
 }
 {% endfor %}
 
+# Manage each virtual IP. If there are multiple loadbalancers, then each lb will 
+# be given MASTER status for a different virtual IP in a round robin fashion
+# TODO: Currently this will not handle the case where there are more VIPs than 
+#       lbs. This means that an error would be thrown for any VIPs > than lbs. 
+#       Add a wraparound capability that would detect when there are still VIPs
+#       to configure but no more lbs, so that the roundrobin would restart from 
+#       the initial lb
 {% for vip in virtualIPs %}
 {% set outer_loop = loop %}
+{% set lb_count = groups['loadbalancers']|length %}
+{% set lb_idx = loop.index0 %}
+
 vrrp_instance vrrp_{{ loop.index0 }} {
    interface {{ virtualIPs[loop.index0].config.interface | default('eth0') }}
-   state {{ 'MASTER' if ansible_host == groups['loadbalancers'][loop.index0] else 'BACKUP' }}
+   state {{ 'MASTER' if ansible_host == groups['loadbalancers'][lb_idx] else 'BACKUP' }}
    virtual_router_id 5{{ loop.index0 }}
-   priority {{ '101' if ansible_host == groups['loadbalancers'][loop.index0] else '100' }}
+   priority {{ '101' if ansible_host == groups['loadbalancers'][lb_idx] else '100' }}
    virtual_ipaddress_excluded {
        {{ virtualIPs[loop.index0].ip }}
    }

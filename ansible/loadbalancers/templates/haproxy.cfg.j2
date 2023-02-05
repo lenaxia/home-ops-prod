@@ -29,6 +29,7 @@ backend stats
     stats show-legends
     stats admin if TRUE
 
+# create a health HTTP endpoint on port+1 since you can't run TCP and HTTP on the same port
 {% for lb in loadbalancers %}
 frontend {{ lb.name}}_health
     bind *:{{ lb.config.frontend_port +1 }}

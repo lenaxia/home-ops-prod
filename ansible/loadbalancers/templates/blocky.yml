@@ -13,3 +13,22 @@ blocking:
       - ads
 port: 53
 httpPort: 4000
+  #customDNS:
+  #  customTTL: 1h
+  #  filterUnmappedTypes: true
+  ##  rewrite:
+  ##    replace-me.com: with-this.com
+  #  mapping:
+  #    adguard.lan: 192.168.0.5
+  #    kao.haus: 192.168.12.10
+  #    mail.kao.haus: redbull.mxrouting.net
+  #    webmail.kao.haus: redbull.mxrouting.net
+  #    lumiere.mikegoes.online: 192.168.3.7
+  #
+  #
+  #    mqtt.lan: 192.168.5.6
+  #    sonoff.lan: 192.168.0.9
+  #    # for reverse DNS lookups of local devices
+  #    178.168.192.in-addr.arpa: 192.168.178.1
+  #    # for all unqualified hostnames
+  #    .: 192.168.0.5, 192.168.0.6
