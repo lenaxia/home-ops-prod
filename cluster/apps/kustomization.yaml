@@ -22,8 +22,8 @@ resources:
   - ./storage/minio/ks.yaml
 
   # Security
-  - ./networking/traefik/ks.yaml
   #- ./networking/multus/ks.yaml
+  - ./networking/traefik/ks.yaml
   - ./networking/authelia/ks.yaml
   - ./networking/cert-manager/ks.yaml
   - ./networking/metallb/ks.yaml
@@ -58,7 +58,7 @@ resources:
   #- ./media/mediarequests/ks.yaml
   #  - ./media/calibre/ks.yaml
   #- ./media/tautulli/ks.yaml
-  #- ./media/outline/ks.yaml
+  - ./media/outline/ks.yaml
   #- ./media/imaginary/ks.yaml
 
   # Utilities Namespace
