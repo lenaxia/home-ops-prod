@@ -34,5 +34,9 @@ spec:
 
     persistence:
       defaultClassReplicaCount: 3
-    #defaultSettings:
+    defaultSettings:
     #  backupTargetCredentialSecret: longhorn-minio-secret
+      autoDeletePodWhenVolumeDetachedUnexpectedly: true
+      orphanAutoDeletion: true
+      nodeDownPodDeletionPolicy: "delete-both-statefulset-and-deployment-pod"
+
