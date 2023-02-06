@@ -41,7 +41,14 @@
   ansible.builtin.systemd:
     daemon_reload: true
 
+- name: Make sure keepalived service unit reloaded
+  ansible.builtin.systemd:
+    state: reloaded
+    name: keepalived
+  become_user: root
+
 - name: Make sure keepalived service unit is running
   ansible.builtin.systemd:
-    state: started
-    name: keepalived 
+    state: restarted
+    name: keepalived
+  become_user: root

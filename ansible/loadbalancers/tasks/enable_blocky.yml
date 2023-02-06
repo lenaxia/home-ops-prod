@@ -68,6 +68,6 @@
 
 - name: Make sure blocky service unit is running
   ansible.builtin.systemd:
-    state: started
+    state: restarted
     name: blocky
   become_user: root

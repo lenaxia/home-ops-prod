@@ -15,3 +15,14 @@
     dest: "/etc/haproxy/haproxy.cfg"
     mode: "0644"
 
+- name: Make sure haproxy service unit reloaded
+  ansible.builtin.systemd:
+    state: reloaded
+    name: haproxy
+  become_user: root
+
+- name: Make sure haproxy service unit is running
+  ansible.builtin.systemd:
+    state: restarted
+    name: haproxy
+  become_user: root
