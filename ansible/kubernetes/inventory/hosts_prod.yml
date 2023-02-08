@@ -3,25 +3,25 @@ kubernetes:
   children:
     master:
       vars:
-        ansible_user: ubuntu
+        ansible_user: yin
         ansible_ssh_port: 22
         ansible_ssh_common_args: "-o StrictHostKeyChecking=no"
       hosts:
         k3s-cp-00:
-          ansible_host: 192.168.2.50
+          ansible_host: 192.168.3.13
         k3s-cp-01:
-          ansible_host: 192.168.2.51
+          ansible_host: 192.168.3.11
         k3s-cp-02:
-          ansible_host: 192.168.2.52
+          ansible_host: 192.168.3.12
     worker:
       vars:
-        ansible_user: ubuntu 
+        ansible_user: yin
         ansible_ssh_port: 22
         ansible_ssh_common_args: "-o StrictHostKeyChecking=no"
       hosts:
         k3s-worker-00:
-          ansible_host: 192.168.2.60
+          ansible_host: 192.168.3.20
         k3s-worker-01:
-          ansible_host: 192.168.2.61
+          ansible_host: 192.168.3.21
         k3s-worker-02:
-          ansible_host: 192.168.2.62
+          ansible_host: 192.168.3.22
