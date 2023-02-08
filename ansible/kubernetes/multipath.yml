@@ -1,0 +1,22 @@
+---
+
+- hosts: 
+  - master
+  - worker
+  gather_facts: yes
+  become: yes
+  tasks:
+
+    - name: Insert blocklist for multipath
+      ansible.builtin.blockinfile:
+        path: /etc/multipath.conf
+        block: |
+          blacklist {
+            devnode "^sd[a-z0-9]+"
+          } 
+
+
+    - name: Make sure haproxy service unit is running
+      ansible.builtin.systemd:
+        state: restarted
+        name: multipathd.service
