@@ -26,6 +26,6 @@ tasks:
       - sed -i 's/127.0.0.1/{{.K3S_LB_ADDR}}/g' "{{.CLUSTER_DIR}}/local/kubeconfig"
       - chmod go-r "{{.CLUSTER_DIR}}/local/kubeconfig"
     vars:
-      K3S_PRIMARY_MASTER_NODE_USERNAME: "ubuntu"
-      K3S_PRIMARY_MASTER_NODE_ADDR: "192.168.2.50"
-      K3S_LB_ADDR: "192.168.2.50"
+      K3S_PRIMARY_MASTER_NODE_USERNAME: "yin"
+      K3S_PRIMARY_MASTER_NODE_ADDR: "192.168.3.11"
+      K3S_LB_ADDR: "192.168.4.10"

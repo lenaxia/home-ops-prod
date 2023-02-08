@@ -33,10 +33,16 @@ spec:
         nodePort: null
 
     persistence:
+      defaultClass: true
+      defaultFsType: ext4
+      defaultMkfsParams: ""
       defaultClassReplicaCount: 3
+      defaultDataLocality: "best-effort"
     defaultSettings:
     #  backupTargetCredentialSecret: longhorn-minio-secret
       autoDeletePodWhenVolumeDetachedUnexpectedly: true
       orphanAutoDeletion: true
       nodeDownPodDeletionPolicy: "delete-both-statefulset-and-deployment-pod"
+      dataLocality: "best-effort"
+      replicaAutoBalance: "best-effort"
 
