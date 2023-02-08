@@ -40,3 +40,13 @@ spec:
           nfs:
             server: 192.168.0.120
             path: /volume1/backups/kopia
+      affinity:
+        nodeAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - weight: 1
+              preference:
+                matchExpressions:
+                  - key: "node-role.kubernetes.io/worker"
+                    operator: In
+                    values:
+                      - "true"

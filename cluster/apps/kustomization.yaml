@@ -33,7 +33,7 @@ resources:
   # Home
   #- ./home/fasten/ks.yaml
   - ./home/babybuddy/ks.yaml
-  - ./home/home-assistant/ks.yaml
+    #- ./home/home-assistant/ks.yaml
   - ./home/zwavejs/ks.yaml
   - ./home/mosquitto/ks.yaml
   - ./home/node-red/ks.yaml
