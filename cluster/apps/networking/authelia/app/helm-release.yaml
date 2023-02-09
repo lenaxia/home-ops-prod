@@ -84,11 +84,11 @@ spec:
       ##
       telemetry:
         metrics:
-          enabled: false
+          enabled: true
           port: 9959
     
           serviceMonitor:
-            enabled: false
+            enabled: true
             annotations: {}
             labels: {}
     
