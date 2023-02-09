@@ -92,9 +92,53 @@ spec:
     experimental:
       plugins:
         enabled: false
+    metrics:
+      prometheus:
+        entryPoint: metrics
+        ## Enable metrics on routers. Default=false
+        addRoutersLabels: true
+
+    serviceMonitor:
+      metricRelabelings: []
+      #  - sourceLabels: [__name__]
+      #    separator: ;
+      #    regex: ^fluentd_output_status_buffer_(oldest|newest)_.+
+      #    replacement: $1
+      #    action: drop
+      relabelings: []
+      #  - sourceLabels: [__meta_kubernetes_pod_node_name]
+      #    separator: ;
+      #    regex: ^(.*)$
+      #    targetLabel: nodename
+      #    replacement: $1
+      #    action: replace
+      jobLabel: traefik
+      interval: 30s
+      honorLabels: true
+      # (Optional)
+      # scrapeTimeout: 5s
+      honorTimestamps: true
+      enableHttp2: true
+      # followRedirects: true
+      # additionalLabels:
+      #   foo: bar
+    prometheusRule:
+      additionalLabels: {}
+      rules:
+        - alert: TraefikDown
+          expr: up{job="traefik"} == 0
+          for: 5m
+          labels:
+            context: traefik
+            severity: warning
+          annotations:
+            summary: "Traefik Down"
+            description: "{{ $labels.pod }} on {{ $labels.nodename }} is down"
+
     resources:
       requests:
         memory: 100Mi
         cpu: 500m
       limits:
         memory: 500Mi
+

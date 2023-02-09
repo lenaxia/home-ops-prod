@@ -3,8 +3,7 @@ kind: PersistentVolumeClaim
 metadata:
     name: babybuddy-volume
     labels:
-      app: mealie
-      snapshot.home.arpa/enabled: "true"
+      app: babybuddy
 spec:
     accessModes:
         - ReadWriteOnce

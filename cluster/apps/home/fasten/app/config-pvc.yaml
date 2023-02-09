@@ -4,7 +4,6 @@ metadata:
     name: fasten-volume
     labels:
       app: fasten
-      snapshot.home.arpa/enabled: "true"
 spec:
     accessModes:
         - ReadWriteOnce
