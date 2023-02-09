@@ -10,3 +10,4 @@ resources:
     #- recurring-jobs.yaml
   - ingress.yaml
   - servicemonitor.yaml
+  - prometheusrules.yaml
