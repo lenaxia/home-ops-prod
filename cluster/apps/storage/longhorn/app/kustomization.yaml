@@ -9,3 +9,4 @@ resources:
     #- backup-secret.sops.yaml
     #- recurring-jobs.yaml
   - ingress.yaml
+  - servicemonitor.yaml
