@@ -50,7 +50,7 @@ resources:
 
   # Media Namespace
   - ./media/plex/ks.yaml
-  ##  - ./media/ersatztv/ks.yaml
+  - ./media/ersatztv/ks.yaml
   - ./media/sonarr/ks.yaml
   - ./media/radarr/ks.yaml
   - ./media/bazarr/ks.yaml
