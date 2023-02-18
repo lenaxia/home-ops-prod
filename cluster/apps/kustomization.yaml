@@ -75,5 +75,3 @@ resources:
   - ./utilities/pgadmin/ks.yaml
   - ./utilities/podinfo/ks.yaml
   - ./utilities/echo-server/ks.yaml
-
-

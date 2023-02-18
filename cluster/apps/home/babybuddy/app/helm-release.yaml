@@ -31,7 +31,7 @@ spec:
       USE_24_HOUR_TIME_FORMAT: true 
       ALLOWED_HOSTS: baby.${SECRET_DEV_DOMAIN}
       REVERSE_PROXY_AUTH: true
-        #PROXY_HEADER: Remote-User
+      PROXY_HEADER: Remote-User
 
       # -- Set the application database type
     envFrom:
