@@ -68,7 +68,7 @@ resources:
   - ./utilities/vaultwarden-ldap/ks.yaml
   - ./utilities/uptimekuma/ks.yaml
     #- ./utilities/smokeping/ks.yaml
-  - ./utilities/changedetection/ks.yaml
+    #- ./utilities/changedetection/ks.yaml
     #- ./utilities/librespeed/ks.yaml
   - ./utilities/guacamole/ks.yaml
     #- ./utilities/ltb-project/ks.yaml
