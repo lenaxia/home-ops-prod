@@ -326,6 +326,7 @@ spec:
             - "phpmyadmin.${SECRET_DEV_DOMAIN}"
             - "portainer.${SECRET_DEV_DOMAIN}"
             - "proxmox.${SECRET_DEV_DOMAIN}"
+            - "ping.${SECRET_DEV_DOMAIN}"
             #storage
             - "kopia.${SECRET_DEV_DOMAIN}"
             - "longhorn.${SECRET_DEV_DOMAIN}"
