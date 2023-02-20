@@ -40,7 +40,8 @@ spec:
     master:
       persistence: 
         enabled: true 
-        storageClass: "local-path"
+        storageClass: local-path
+        size: 5Gi
 
       service:
         type: LoadBalancer
@@ -53,6 +54,6 @@ spec:
       persistence: 
         enabled: true
         storageClass: local-path
-        size: 2Gi
+        size: 5Gi
 
 
