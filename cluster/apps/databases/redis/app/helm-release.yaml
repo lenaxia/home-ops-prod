@@ -40,7 +40,6 @@ spec:
     master:
       persistence: 
         enabled: true 
-        medium: "Memory"
         storageClass: "local-path"
 
       service:
