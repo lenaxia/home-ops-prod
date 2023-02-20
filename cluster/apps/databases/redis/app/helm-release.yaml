@@ -41,6 +41,7 @@ spec:
       persistence: 
         enabled: true 
         medium: "Memory"
+        storageClass: "local-path"
 
       service:
         type: LoadBalancer
