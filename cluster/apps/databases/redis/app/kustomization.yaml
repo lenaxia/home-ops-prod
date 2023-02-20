@@ -6,14 +6,14 @@ resources:
   - config-pvc.yaml
   - helm-release.yaml
   - secret.sops.yaml
-configMapGenerator:
-  - name: redis-dashboard
-    files:
-      - redis-dashboard.json=https://grafana.com/api/dashboards/12776/revisions/2/download
-generatorOptions:
-  disableNameSuffixHash: true
-  annotations:
-    kustomize.toolkit.fluxcd.io/substitute: disabled
-    grafana_folder: General
-  labels:
-    grafana_dashboard: "true"
+    #namespace not specifiedconfigMapGenerator:
+    #  - name: redis-dashboard
+    #    files:
+    #      - redis-dashboard.json=https://grafana.com/api/dashboards/12776/revisions/2/download
+    #generatorOptions:
+    #  disableNameSuffixHash: true
+    #  annotations:
+    #    kustomize.toolkit.fluxcd.io/substitute: disabled
+    #    grafana_folder: General
+    #  labels:
+    #    grafana_dashboard: "true"
