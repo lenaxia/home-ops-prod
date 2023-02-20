@@ -5,5 +5,4 @@ commonLabels:
   app.kubernetes.io/name: &app librespeed
   app.kubernetes.io/instance: *app
 resources:
-  - config-pvc.yaml
   - secret.sops.yaml
