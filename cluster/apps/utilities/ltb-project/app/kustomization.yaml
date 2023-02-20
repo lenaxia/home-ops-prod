@@ -7,7 +7,6 @@ commonLabels:
 resources:
   - helm-release.yaml
   - secret.sops.yaml
-  - config-pvc.yaml
 configMapGenerator:
   - name: ltb-config
     files:

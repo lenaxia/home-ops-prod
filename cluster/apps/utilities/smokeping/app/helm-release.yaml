@@ -44,7 +44,7 @@ spec:
         existingClaim: smokeping-config-volume
         mountPath: /config
       data:
-        enabled: false
+        enabled: true
         existingClaim: smokeping-data-volume
         mountPath: /data
 
