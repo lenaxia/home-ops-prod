@@ -26,7 +26,7 @@ resources:
   # Security
   #- ./networking/multus/ks.yaml
   - ./networking/traefik/ks.yaml
-    #- ./networking/authelia/ks.yaml
+  - ./networking/authelia/ks.yaml
   - ./networking/cert-manager/ks.yaml
   - ./networking/metallb/ks.yaml
   
@@ -67,11 +67,11 @@ resources:
   - ./utilities/vaultwarden/ks.yaml
   - ./utilities/vaultwarden-ldap/ks.yaml
   - ./utilities/uptimekuma/ks.yaml
-    #- ./utilities/smokeping/ks.yaml
-    #- ./utilities/changedetection/ks.yaml
-    #- ./utilities/librespeed/ks.yaml
+  - ./utilities/smokeping/ks.yaml
+  - ./utilities/changedetection/ks.yaml
+  - ./utilities/librespeed/ks.yaml
   - ./utilities/guacamole/ks.yaml
-    #- ./utilities/ltb-project/ks.yaml
+  - ./utilities/ltb-project/ks.yaml
   - ./utilities/pgadmin/ks.yaml
   - ./utilities/podinfo/ks.yaml
   - ./utilities/echo-server/ks.yaml
