@@ -29,9 +29,9 @@ spec:
     ## Redis&reg; Authentication parameters
     ## ref: https://github.com/bitnami/containers/tree/main/bitnami/redis#setting-the-server-password-on-first-run
     auth:
-      enabled: false
+      enabled: true
       ## @param auth.sentinel Enable password authentication on sentinels too
-      sentinel: false
+      sentinel: true
       existingSecret: redis-secret
       ## @param auth.existingSecretPasswordKey Password key to be retrieved from existing secret
       ## NOTE: ignored unless `auth.existingSecret` parameter is set
