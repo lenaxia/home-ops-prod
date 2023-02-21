@@ -69,7 +69,7 @@ resources:
   - ./utilities/uptimekuma/ks.yaml
     #- ./utilities/smokeping/ks.yaml
     #- ./utilities/changedetection/ks.yaml
-  - ./utilities/librespeed/ks.yaml
+    #- ./utilities/librespeed/ks.yaml
   - ./utilities/guacamole/ks.yaml
     #- ./utilities/ltb-project/ks.yaml
   - ./utilities/pgadmin/ks.yaml
