@@ -15,8 +15,7 @@
             devnode "^sd[a-z0-9]+"
           } 
 
-
-    - name: Make sure haproxy service unit is running
+    - name: Restart Multipath service
       ansible.builtin.systemd:
         state: restarted
         name: multipathd.service
