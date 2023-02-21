@@ -642,8 +642,10 @@ spec:
         key: DUO_SECRET_KEY
       redis:
         key: REDIS_PASSWORD
+        value: ${SECRET_REDIS_PASSWORD}
       redisSentinel:
         key: REDIS_SENTINEL_PASSWORD
+        value: ${SECRET_REDIS_PASSWORD}
       smtp:
         key: SMTP_PASSWORD
       oidcPrivateKey:
