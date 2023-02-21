@@ -5,4 +5,4 @@ metadata:
   namespace: databases
 spec:
   cluster:
-    name: backup
+    name: defaultpg
