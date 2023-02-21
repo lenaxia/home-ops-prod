@@ -46,7 +46,7 @@ spec:
     pod:
       # Must be Deployment, DaemonSet, or StatefulSet.
       kind: Deployment
-      replicas: 1
+      replicas: 3
 
     envFrom:
       - secretRef:
@@ -406,9 +406,9 @@ spec:
         ## Redis Provider
         ##
         redis:
-          enabled: false
+          enabled: true
           enabledSecret: true
-          host: redis-master.databases.svc.cluster.local
+          host: redis.databases.svc.cluster.local
           port: 6379
           username: ""
           database_index: 0
