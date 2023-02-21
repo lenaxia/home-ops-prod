@@ -40,8 +40,7 @@ spec:
     
     persistence:
       config:
-        enabled: true
-        existingClaim: smokeping-config-volume
+        enabled: false 
         mountPath: /config
       data:
         enabled: true
