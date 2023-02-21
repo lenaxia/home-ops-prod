@@ -5,6 +5,8 @@ kind: Kustomization
 metadata:
   name: cluster-databases-redis
   namespace: flux-system
+  labels:
+    substitution.flux.home.arpa/enabled: "true"
 spec:
   path: ./cluster/apps/databases/redis/app
   prune: true
@@ -26,6 +28,8 @@ kind: Kustomization
 metadata:
   name: cluster-databases-redis-lb
   namespace: flux-system
+  labels:
+    substitution.flux.home.arpa/enabled: "true"
 spec:
   dependsOn:
     - name: cluster-databases-redis
