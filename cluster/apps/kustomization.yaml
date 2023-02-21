@@ -5,7 +5,7 @@ resources:
   #- ./system-upgrade/ks.yaml
 
   # Databases
-  - ./databases/redis/ks.yaml
+  #- ./databases/redis/ks.yaml
   - ./databases/redis-operator/ks.yaml
   - ./databases/cloudnative-pg/ks.yaml
   - ./databases/cloudnative-pg/clusters
@@ -25,8 +25,8 @@ resources:
 
   # Security
   #- ./networking/multus/ks.yaml
-  - ./networking/traefik/ks.yaml
-  - ./networking/authelia/ks.yaml
+  #- ./networking/traefik/ks.yaml
+  #- ./networking/authelia/ks.yaml
   - ./networking/cert-manager/ks.yaml
   - ./networking/metallb/ks.yaml
   
@@ -34,8 +34,8 @@ resources:
   #- ./home/fasten/ks.yaml
   #- ./home/babybuddy/ks.yaml
   - ./home/home-assistant/ks.yaml
-  - ./home/zwavejs/ks.yaml
-  - ./home/mosquitto/ks.yaml
+  #- ./home/zwavejs/ks.yaml
+  #- ./home/mosquitto/ks.yaml
   - ./home/node-red/ks.yaml
 
   # Monitoring Namespace
@@ -56,7 +56,7 @@ resources:
   - ./media/bazarr/ks.yaml
   - ./media/nzbget/ks.yaml
   - ./media/nzbhydra2/ks.yaml
-  - ./media/metube/ks.yaml
+  #- ./media/metube/ks.yaml
   - ./media/mediarequests/ks.yaml
   #  - ./media/calibre/ks.yaml
   - ./media/tautulli/ks.yaml
