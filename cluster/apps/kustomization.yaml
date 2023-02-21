@@ -25,14 +25,14 @@ resources:
 
   # Security
   #- ./networking/multus/ks.yaml
-  - ./networking/traefik/ks.yaml
-  - ./networking/authelia/ks.yaml
+  #- ./networking/traefik/ks.yaml
+  #- ./networking/authelia/ks.yaml
   - ./networking/cert-manager/ks.yaml
   - ./networking/metallb/ks.yaml
   
   # Home
   #- ./home/fasten/ks.yaml
-  - ./home/babybuddy/ks.yaml
+  #- ./home/babybuddy/ks.yaml
   - ./home/home-assistant/ks.yaml
   - ./home/zwavejs/ks.yaml
   - ./home/mosquitto/ks.yaml
