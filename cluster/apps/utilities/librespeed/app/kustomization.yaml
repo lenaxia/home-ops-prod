@@ -6,3 +6,4 @@ commonLabels:
   app.kubernetes.io/instance: *app
 resources:
   - secret.sops.yaml
+  - helm-release.yaml
