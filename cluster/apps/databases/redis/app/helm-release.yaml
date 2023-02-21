@@ -17,7 +17,7 @@ spec:
   install:
     createNamespace: true
     remediation:
-      retries: 3
+      retries: 4
   upgrade:
     remediation:
       retries: 3
@@ -40,20 +40,18 @@ spec:
     master:
       persistence: 
         enabled: true
-        storageClass: local-path
-        size: 5Gi
+        existingClaim: redis-data-volume
 
-#      service:
-#        type: LoadBalancer
-#        loadBalancerIP: "${SVC_REDIS_ADDR}"
-#        annotations: 
-#          metallb.universe.tf/address-pool: dev-infra
+      service:
+        type: LoadBalancer
+        loadBalancerIP: "${SVC_REDIS_ADDR}"
+        annotations: 
+          metallb.universe.tf/address-pool: dev-infra
 
     replica:
-      replicaCount: 0
+      replicaCount: 2
       persistence: 
         enabled: true
         storageClass: local-path
-        size: 5Gi
-
+        size: 2Gi
 
