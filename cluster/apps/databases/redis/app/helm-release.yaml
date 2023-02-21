@@ -28,8 +28,8 @@ spec:
     keepHistory: false
   values:
     auth:
-      enabled: true
-      sentinel: true
+      enabled: false
+      sentinel: false
       existingSecret: redis-secret
       existingSecretPasswordKey: password
     master:
