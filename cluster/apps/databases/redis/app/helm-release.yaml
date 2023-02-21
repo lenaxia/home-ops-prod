@@ -37,6 +37,9 @@ spec:
         enabled: false
         storageClass: local-path
         size: 3Gi
+      service:
+        type: LoadBalancer
+
     replica:
       persistence:
         enabled: false
