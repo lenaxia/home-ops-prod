@@ -20,6 +20,7 @@ customDNS:
     kao.haus: 192.168.12.10
   mapping:
     adguard.lan: 192.168.0.5
+    mikegoes.online: 192.168.0.125
   #    kao.haus: 192.168.12.10
   #    mail.kao.haus: redbull.mxrouting.net
   #    webmail.kao.haus: redbull.mxrouting.net
