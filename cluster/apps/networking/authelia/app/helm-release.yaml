@@ -339,6 +339,8 @@ spec:
         - domain:
             #home
             - "baby.${SECRET_DEV_DOMAIN}"
+            # monitoring
+            - "grafana.${SECRET_DEV_DOMAIN}"
             #media
             - "library.${SECRET_DEV_DOMAIN}"
             - "plex.${SECRET_DEV_DOMAIN}"
