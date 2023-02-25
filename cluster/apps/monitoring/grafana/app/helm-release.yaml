@@ -96,7 +96,7 @@ spec:
         header_property: username
         auto_sign_up: false
         sync_ttl: 60
-        whitelist: 192.168.5.10/32, 10.42.5.0/24, 10.42.4.0/24, 10.42.3.0/24
+        whitelist: 192.168.5.10/32, 10.42.5.0/24, 10.42.4.0/24, 10.42.3.0/24, 10.42.2.0/24, 10.42.1.0/24, 10.42.0.0/24
         headers: Email:X-User-Email, Name:X-User-Name, Group:Remote-Groups
         # Read the auth proxy docs for details on what the setting below enables
         #enable_login_token: false
