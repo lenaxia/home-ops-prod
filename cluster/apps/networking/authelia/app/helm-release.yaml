@@ -531,6 +531,7 @@ spec:
             secret: "${SECRET_GRAFANA_OAUTH_CLIENT_SECRET}"
             public: false
             authorization_policy: one_factor
+            consent_mode: implicit
             pre_configured_consent_duration: 1y
             scopes: ["openid", "profile", "groups", "email"]
             redirect_uris: ["https://grafana.${SECRET_DEV_DOMAIN}/login/generic_oauth"]
