@@ -92,7 +92,7 @@ spec:
         org_role: Viewer
       auth.generic_oauth:
         enabled: true
-        name: Authelia
+        name: TheKaoCloud Authelia
         icon: signin
         client_id: grafana
         client_secret: ${SECRET_GRAFANA_OAUTH_CLIENT_SECRET}

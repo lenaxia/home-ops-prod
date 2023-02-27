@@ -514,6 +514,7 @@ spec:
             secret: "${SECRET_OUTLINE_OAUTH_CLIENT_SECRET}"
             public: false
             authorization_policy: one_factor
+            consent_mode: implicit
             pre_configured_consent_duration: 1y
             scopes: ["openid", "profile", "email", "offline_access"]
             redirect_uris: ["https://w.${SECRET_DEV_DOMAIN}/auth/oidc.callback"]
@@ -523,6 +524,7 @@ spec:
             secret: "${SECRET_OVERSEERR_OAUTH_CLIENT_SECRET}"
             public: false
             authorization_policy: one_factor
+            consent_mode: implicit
             pre_configured_consent_duration: 1y
             scopes: ["openid", "profile", "email", "offline_access"]
             redirect_uris: ["https://overseerr.${SECRET_DEV_DOMAIN}/api/v1/auth/oidc-callback"]
