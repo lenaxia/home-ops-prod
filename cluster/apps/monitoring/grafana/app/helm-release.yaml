@@ -62,7 +62,7 @@ spec:
                 key: POSTGRES_PASSWORD
     grafana.ini:
       server:
-        root_url: "https://grafana.${SECRET_DEV_DOMAIN}:443"
+        root_url: "https://grafana.${SECRET_DEV_DOMAIN}"
       paths:
         data: /var/lib/grafana/data
         logs: /var/log/grafana
