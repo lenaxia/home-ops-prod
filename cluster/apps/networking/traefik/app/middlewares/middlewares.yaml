@@ -36,6 +36,7 @@ kind: Middleware
 metadata:
   name: middlewares-basic-auth
   namespace: networking
+type: kubernetes.io/basic-auth
 spec:
   basicAuth:
     secret: authsecret
