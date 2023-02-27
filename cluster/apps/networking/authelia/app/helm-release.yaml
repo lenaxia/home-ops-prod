@@ -527,13 +527,17 @@ spec:
             redirect_uris: ["https://w.${SECRET_DEV_DOMAIN}/oidc/callback"]
             userinfo_signing_algorithm: none
           - id: grafana
-            description: grafana
-            secret: "${SECRET_GRAFANA_OAUTH_CLIENT_SECRET}"
+            description: Grafana
+            secret: ${SECRET_GRAFANA_OAUTH_CLIENT_SECRET}
             public: false
             authorization_policy: one_factor
-            pre_configured_consent_duration: 1y
-            scopes: ["openid", "profile", "groups", "email"]
-            redirect_uris: ["https://grafana.${SECRET_DEV_DOMAIN}/login/generic_oauth"]
+            redirect_uris:
+              - https://grafana.${SECRET_DEV_DOMAIN}/login/generic_oauth
+            scopes:
+              - openid
+              - profile
+              - groups
+              - email
             userinfo_signing_algorithm: none
           - id: outline
             description: outline
