@@ -4,4 +4,3 @@ resources:
   - middlewares.yaml
   - middlewares-chains.yaml
   - cloudflare.yaml
-  - authsecret.sops.yaml
