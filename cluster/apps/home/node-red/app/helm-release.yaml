@@ -95,7 +95,7 @@ spec:
           hajimari.io/enable: "true"
           hajimari.io/icon: "resistor-nodes"
           hajimari.io/appName: "Node-RED"
-          hajimari.io/group: "IOT"
+          hajimari.io/group: "Home"
           cert-manager.io/cluster-issuer: "letsencrypt-production"
           traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
           traefik.ingress.kubernetes.io/router.middlewares: networking-chain-authelia@kubernetescrd
