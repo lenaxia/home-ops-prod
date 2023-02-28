@@ -8,7 +8,7 @@ metadata:
     cert-manager.io/cluster-issuer: "letsencrypt-production"
     hajimari.io/appName: "traefik"
     hajimari.io/enable: "true"
-    hajimari.io/icon: "web"
+    hajimari.io/icon: "simple-icons:Traefik Proxy"
     traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
     traefik.ingress.kubernetes.io/router.middlewares: networking-chain-authelia@kubernetescrd
 spec:
