@@ -18,7 +18,7 @@ spec:
   values:
     image:
       repository: ghcr.io/fastenhealth/fasten-onprem
-      tag: v0.0.6
+      tag: v0.0.8
 
     podAnnotations:
       secret.reloader.stakater.com/reload: *appname
