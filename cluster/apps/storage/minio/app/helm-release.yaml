@@ -65,6 +65,7 @@ spec:
         annotations:
           hajimari.io/enable: "true"
           hajimari.io/icon: "cloud-upload"
+          hajimari.io/group: "Storage"
           cert-manager.io/cluster-issuer: "letsencrypt-production"
           traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
           traefik.ingress.kubernetes.io/router.middlewares: networking-chain-authelia-minio@kubernetescrd
