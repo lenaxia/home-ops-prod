@@ -30,7 +30,7 @@ spec:
     middlewares:
       - name: middlewares-rate-limit
       - name: middlewares-secure-headers
-      - name: middlewares-basic-auth-abc
+      - name: middlewares-basic-auth
 ---
 apiVersion: traefik.containo.us/v1alpha1
 kind: Middleware
