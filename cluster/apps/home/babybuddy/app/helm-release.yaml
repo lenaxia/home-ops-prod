@@ -59,9 +59,9 @@ spec:
         enabled: true
         annotations:
           hajimari.io/enable: "true"
-          hajimari.io/icon: game-icons:meal
-          hajimari.io/info: Meal Recipes
-          hajimari.io/group: documents
+          hajimari.io/icon: baby-bottle-outline
+          hajimari.io/info: Baby Buddy
+          hajimari.io/group: Home
           cert-manager.io/cluster-issuer: "letsencrypt-production"
           traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
           traefik.ingress.kubernetes.io/router.middlewares: networking-chain-authelia@kubernetescrd

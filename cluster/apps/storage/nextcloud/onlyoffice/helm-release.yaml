@@ -81,7 +81,7 @@ spec:
           hajimari.io/enable: "true"
           hajimari.io/icon: office
           hajimari.io/info: Only Office
-          hajimari.io/group: Office
+          hajimari.io/group: Storage 
           cert-manager.io/cluster-issuer: "letsencrypt-production"
           traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
           traefik.ingress.kubernetes.io/router.middlewares: networking-chain-onlyoffice-headers@kubernetescrd

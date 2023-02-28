@@ -143,7 +143,7 @@ spec:
         ingressClassName: "traefik"
         annotations:
           hajimari.io/enable: "true"
-          hajimari.io/icon: "alpha-a-box"
+          hajimari.io/icon: "simple-icons:prometheus"
           hajimari.io/appName: "AlertManager"
           cert-manager.io/cluster-issuer: "letsencrypt-production"
           traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
@@ -238,7 +238,7 @@ spec:
         ingressClassName: "traefik"
         annotations:
           hajimari.io/enable: "true"
-          hajimari.io/icon: "alpha-p-box"
+          hajimari.io/icon: "simple-icons:prometheus"
           hajimari.io/appName: "Prometheus"
           cert-manager.io/cluster-issuer: "letsencrypt-production"
           traefik.ingress.kubernetes.io/router.entrypoints: "websecure"

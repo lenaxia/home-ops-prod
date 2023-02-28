@@ -42,7 +42,7 @@ spec:
         ingressClassName: "traefik"
         annotations:
           hajimari.io/enable: "true"
-          hajimari.io/icon: "youtube"
+          hajimari.io/icon: "image-size-select-large"
           hajimari.io/group: "Media"
           cert-manager.io/cluster-issuer: "letsencrypt-production"
           traefik.ingress.kubernetes.io/router.entrypoints: "websecure"

@@ -72,7 +72,7 @@ spec:
         annotations:
           cert-manager.io/cluster-issuer: letsencrypt-production
           hajimari.io/enable: "true"
-          hajimari.io/icon: home-assistant
+          hajimari.io/icon: simple-icons:z-wave 
           traefik.ingress.kubernetes.io/router.entrypoints: websecure
         hosts:
           - host: &host zwave.${SECRET_DEV_DOMAIN}

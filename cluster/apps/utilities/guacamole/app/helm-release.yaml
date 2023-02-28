@@ -46,7 +46,7 @@ spec:
         annotations:
           hajimari.io/enable: "true"
           hajimari.io/icon: "remote-desktop"
-          hajimari.io/group: "Media"
+          hajimari.io/group: "Utilities"
           cert-manager.io/cluster-issuer: "letsencrypt-production"
             ##cert-manager.io/cluster-issuer: "ca-issuer"
           traefik.ingress.kubernetes.io/router.entrypoints: "websecure"

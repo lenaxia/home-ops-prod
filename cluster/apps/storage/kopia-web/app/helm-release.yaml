@@ -67,8 +67,8 @@ spec:
         ingressClassName: "traefik"
         annotations:
           hajimari.io/enable: "true"
-          hajimari.io/icon: "youtube"
-          hajimari.io/group: "Media"
+          hajimari.io/icon: "backup-restore"
+          hajimari.io/group: "Storage"
           cert-manager.io/cluster-issuer: "letsencrypt-production"
           traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
           traefik.ingress.kubernetes.io/router.middlewares: networking-chain-authelia@kubernetescrd

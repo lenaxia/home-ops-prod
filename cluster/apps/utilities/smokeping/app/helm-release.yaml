@@ -52,7 +52,7 @@ spec:
       ingressClassName: "traefik"
       annotations:
         hajimari.io/enable: "true"
-        hajimari.io/icon: "alpha-s-box"
+        hajimari.io/icon: "wan"
         hajimari.io/group: "Utilities"
         cert-manager.io/cluster-issuer: "letsencrypt-production"
         traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
