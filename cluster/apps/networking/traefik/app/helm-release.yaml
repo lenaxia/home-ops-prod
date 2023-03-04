@@ -44,6 +44,8 @@ spec:
         externalTrafficPolicy: Local
       annotations:
         metallb.universe.tf/address-pool: dev-infra
+        external-dns.home.arpa/enabled: "true"
+        external-dns.alpha.kubernetes.io/hostname: "${SECRET_DEV_DOMAIN}"
     logs:
       general:
         format: json
