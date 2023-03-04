@@ -32,3 +32,4 @@ resources:
   - spotahome-redis-operator-charts.yaml
   - intel.yaml
   - angelnu.yaml
+  - external-dns.yaml
