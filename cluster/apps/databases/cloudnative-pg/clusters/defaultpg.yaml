@@ -23,6 +23,9 @@ spec:
     storageClass: local-path
   superuserSecret:
     name: postgres-superuser
+  affinity:
+    nodeSelector:
+      node-role.kubernetes.io/worker: "true"
   monitoring:
     enablePodMonitor: true
   postgresql:

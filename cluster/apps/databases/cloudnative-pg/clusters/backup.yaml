@@ -5,6 +5,9 @@ metadata:
   name: backup
   namespace: databases
 spec:
+  affinity:
+    nodeSelector:
+      node-role.kubernetes.io/worker: "true"
   instances: 1
   imageName: ghcr.io/cloudnative-pg/postgresql:14.5
   primaryUpdateStrategy: unsupervised
