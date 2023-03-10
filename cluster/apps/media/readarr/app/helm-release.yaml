@@ -88,6 +88,11 @@ spec:
             server: ${NAS_ADDR}
             path: /volume2/downloads
         mountPath: /downloads
+      media:
+        enabled: true
+        existingClaim: calibre-media-volume
+        namespace: media
+        mountPath: /library
       backup:
         enabled: true
         type: custom

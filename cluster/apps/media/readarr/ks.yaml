@@ -10,6 +10,7 @@ metadata:
 spec:
   dependsOn:
     - name: cluster-storage-longhorn
+    - name: cluster-media-calibre
   path: ./cluster/apps/media/readarr/app
   prune: true
   sourceRef:
