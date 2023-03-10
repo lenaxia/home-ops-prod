@@ -75,7 +75,7 @@ spec:
       media:
         enabled: true
         existingClaim: calibre-media-volume 
-        mountPath: /media
+        mountPath: /library
     nodeSelector:
       node-role.kubernetes.io/worker: "true"
     resources:
