@@ -89,7 +89,7 @@ spec:
             server: ${NAS_ADDR}
             path: /volume2/downloads
         mountPath: /downloads
-      media:
+      library:
         enabled: true
         existingClaim: calibre-media-volume
         namespace: media
