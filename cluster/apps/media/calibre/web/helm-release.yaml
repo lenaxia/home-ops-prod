@@ -70,10 +70,18 @@ spec:
       config:
         enabled: true
         existingClaim: calibre-web-config-volume
-      media:
+#      media:
+#        enabled: true
+#        existingClaim: calibre-media-volume
+#        namespace: media
+#        mountPath: /library
+      omoikane:
         enabled: true
-        existingClaim: calibre-media-volume
-        namespace: media
+        type: custom
+        volumeSpec:
+          nfs:
+            server: ${NAS_ADDR}
+            path: "/volume1/omoikane/[Books]"
         mountPath: /library
     nodeSelector:
       node-role.kubernetes.io/worker: "true"
