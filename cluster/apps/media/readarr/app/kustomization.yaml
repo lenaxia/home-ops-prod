@@ -7,12 +7,3 @@ commonLabels:
 resources:
   - helm-release.yaml
   - config-pvc.yaml
-  - poststart.yaml
-    #configMapGenerator:
-    #  - name: readarr-config
-    #    files:
-    #      - config.ini
-    #generatorOptions:
-    #  disableNameSuffixHash: true
-    #  annotations:
-    #    kustomize.toolkit.fluxcd.io/substitute: disabled
