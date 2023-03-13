@@ -22,9 +22,6 @@ spec:
     remediation:
       retries: 3
   values:
-#    podLabels:
-#      app: influxdb
-#
     adminUser:
       organization: "kaocloud"
       bucket: "default"
@@ -39,7 +36,7 @@ spec:
 
     service:
       type: ClusterIP
-      port: 80
+      port: 8086
       targetPort: 8086
       annotations:
         metallb.universe.tf/address-pool: dev-infra

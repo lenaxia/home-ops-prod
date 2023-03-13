@@ -22,31 +22,11 @@ spec:
     remediation:
       retries: 3
   values:
-    podLabels:
-      app: telegraf 
-
-#    adminUser:
-#      organization: "kaocloud"
-#      bucket: "default"
-#      user: "admin"
-#      retention_policy: "30d"
-#      existingSecret: influxdb-auth
-
-    persistence:
-      enabled: true
-      useExisting: true
-      name: telegraf-data-volume
-
     service:
+      enabled: true
       type: ClusterIP
-      port: 80
-      targetPort: 8086
       annotations:
         metallb.universe.tf/address-pool: dev-infra
-      labels:
-        app: telegraf
-      portName: http
-
 
     ## Exposed telegraf configuration
     ## For full list of possible values see `/docs/all-config-values.yaml` and `/docs/all-config-values.toml`
@@ -64,7 +44,7 @@ spec:
         debug: false
         quiet: false
         logfile: ""
-        hostname: "$HOSTNAME"
+        hostname: "telegraf"
         omit_hostname: false
       processors:
         - enum:
@@ -78,9 +58,47 @@ spec:
       outputs:
         - influxdb:
             urls:
-              - "http://influxdb.databases.svc.cluster.local:80"
+              - "http://influxdb.databases.svc.cluster.local:8086"
             database: "telegraf"
             precision: "s"
+            namedrop:
+              - "hs_*"
+              - "ifTable"
+              - "diskTable"
+              - "raidTable"
+              - "laTable"
+              - "hrStorageTable"
+              - "snmp.SYNO"
+              - "influxdb_*"
+              - "influxdb"
+              - "docker_*"
+              - "docker"
+              - "pihole.lan"
+              - "snmp.rtn87r"
+              - "ifXTable"
+              - "icmpMsgStatsTable"
+              - "hrProcessorTable"
+              - "hrDeviceTable"
+        - influxdb:
+            urls:
+              - "http://influxdb.databases.svc.cluster.local:8086"
+            database: "homeseer"
+            precision: "s" 
+            namepass: 
+              - "hs_*"
+        - influxdb:
+            urls:
+              - "http://influxdb.databases.svc.cluster.local:8086"
+            database: "synology"
+            precision: "s" 
+            namepass: 
+              - "ifTable"
+              - "diskTable"
+              - "raidTable"
+              - "laTable"
+              - "hrStorageTable"
+              - "snmp.SYNO"
+
       inputs:
         - statsd:
             service_address: ":8125"
@@ -91,3 +109,14 @@ spec:
             metric_separator: "_"
             allowed_pending_messages: 10000
             percentile_limit: 1000
+         - mqtt_consumer:
+            servers:
+              - "tcp://moquitto.home.svc.cluster.local:1883"
+            topics:
+              - "telegraf/host01/cpu"
+              - "telegraf/+/mem"
+              - "sensors/#"
+              - "environmental/#" 
+            qos: 2
+            data_format: "influx"
+            
