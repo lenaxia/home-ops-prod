@@ -40,12 +40,28 @@
             "mode": "thresholds"
           },
           "decimals": 1,
-          "mappings": [],
+          "mappings": [
+            {
+              "options": {
+                "0": {
+                  "color": "dark-red",
+                  "index": 0,
+                  "text": "#00FF00"
+                },
+                "1": {
+                  "color": "dark-blue",
+                  "index": 1,
+                  "text": "#000000"
+                }
+              },
+              "type": "value"
+            }
+          ],
           "thresholds": {
             "mode": "absolute",
             "steps": [
               {
-                "color": "dark-yellow",
+                "color": "#E0B400",
                 "value": null
               }
             ]
@@ -68,7 +84,7 @@
         "orientation": "auto",
         "reduceOptions": {
           "calcs": [
-            "min"
+            "lastNotNull"
           ],
           "fields": "",
           "values": false
@@ -87,9 +103,39 @@
           },
           "editorMode": "code",
           "format": "table",
+          "hide": false,
           "rawQuery": true,
-          "rawSql": "SELECT\r\n  $__time(\"start\"),\r\n  extract(epoch from (CURRENT_TIMESTAMP(0)::TIMESTAMP WITH TIME ZONE - \"start\"))\r\nFROM\r\n  core_feeding\r\nORDER BY start",
+          "rawSql": "SELECT\r\n  $__time(\"start\"),\r\n  extract(epoch from (CURRENT_TIMESTAMP(0)::TIMESTAMP WITH TIME ZONE - \"start\")) as timeSince\r\nFROM\r\n  core_feeding\r\nORDER BY start",
           "refId": "A",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          }
+        },
+        {
+          "datasource": {
+            "type": "postgres",
+            "uid": "3rLxRGx4z"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "hide": false,
+          "rawQuery": true,
+          "rawSql": "SELECT\r\n  $__time(\"start\"),\r\n  CASE\r\n    WHEN extract(epoch from (\"end\" - \"start\")) = 0 THEN '#00FF00'\r\n    ELSE '#e0b400'\r\n  END as duration,\r\n  CASE\r\n    WHEN extract(epoch from (\"end\" - \"start\")) = 0 THEN 0\r\n    ELSE 1\r\n  END as duration_bin\r\nFROM\r\n  core_feeding\r\nORDER BY start",
+          "refId": "B",
           "sql": {
             "columns": [
               {
@@ -110,6 +156,29 @@
         }
       ],
       "title": "Time Since Last Feeding",
+      "transformations": [
+        {
+          "id": "configFromData",
+          "options": {
+            "applyTo": {
+              "id": "byName",
+              "options": "timesince"
+            },
+            "configRefId": "B",
+            "mappings": [
+              {
+                "fieldName": "duration",
+                "handlerKey": "color"
+              },
+              {
+                "fieldName": "duration_bin",
+                "handlerKey": "mappings.text",
+                "reducerId": "lastNotNull"
+              }
+            ]
+          }
+        }
+      ],
       "type": "stat"
     },
     {
@@ -337,8 +406,37 @@
           "editorMode": "code",
           "format": "table",
           "rawQuery": true,
-          "rawSql": "SELECT\r\n  $__time(\"start\"),\r\n  extract(epoch from (CURRENT_TIMESTAMP(0)::TIMESTAMP WITH TIME ZONE - \"end\"))\r\nFROM\r\n  core_sleep\r\nORDER BY start",
+          "rawSql": "SELECT\r\n  $__time(\"start\"),\r\n  extract(epoch from (CURRENT_TIMESTAMP(0)::TIMESTAMP WITH TIME ZONE - \"end\")) as timesince\r\nFROM\r\n  core_sleep\r\nORDER BY start",
           "refId": "A",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          }
+        },
+        {
+          "datasource": {
+            "type": "postgres",
+            "uid": "3rLxRGx4z"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "hide": false,
+          "rawQuery": true,
+          "rawSql": "SELECT\r\n  $__time(\"start\"),\r\n  CASE\r\n    WHEN extract(epoch from (\"end\" - \"start\")) = 0 THEN '#00FF00'\r\n    ELSE '#1F60C4'\r\n  END as duration\r\nFROM\r\n  core_sleep\r\nORDER BY start",
+          "refId": "B",
           "sql": {
             "columns": [
               {
@@ -359,6 +457,24 @@
         }
       ],
       "title": "Time Since Last Sleep",
+      "transformations": [
+        {
+          "id": "configFromData",
+          "options": {
+            "applyTo": {
+              "id": "byName",
+              "options": "timesince"
+            },
+            "configRefId": "B",
+            "mappings": [
+              {
+                "fieldName": "duration",
+                "handlerKey": "color"
+              }
+            ]
+          }
+        }
+      ],
       "type": "stat"
     },
     {
@@ -587,7 +703,7 @@
       },
       "id": 17,
       "panels": [],
-      "title": "By Hour Averages, Trailing One Weeks",
+      "title": "By Hour Averages, Trailing Two Weeks",
       "type": "row"
     },
     {
@@ -684,7 +800,7 @@
           "editorMode": "code",
           "format": "table",
           "rawQuery": true,
-          "rawSql": "SELECT\r\n  extract(hour from start) as hour,\r\n  avg(amount) as avgAmount\r\nFROM\r\n  core_feeding\r\nWHERE start > CURRENT_TIMESTAMP(0)::TIMESTAMP WITH TIME ZONE - INTERVAL '7 days'\r\nGROUP BY hour\r\nORDER BY hour",
+          "rawSql": "SELECT\r\n  extract(hour from start) as hour,\r\n  avg(amount) as avgAmount\r\nFROM\r\n  core_feeding\r\nWHERE start > CURRENT_TIMESTAMP(0)::TIMESTAMP WITH TIME ZONE - INTERVAL '14 days'\r\nGROUP BY hour\r\nORDER BY hour",
           "refId": "A",
           "sql": {
             "columns": [
@@ -803,7 +919,7 @@
           "editorMode": "code",
           "format": "table",
           "rawQuery": true,
-          "rawSql": "SELECT\r\n  extract(hour from \"time\") as hour,\r\n  avg(amount) as avgAmount\r\nFROM\r\n  core_pumping\r\nWHERE \"time\" > CURRENT_TIMESTAMP(0)::TIMESTAMP WITH TIME ZONE - INTERVAL '7 days'\r\nGROUP BY hour\r\nORDER BY hour",
+          "rawSql": "SELECT\r\n  extract(hour from \"time\") as hour,\r\n  avg(amount) as avgAmount\r\nFROM\r\n  core_pumping\r\nWHERE \"time\" > CURRENT_TIMESTAMP(0)::TIMESTAMP WITH TIME ZONE - INTERVAL '14 days'\r\nGROUP BY hour\r\nORDER BY hour",
           "refId": "A",
           "sql": {
             "columns": [
@@ -921,7 +1037,7 @@
           "editorMode": "code",
           "format": "table",
           "rawQuery": true,
-          "rawSql": "SELECT\r\n  extract(hour from start) as hour,\r\n  extract(epoch from avg(duration))*1000 as avgDuration\r\nFROM\r\n  core_feeding\r\nWHERE start > CURRENT_TIMESTAMP(0)::TIMESTAMP WITH TIME ZONE - INTERVAL '7 days'\r\nGROUP BY hour\r\nORDER BY hour",
+          "rawSql": "SELECT\r\n  extract(hour from start) as hour,\r\n  extract(epoch from avg(duration))*1000 as avgDuration\r\nFROM\r\n  core_feeding\r\nWHERE start > CURRENT_TIMESTAMP(0)::TIMESTAMP WITH TIME ZONE - INTERVAL '14 days'\r\nGROUP BY hour\r\nORDER BY hour",
           "refId": "A",
           "sql": {
             "columns": [
@@ -1016,7 +1132,7 @@
             "h": 8,
             "w": 8,
             "x": 0,
-            "y": 28
+            "y": 19
           },
           "id": 22,
           "options": {
@@ -1109,123 +1225,6 @@
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "dark-blue"
-                  }
-                ]
-              },
-              "unit": "ms"
-            },
-            "overrides": [
-              {
-                "matcher": {
-                  "id": "byName",
-                  "options": "hour"
-                },
-                "properties": [
-                  {
-                    "id": "unit"
-                  }
-                ]
-              }
-            ]
-          },
-          "gridPos": {
-            "h": 8,
-            "w": 8,
-            "x": 8,
-            "y": 28
-          },
-          "id": 23,
-          "options": {
-            "barRadius": 0.2,
-            "barWidth": 0.97,
-            "groupWidth": 0.7,
-            "legend": {
-              "calcs": [],
-              "displayMode": "list",
-              "placement": "bottom",
-              "showLegend": false
-            },
-            "orientation": "auto",
-            "showValue": "never",
-            "stacking": "none",
-            "tooltip": {
-              "mode": "single",
-              "sort": "none"
-            },
-            "xField": "hour",
-            "xTickLabelRotation": -90,
-            "xTickLabelSpacing": 0
-          },
-          "targets": [
-            {
-              "datasource": {
-                "type": "postgres",
-                "uid": "3rLxRGx4z"
-              },
-              "editorMode": "code",
-              "format": "table",
-              "rawQuery": true,
-              "rawSql": "SELECT\r\n  extract(hour from start) as hour,\r\n  extract(epoch from avg(duration))*1000 as avgDuration\r\nFROM\r\n  core_feeding\r\nGROUP BY hour\r\nORDER BY hour",
-              "refId": "A",
-              "sql": {
-                "columns": [
-                  {
-                    "parameters": [],
-                    "type": "function"
-                  }
-                ],
-                "groupBy": [
-                  {
-                    "property": {
-                      "type": "string"
-                    },
-                    "type": "groupBy"
-                  }
-                ],
-                "limit": 50
-              }
-            }
-          ],
-          "title": "Average Nap Duration by Hour of Day",
-          "transformations": [],
-          "type": "barchart"
-        },
-        {
-          "datasource": {
-            "type": "postgres",
-            "uid": "3rLxRGx4z"
-          },
-          "fieldConfig": {
-            "defaults": {
-              "color": {
-                "mode": "thresholds"
-              },
-              "custom": {
-                "axisCenteredZero": false,
-                "axisColorMode": "text",
-                "axisLabel": "",
-                "axisPlacement": "auto",
-                "fillOpacity": 100,
-                "gradientMode": "opacity",
-                "hideFrom": {
-                  "legend": false,
-                  "tooltip": false,
-                  "viz": false
-                },
-                "lineWidth": 1,
-                "scaleDistribution": {
-                  "type": "linear"
-                },
-                "thresholdsStyle": {
-                  "mode": "off"
-                }
-              },
-              "mappings": [],
-              "thresholds": {
-                "mode": "absolute",
-                "steps": [
-                  {
                     "color": "dark-purple"
                   }
                 ]
@@ -1250,8 +1249,8 @@
           "gridPos": {
             "h": 8,
             "w": 8,
-            "x": 16,
-            "y": 28
+            "x": 8,
+            "y": 19
           },
           "id": 24,
           "options": {
@@ -1306,6 +1305,123 @@
             }
           ],
           "title": "Average Amount Pumped by Hour of Day ",
+          "transformations": [],
+          "type": "barchart"
+        },
+        {
+          "datasource": {
+            "type": "postgres",
+            "uid": "3rLxRGx4z"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "thresholds"
+              },
+              "custom": {
+                "axisCenteredZero": false,
+                "axisColorMode": "text",
+                "axisLabel": "",
+                "axisPlacement": "auto",
+                "fillOpacity": 100,
+                "gradientMode": "opacity",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "lineWidth": 1,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "thresholdsStyle": {
+                  "mode": "off"
+                }
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "dark-blue"
+                  }
+                ]
+              },
+              "unit": "ms"
+            },
+            "overrides": [
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "hour"
+                },
+                "properties": [
+                  {
+                    "id": "unit"
+                  }
+                ]
+              }
+            ]
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 8,
+            "x": 16,
+            "y": 19
+          },
+          "id": 23,
+          "options": {
+            "barRadius": 0.2,
+            "barWidth": 0.97,
+            "groupWidth": 0.7,
+            "legend": {
+              "calcs": [],
+              "displayMode": "list",
+              "placement": "bottom",
+              "showLegend": false
+            },
+            "orientation": "auto",
+            "showValue": "never",
+            "stacking": "none",
+            "tooltip": {
+              "mode": "single",
+              "sort": "none"
+            },
+            "xField": "hour",
+            "xTickLabelRotation": -90,
+            "xTickLabelSpacing": 0
+          },
+          "targets": [
+            {
+              "datasource": {
+                "type": "postgres",
+                "uid": "3rLxRGx4z"
+              },
+              "editorMode": "code",
+              "format": "table",
+              "rawQuery": true,
+              "rawSql": "SELECT\r\n  extract(hour from start) as hour,\r\n  extract(epoch from avg(duration))*1000 as avgDuration\r\nFROM\r\n  core_feeding\r\nGROUP BY hour\r\nORDER BY hour",
+              "refId": "A",
+              "sql": {
+                "columns": [
+                  {
+                    "parameters": [],
+                    "type": "function"
+                  }
+                ],
+                "groupBy": [
+                  {
+                    "property": {
+                      "type": "string"
+                    },
+                    "type": "groupBy"
+                  }
+                ],
+                "limit": 50
+              }
+            }
+          ],
+          "title": "Average Nap Duration by Hour of Day",
           "transformations": [],
           "type": "barchart"
         }
@@ -1462,13 +1578,13 @@
     "list": []
   },
   "time": {
-    "from": "now-12h",
+    "from": "now-24h",
     "to": "now"
   },
   "timepicker": {},
   "timezone": "",
   "title": "BabyBuddy",
   "uid": "w1Ejunx4k",
-  "version": 34,
+  "version": 44,
   "weekStart": ""
 }
