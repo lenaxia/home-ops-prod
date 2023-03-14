@@ -1,7 +1,7 @@
 ---
 ansible_python_interpreter: /usr/bin/python
 
-ansible_user: pi 
+ansible_user: yin 
 systemd_dir: /etc/systemd/system
 
 # Map ansible fact gathering architecture to a release name and suffix in github.

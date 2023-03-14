@@ -33,7 +33,7 @@
 - name: sysctl ip_nonlocal_bind 1 to enable binding to VIPs
   ansible.posix.sysctl:
     name: net.ipv4.ip_nonlocal_bind
-    value: 1
+    value: "1"
     state: present
     reload: yes
 

@@ -15,7 +15,7 @@ resources:
   - ./kube-system/node-feature-discovery/ks.yaml
   - ./kube-system/intel-device-plugin/ks.yaml
   - ./kube-system/reloader
-    #- ./kube-system/descheduler
+  - ./kube-system/descheduler
   ##- ./kube-system/metrics-server  # k3s already comes with a metrics server
 
   # Storage
