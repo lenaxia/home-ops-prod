@@ -25,7 +25,7 @@ spec:
     image:
       #repository: ghcr.io/linuxserver/tautulli
       repository: ghcr.io/onedr0p/tautulli
-      tag: 2.11.1@sha256:7eed9224c97af9c4da9d00c0b637a37c15a4412d6d5a409631f17ad5a7e96cc4 
+      tag: 2.12.2@sha256:34072dfc39c1388718a27a33cea7f44fdf89c3ce6108d9c0b5f7b51d40aeb823 
       pullPolicy: Always
     env:
       TZ: "${TIMEZONE}"

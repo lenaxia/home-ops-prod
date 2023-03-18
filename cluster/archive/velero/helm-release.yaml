@@ -25,7 +25,7 @@ spec:
     # enabling restic). Required.
     image:
       repository: velero/velero
-      tag: v1.10.1
+      tag: v1.10.2
       pullPolicy: IfNotPresent
 
     # Annotations to add to the Velero deployment's. Optional.
