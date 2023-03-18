@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-    name: config-plex-0
+    name: plex-config-volume
     labels:
       app: plex
       snapshot.home.arpa/enabled: "true"
