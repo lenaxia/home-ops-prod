@@ -27,6 +27,7 @@ spec:
       tag: 1.31.2.6810-a607d384f@sha256:8fc84ad20606f6f55470f4c191a16800d251858628e5a0868bdeaf1724aaec43
     env:
       TZ: "${TIMEZONE}"
+      PLEX_CLAIM: claim-RGPtV5WwXo9JZcoHzti2
     service:
       main:
         type: LoadBalancer
