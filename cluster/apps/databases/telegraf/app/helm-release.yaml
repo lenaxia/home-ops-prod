@@ -119,4 +119,6 @@ spec:
               - "environmental/#" 
             qos: 2
             data_format: "influx"
+            username: "sensor" 
+            password: "derived-pester-arrival"
             
