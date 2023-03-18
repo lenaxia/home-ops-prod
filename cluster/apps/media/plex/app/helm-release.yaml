@@ -68,7 +68,7 @@ spec:
     persistence:
       config:
         enabled: true
-        existingClaim: plex-config-volume
+        existingClaim: config-plex-0
       omoikane:
         enabled: true
         type: nfs

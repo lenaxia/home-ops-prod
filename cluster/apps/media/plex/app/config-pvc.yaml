@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-    name: plex-config-volume
+    name: config-plex-0
     labels:
       app: plex
       snapshot.home.arpa/enabled: "true"
@@ -11,5 +11,5 @@ spec:
     storageClassName: longhorn
     resources:
         requests:
-            storage: 50Gi
+            storage: 60Gi
 
