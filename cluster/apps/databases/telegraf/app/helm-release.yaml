@@ -58,7 +58,7 @@ spec:
       outputs:
         - influxdb:
             urls:
-              - "http://influxdb.databases.svc.cluster.local:8086"
+              - "http://influxdb-influxdb2.databases.svc.cluster.local:8086"
             database: "telegraf"
             precision: "s"
             namedrop:
@@ -81,14 +81,14 @@ spec:
               - "hrDeviceTable"
         - influxdb:
             urls:
-              - "http://influxdb.databases.svc.cluster.local:8086"
+              - "http://influxdb-influxdb2.databases.svc.cluster.local:8086"
             database: "homeseer"
             precision: "s" 
             namepass: 
               - "hs_*"
         - influxdb:
             urls:
-              - "http://influxdb.databases.svc.cluster.local:8086"
+              - "http://influxdb-influxdb2.databases.svc.cluster.local:8086"
             database: "synology"
             precision: "s" 
             namepass: 
@@ -111,7 +111,7 @@ spec:
             percentile_limit: 1000
         - mqtt_consumer:
             servers:
-              - "tcp://moquitto.home.svc.cluster.local:1883"
+              - "tcp://mosquitto.home.svc.cluster.local:1883"
             topics:
               - "telegraf/host01/cpu"
               - "telegraf/+/mem"
