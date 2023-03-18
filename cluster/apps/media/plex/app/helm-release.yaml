@@ -95,9 +95,6 @@ spec:
         path: /volume2/downloads
         mountPath: /downloads
         readOnly: true
-      transcode:
-        enabled: true
-        type: emptyDir
     nodeSelector:
       node-role.kubernetes.io/worker: "true"
       intel.feature.node.kubernetes.io/gpu: "true"
