@@ -29,9 +29,9 @@ spec:
       PUID: 1000
       NAP_START_MAX: 23:00
       NAP_START_MIN: 08:00
-      CSRF_TRUSTED_ORIGINS: http://127.0.0.1:8000,https://baby.${SECRET_DEV_DOMAIN}
+      CSRF_TRUSTED_ORIGINS: http://127.0.0.1:8000,https://babyava.${SECRET_DEV_DOMAIN}
       USE_24_HOUR_TIME_FORMAT: true
-      ALLOWED_HOSTS: baby.${SECRET_DEV_DOMAIN}
+      ALLOWED_HOSTS: babyava.${SECRET_DEV_DOMAIN}
       REVERSE_PROXY_AUTH: true
         #PROXY_HEADER: Remote-User
 
