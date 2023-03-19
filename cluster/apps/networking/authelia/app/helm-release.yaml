@@ -256,8 +256,9 @@ spec:
             - "^/admin"
           policy: two_factor
         # Baby API
-        - domain:
-            - "baby.${SECRET_DEV_DOMAIN}"
+        - domain_regex:
+           #- "baby.${SECRET_DEV_DOMAIN}"
+            - 'baby.*\.${SECRET_DEV_DOMAIN}$'
           policy: bypass
           resources:
             - "^/api/.*$"
@@ -338,7 +339,7 @@ spec:
         # Public services - 1 Factor
         - domain:
             #home
-            - "baby.${SECRET_DEV_DOMAIN}"
+            - "baby*.${SECRET_DEV_DOMAIN}"
             # monitoring
             - "grafana.${SECRET_DEV_DOMAIN}"
             #media
@@ -347,6 +348,8 @@ spec:
             - "request.${SECRET_DEV_DOMAIN}"
             #utilities
             - "hajimari.${SECRET_DEV_DOMAIN}"
+          domain_regex:
+            - 'baby.*\.${SECRET_DEV_DOMAIN}$'
           policy: one_factor
 
         # rules:
