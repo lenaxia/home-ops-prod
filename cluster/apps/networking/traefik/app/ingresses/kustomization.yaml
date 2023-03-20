@@ -10,6 +10,6 @@ resources:
     #  - synology-drive.yaml
   - portainer.yaml
   - phpmyadmin.yaml
-  - plex.yaml
+    #- plex.yaml
   - omoikane-ldap.yaml
   - overseerr-oidc.yaml
