@@ -8,7 +8,7 @@ spec:
   chart:
     spec:
       chart: nextcloud
-      version: 3.5.3
+      version: 3.5.5
       sourceRef:
         kind: HelmRepository
         name: nextcloud-charts
@@ -25,7 +25,7 @@ spec:
     fullnameOverride: *app
     image:
       repository: nextcloud
-      tag: 25.0.4-fpm-alpine
+      tag: 26.0.0-fpm-alpine
       flavor: fpm-alpine
     ingress:
       enabled: true
@@ -128,7 +128,7 @@ spec:
             mountPath: /vector-data-dir
       extraInitContainers:
         - name: wait-database
-          image: alpine:3.17.2
+          image: alpine:3.17.3
           imagePullPolicy: IfNotPresent
           command:
             - sh
@@ -142,7 +142,7 @@ spec:
             - name: POSTGRES_HOST
               value: &postgresHost defaultpg-rw.databases.svc.cluster.local
         - name: wait-redis
-          image: alpine:3.17.2
+          image: alpine:3.17.3
           imagePullPolicy: IfNotPresent
           command:
             - sh
