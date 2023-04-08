@@ -46,7 +46,7 @@ spec:
     
     image:
       repository: vaultwarden/server
-      tag: 1.27.0
+      tag: 1.28.1
     
     # -- environment variables.
     env:
