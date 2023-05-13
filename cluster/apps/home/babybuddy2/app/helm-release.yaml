@@ -17,7 +17,7 @@ spec:
   # See https://github.com/bjw-s/helm-charts/blob/main/charts/library/common/values.yaml
   values:
     image:
-      repository: lscr.io/linuxserver/babybuddy
+      repository: ghcr.io/babybuddy/babybuddy
       tag: 2.0.0-beta1
 
     podAnnotations:
