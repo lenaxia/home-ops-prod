@@ -19,7 +19,9 @@ spec:
     podAnnotations:
       secret.reloader.stakater.com/reload: *appname
 
-    image: quay.io/go-skynet/local-ai:latest
+    image: 
+      repository: quay.io/go-skynet/local-ai
+      tag: latest
 
     env:
     - name: THREADS
