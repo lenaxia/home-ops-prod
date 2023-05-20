@@ -33,3 +33,4 @@ resources:
   - intel.yaml
   - angelnu.yaml
   - external-dns.yaml
+  - go-skynet-charts.yaml
