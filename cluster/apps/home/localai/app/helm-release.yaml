@@ -33,13 +33,13 @@ spec:
     - name: GO_TAGS
       value: "stablediffusion"
 
-        #    lifecycle:
-        #      postStart:
-        #        exec:
-        #          command:
-        #            - /bin/bash
-        #            - -c
-        #            - /postStart.sh
+    lifecycle:
+      postStart:
+        exec:
+          command:
+            - /bin/bash
+            - -c
+            - /postStart.sh
 
 #    initContainers:
 #      download-model:
@@ -66,13 +66,13 @@ spec:
       models:
         enabled: true
         existingClaim: localai-volume
-          #      poststart:
-          #        enabled: true
-          #        type: configMap
-          #        name: poststart-sh
-          #        subPath: postStart.sh
-          #        mountPath: /postStart.sh
-          #        defaultMode: 0777
+      poststart:
+        enabled: true
+        type: configMap
+        name: poststart-sh
+        subPath: postStart.sh
+        mountPath: /postStart.sh
+        defaultMode: 0777
 
     service:
       main:
