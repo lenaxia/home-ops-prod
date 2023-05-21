@@ -33,13 +33,13 @@ spec:
     - name: GO_TAGS
       value: "stablediffusion"
 
-    lifecycle:
-      postStart:
-        exec:
-          command:
-            - /bin/bash
-            - -c
-            - /postStart.sh
+        #    lifecycle:
+        #      postStart:
+        #        exec:
+        #          command:
+        #            - /bin/bash
+        #            - -c
+        #            - /postStart.sh
 
 #    initContainers:
 #      download-model:
