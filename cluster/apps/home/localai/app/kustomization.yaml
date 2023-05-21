@@ -8,4 +8,11 @@ resources:
   - helm-release.yaml
   - config-pvc.yaml
   - secret.sops.yaml
-  - postStart.sh
+configMapGenerator:
+  - name: poststart-sh
+    files:
+      - postStart.sh
+generatorOptions:
+  disableNameSuffixHash: true
+  annotations:
+    kustomize.toolkit.fluxcd.io/substitute: disabled
