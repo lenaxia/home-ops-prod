@@ -39,7 +39,7 @@ spec:
           command:
             - /bin/bash
             - -c
-            - /poststart.sh
+            - /postStart.sh
 
 #    initContainers:
 #      download-model:
@@ -70,8 +70,8 @@ spec:
         enabled: true
         type: configMap
         name: poststart-sh
-        subPath: poststart.sh
-        mountPath: /poststart.sh
+        subPath: postStart.sh
+        mountPath: /postStart.sh
         defaultMode: 0777
 
     service:
