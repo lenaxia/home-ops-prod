@@ -30,32 +30,49 @@ spec:
       value: 512
     - name: MODELS_PATH
       value: "/models"
+    - name: GO_TAGS
+      value: "stablediffusion"
 
-    initContainers:
-      download-model:
-        image: busybox@sha256:b5d6fe0712636ceb7430189de28819e195e8966372edfc2d9409d79402a0dc16
-        command: ["/bin/sh", "-c"]
-        args:
-          - |
-            url=$URL
-            if [[ ! -f "$MODELS_PATH/${url##*/}" ]]; then
-              wget $URL -P $MODELS_PATH 
-            fi
-        env:
-          - name: URL
-            value: "https://gpt4all.io/models/ggml-gpt4all-j.bin"
-          - name: MODELS_PATH
-            value: "/models"
-        volumeMounts:
-          - name: models 
-            mountPath: /models
-        securityContext:
-          runAsUser: 0
+    lifecycle:
+      poststart:
+        exec:
+          command:
+            - /bin/bash
+            - -c
+            - /poststart.sh
+
+#    initContainers:
+#      download-model:
+#        image: busybox@sha256:b5d6fe0712636ceb7430189de28819e195e8966372edfc2d9409d79402a0dc16
+#        command: ["/bin/sh", "-c"]
+#        args:
+#          - |
+#            url=$URL
+#            if [[ ! -f "$MODELS_PATH/${url##*/}" ]]; then
+#              wget $URL -P $MODELS_PATH 
+#            fi
+#        env:
+#          - name: URL
+#            value: "https://gpt4all.io/models/ggml-gpt4all-j.bin"
+#          - name: MODELS_PATH
+#            value: "/models"
+#        volumeMounts:
+#          - name: models 
+#            mountPath: /models
+#        securityContext:
+#          runAsUser: 0
 
     persistence:
       models:
         enabled: true
         existingClaim: localai-volume
+      poststart:
+        enabled: true
+        type: configMap
+        name: poststart-sh
+        subPath: poststart.sh
+        mountPath: /poststart.sh
+        defaultMode: 0777
 
     service:
       main:
