@@ -21,7 +21,7 @@ spec:
 
     image: 
       repository: quay.io/go-skynet/local-ai
-      tag: v1.14.1
+      tag: v1.13.0
 
     env:
     - name: THREADS
