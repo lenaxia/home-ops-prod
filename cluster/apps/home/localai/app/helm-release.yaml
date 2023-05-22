@@ -48,8 +48,11 @@ spec:
         args:
           - |
             url=$URL
+            echo "URL: $URL"
+            echo "MODELS_PATH: $MODELS_PATH"
+            echo "File Path: $MODELS_PATH/${url##*/}"
             if [[ ! -f "$MODELS_PATH/${url##*/}" ]]; then
-              wget $URL -O "$MODELS_PATH/${url##*/}"
+              wget $URL -P "$MODELS_PATH"
             fi
         env:
           - name: URL
