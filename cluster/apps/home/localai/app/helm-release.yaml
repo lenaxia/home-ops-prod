@@ -70,7 +70,11 @@ spec:
     persistence:
       models:
         enabled: true
-        existingClaim: localai-volume
+          #existingClaim: localai-volume
+        storageClass: local-path
+        size: 30Gi
+        type: pvc
+        accessMode: ReadWriteOnce
       poststart:
         enabled: true
         type: configMap
