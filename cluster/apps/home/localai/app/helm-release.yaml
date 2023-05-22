@@ -21,7 +21,7 @@ spec:
 
     image: 
       repository: quay.io/go-skynet/local-ai
-      tag: latest
+      tag: v1.13.0
 
     env:
     - name: THREADS
@@ -48,11 +48,12 @@ spec:
         args:
           - |
             url=$URL
-            echo "URL: $URL"
+            file=${url##*/}
+            filename=${file%%.*}
             echo "MODELS_PATH: $MODELS_PATH"
-            echo "File Path: $MODELS_PATH/${url##*/}"
-            if [[ ! -f "$MODELS_PATH/${url##*/}" ]]; then
-              wget $URL -P $MODELS_PATH
+            echo "File Path: $MODELS_PATH/${file_name%.*}"
+            if [[ ! -f "$MODELS_PATH/$filename" ]]; then
+              wget $URL -O "$MODELS_PATH/$filename"
             fi
         env:
           - name: URL
