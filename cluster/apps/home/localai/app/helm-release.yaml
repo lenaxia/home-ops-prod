@@ -30,8 +30,8 @@ spec:
       value: 512
     - name: MODELS_PATH
       value: "/models"
-    - name: GO_TAGS
-      value: "stablediffusion"
+        #    - name: GO_TAGS
+        #      value: "stablediffusion"
 
         #    lifecycle:
         #      postStart:
@@ -71,13 +71,13 @@ spec:
       models:
         enabled: true
         existingClaim: localai-volume
-          #      poststart:
-          #        enabled: true
-          #        type: configMap
-          #        name: poststart-sh
-          #        subPath: postStart.sh
-          #        mountPath: /postStart.sh
-          #        defaultMode: 0777
+      poststart:
+        enabled: true
+        type: configMap
+        name: poststart-sh
+        subPath: postStart.sh
+        mountPath: /postStart.sh
+        defaultMode: 0777
 
     service:
       main:
