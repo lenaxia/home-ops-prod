@@ -51,8 +51,9 @@ spec:
             file=${url##*/}
             filename=${file%%.*}
             echo "MODELS_PATH: $MODELS_PATH"
-            echo "File Path: $MODELS_PATH/${file_name%.*}"
+            echo "File Path: $MODELS_PATH/$filename"
             if [[ ! -f "$MODELS_PATH/$filename" ]]; then
+              mkdir -p $MODELS_PATH
               wget $URL -O "$MODELS_PATH/$filename"
             fi
         env:
