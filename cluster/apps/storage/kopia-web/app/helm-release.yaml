@@ -46,7 +46,7 @@ spec:
     command: kopia
     args:
       - server
-      - --insecure
+        #- --insecure
       - --address
       - 0.0.0.0:80
       - --metrics-listen-addr
