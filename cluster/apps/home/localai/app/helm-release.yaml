@@ -30,8 +30,8 @@ spec:
       value: 512
     - name: MODELS_PATH
       value: "/models"
-        #    - name: GO_TAGS
-        #      value: "stablediffusion"
+    - name: GO_TAGS
+      value: "stablediffusion"
         #
         #    lifecycle:
         #      postStart:
