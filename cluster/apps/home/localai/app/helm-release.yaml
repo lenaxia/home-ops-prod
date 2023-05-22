@@ -52,7 +52,7 @@ spec:
             echo "MODELS_PATH: $MODELS_PATH"
             echo "File Path: $MODELS_PATH/${url##*/}"
             if [[ ! -f "$MODELS_PATH/${url##*/}" ]]; then
-              wget $URL -P "$MODELS_PATH"
+              wget $URL -P $MODELS_PATH
             fi
         env:
           - name: URL
