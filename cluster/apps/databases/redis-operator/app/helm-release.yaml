@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: redis-operator
-      version: 3.2.7
+      version: 3.2.8
       sourceRef:
         kind: HelmRepository
         name: spotahome-redis-operator-charts
