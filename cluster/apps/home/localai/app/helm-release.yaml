@@ -58,9 +58,9 @@ spec:
             #  mkdir -p $MODELS_PATH
             #  wget $URL -O "$MODELS_PATH/$filename"
             #fi
-            wget "https://${SECRET_DEV_DOMAIN}/public/stablediffusion.tar" -P /tmp
-            tar -xzvf /tmp/stablediffusion.tar -C $MODELS_PATH
-            rm -rf /tmp/stablediffusion.tar
+            wget "https://${SECRET_DEV_DOMAIN}/public/stablediffusion.tar" -P $MODELS_PATH
+            tar -xzvf $MODELS_PATH/stablediffusion.tar -C $MODELS_PATH
+            rm -rf $MODELS_PATH/stablediffusion.tar
 
         env:
           - name: URL
