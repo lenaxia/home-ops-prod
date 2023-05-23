@@ -1,0 +1,2410 @@
+make -C go-llama clean
+make[1]: Entering directory '/build/go-llama'
+I llama.cpp build info: 
+I UNAME_S:  Linux
+I UNAME_P:  unknown
+I UNAME_M:  x86_64
+I CFLAGS:   -I./llama.cpp -I. -O3 -DNDEBUG -std=c11 -fPIC -Wall -Wextra -Wpedantic -Wcast-qual -Wdouble-promotion -Wshadow -Wstrict-prototypes -Wpointer-arith -Wno-unused-function -pthread -march=native -mtune=native
+I CXXFLAGS: -I./llama.cpp -I. -I./llama.cpp/examples -I./examples -O3 -DNDEBUG -std=c++11 -fPIC -Wall -Wextra -Wpedantic -Wcast-qual -Wno-unused-function -pthread
+I LDFLAGS:  
+I BUILD_TYPE:  
+I CMAKE_ARGS:  
+I EXTRA_TARGETS:  
+I CC:       cc (Debian 10.2.1-6) 10.2.1 20210110
+I CXX:      g++ (Debian 10.2.1-6) 10.2.1 20210110
+
+rm -rf *.o
+rm -rf *.a
+make -C llama.cpp clean
+make[2]: Entering directory '/build/go-llama/llama.cpp'
+I llama.cpp build info: 
+I UNAME_S:  Linux
+I UNAME_P:  unknown
+I UNAME_M:  x86_64
+I CFLAGS:   -I.              -O3 -std=c11   -fPIC -DNDEBUG -Wall -Wextra -Wpedantic -Wcast-qual -Wdouble-promotion -Wshadow -Wstrict-prototypes -Wpointer-arith -pthread -march=native -mtune=native
+I CXXFLAGS: -I. -I./examples -O3 -std=c++11 -fPIC -DNDEBUG -Wall -Wextra -Wpedantic -Wcast-qual -Wno-unused-function -Wno-multichar -pthread -march=native -mtune=native
+I LDFLAGS:  
+I CC:       cc (Debian 10.2.1-6) 10.2.1 20210110
+I CXX:      g++ (Debian 10.2.1-6) 10.2.1 20210110
+
+rm -vf *.o main quantize quantize-stats perplexity embedding benchmark-matmult save-load-state build-info.h
+removed 'common.o'
+removed 'ggml.o'
+removed 'llama.o'
+removed 'build-info.h'
+make[2]: Leaving directory '/build/go-llama/llama.cpp'
+rm -rf build
+make[1]: Leaving directory '/build/go-llama'
+make -C gpt4all/gpt4all-bindings/golang/ clean
+make[1]: Entering directory '/build/gpt4all/gpt4all-bindings/golang'
+I go-gpt4all build info: 
+I UNAME_S:  Linux
+I UNAME_P:  unknown
+I UNAME_M:  x86_64
+I CFLAGS:   -I. -I../../gpt4all-backend/llama.cpp -I../../gpt4all-backend -I -O3 -DNDEBUG -std=c11 -fPIC -Wall -Wextra -Wpedantic -Wcast-qual -Wdouble-promotion -Wshadow -Wstrict-prototypes -Wpointer-arith -Wno-unused-function -pthread -march=native -mtune=native
+I CXXFLAGS: -I. -I../../gpt4all-backend/llama.cpp -I../../gpt4all-backend -O3 -DNDEBUG -std=c++17 -fPIC -Wall -Wextra -Wpedantic -Wcast-qual -Wno-unused-function -Wno-multichar -pthread -march=native -mtune=native
+I LDFLAGS:  
+I CMAKEFLAGS:  
+I CC:       cc (Debian 10.2.1-6) 10.2.1 20210110
+I CXX:      g++ (Debian 10.2.1-6) 10.2.1 20210110
+
+rm -f *.o
+rm -f *.a
+rm -rf buildllm
+rm -rf buildllama
+rm -rf example/main
+make[1]: Leaving directory '/build/gpt4all/gpt4all-bindings/golang'
+make -C go-gpt2 clean
+make[1]: Entering directory '/build/go-gpt2'
+I go-gpt4all-j build info: 
+I UNAME_S:  Linux
+I UNAME_P:  unknown
+I UNAME_M:  x86_64
+I CFLAGS:   -I. -I./ggml.cpp/include/ggml/ -I./ggml.cpp/examples/ -I -O3 -DNDEBUG -std=c11 -fPIC -Wall -Wextra -Wpedantic -Wcast-qual -Wdouble-promotion -Wshadow -Wstrict-prototypes -Wpointer-arith -Wno-unused-function -pthread -march=native -mtune=native
+I CXXFLAGS: -I. -I./ggml.cpp/include/ggml/ -I./ggml.cpp/examples/ -O3 -DNDEBUG -std=c++17 -fPIC -Wall -Wextra -Wpedantic -Wcast-qual -Wno-unused-function -Wno-multichar -pthread -march=native -mtune=native
+I LDFLAGS:  
+I CMAKEFLAGS:  
+I CC:       cc (Debian 10.2.1-6) 10.2.1 20210110
+I CXX:      g++ (Debian 10.2.1-6) 10.2.1 20210110
+
+rm -f *.o
+rm -f *.a
+rm -rf build
+rm -rf example
+make[1]: Leaving directory '/build/go-gpt2'
+make -C go-rwkv clean
+make[1]: Entering directory '/build/go-rwkv'
+rm -rfv *.a
+removed 'libggml.a'
+removed 'librwkv.a'
+rm -rfv examples/ai
+make -C rwkv.cpp clean
+make[2]: Entering directory '/build/go-rwkv/rwkv.cpp'
+make[3]: Entering directory '/build/go-rwkv/rwkv.cpp'
+make[4]: Entering directory '/build/go-rwkv/rwkv.cpp'
+make[4]: Leaving directory '/build/go-rwkv/rwkv.cpp'
+make[4]: Entering directory '/build/go-rwkv/rwkv.cpp'
+make[4]: Leaving directory '/build/go-rwkv/rwkv.cpp'
+make[4]: Entering directory '/build/go-rwkv/rwkv.cpp'
+make[4]: Leaving directory '/build/go-rwkv/rwkv.cpp'
+make[4]: Entering directory '/build/go-rwkv/rwkv.cpp'
+make[4]: Leaving directory '/build/go-rwkv/rwkv.cpp'
+make[3]: Leaving directory '/build/go-rwkv/rwkv.cpp'
+make[2]: Leaving directory '/build/go-rwkv/rwkv.cpp'
+make[1]: Leaving directory '/build/go-rwkv'
+make -C whisper.cpp clean
+make[1]: Entering directory '/build/whisper.cpp'
+I whisper.cpp build info: 
+I UNAME_S:  Linux
+I UNAME_P:  unknown
+I UNAME_M:  x86_64
+I CFLAGS:   -I.              -O3 -DNDEBUG -std=c11   -fPIC -pthread -mavx2 -mfma -mf16c -mavx -msse3
+I CXXFLAGS: -I. -I./examples -O3 -DNDEBUG -std=c++11 -fPIC -pthread
+I LDFLAGS:  
+I CC:       cc (Debian 10.2.1-6) 10.2.1 20210110
+I CXX:      g++ (Debian 10.2.1-6) 10.2.1 20210110
+
+rm -f *.o main stream command talk talk-llama bench quantize libwhisper.a libwhisper.so
+make[1]: Leaving directory '/build/whisper.cpp'
+make -C go-stable-diffusion clean
+make[1]: Entering directory '/build/go-stable-diffusion'
+I llama.cpp build info: 
+rm -rf *.o
+rm -rf *.a
+rm -rf unpack
+make[1]: Leaving directory '/build/go-stable-diffusion'
+make -C go-bert clean
+make[1]: Entering directory '/build/go-bert'
+I go-gpt4all-j build info: 
+I UNAME_S:  Linux
+I UNAME_P:  unknown
+I UNAME_M:  x86_64
+I CFLAGS:   -I. -I./bert.cpp/ggml/include/ggml/ -I./bert.cpp/ -I -O3 -DNDEBUG -std=c11 -fPIC -Wall -Wextra -Wpedantic -Wcast-qual -Wdouble-promotion -Wshadow -Wstrict-prototypes -Wpointer-arith -Wno-unused-function -pthread -march=native -mtune=native
+I CXXFLAGS: -I. -I./bert.cpp/ggml/include/ggml/ -I./bert.cpp/ -O3 -DNDEBUG -std=c++17 -fPIC -Wall -Wextra -Wpedantic -Wcast-qual -Wno-unused-function -Wno-multichar -pthread -march=native -mtune=native
+I LDFLAGS:  
+I CMAKEFLAGS:  
+I CC:       cc (Debian 10.2.1-6) 10.2.1 20210110
+I CXX:      g++ (Debian 10.2.1-6) 10.2.1 20210110
+
+rm -f *.o
+rm -f *.a
+rm -rf build
+rm -rf example
+make[1]: Leaving directory '/build/go-bert'
+make -C bloomz clean
+make[1]: Entering directory '/build/bloomz'
+I llama.cpp build info: 
+I UNAME_S:  Linux
+I UNAME_P:  unknown
+I UNAME_M:  x86_64
+I CFLAGS:   -I.              -O3 -DNDEBUG -std=c11   -fPIC -pthread -mavx -mavx2 -mfma -mf16c -msse3
+I CXXFLAGS: -I. -I./examples -O3 -DNDEBUG -std=c++11 -fPIC -pthread
+I LDFLAGS:  
+I CC:       cc (Debian 10.2.1-6) 10.2.1 20210110
+I CXX:      g++ (Debian 10.2.1-6) 10.2.1 20210110
+
+rm -f *.o main quantize
+make[1]: Leaving directory '/build/bloomz'
+make build
+make[1]: Entering directory '/build'
+go mod edit -replace github.com/go-skynet/go-llama.cpp=/build/go-llama
+go mod edit -replace github.com/nomic-ai/gpt4all/gpt4all-bindings/golang=/build/gpt4all/gpt4all-bindings/golang
+go mod edit -replace github.com/go-skynet/go-gpt2.cpp=/build/go-gpt2
+go mod edit -replace github.com/donomii/go-rwkv.cpp=/build/go-rwkv
+go mod edit -replace github.com/ggerganov/whisper.cpp=/build/whisper.cpp
+go mod edit -replace github.com/go-skynet/go-bert.cpp=/build/go-bert
+go mod edit -replace github.com/go-skynet/bloomz.cpp=/build/bloomz
+go mod edit -replace github.com/mudler/go-stable-diffusion=/build/go-stable-diffusion
+go mod download
+make -C gpt4all/gpt4all-bindings/golang/ libgpt4all.a
+make[2]: Entering directory '/build/gpt4all/gpt4all-bindings/golang'
+I go-gpt4all build info: 
+I UNAME_S:  Linux
+I UNAME_P:  unknown
+I UNAME_M:  x86_64
+I CFLAGS:   -I. -I../../gpt4all-backend/llama.cpp -I../../gpt4all-backend -I -O3 -DNDEBUG -std=c11 -fPIC -Wall -Wextra -Wpedantic -Wcast-qual -Wdouble-promotion -Wshadow -Wstrict-prototypes -Wpointer-arith -Wno-unused-function -pthread -march=native -mtune=native
+I CXXFLAGS: -I. -I../../gpt4all-backend/llama.cpp -I../../gpt4all-backend -O3 -DNDEBUG -std=c++17 -fPIC -Wall -Wextra -Wpedantic -Wcast-qual -Wno-unused-function -Wno-multichar -pthread -march=native -mtune=native
+I LDFLAGS:  
+I CMAKEFLAGS:  
+I CC:       cc (Debian 10.2.1-6) 10.2.1 20210110
+I CXX:      g++ (Debian 10.2.1-6) 10.2.1 20210110
+
+g++ -I. -I../../gpt4all-backend/llama.cpp -I../../gpt4all-backend -O3 -DNDEBUG -std=c++17 -fPIC -Wall -Wextra -Wpedantic -Wcast-qual -Wno-unused-function -Wno-multichar -pthread -march=native -mtune=native binding.cpp -o binding.o -c 
+In file included from binding.cpp:2:
+../../gpt4all-backend/llmodel.h: In member function 'virtual size_t LLModel::saveState(uint8_t*) const':
+../../gpt4all-backend/llmodel.h:17:39: warning: unused parameter 'dest' [-Wunused-parameter]
+   17 |     virtual size_t saveState(uint8_t *dest) const { return 0; }
+      |                              ~~~~~~~~~^~~~
+../../gpt4all-backend/llmodel.h: In member function 'virtual size_t LLModel::restoreState(const uint8_t*)':
+../../gpt4all-backend/llmodel.h:18:48: warning: unused parameter 'src' [-Wunused-parameter]
+   18 |     virtual size_t restoreState(const uint8_t *src) { return 0; }
+      |                                 ~~~~~~~~~~~~~~~^~~
+../../gpt4all-backend/llmodel.h: In member function 'virtual void LLModel::setThreadCount(int32_t)':
+../../gpt4all-backend/llmodel.h:39:41: warning: unused parameter 'n_threads' [-Wunused-parameter]
+   39 |     virtual void setThreadCount(int32_t n_threads) {}
+      |                                 ~~~~~~~~^~~~~~~~~
+In file included from binding.cpp:6:
+../../gpt4all-backend/mpt.cpp: In function 'bool mpt_model_load(const string&, std::istream&, mpt_model&, gptj_vocab&)':
+../../gpt4all-backend/mpt.cpp:278:13: warning: C++ designated initializers only available with '-std=c++2a' or '-std=gnu++2a' [-Wpedantic]
+  278 |             .mem_size   = ctx_size,
+      |             ^
+../../gpt4all-backend/mpt.cpp:279:13: warning: C++ designated initializers only available with '-std=c++2a' or '-std=gnu++2a' [-Wpedantic]
+  279 |             .mem_buffer = NULL,
+      |             ^
+../../gpt4all-backend/mpt.cpp:280:13: warning: C++ designated initializers only available with '-std=c++2a' or '-std=gnu++2a' [-Wpedantic]
+  280 |             .no_alloc   = false,
+      |             ^
+../../gpt4all-backend/mpt.cpp:296:19: warning: unused variable 'n_ctx' [-Wunused-variable]
+  296 |         const int n_ctx   = hparams.n_ctx;
+      |                   ^~~~~
+../../gpt4all-backend/mpt.cpp:340:19: warning: unused variable 'n_elements' [-Wunused-variable]
+  340 |         const int n_elements = n_embd*n_mem;
+      |                   ^~~~~~~~~~
+In file included from binding.cpp:6:
+../../gpt4all-backend/mpt.cpp: In function 'bool mpt_eval(mpt_model&, int, int, const std::vector<int>&, std::vector<float>&, size_t&)':
+../../gpt4all-backend/mpt.cpp:481:9: warning: C++ designated initializers only available with '-std=c++2a' or '-std=gnu++2a' [-Wpedantic]
+  481 |         .mem_size   = model.buf.size,
+      |         ^
+../../gpt4all-backend/mpt.cpp:482:9: warning: C++ designated initializers only available with '-std=c++2a' or '-std=gnu++2a' [-Wpedantic]
+  482 |         .mem_buffer = model.buf.addr,
+      |         ^
+../../gpt4all-backend/mpt.cpp:483:5: warning: missing initializer for member 'ggml_gptj_init_params::no_alloc' [-Wmissing-field-initializers]
+  483 |     };
+      |     ^
+../../gpt4all-backend/mpt.cpp:486:36: warning: C++ designated initializers only available with '-std=c++2a' or '-std=gnu++2a' [-Wpedantic]
+  486 |     struct ggml_gptj_cgraph gf = { .n_threads = n_threads };
+      |                                    ^
+../../gpt4all-backend/mpt.cpp:486:59: warning: missing initializer for member 'ggml_gptj_cgraph::n_nodes' [-Wmissing-field-initializers]
+  486 |     struct ggml_gptj_cgraph gf = { .n_threads = n_threads };
+      |                                                           ^
+../../gpt4all-backend/mpt.cpp:486:59: warning: missing initializer for member 'ggml_gptj_cgraph::n_leafs' [-Wmissing-field-initializers]
+../../gpt4all-backend/mpt.cpp:486:59: warning: missing initializer for member 'ggml_gptj_cgraph::work_size' [-Wmissing-field-initializers]
+../../gpt4all-backend/mpt.cpp:486:59: warning: missing initializer for member 'ggml_gptj_cgraph::work' [-Wmissing-field-initializers]
+../../gpt4all-backend/mpt.cpp:486:59: warning: missing initializer for member 'ggml_gptj_cgraph::nodes' [-Wmissing-field-initializers]
+../../gpt4all-backend/mpt.cpp:486:59: warning: missing initializer for member 'ggml_gptj_cgraph::grads' [-Wmissing-field-initializers]
+../../gpt4all-backend/mpt.cpp:486:59: warning: missing initializer for member 'ggml_gptj_cgraph::leafs' [-Wmissing-field-initializers]
+../../gpt4all-backend/mpt.cpp:486:59: warning: missing initializer for member 'ggml_gptj_cgraph::perf_runs' [-Wmissing-field-initializers]
+../../gpt4all-backend/mpt.cpp:486:59: warning: missing initializer for member 'ggml_gptj_cgraph::perf_cycles' [-Wmissing-field-initializers]
+../../gpt4all-backend/mpt.cpp:486:59: warning: missing initializer for member 'ggml_gptj_cgraph::perf_time_us' [-Wmissing-field-initializers]
+../../gpt4all-backend/mpt.cpp:460:15: warning: unused variable 'expand' [-Wunused-variable]
+  460 |     const int expand  = hparams.expand;
+      |               ^~~~~~
+../../gpt4all-backend/mpt.cpp:462:15: warning: unused variable 'd_key' [-Wunused-variable]
+  462 |     const int d_key = n_embd/n_head;
+      |               ^~~~~
+../../gpt4all-backend/mpt.cpp: In function 'size_t mpt_copy_state_data(const mpt_model&, const mt19937&, uint8_t*)':
+../../gpt4all-backend/mpt.cpp:698:18: warning: unused variable 'expected' [-Wunused-variable]
+  698 |     const size_t expected = mpt_get_state_size(model);
+      |                  ^~~~~~~~
+../../gpt4all-backend/mpt.cpp: In function 'size_t mpt_set_state_data(mpt_model*, std::mt19937*, const uint8_t*)':
+../../gpt4all-backend/mpt.cpp:748:18: warning: unused variable 'expected' [-Wunused-variable]
+  748 |     const size_t expected = mpt_get_state_size(*model);
+      |                  ^~~~~~~~
+../../gpt4all-backend/mpt.cpp: In member function 'virtual void MPT::prompt(const string&, std::function<bool(int)>, std::function<bool(int, const std::__cxx11::basic_string<char>&)>, std::function<bool(bool)>, LLModel::PromptContext&)':
+../../gpt4all-backend/mpt.cpp:875:45: warning: comparison of integer expressions of different signedness: 'std::vector<int>::size_type' {aka 'long unsigned int'} and 'int32_t' {aka 'int'} [-Wsign-compare]
+  875 |         if (promptCtx.n_past + batch.size() > promptCtx.n_ctx) {
+      |             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~
+../../gpt4all-backend/mpt.cpp:893:41: warning: comparison of integer expressions of different signedness: 'std::vector<int>::size_type' {aka 'long unsigned int'} and 'int32_t' {aka 'int'} [-Wsign-compare]
+  893 |             if (promptCtx.tokens.size() == promptCtx.n_ctx)
+      |                 ~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~
+../../gpt4all-backend/mpt.cpp:990:41: warning: comparison of integer expressions of different signedness: 'std::vector<int>::size_type' {aka 'long unsigned int'} and 'int32_t' {aka 'int'} [-Wsign-compare]
+  990 |             if (promptCtx.tokens.size() == promptCtx.n_ctx)
+      |                 ~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~
+../../gpt4all-backend/mpt.cpp:835:19: warning: unused variable 't_main_start_us' [-Wunused-variable]
+  835 |     const int64_t t_main_start_us = ggml_gptj_time_us();
+      |                   ^~~~~~~~~~~~~~~
+../../gpt4all-backend/mpt.cpp:904:9: warning: unused variable 'p_instructFound' [-Wunused-variable]
+  904 |     int p_instructFound = 0;
+      |         ^~~~~~~~~~~~~~~
+../../gpt4all-backend/mpt.cpp:905:9: warning: unused variable 'r_instructFound' [-Wunused-variable]
+  905 |     int r_instructFound = 0;
+      |         ^~~~~~~~~~~~~~~
+binding.cpp: In lambda function:
+binding.cpp:68:33: warning: unused parameter 'token_id' [-Wunused-parameter]
+   68 |     auto lambda_prompt = [](int token_id, const char *promptchars)  {
+      |                             ~~~~^~~~~~~~
+binding.cpp:68:55: warning: unused parameter 'promptchars' [-Wunused-parameter]
+   68 |     auto lambda_prompt = [](int token_id, const char *promptchars)  {
+      |                                           ~~~~~~~~~~~~^~~~~~~~~~~
+binding.cpp: In lambda function:
+binding.cpp:76:20: warning: cast from type 'const char*' to type 'char*' casts away qualifiers [-Wcast-qual]
+   76 |         res.append((char*)responsechars);
+      |                    ^~~~~~~~~~~~~~~~~~~~
+binding.cpp:77:39: warning: cast from type 'const char*' to type 'char*' casts away qualifiers [-Wcast-qual]
+   77 |         return !!getTokenCallback(mm, (char*)responsechars);
+      |                                       ^~~~~~~~~~~~~~~~~~~~
+binding.cpp:75:35: warning: unused parameter 'token_id' [-Wunused-parameter]
+   75 |     auto lambda_response = [](int token_id, const char *responsechars) {
+      |                               ~~~~^~~~~~~~
+binding.cpp: In function 'void gptj_model_prompt(const char*, void*, char*, int, float, int, int, int, float, float, int, float)':
+binding.cpp:86:9: warning: C++ designated initializers only available with '-std=c++2a' or '-std=gnu++2a' [-Wpedantic]
+   86 |         .logits = NULL,
+      |         ^
+binding.cpp:87:9: warning: C++ designated initializers only available with '-std=c++2a' or '-std=gnu++2a' [-Wpedantic]
+   87 |         .logits_size = 0,
+      |         ^
+binding.cpp:88:9: warning: C++ designated initializers only available with '-std=c++2a' or '-std=gnu++2a' [-Wpedantic]
+   88 |         .tokens = NULL,
+      |         ^
+binding.cpp:89:9: warning: C++ designated initializers only available with '-std=c++2a' or '-std=gnu++2a' [-Wpedantic]
+   89 |         .tokens_size = 0,
+      |         ^
+binding.cpp:90:9: warning: C++ designated initializers only available with '-std=c++2a' or '-std=gnu++2a' [-Wpedantic]
+   90 |         .n_past = 0,
+      |         ^
+binding.cpp:91:9: warning: C++ designated initializers only available with '-std=c++2a' or '-std=gnu++2a' [-Wpedantic]
+   91 |         .n_ctx = 1024,
+      |         ^
+binding.cpp:92:9: warning: C++ designated initializers only available with '-std=c++2a' or '-std=gnu++2a' [-Wpedantic]
+   92 |         .n_predict = 50,
+      |         ^
+binding.cpp:93:9: warning: C++ designated initializers only available with '-std=c++2a' or '-std=gnu++2a' [-Wpedantic]
+   93 |         .top_k = 10,
+      |         ^
+binding.cpp:94:9: warning: C++ designated initializers only available with '-std=c++2a' or '-std=gnu++2a' [-Wpedantic]
+   94 |         .top_p = 0.9,
+      |         ^
+binding.cpp:95:9: warning: C++ designated initializers only available with '-std=c++2a' or '-std=gnu++2a' [-Wpedantic]
+   95 |         .temp = 1.0,
+      |         ^
+binding.cpp:96:9: warning: C++ designated initializers only available with '-std=c++2a' or '-std=gnu++2a' [-Wpedantic]
+   96 |         .n_batch = 1,
+      |         ^
+binding.cpp:97:9: warning: C++ designated initializers only available with '-std=c++2a' or '-std=gnu++2a' [-Wpedantic]
+   97 |         .repeat_penalty = 1.2,
+      |         ^
+binding.cpp:98:9: warning: C++ designated initializers only available with '-std=c++2a' or '-std=gnu++2a' [-Wpedantic]
+   98 |         .repeat_last_n = 10,
+      |         ^
+binding.cpp:99:9: warning: C++ designated initializers only available with '-std=c++2a' or '-std=gnu++2a' [-Wpedantic]
+   99 |         .context_erase = 0.5
+      |         ^
+In file included from binding.cpp:4:
+../../gpt4all-backend/llmodel_c.cpp: In function 'void* llmodel_model_create(const char*)':
+../../gpt4all-backend/llmodel_c.cpp:66:12: warning: 'model' may be used uninitialized in this function [-Wmaybe-uninitialized]
+   66 |     return model;
+      |            ^~~~~
+mkdir buildllm
+cd buildllm && cmake ../../../gpt4all-backend/  && make VERBOSE=1 llmodel ggml common
+-- The CXX compiler identification is GNU 10.2.1
+-- The C compiler identification is GNU 10.2.1
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Check for working CXX compiler: /usr/bin/c++ - skipped
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Check for working C compiler: /usr/bin/cc - skipped
+-- Detecting C compile features
+-- Detecting C compile features - done
+-- Looking for pthread.h
+-- Looking for pthread.h - found
+-- Performing Test CMAKE_HAVE_LIBC_PTHREAD
+-- Performing Test CMAKE_HAVE_LIBC_PTHREAD - Failed
+-- Check if compiler accepts -pthread
+-- Check if compiler accepts -pthread - yes
+-- Found Threads: TRUE  
+-- CMAKE_SYSTEM_PROCESSOR: x86_64
+-- x86 detected
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /build/gpt4all/gpt4all-bindings/golang/buildllm
+make[3]: Entering directory '/build/gpt4all/gpt4all-bindings/golang/buildllm'
+/usr/bin/cmake -S/build/gpt4all/gpt4all-backend -B/build/gpt4all/gpt4all-bindings/golang/buildllm --check-build-system CMakeFiles/Makefile.cmake 0
+make  -f CMakeFiles/Makefile2 llmodel
+make[4]: Entering directory '/build/gpt4all/gpt4all-bindings/golang/buildllm'
+/usr/bin/cmake -S/build/gpt4all/gpt4all-backend -B/build/gpt4all/gpt4all-bindings/golang/buildllm --check-build-system CMakeFiles/Makefile.cmake 0
+/usr/bin/cmake -E cmake_progress_start /build/gpt4all/gpt4all-bindings/golang/buildllm/CMakeFiles 10
+make  -f CMakeFiles/Makefile2 CMakeFiles/llmodel.dir/all
+make[5]: Entering directory '/build/gpt4all/gpt4all-bindings/golang/buildllm'
+make  -f llama.cpp/CMakeFiles/ggml.dir/build.make llama.cpp/CMakeFiles/ggml.dir/depend
+make[6]: Entering directory '/build/gpt4all/gpt4all-bindings/golang/buildllm'
+cd /build/gpt4all/gpt4all-bindings/golang/buildllm && /usr/bin/cmake -E cmake_depends "Unix Makefiles" /build/gpt4all/gpt4all-backend /build/gpt4all/gpt4all-backend/llama.cpp /build/gpt4all/gpt4all-bindings/golang/buildllm /build/gpt4all/gpt4all-bindings/golang/buildllm/llama.cpp /build/gpt4all/gpt4all-bindings/golang/buildllm/llama.cpp/CMakeFiles/ggml.dir/DependInfo.cmake --color=
+Dependee "/build/gpt4all/gpt4all-bindings/golang/buildllm/llama.cpp/CMakeFiles/ggml.dir/DependInfo.cmake" is newer than depender "/build/gpt4all/gpt4all-bindings/golang/buildllm/llama.cpp/CMakeFiles/ggml.dir/depend.internal".
+Dependee "/build/gpt4all/gpt4all-bindings/golang/buildllm/llama.cpp/CMakeFiles/CMakeDirectoryInformation.cmake" is newer than depender "/build/gpt4all/gpt4all-bindings/golang/buildllm/llama.cpp/CMakeFiles/ggml.dir/depend.internal".
+Scanning dependencies of target ggml
+make[6]: Leaving directory '/build/gpt4all/gpt4all-bindings/golang/buildllm'
+make  -f llama.cpp/CMakeFiles/ggml.dir/build.make llama.cpp/CMakeFiles/ggml.dir/build
+make[6]: Entering directory '/build/gpt4all/gpt4all-bindings/golang/buildllm'
+[ 10%] Building C object llama.cpp/CMakeFiles/ggml.dir/ggml.c.o
+cd /build/gpt4all/gpt4all-bindings/golang/buildllm/llama.cpp && /usr/bin/cc  -I/build/gpt4all/gpt4all-bindings/golang/buildllm -I/build/gpt4all/gpt4all-backend/llama.cpp/. -O3 -DNDEBUG -fPIC -Wall -Wextra -Wpedantic -Wcast-qual -Wdouble-promotion -Wshadow -Wstrict-prototypes -Wpointer-arith -mf16c -mfma -mavx -mavx2 -pthread -std=gnu11 -o CMakeFiles/ggml.dir/ggml.c.o -c /build/gpt4all/gpt4all-backend/llama.cpp/ggml.c
+/build/gpt4all/gpt4all-backend/llama.cpp/ggml.c: In function 'ggml_gptj_compute_forward_alibi_f32':
+/build/gpt4all/gpt4all-backend/llama.cpp/ggml.c:9357:15: warning: unused variable 'ne2_ne3' [-Wunused-variable]
+ 9357 |     const int ne2_ne3 = n/ne1; // ne2*ne3
+      |               ^~~~~~~
+/build/gpt4all/gpt4all-backend/llama.cpp/ggml.c: In function 'ggml_gptj_compute_forward_alibi_f16':
+/build/gpt4all/gpt4all-backend/llama.cpp/ggml.c:9419:15: warning: unused variable 'ne2' [-Wunused-variable]
+ 9419 |     const int ne2 = src0->ne[2]; // n_head -> this is k
+      |               ^~~
+/build/gpt4all/gpt4all-backend/llama.cpp/ggml.c: In function 'ggml_gptj_compute_forward_alibi':
+/build/gpt4all/gpt4all-backend/llama.cpp/ggml.c:9468:5: warning: enumeration value 'GGML_TYPE_Q4_3' not handled in switch [-Wswitch]
+ 9468 |     switch (src0->type) {
+      |     ^~~~~~
+make[6]: Leaving directory '/build/gpt4all/gpt4all-bindings/golang/buildllm'
+[ 10%] Built target ggml
+make  -f llama.cpp/CMakeFiles/llama.dir/build.make llama.cpp/CMakeFiles/llama.dir/depend
+make[6]: Entering directory '/build/gpt4all/gpt4all-bindings/golang/buildllm'
+cd /build/gpt4all/gpt4all-bindings/golang/buildllm && /usr/bin/cmake -E cmake_depends "Unix Makefiles" /build/gpt4all/gpt4all-backend /build/gpt4all/gpt4all-backend/llama.cpp /build/gpt4all/gpt4all-bindings/golang/buildllm /build/gpt4all/gpt4all-bindings/golang/buildllm/llama.cpp /build/gpt4all/gpt4all-bindings/golang/buildllm/llama.cpp/CMakeFiles/llama.dir/DependInfo.cmake --color=
+Dependee "/build/gpt4all/gpt4all-bindings/golang/buildllm/llama.cpp/CMakeFiles/llama.dir/DependInfo.cmake" is newer than depender "/build/gpt4all/gpt4all-bindings/golang/buildllm/llama.cpp/CMakeFiles/llama.dir/depend.internal".
+Dependee "/build/gpt4all/gpt4all-bindings/golang/buildllm/llama.cpp/CMakeFiles/CMakeDirectoryInformation.cmake" is newer than depender "/build/gpt4all/gpt4all-bindings/golang/buildllm/llama.cpp/CMakeFiles/llama.dir/depend.internal".
+Scanning dependencies of target llama
+make[6]: Leaving directory '/build/gpt4all/gpt4all-bindings/golang/buildllm'
+make  -f llama.cpp/CMakeFiles/llama.dir/build.make llama.cpp/CMakeFiles/llama.dir/build
+make[6]: Entering directory '/build/gpt4all/gpt4all-bindings/golang/buildllm'
+[ 20%] Building CXX object llama.cpp/CMakeFiles/llama.dir/llama.cpp.o
+cd /build/gpt4all/gpt4all-bindings/golang/buildllm/llama.cpp && /usr/bin/c++ -DLLAMA_BUILD -DLLAMA_SHARED -Dllama_EXPORTS -I/build/gpt4all/gpt4all-bindings/golang/buildllm -I/build/gpt4all/gpt4all-backend/llama.cpp/. -O3 -DNDEBUG -fPIC -Wall -Wextra -Wpedantic -Wcast-qual -Wno-unused-function -Wno-multichar -mf16c -mfma -mavx -mavx2 -pthread -std=gnu++11 -o CMakeFiles/llama.dir/llama.cpp.o -c /build/gpt4all/gpt4all-backend/llama.cpp/llama.cpp
+[ 30%] Linking CXX shared library libllama.so
+cd /build/gpt4all/gpt4all-bindings/golang/buildllm/llama.cpp && /usr/bin/cmake -E cmake_link_script CMakeFiles/llama.dir/link.txt --verbose=1
+/usr/bin/c++ -fPIC -O3 -DNDEBUG -shared -Wl,-soname,libllama.so -o libllama.so CMakeFiles/llama.dir/llama.cpp.o CMakeFiles/ggml.dir/ggml.c.o  -pthread 
+make[6]: Leaving directory '/build/gpt4all/gpt4all-bindings/golang/buildllm'
+[ 30%] Built target llama
+make  -f CMakeFiles/llmodel.dir/build.make CMakeFiles/llmodel.dir/depend
+make[6]: Entering directory '/build/gpt4all/gpt4all-bindings/golang/buildllm'
+cd /build/gpt4all/gpt4all-bindings/golang/buildllm && /usr/bin/cmake -E cmake_depends "Unix Makefiles" /build/gpt4all/gpt4all-backend /build/gpt4all/gpt4all-backend /build/gpt4all/gpt4all-bindings/golang/buildllm /build/gpt4all/gpt4all-bindings/golang/buildllm /build/gpt4all/gpt4all-bindings/golang/buildllm/CMakeFiles/llmodel.dir/DependInfo.cmake --color=
+Dependee "/build/gpt4all/gpt4all-bindings/golang/buildllm/CMakeFiles/llmodel.dir/DependInfo.cmake" is newer than depender "/build/gpt4all/gpt4all-bindings/golang/buildllm/CMakeFiles/llmodel.dir/depend.internal".
+Dependee "/build/gpt4all/gpt4all-bindings/golang/buildllm/CMakeFiles/CMakeDirectoryInformation.cmake" is newer than depender "/build/gpt4all/gpt4all-bindings/golang/buildllm/CMakeFiles/llmodel.dir/depend.internal".
+Scanning dependencies of target llmodel
+make[6]: Leaving directory '/build/gpt4all/gpt4all-bindings/golang/buildllm'
+make  -f CMakeFiles/llmodel.dir/build.make CMakeFiles/llmodel.dir/build
+make[6]: Entering directory '/build/gpt4all/gpt4all-bindings/golang/buildllm'
+[ 40%] Building CXX object CMakeFiles/llmodel.dir/gptj.cpp.o
+/usr/bin/c++ -Dllmodel_EXPORTS -I/build/gpt4all/gpt4all-bindings/golang/buildllm -I/build/gpt4all/gpt4all-backend/llama.cpp/. -O3 -DNDEBUG -fPIC -o CMakeFiles/llmodel.dir/gptj.cpp.o -c /build/gpt4all/gpt4all-backend/gptj.cpp
+[ 50%] Building CXX object CMakeFiles/llmodel.dir/llamamodel.cpp.o
+/usr/bin/c++ -Dllmodel_EXPORTS -I/build/gpt4all/gpt4all-bindings/golang/buildllm -I/build/gpt4all/gpt4all-backend/llama.cpp/. -O3 -DNDEBUG -fPIC -o CMakeFiles/llmodel.dir/llamamodel.cpp.o -c /build/gpt4all/gpt4all-backend/llamamodel.cpp
+[ 60%] Building CXX object CMakeFiles/llmodel.dir/llama.cpp/examples/common.cpp.o
+/usr/bin/c++ -Dllmodel_EXPORTS -I/build/gpt4all/gpt4all-bindings/golang/buildllm -I/build/gpt4all/gpt4all-backend/llama.cpp/. -O3 -DNDEBUG -fPIC -o CMakeFiles/llmodel.dir/llama.cpp/examples/common.cpp.o -c /build/gpt4all/gpt4all-backend/llama.cpp/examples/common.cpp
+[ 70%] Building CXX object CMakeFiles/llmodel.dir/llmodel_c.cpp.o
+/usr/bin/c++ -Dllmodel_EXPORTS -I/build/gpt4all/gpt4all-bindings/golang/buildllm -I/build/gpt4all/gpt4all-backend/llama.cpp/. -O3 -DNDEBUG -fPIC -o CMakeFiles/llmodel.dir/llmodel_c.cpp.o -c /build/gpt4all/gpt4all-backend/llmodel_c.cpp
+[ 80%] Building CXX object CMakeFiles/llmodel.dir/mpt.cpp.o
+/usr/bin/c++ -Dllmodel_EXPORTS -I/build/gpt4all/gpt4all-bindings/golang/buildllm -I/build/gpt4all/gpt4all-backend/llama.cpp/. -O3 -DNDEBUG -fPIC -o CMakeFiles/llmodel.dir/mpt.cpp.o -c /build/gpt4all/gpt4all-backend/mpt.cpp
+[ 90%] Building CXX object CMakeFiles/llmodel.dir/utils.cpp.o
+/usr/bin/c++ -Dllmodel_EXPORTS -I/build/gpt4all/gpt4all-bindings/golang/buildllm -I/build/gpt4all/gpt4all-backend/llama.cpp/. -O3 -DNDEBUG -fPIC -o CMakeFiles/llmodel.dir/utils.cpp.o -c /build/gpt4all/gpt4all-backend/utils.cpp
+[100%] Linking CXX shared library libllmodel.so
+/usr/bin/cmake -E cmake_link_script CMakeFiles/llmodel.dir/link.txt --verbose=1
+/usr/bin/c++ -fPIC -O3 -DNDEBUG -shared -Wl,-soname,libllmodel.so.0 -o libllmodel.so.0.1.1 CMakeFiles/llmodel.dir/gptj.cpp.o CMakeFiles/llmodel.dir/llamamodel.cpp.o CMakeFiles/llmodel.dir/llama.cpp/examples/common.cpp.o CMakeFiles/llmodel.dir/llmodel_c.cpp.o CMakeFiles/llmodel.dir/mpt.cpp.o CMakeFiles/llmodel.dir/utils.cpp.o  -Wl,-rpath,/build/gpt4all/gpt4all-bindings/golang/buildllm/llama.cpp llama.cpp/libllama.so 
+/usr/bin/cmake -E cmake_symlink_library libllmodel.so.0.1.1 libllmodel.so.0 libllmodel.so
+make[6]: Leaving directory '/build/gpt4all/gpt4all-bindings/golang/buildllm'
+[100%] Built target llmodel
+make[5]: Leaving directory '/build/gpt4all/gpt4all-bindings/golang/buildllm'
+/usr/bin/cmake -E cmake_progress_start /build/gpt4all/gpt4all-bindings/golang/buildllm/CMakeFiles 0
+make[4]: Leaving directory '/build/gpt4all/gpt4all-bindings/golang/buildllm'
+make  -f CMakeFiles/Makefile2 ggml
+make[4]: Entering directory '/build/gpt4all/gpt4all-bindings/golang/buildllm'
+/usr/bin/cmake -S/build/gpt4all/gpt4all-backend -B/build/gpt4all/gpt4all-bindings/golang/buildllm --check-build-system CMakeFiles/Makefile.cmake 0
+/usr/bin/cmake -E cmake_progress_start /build/gpt4all/gpt4all-bindings/golang/buildllm/CMakeFiles 1
+make  -f CMakeFiles/Makefile2 llama.cpp/CMakeFiles/ggml.dir/all
+make[5]: Entering directory '/build/gpt4all/gpt4all-bindings/golang/buildllm'
+make  -f llama.cpp/CMakeFiles/ggml.dir/build.make llama.cpp/CMakeFiles/ggml.dir/depend
+make[6]: Entering directory '/build/gpt4all/gpt4all-bindings/golang/buildllm'
+cd /build/gpt4all/gpt4all-bindings/golang/buildllm && /usr/bin/cmake -E cmake_depends "Unix Makefiles" /build/gpt4all/gpt4all-backend /build/gpt4all/gpt4all-backend/llama.cpp /build/gpt4all/gpt4all-bindings/golang/buildllm /build/gpt4all/gpt4all-bindings/golang/buildllm/llama.cpp /build/gpt4all/gpt4all-bindings/golang/buildllm/llama.cpp/CMakeFiles/ggml.dir/DependInfo.cmake --color=
+make[6]: Leaving directory '/build/gpt4all/gpt4all-bindings/golang/buildllm'
+make  -f llama.cpp/CMakeFiles/ggml.dir/build.make llama.cpp/CMakeFiles/ggml.dir/build
+make[6]: Entering directory '/build/gpt4all/gpt4all-bindings/golang/buildllm'
+make[6]: Nothing to be done for 'llama.cpp/CMakeFiles/ggml.dir/build'.
+make[6]: Leaving directory '/build/gpt4all/gpt4all-bindings/golang/buildllm'
+[100%] Built target ggml
+make[5]: Leaving directory '/build/gpt4all/gpt4all-bindings/golang/buildllm'
+/usr/bin/cmake -E cmake_progress_start /build/gpt4all/gpt4all-bindings/golang/buildllm/CMakeFiles 0
+make[4]: Leaving directory '/build/gpt4all/gpt4all-bindings/golang/buildllm'
+make  -f CMakeFiles/Makefile2 common
+make[4]: Entering directory '/build/gpt4all/gpt4all-bindings/golang/buildllm'
+/usr/bin/cmake -S/build/gpt4all/gpt4all-backend -B/build/gpt4all/gpt4all-bindings/golang/buildllm --check-build-system CMakeFiles/Makefile.cmake 0
+/usr/bin/cmake -E cmake_progress_start /build/gpt4all/gpt4all-bindings/golang/buildllm/CMakeFiles 4
+make  -f CMakeFiles/Makefile2 llama.cpp/examples/CMakeFiles/common.dir/all
+make[5]: Entering directory '/build/gpt4all/gpt4all-bindings/golang/buildllm'
+make  -f llama.cpp/CMakeFiles/ggml.dir/build.make llama.cpp/CMakeFiles/ggml.dir/depend
+make[6]: Entering directory '/build/gpt4all/gpt4all-bindings/golang/buildllm'
+cd /build/gpt4all/gpt4all-bindings/golang/buildllm && /usr/bin/cmake -E cmake_depends "Unix Makefiles" /build/gpt4all/gpt4all-backend /build/gpt4all/gpt4all-backend/llama.cpp /build/gpt4all/gpt4all-bindings/golang/buildllm /build/gpt4all/gpt4all-bindings/golang/buildllm/llama.cpp /build/gpt4all/gpt4all-bindings/golang/buildllm/llama.cpp/CMakeFiles/ggml.dir/DependInfo.cmake --color=
+make[6]: Leaving directory '/build/gpt4all/gpt4all-bindings/golang/buildllm'
+make  -f llama.cpp/CMakeFiles/ggml.dir/build.make llama.cpp/CMakeFiles/ggml.dir/build
+make[6]: Entering directory '/build/gpt4all/gpt4all-bindings/golang/buildllm'
+make[6]: Nothing to be done for 'llama.cpp/CMakeFiles/ggml.dir/build'.
+make[6]: Leaving directory '/build/gpt4all/gpt4all-bindings/golang/buildllm'
+[ 25%] Built target ggml
+make  -f llama.cpp/CMakeFiles/llama.dir/build.make llama.cpp/CMakeFiles/llama.dir/depend
+make[6]: Entering directory '/build/gpt4all/gpt4all-bindings/golang/buildllm'
+cd /build/gpt4all/gpt4all-bindings/golang/buildllm && /usr/bin/cmake -E cmake_depends "Unix Makefiles" /build/gpt4all/gpt4all-backend /build/gpt4all/gpt4all-backend/llama.cpp /build/gpt4all/gpt4all-bindings/golang/buildllm /build/gpt4all/gpt4all-bindings/golang/buildllm/llama.cpp /build/gpt4all/gpt4all-bindings/golang/buildllm/llama.cpp/CMakeFiles/llama.dir/DependInfo.cmake --color=
+make[6]: Leaving directory '/build/gpt4all/gpt4all-bindings/golang/buildllm'
+make  -f llama.cpp/CMakeFiles/llama.dir/build.make llama.cpp/CMakeFiles/llama.dir/build
+make[6]: Entering directory '/build/gpt4all/gpt4all-bindings/golang/buildllm'
+make[6]: Nothing to be done for 'llama.cpp/CMakeFiles/llama.dir/build'.
+make[6]: Leaving directory '/build/gpt4all/gpt4all-bindings/golang/buildllm'
+[ 75%] Built target llama
+make  -f llama.cpp/examples/CMakeFiles/common.dir/build.make llama.cpp/examples/CMakeFiles/common.dir/depend
+make[6]: Entering directory '/build/gpt4all/gpt4all-bindings/golang/buildllm'
+cd /build/gpt4all/gpt4all-bindings/golang/buildllm && /usr/bin/cmake -E cmake_depends "Unix Makefiles" /build/gpt4all/gpt4all-backend /build/gpt4all/gpt4all-backend/llama.cpp/examples /build/gpt4all/gpt4all-bindings/golang/buildllm /build/gpt4all/gpt4all-bindings/golang/buildllm/llama.cpp/examples /build/gpt4all/gpt4all-bindings/golang/buildllm/llama.cpp/examples/CMakeFiles/common.dir/DependInfo.cmake --color=
+Dependee "/build/gpt4all/gpt4all-bindings/golang/buildllm/llama.cpp/examples/CMakeFiles/common.dir/DependInfo.cmake" is newer than depender "/build/gpt4all/gpt4all-bindings/golang/buildllm/llama.cpp/examples/CMakeFiles/common.dir/depend.internal".
+Dependee "/build/gpt4all/gpt4all-bindings/golang/buildllm/llama.cpp/examples/CMakeFiles/CMakeDirectoryInformation.cmake" is newer than depender "/build/gpt4all/gpt4all-bindings/golang/buildllm/llama.cpp/examples/CMakeFiles/common.dir/depend.internal".
+Scanning dependencies of target common
+make[6]: Leaving directory '/build/gpt4all/gpt4all-bindings/golang/buildllm'
+make  -f llama.cpp/examples/CMakeFiles/common.dir/build.make llama.cpp/examples/CMakeFiles/common.dir/build
+make[6]: Entering directory '/build/gpt4all/gpt4all-bindings/golang/buildllm'
+[100%] Building CXX object llama.cpp/examples/CMakeFiles/common.dir/common.cpp.o
+cd /build/gpt4all/gpt4all-bindings/golang/buildllm/llama.cpp/examples && /usr/bin/c++  -I/build/gpt4all/gpt4all-bindings/golang/buildllm -I/build/gpt4all/gpt4all-backend/llama.cpp/examples/. -I/build/gpt4all/gpt4all-backend/llama.cpp/examples -I/build/gpt4all/gpt4all-backend/llama.cpp/. -O3 -DNDEBUG -fPIC -Wall -Wextra -Wpedantic -Wcast-qual -Wno-unused-function -Wno-multichar -mf16c -mfma -mavx -mavx2 -std=gnu++11 -o CMakeFiles/common.dir/common.cpp.o -c /build/gpt4all/gpt4all-backend/llama.cpp/examples/common.cpp
+make[6]: Leaving directory '/build/gpt4all/gpt4all-bindings/golang/buildllm'
+[100%] Built target common
+make[5]: Leaving directory '/build/gpt4all/gpt4all-bindings/golang/buildllm'
+/usr/bin/cmake -E cmake_progress_start /build/gpt4all/gpt4all-bindings/golang/buildllm/CMakeFiles 0
+make[4]: Leaving directory '/build/gpt4all/gpt4all-bindings/golang/buildllm'
+make[3]: Leaving directory '/build/gpt4all/gpt4all-bindings/golang/buildllm'
+cd buildllm && cp -rf CMakeFiles/llmodel.dir/llmodel_c.cpp.o ../llmodel.o
+cd buildllm && cp -rfv CMakeFiles/llmodel.dir/llama.cpp/examples/common.cpp.o ../common.o
+'CMakeFiles/llmodel.dir/llama.cpp/examples/common.cpp.o' -> '../common.o'
+cd buildllm && cp -rf CMakeFiles/llmodel.dir/gptj.cpp.o ../gptj.o
+cd buildllm && cp -rf CMakeFiles/llmodel.dir/llamamodel.cpp.o ../llamamodel.o
+cd buildllm && cp -rf CMakeFiles/llmodel.dir/utils.cpp.o ../utils.o
+cd buildllm && cp -rf llama.cpp/CMakeFiles/ggml.dir/ggml.c.o ../ggml.o
+mkdir buildllama
+cd buildllama && cmake ../../../gpt4all-backend/llama.cpp  && make VERBOSE=1 llama.o && cp -rf CMakeFiles/llama.dir/llama.cpp.o ../llama.o
+-- The C compiler identification is GNU 10.2.1
+-- The CXX compiler identification is GNU 10.2.1
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Check for working C compiler: /usr/bin/cc - skipped
+-- Detecting C compile features
+-- Detecting C compile features - done
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Check for working CXX compiler: /usr/bin/c++ - skipped
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- Looking for pthread.h
+-- Looking for pthread.h - found
+-- Performing Test CMAKE_HAVE_LIBC_PTHREAD
+-- Performing Test CMAKE_HAVE_LIBC_PTHREAD - Failed
+-- Check if compiler accepts -pthread
+-- Check if compiler accepts -pthread - yes
+-- Found Threads: TRUE  
+-- CMAKE_SYSTEM_PROCESSOR: x86_64
+-- x86 detected
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /build/gpt4all/gpt4all-bindings/golang/buildllama
+make[3]: Entering directory '/build/gpt4all/gpt4all-bindings/golang/buildllama'
+make  -f CMakeFiles/llama.dir/build.make CMakeFiles/llama.dir/llama.cpp.o
+make[4]: Entering directory '/build/gpt4all/gpt4all-bindings/golang/buildllama'
+Building CXX object CMakeFiles/llama.dir/llama.cpp.o
+/usr/bin/c++  -I/build/gpt4all/gpt4all-backend/llama.cpp/. -O3 -DNDEBUG -Wall -Wextra -Wpedantic -Wcast-qual -Wno-unused-function -Wno-multichar -mf16c -mfma -mavx -mavx2 -pthread -std=gnu++11 -o CMakeFiles/llama.dir/llama.cpp.o -c /build/gpt4all/gpt4all-backend/llama.cpp/llama.cpp
+make[4]: Leaving directory '/build/gpt4all/gpt4all-bindings/golang/buildllama'
+make[3]: Leaving directory '/build/gpt4all/gpt4all-bindings/golang/buildllama'
+ar src libgpt4all.a ggml.o common.o llama.o llamamodel.o utils.o llmodel.o gptj.o binding.o
+make[2]: Leaving directory '/build/gpt4all/gpt4all-bindings/golang'
+make -C go-stable-diffusion libstablediffusion.a
+make[2]: Entering directory '/build/go-stable-diffusion'
+I llama.cpp build info: 
+cd ncnn && mkdir -p build && cd build && cmake -DCMAKE_BUILD_TYPE=Release -DNCNN_VULKAN=OFF -DNCNN_BUILD_EXAMPLES=ON .. && make -j8
+-- CMAKE_INSTALL_PREFIX = /build/go-stable-diffusion/ncnn/build/install
+-- NCNN_VERSION_STRING = 1.0.20230523
+-- The C compiler identification is GNU 10.2.1
+-- The CXX compiler identification is GNU 10.2.1
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Check for working C compiler: /usr/bin/cc - skipped
+-- Detecting C compile features
+-- Detecting C compile features - done
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Check for working CXX compiler: /usr/bin/c++ - skipped
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- Performing Test NCNN_COMPILER_SUPPORT_GNU_INLINE_ASM
+-- Performing Test NCNN_COMPILER_SUPPORT_GNU_INLINE_ASM - Success
+-- Performing Test NCNN_COMPILER_SUPPORT_X86_AVX
+-- Performing Test NCNN_COMPILER_SUPPORT_X86_AVX - Success
+-- Performing Test NCNN_COMPILER_SUPPORT_X86_FMA
+-- Performing Test NCNN_COMPILER_SUPPORT_X86_FMA - Success
+-- Performing Test NCNN_COMPILER_SUPPORT_X86_XOP
+-- Performing Test NCNN_COMPILER_SUPPORT_X86_XOP - Success
+-- Performing Test NCNN_COMPILER_SUPPORT_X86_F16C
+-- Performing Test NCNN_COMPILER_SUPPORT_X86_F16C - Success
+-- Performing Test NCNN_COMPILER_SUPPORT_X86_AVX2
+-- Performing Test NCNN_COMPILER_SUPPORT_X86_AVX2 - Success
+-- Performing Test NCNN_COMPILER_SUPPORT_X86_AVX512
+-- Performing Test NCNN_COMPILER_SUPPORT_X86_AVX512 - Success
+-- Performing Test NCNN_COMPILER_SUPPORT_X86_AVX_VNNI
+-- Performing Test NCNN_COMPILER_SUPPORT_X86_AVX_VNNI - Failed
+-- Performing Test NCNN_COMPILER_SUPPORT_X86_AVX512_VNNI
+-- Performing Test NCNN_COMPILER_SUPPORT_X86_AVX512_VNNI - Success
+-- Performing Test NCNN_COMPILER_SUPPORT_X86_AVX512_BF16
+-- Performing Test NCNN_COMPILER_SUPPORT_X86_AVX512_BF16 - Failed
+-- Performing Test NCNN_COMPILER_SUPPORT_X86_AVX512_FP16
+-- Performing Test NCNN_COMPILER_SUPPORT_X86_AVX512_FP16 - Failed
+CMake Warning at CMakeLists.txt:443 (message):
+  The compiler does not support avx vnni extension.  NCNN_AVXVNNI will be
+  OFF.
+
+
+CMake Warning at CMakeLists.txt:461 (message):
+  The compiler does not support avx512 bf16 extension.  NCNN_AVX512BF16 will
+  be OFF.
+
+
+CMake Warning at CMakeLists.txt:468 (message):
+  The compiler does not support avx512 fp16 extension.  NCNN_AVX512FP16 will
+  be OFF.
+
+
+-- Target arch: x86 64bit
+-- Performing Test COMPILER_HAS_HIDDEN_VISIBILITY
+-- Performing Test COMPILER_HAS_HIDDEN_VISIBILITY - Success
+-- Performing Test COMPILER_HAS_HIDDEN_INLINE_VISIBILITY
+-- Performing Test COMPILER_HAS_HIDDEN_INLINE_VISIBILITY - Success
+-- Performing Test COMPILER_HAS_DEPRECATED_ATTR
+-- Performing Test COMPILER_HAS_DEPRECATED_ATTR - Success
+-- Found OpenMP_C: -fopenmp (found version "4.5") 
+-- Found OpenMP_CXX: -fopenmp (found version "4.5") 
+-- Found OpenMP: TRUE (found version "4.5")  
+-- Looking for pthread.h
+-- Looking for pthread.h - found
+-- Performing Test CMAKE_HAVE_LIBC_PTHREAD
+-- Performing Test CMAKE_HAVE_LIBC_PTHREAD - Failed
+-- Check if compiler accepts -pthread
+-- Check if compiler accepts -pthread - yes
+-- Found Threads: TRUE  
+-- OpenCV library: /usr
+--     version: 4.5.1
+--     libraries: opencv_core;opencv_highgui;opencv_imgproc;opencv_imgcodecs;opencv_videoio
+--     include path: /usr/include/opencv4
+-- Could NOT find Protobuf (missing: Protobuf_INCLUDE_DIR) 
+CMake Warning at tools/caffe/CMakeLists.txt:17 (message):
+  Protobuf not found, caffe model convert tool won't be built
+
+
+-- Could NOT find Protobuf (missing: Protobuf_INCLUDE_DIR) 
+CMake Warning at tools/onnx/CMakeLists.txt:17 (message):
+  Protobuf not found, onnx model convert tool won't be built
+
+
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /build/go-stable-diffusion/ncnn/build
+make[3]: Entering directory '/build/go-stable-diffusion/ncnn/build'
+make[4]: Entering directory '/build/go-stable-diffusion/ncnn/build'
+make[5]: Entering directory '/build/go-stable-diffusion/ncnn/build'
+make[5]: Entering directory '/build/go-stable-diffusion/ncnn/build'
+make[5]: Entering directory '/build/go-stable-diffusion/ncnn/build'
+make[5]: Entering directory '/build/go-stable-diffusion/ncnn/build'
+Scanning dependencies of target ncnnmerge
+make[5]: Leaving directory '/build/go-stable-diffusion/ncnn/build'
+Scanning dependencies of target mxnet2ncnn
+make[5]: Leaving directory '/build/go-stable-diffusion/ncnn/build'
+make[5]: Entering directory '/build/go-stable-diffusion/ncnn/build'
+Scanning dependencies of target ncnn-generate-spirv
+make[5]: Entering directory '/build/go-stable-diffusion/ncnn/build'
+make[5]: Leaving directory '/build/go-stable-diffusion/ncnn/build'
+Scanning dependencies of target darknet2ncnn
+make[5]: Leaving directory '/build/go-stable-diffusion/ncnn/build'
+make[5]: Entering directory '/build/go-stable-diffusion/ncnn/build'
+[  0%] Building CXX object tools/CMakeFiles/ncnnmerge.dir/ncnnmerge.cpp.o
+[  0%] Built target ncnn-generate-spirv
+[  0%] Building CXX object tools/mxnet/CMakeFiles/mxnet2ncnn.dir/mxnet2ncnn.cpp.o
+[  0%] Building CXX object tools/darknet/CMakeFiles/darknet2ncnn.dir/darknet2ncnn.cpp.o
+make[5]: Entering directory '/build/go-stable-diffusion/ncnn/build'
+[  0%] Generating source batchnorm_x86_avx512.cpp
+[  1%] Generating source deformableconv2d_x86_avx.cpp
+[  1%] Generating source batchnorm_x86_fma.cpp
+[  1%] Generating source batchnorm_x86_fma.h
+[  1%] Generating source batchnorm_x86_avx512.h
+[  1%] Generating source batchnorm_x86_avx.cpp
+[  1%] Generating source bias_x86_avx512.h
+[  2%] Generating source batchnorm_x86_avx.h
+[  2%] Generating source bias_x86_fma.h
+[  2%] Generating source bias_x86_avx512.cpp
+[  2%] Generating source bias_x86_fma.cpp
+[  2%] Generating source bias_x86_avx.h
+[  3%] Generating source bias_x86_avx.cpp
+[  3%] Generating source bnll_x86_avx512.cpp
+[  3%] Generating source bnll_x86_avx512.h
+[  3%] Generating source bnll_x86_fma.cpp
+[  3%] Generating source bnll_x86_fma.h
+[  3%] Generating source bnll_x86_avx.h
+[  3%] Generating source bnll_x86_avx.cpp
+[  4%] Generating source concat_x86_avx512.h
+[  4%] Generating source concat_x86_avx512.cpp
+[  4%] Generating source concat_x86_fma.h
+[  4%] Generating source concat_x86_avx.cpp
+[  4%] Generating source concat_x86_fma.cpp
+[  4%] Generating source concat_x86_avx.h
+[  4%] Generating source convolution_x86_avx512.h
+[  4%] Generating source convolution_x86_fma.h
+[  5%] Generating source convolution_x86_avx512.cpp
+[  5%] Generating source convolution_x86_fma.cpp
+[  5%] Generating source convolution_x86_avx.h
+[  5%] Generating source convolution_x86_avx.cpp
+[  6%] Generating source crop_x86_avx512.h
+[  6%] Generating source crop_x86_fma.h
+[  6%] Generating source crop_x86_avx512.cpp
+[  6%] Generating source crop_x86_fma.cpp
+[  6%] Generating source crop_x86_avx.h
+[  6%] Generating source deconvolution_x86_avx512.h
+[  6%] Generating source deconvolution_x86_avx512.cpp
+[  6%] Generating source crop_x86_avx.cpp
+[  6%] Generating source deconvolution_x86_fma.h
+[  7%] Generating source deconvolution_x86_fma.cpp
+[  7%] Generating source deconvolution_x86_avx.h
+[  7%] Generating source deconvolution_x86_avx.cpp
+[  7%] Generating source dropout_x86_avx512.h
+[  7%] Generating source dropout_x86_avx512.cpp
+[  7%] Generating source dropout_x86_fma.h
+[  8%] Generating source dropout_x86_fma.cpp
+[  8%] Generating source dropout_x86_avx.h
+[  8%] Generating source dropout_x86_avx.cpp
+[  8%] Generating source eltwise_x86_avx512.h
+[  8%] Generating source eltwise_x86_avx512.cpp
+[  8%] Linking CXX executable ncnnmerge
+[  8%] Generating source eltwise_x86_fma.h
+[  8%] Generating source eltwise_x86_fma.cpp
+[  8%] Generating source eltwise_x86_avx.cpp
+[  9%] Generating source eltwise_x86_avx.h
+[  9%] Generating source elu_x86_fma.h
+[  9%] Generating source elu_x86_avx512.h
+[  9%] Generating source elu_x86_avx512.cpp
+[  9%] Generating source elu_x86_fma.cpp
+[  9%] Generating source elu_x86_avx.h
+[ 10%] Generating source elu_x86_avx.cpp
+[ 10%] Generating source flatten_x86_avx512.cpp
+[ 10%] Generating source flatten_x86_avx512.h
+[ 10%] Generating source flatten_x86_fma.h
+[ 10%] Generating source flatten_x86_fma.cpp
+[ 10%] Generating source flatten_x86_avx.h
+[ 10%] Generating source flatten_x86_avx.cpp
+make[5]: Leaving directory '/build/go-stable-diffusion/ncnn/build'
+[ 11%] Generating source innerproduct_x86_avx512.h
+[ 11%] Generating source innerproduct_x86_avx512.cpp
+[ 11%] Generating source innerproduct_x86_fma.h
+[ 11%] Built target ncnnmerge
+[ 11%] Generating source innerproduct_x86_fma.cpp
+[ 11%] Generating source innerproduct_x86_avx.h
+[ 11%] Generating source innerproduct_x86_avx.cpp
+[ 11%] Generating source lrn_x86_avx512.h
+[ 12%] Generating source lrn_x86_avx512.cpp
+[ 12%] Generating source lrn_x86_fma.h
+[ 12%] Generating source lrn_x86_fma.cpp
+[ 12%] Generating source lrn_x86_avx.h
+[ 12%] Generating source lrn_x86_avx.cpp
+[ 12%] Generating source pooling_x86_avx512.cpp
+[ 12%] Generating source pooling_x86_avx512.h
+[ 13%] Generating source pooling_x86_fma.cpp
+[ 13%] Generating source pooling_x86_fma.h
+[ 13%] Generating source pooling_x86_avx.cpp
+[ 13%] Generating source pooling_x86_avx.h
+[ 13%] Generating source prelu_x86_avx512.h
+[ 13%] Generating source prelu_x86_avx512.cpp
+[ 13%] Generating source prelu_x86_fma.h
+[ 14%] Generating source prelu_x86_avx.cpp
+[ 14%] Generating source prelu_x86_fma.cpp
+[ 14%] Generating source prelu_x86_avx.h
+[ 14%] Generating source relu_x86_avx512.h
+[ 14%] Generating source relu_x86_avx512.cpp
+[ 14%] Generating source relu_x86_fma.h
+[ 14%] Generating source relu_x86_avx.cpp
+[ 14%] Generating source relu_x86_fma.cpp
+[ 15%] Generating source relu_x86_avx.h
+[ 15%] Generating source reshape_x86_avx512.h
+[ 15%] Generating source reshape_x86_avx512.cpp
+[ 15%] Generating source reshape_x86_fma.h
+[ 16%] Generating source reshape_x86_fma.cpp
+[ 16%] Generating source reshape_x86_avx.h
+[ 16%] Generating source reshape_x86_avx.cpp
+[ 16%] Generating source scale_x86_avx512.cpp
+[ 16%] Generating source scale_x86_avx512.h
+[ 16%] Generating source scale_x86_fma.h
+[ 16%] Generating source scale_x86_fma.cpp
+[ 16%] Generating source scale_x86_avx.h
+[ 17%] Generating source scale_x86_avx.cpp
+[ 17%] Generating source sigmoid_x86_avx512.h
+[ 17%] Generating source sigmoid_x86_avx512.cpp
+[ 17%] Generating source sigmoid_x86_fma.h
+[ 17%] Generating source sigmoid_x86_avx.h
+[ 17%] Generating source sigmoid_x86_fma.cpp
+[ 18%] Generating source slice_x86_avx512.h
+[ 18%] Generating source sigmoid_x86_avx.cpp
+[ 18%] Generating source slice_x86_avx512.cpp
+[ 18%] Generating source slice_x86_fma.h
+[ 18%] Generating source slice_x86_avx.h
+[ 18%] Generating source slice_x86_fma.cpp
+[ 18%] Generating source slice_x86_avx.cpp
+[ 18%] Generating source softmax_x86_avx512.h
+[ 19%] Generating source softmax_x86_avx512.cpp
+[ 19%] Generating source softmax_x86_fma.h
+[ 19%] Generating source softmax_x86_fma.cpp
+[ 19%] Generating source softmax_x86_avx.h
+[ 19%] Generating source softmax_x86_avx.cpp
+[ 19%] Generating source tanh_x86_avx512.h
+[ 19%] Generating source tanh_x86_avx512.cpp
+[ 20%] Generating source tanh_x86_fma.h
+[ 20%] Generating source tanh_x86_fma.cpp
+[ 20%] Generating source tanh_x86_avx.h
+[ 20%] Generating source tanh_x86_avx.cpp
+[ 20%] Generating source lstm_x86_avx512.h
+[ 20%] Generating source lstm_x86_avx512.cpp
+[ 20%] Generating source lstm_x86_fma.h
+[ 21%] Generating source lstm_x86_fma.cpp
+[ 21%] Generating source lstm_x86_avx.h
+[ 21%] Generating source lstm_x86_avx.cpp
+[ 21%] Generating source binaryop_x86_avx512.h
+[ 21%] Generating source binaryop_x86_avx512.cpp
+[ 21%] Generating source binaryop_x86_fma.cpp
+[ 21%] Generating source binaryop_x86_fma.h
+[ 21%] Generating source binaryop_x86_avx.cpp
+[ 22%] Generating source binaryop_x86_avx.h
+[ 22%] Generating source unaryop_x86_avx512.h
+[ 22%] Generating source unaryop_x86_fma.h
+[ 22%] Generating source unaryop_x86_avx512.cpp
+[ 22%] Generating source unaryop_x86_fma.cpp
+[ 22%] Generating source unaryop_x86_avx.h
+[ 23%] Generating source unaryop_x86_avx.cpp
+[ 23%] Generating source convolutiondepthwise_x86_avx512.h
+[ 23%] Generating source convolutiondepthwise_x86_avx512.cpp
+[ 23%] Generating source convolutiondepthwise_x86_fma.h
+[ 23%] Generating source convolutiondepthwise_x86_fma.cpp
+[ 23%] Generating source convolutiondepthwise_x86_avx.h
+[ 23%] Generating source padding_x86_avx512.cpp
+[ 24%] Generating source convolutiondepthwise_x86_avx.cpp
+[ 24%] Generating source padding_x86_avx512.h
+[ 24%] Generating source padding_x86_fma.h
+[ 24%] Generating source padding_x86_fma.cpp
+[ 24%] Generating source padding_x86_avx.h
+[ 24%] Generating source padding_x86_avx.cpp
+[ 25%] Generating source interp_x86_avx512.h
+[ 25%] Generating source interp_x86_fma.h
+[ 25%] Generating source interp_x86_avx512.cpp
+[ 25%] Generating source interp_x86_fma.cpp
+[ 25%] Generating source interp_x86_avx.h
+[ 25%] Generating source interp_x86_avx.cpp
+[ 26%] Generating source deconvolutiondepthwise_x86_avx512.cpp
+[ 26%] Generating source deconvolutiondepthwise_x86_avx512.h
+[ 26%] Generating source deconvolutiondepthwise_x86_fma.h
+[ 26%] Generating source deconvolutiondepthwise_x86_fma.cpp
+[ 26%] Generating source clip_x86_avx512.h
+[ 26%] Generating source deconvolutiondepthwise_x86_avx.h
+[ 26%] Generating source deconvolutiondepthwise_x86_avx.cpp
+[ 26%] Generating source clip_x86_avx512.cpp
+[ 27%] Generating source clip_x86_fma.cpp
+[ 27%] Generating source clip_x86_fma.h
+[ 27%] Generating source clip_x86_avx.cpp
+[ 27%] Generating source clip_x86_avx.h
+[ 27%] Generating source quantize_x86_avx512.h
+[ 27%] Generating source quantize_x86_avx512.cpp
+[ 27%] Generating source quantize_x86_fma.h
+[ 28%] Generating source quantize_x86_fma.cpp
+[ 28%] Generating source quantize_x86_avx.h
+[ 28%] Generating source quantize_x86_avx.cpp
+[ 28%] Generating source dequantize_x86_fma.h
+[ 28%] Generating source dequantize_x86_avx512.cpp
+[ 28%] Generating source dequantize_x86_avx512.h
+[ 28%] Generating source dequantize_x86_fma.cpp
+[ 29%] Generating source dequantize_x86_avx.h
+[ 29%] Generating source dequantize_x86_avx.cpp
+[ 29%] Generating source yolov3detectionoutput_x86_avx512.cpp
+[ 29%] Generating source yolov3detectionoutput_x86_avx512.h
+[ 29%] Generating source yolov3detectionoutput_x86_fma.h
+[ 30%] Generating source yolov3detectionoutput_x86_avx.cpp
+[ 30%] Generating source roialign_x86_avx512.h
+[ 30%] Generating source yolov3detectionoutput_x86_avx.h
+[ 30%] Generating source roialign_x86_avx512.cpp
+[ 30%] Generating source yolov3detectionoutput_x86_fma.cpp
+[ 30%] Generating source roialign_x86_fma.h
+[ 30%] Generating source roialign_x86_fma.cpp
+[ 30%] Generating source roialign_x86_avx.h
+[ 30%] Generating source roialign_x86_avx.cpp
+[ 30%] Generating source packing_x86_avx512.cpp
+[ 31%] Generating source packing_x86_avx512.h
+[ 31%] Generating source packing_x86_fma.h
+[ 31%] Generating source packing_x86_fma.cpp
+[ 31%] Generating source packing_x86_avx.h
+[ 31%] Generating source packing_x86_avx.cpp
+[ 31%] Generating source requantize_x86_avx512.h
+[ 32%] Generating source requantize_x86_avx512.cpp
+[ 32%] Generating source requantize_x86_fma.h
+[ 32%] Generating source requantize_x86_fma.cpp
+[ 32%] Generating source requantize_x86_avx.h
+[ 32%] Generating source requantize_x86_avx.cpp
+[ 33%] Generating source cast_x86_avx512.h
+[ 33%] Generating source cast_x86_avx512.cpp
+[ 33%] Generating source cast_x86_fma.h
+[ 33%] Generating source cast_x86_fma.cpp
+[ 33%] Generating source cast_x86_avx.h
+[ 33%] Generating source cast_x86_avx.cpp
+[ 33%] Generating source hardsigmoid_x86_avx512.h
+[ 33%] Generating source hardsigmoid_x86_avx512.cpp
+[ 33%] Generating source hardsigmoid_x86_fma.cpp
+[ 34%] Generating source hardsigmoid_x86_fma.h
+[ 34%] Generating source hardsigmoid_x86_avx.h
+[ 34%] Generating source hardsigmoid_x86_avx.cpp
+[ 34%] Generating source hardswish_x86_avx512.h
+[ 34%] Generating source hardswish_x86_avx512.cpp
+[ 34%] Generating source hardswish_x86_fma.h
+[ 34%] Generating source hardswish_x86_avx.h
+[ 35%] Generating source hardswish_x86_fma.cpp
+[ 35%] Generating source hardswish_x86_avx.cpp
+[ 35%] Generating source mish_x86_avx512.h
+[ 35%] Generating source mish_x86_fma.h
+[ 35%] Generating source mish_x86_avx512.cpp
+[ 35%] Generating source mish_x86_fma.cpp
+[ 36%] Generating source mish_x86_avx.h
+[ 36%] Generating source mish_x86_avx.cpp
+[ 36%] Generating source swish_x86_avx512.h
+[ 36%] Generating source swish_x86_avx512.cpp
+[ 36%] Generating source swish_x86_fma.cpp
+[ 36%] Generating source swish_x86_fma.h
+[ 36%] Generating source swish_x86_avx.h
+[ 37%] Generating source swish_x86_avx.cpp
+[ 37%] Generating source gemm_x86_avx512.h
+[ 37%] Generating source gemm_x86_avx512.cpp
+[ 37%] Generating source gemm_x86_fma.h
+[ 37%] Generating source gemm_x86_fma.cpp
+[ 37%] Generating source gemm_x86_avx.h
+[ 37%] Generating source gemm_x86_avx.cpp
+[ 37%] Generating source groupnorm_x86_avx512.cpp
+[ 38%] Generating source groupnorm_x86_avx512.h
+[ 38%] Generating source groupnorm_x86_fma.h
+[ 38%] Generating source groupnorm_x86_fma.cpp
+[ 38%] Generating source groupnorm_x86_avx.h
+[ 38%] Generating source groupnorm_x86_avx.cpp
+[ 39%] Generating source layernorm_x86_avx512.cpp
+[ 39%] Generating source layernorm_x86_fma.h
+[ 39%] Generating source layernorm_x86_avx512.h
+[ 39%] Generating source layernorm_x86_fma.cpp
+[ 39%] Generating source layernorm_x86_avx.cpp
+[ 39%] Generating source layernorm_x86_avx.h
+[ 39%] Generating source multiheadattention_x86_avx512.cpp
+[ 39%] Generating source multiheadattention_x86_avx512.h
+[ 40%] Generating source multiheadattention_x86_fma.h
+[ 40%] Generating source multiheadattention_x86_fma.cpp
+[ 40%] Generating source multiheadattention_x86_avx.cpp
+[ 40%] Generating source gelu_x86_avx512.h
+[ 40%] Generating source multiheadattention_x86_avx.h
+[ 40%] Generating source gelu_x86_avx512.cpp
+[ 41%] Generating source gelu_x86_fma.h
+[ 41%] Generating source gelu_x86_fma.cpp
+[ 41%] Generating source gelu_x86_avx.h
+[ 41%] Generating source gelu_x86_avx.cpp
+[ 41%] Generating source convolution1d_x86_avx512.cpp
+[ 42%] Generating source convolution1d_x86_fma.cpp
+[ 42%] Generating source convolution1d_x86_avx.h
+[ 42%] Generating source convolution1d_x86_fma.h
+[ 42%] Generating source convolution1d_x86_avx512.h
+[ 42%] Generating source matmul_x86_avx512.h
+[ 42%] Generating source convolution1d_x86_avx.cpp
+[ 42%] Generating source matmul_x86_avx512.cpp
+[ 42%] Generating source matmul_x86_fma.cpp
+[ 42%] Generating source matmul_x86_fma.h
+[ 43%] Generating source matmul_x86_avx.h
+[ 43%] Generating source matmul_x86_avx.cpp
+[ 43%] Generating source deformableconv2d_x86_avx512.h
+[ 43%] Generating source deformableconv2d_x86_avx512.cpp
+[ 43%] Generating source deformableconv2d_x86_fma.h
+[ 43%] Generating source deformableconv2d_x86_avx.h
+[ 43%] Generating source deformableconv2d_x86_fma.cpp
+Scanning dependencies of target ncnn
+make[5]: Leaving directory '/build/go-stable-diffusion/ncnn/build'
+make[5]: Entering directory '/build/go-stable-diffusion/ncnn/build'
+[ 43%] Building CXX object src/CMakeFiles/ncnn.dir/c_api.cpp.o
+[ 43%] Building CXX object src/CMakeFiles/ncnn.dir/blob.cpp.o
+[ 43%] Building CXX object src/CMakeFiles/ncnn.dir/allocator.cpp.o
+[ 43%] Building CXX object src/CMakeFiles/ncnn.dir/benchmark.cpp.o
+[ 43%] Building CXX object src/CMakeFiles/ncnn.dir/command.cpp.o
+[ 43%] Building CXX object src/CMakeFiles/ncnn.dir/cpu.cpp.o
+[ 44%] Building CXX object src/CMakeFiles/ncnn.dir/datareader.cpp.o
+/build/go-stable-diffusion/ncnn/src/cpu.cpp:156:12: warning: 'g_cpu_is_arm_a53_a55' defined but not used [-Wunused-variable]
+  156 | static int g_cpu_is_arm_a53_a55;
+      |            ^~~~~~~~~~~~~~~~~~~~
+[ 44%] Building CXX object src/CMakeFiles/ncnn.dir/gpu.cpp.o
+[ 44%] Building CXX object src/CMakeFiles/ncnn.dir/layer.cpp.o
+[ 44%] Building CXX object src/CMakeFiles/ncnn.dir/mat.cpp.o
+[ 44%] Building CXX object src/CMakeFiles/ncnn.dir/mat_pixel.cpp.o
+[ 44%] Building CXX object src/CMakeFiles/ncnn.dir/mat_pixel_affine.cpp.o
+[ 44%] Building CXX object src/CMakeFiles/ncnn.dir/mat_pixel_drawing.cpp.o
+[ 44%] Linking CXX executable darknet2ncnn
+[ 45%] Building CXX object src/CMakeFiles/ncnn.dir/mat_pixel_resize.cpp.o
+make[5]: Leaving directory '/build/go-stable-diffusion/ncnn/build'
+[ 45%] Built target darknet2ncnn
+[ 45%] Building CXX object src/CMakeFiles/ncnn.dir/mat_pixel_rotate.cpp.o
+[ 45%] Building CXX object src/CMakeFiles/ncnn.dir/modelbin.cpp.o
+[ 45%] Building CXX object src/CMakeFiles/ncnn.dir/net.cpp.o
+[ 45%] Building CXX object src/CMakeFiles/ncnn.dir/option.cpp.o
+[ 45%] Linking CXX executable mxnet2ncnn
+[ 45%] Building CXX object src/CMakeFiles/ncnn.dir/paramdict.cpp.o
+make[5]: Leaving directory '/build/go-stable-diffusion/ncnn/build'
+[ 45%] Built target mxnet2ncnn
+[ 45%] Building CXX object src/CMakeFiles/ncnn.dir/pipeline.cpp.o
+[ 46%] Building CXX object src/CMakeFiles/ncnn.dir/pipelinecache.cpp.o
+[ 46%] Building CXX object src/CMakeFiles/ncnn.dir/simpleocv.cpp.o
+[ 46%] Building CXX object src/CMakeFiles/ncnn.dir/simpleomp.cpp.o
+[ 46%] Building CXX object src/CMakeFiles/ncnn.dir/simplestl.cpp.o
+[ 46%] Building CXX object src/CMakeFiles/ncnn.dir/layer/absval.cpp.o
+[ 46%] Building CXX object src/CMakeFiles/ncnn.dir/layer/batchnorm.cpp.o
+[ 46%] Building CXX object src/CMakeFiles/ncnn.dir/layer/x86/batchnorm_x86.cpp.o
+[ 47%] Building CXX object src/CMakeFiles/ncnn.dir/layer/x86/batchnorm_x86_avx512.cpp.o
+[ 47%] Building CXX object src/CMakeFiles/ncnn.dir/layer/x86/batchnorm_x86_fma.cpp.o
+[ 47%] Building CXX object src/CMakeFiles/ncnn.dir/layer/x86/batchnorm_x86_avx.cpp.o
+[ 47%] Building CXX object src/CMakeFiles/ncnn.dir/layer/bias.cpp.o
+[ 47%] Building CXX object src/CMakeFiles/ncnn.dir/layer/x86/bias_x86.cpp.o
+[ 47%] Building CXX object src/CMakeFiles/ncnn.dir/layer/x86/bias_x86_avx512.cpp.o
+[ 48%] Building CXX object src/CMakeFiles/ncnn.dir/layer/x86/bias_x86_fma.cpp.o
+[ 48%] Building CXX object src/CMakeFiles/ncnn.dir/layer/x86/bias_x86_avx.cpp.o
+[ 48%] Building CXX object src/CMakeFiles/ncnn.dir/layer/bnll.cpp.o
+[ 48%] Building CXX object src/CMakeFiles/ncnn.dir/layer/x86/bnll_x86.cpp.o
+[ 48%] Building CXX object src/CMakeFiles/ncnn.dir/layer/x86/bnll_x86_avx512.cpp.o
+[ 48%] Building CXX object src/CMakeFiles/ncnn.dir/layer/x86/bnll_x86_fma.cpp.o
+[ 48%] Building CXX object src/CMakeFiles/ncnn.dir/layer/x86/bnll_x86_avx.cpp.o
+[ 49%] Building CXX object src/CMakeFiles/ncnn.dir/layer/concat.cpp.o
+[ 49%] Building CXX object src/CMakeFiles/ncnn.dir/layer/x86/concat_x86.cpp.o
+[ 49%] Building CXX object src/CMakeFiles/ncnn.dir/layer/x86/concat_x86_avx512.cpp.o
+[ 49%] Building CXX object src/CMakeFiles/ncnn.dir/layer/x86/concat_x86_fma.cpp.o
+[ 49%] Building CXX object src/CMakeFiles/ncnn.dir/layer/x86/concat_x86_avx.cpp.o
+[ 49%] Building CXX object src/CMakeFiles/ncnn.dir/layer/convolution.cpp.o
+[ 49%] Building CXX object src/CMakeFiles/ncnn.dir/layer/x86/convolution_x86.cpp.o
+[ 50%] Building CXX object src/CMakeFiles/ncnn.dir/layer/x86/convolution_x86_avx512.cpp.o
+[ 50%] Building CXX object src/CMakeFiles/ncnn.dir/layer/x86/convolution_x86_fma.cpp.o
+[ 50%] Building CXX object src/CMakeFiles/ncnn.dir/layer/x86/convolution_x86_avx.cpp.o
+[ 50%] Building CXX object src/CMakeFiles/ncnn.dir/layer/x86/convolution_x86_avx512vnni.cpp.o
+[ 50%] Building CXX object src/CMakeFiles/ncnn.dir/layer/x86/convolution_x86_avx2.cpp.o
+[ 50%] Building CXX object src/CMakeFiles/ncnn.dir/layer/x86/convolution_x86_xop.cpp.o
+[ 50%] Building CXX object src/CMakeFiles/ncnn.dir/layer/crop.cpp.o
+[ 51%] Building CXX object src/CMakeFiles/ncnn.dir/layer/x86/crop_x86.cpp.o
+[ 51%] Building CXX object src/CMakeFiles/ncnn.dir/layer/x86/crop_x86_avx512.cpp.o
+[ 51%] Building CXX object src/CMakeFiles/ncnn.dir/layer/x86/crop_x86_fma.cpp.o
+[ 51%] Building CXX object src/CMakeFiles/ncnn.dir/layer/x86/crop_x86_avx.cpp.o
+[ 51%] Building CXX object src/CMakeFiles/ncnn.dir/layer/deconvolution.cpp.o
+[ 51%] Building CXX object src/CMakeFiles/ncnn.dir/layer/x86/deconvolution_x86.cpp.o
+[ 51%] Building CXX object src/CMakeFiles/ncnn.dir/layer/x86/deconvolution_x86_avx512.cpp.o
+[ 52%] Building CXX object src/CMakeFiles/ncnn.dir/layer/x86/deconvolution_x86_fma.cpp.o
+[ 52%] Building CXX object src/CMakeFiles/ncnn.dir/layer/x86/deconvolution_x86_avx.cpp.o
+[ 52%] Building CXX object src/CMakeFiles/ncnn.dir/layer/dropout.cpp.o
+[ 52%] Building CXX object src/CMakeFiles/ncnn.dir/layer/x86/dropout_x86.cpp.o
+[ 52%] Building CXX object src/CMakeFiles/ncnn.dir/layer/x86/dropout_x86_avx512.cpp.o
+[ 52%] Building CXX object src/CMakeFiles/ncnn.dir/layer/x86/dropout_x86_fma.cpp.o
+[ 52%] Building CXX object src/CMakeFiles/ncnn.dir/layer/x86/dropout_x86_avx.cpp.o
+[ 53%] Building CXX object src/CMakeFiles/ncnn.dir/layer/eltwise.cpp.o
+[ 53%] Building CXX object src/CMakeFiles/ncnn.dir/layer/x86/eltwise_x86.cpp.o
+[ 53%] Building CXX object src/CMakeFiles/ncnn.dir/layer/x86/eltwise_x86_avx512.cpp.o
+[ 53%] Building CXX object src/CMakeFiles/ncnn.dir/layer/x86/eltwise_x86_fma.cpp.o
+[ 53%] Building CXX object src/CMakeFiles/ncnn.dir/layer/x86/eltwise_x86_avx.cpp.o
+[ 53%] Building CXX object src/CMakeFiles/ncnn.dir/layer/elu.cpp.o
+[ 53%] Building CXX object src/CMakeFiles/ncnn.dir/layer/x86/elu_x86.cpp.o
+[ 54%] Building CXX object src/CMakeFiles/ncnn.dir/layer/x86/elu_x86_avx512.cpp.o
+[ 54%] Building CXX object src/CMakeFiles/ncnn.dir/layer/x86/elu_x86_fma.cpp.o
+[ 54%] Building CXX object src/CMakeFiles/ncnn.dir/layer/x86/elu_x86_avx.cpp.o
+[ 54%] Building CXX object src/CMakeFiles/ncnn.dir/layer/embed.cpp.o
+[ 54%] Building CXX object src/CMakeFiles/ncnn.dir/layer/exp.cpp.o
+[ 54%] Building CXX object src/CMakeFiles/ncnn.dir/layer/flatten.cpp.o
+[ 54%] Building CXX object src/CMakeFiles/ncnn.dir/layer/x86/flatten_x86.cpp.o
+[ 55%] Building CXX object src/CMakeFiles/ncnn.dir/layer/x86/flatten_x86_avx512.cpp.o
+[ 55%] Building CXX object src/CMakeFiles/ncnn.dir/layer/x86/flatten_x86_fma.cpp.o
+[ 55%] Building CXX object src/CMakeFiles/ncnn.dir/layer/x86/flatten_x86_avx.cpp.o
+[ 55%] Building CXX object src/CMakeFiles/ncnn.dir/layer/innerproduct.cpp.o
+[ 55%] Building CXX object src/CMakeFiles/ncnn.dir/layer/x86/innerproduct_x86.cpp.o
+[ 55%] Building CXX object src/CMakeFiles/ncnn.dir/layer/x86/innerproduct_x86_avx512.cpp.o
+[ 55%] Building CXX object src/CMakeFiles/ncnn.dir/layer/x86/innerproduct_x86_fma.cpp.o
+[ 56%] Building CXX object src/CMakeFiles/ncnn.dir/layer/x86/innerproduct_x86_avx.cpp.o
+[ 56%] Building CXX object src/CMakeFiles/ncnn.dir/layer/x86/innerproduct_x86_f16c.cpp.o
+[ 56%] Building CXX object src/CMakeFiles/ncnn.dir/layer/input.cpp.o
+[ 56%] Building CXX object src/CMakeFiles/ncnn.dir/layer/log.cpp.o
+[ 56%] Building CXX object src/CMakeFiles/ncnn.dir/layer/lrn.cpp.o
+[ 56%] Building CXX object src/CMakeFiles/ncnn.dir/layer/x86/lrn_x86.cpp.o
+[ 57%] Building CXX object src/CMakeFiles/ncnn.dir/layer/x86/lrn_x86_avx512.cpp.o
+[ 57%] Building CXX object src/CMakeFiles/ncnn.dir/layer/x86/lrn_x86_fma.cpp.o
+[ 57%] Building CXX object src/CMakeFiles/ncnn.dir/layer/x86/lrn_x86_avx.cpp.o
+[ 57%] Building CXX object src/CMakeFiles/ncnn.dir/layer/memorydata.cpp.o
+[ 57%] Building CXX object src/CMakeFiles/ncnn.dir/layer/mvn.cpp.o
+[ 57%] Building CXX object src/CMakeFiles/ncnn.dir/layer/pooling.cpp.o
+[ 57%] Building CXX object src/CMakeFiles/ncnn.dir/layer/x86/pooling_x86.cpp.o
+[ 57%] Building CXX object src/CMakeFiles/ncnn.dir/layer/x86/pooling_x86_fma.cpp.o
+[ 58%] Building CXX object src/CMakeFiles/ncnn.dir/layer/x86/pooling_x86_avx512.cpp.o
+[ 58%] Building CXX object src/CMakeFiles/ncnn.dir/layer/x86/pooling_x86_avx.cpp.o
+[ 58%] Building CXX object src/CMakeFiles/ncnn.dir/layer/power.cpp.o
+[ 58%] Building CXX object src/CMakeFiles/ncnn.dir/layer/prelu.cpp.o
+[ 58%] Building CXX object src/CMakeFiles/ncnn.dir/layer/x86/prelu_x86.cpp.o
+[ 58%] Building CXX object src/CMakeFiles/ncnn.dir/layer/x86/prelu_x86_avx512.cpp.o
+[ 59%] Building CXX object src/CMakeFiles/ncnn.dir/layer/x86/prelu_x86_fma.cpp.o
+[ 59%] Building CXX object src/CMakeFiles/ncnn.dir/layer/x86/prelu_x86_avx.cpp.o
+[ 59%] Building CXX object src/CMakeFiles/ncnn.dir/layer/proposal.cpp.o
+[ 59%] Building CXX object src/CMakeFiles/ncnn.dir/layer/reduction.cpp.o
+[ 59%] Building CXX object src/CMakeFiles/ncnn.dir/layer/relu.cpp.o
+[ 59%] Building CXX object src/CMakeFiles/ncnn.dir/layer/x86/relu_x86.cpp.o
+[ 59%] Building CXX object src/CMakeFiles/ncnn.dir/layer/x86/relu_x86_avx512.cpp.o
+[ 60%] Building CXX object src/CMakeFiles/ncnn.dir/layer/x86/relu_x86_fma.cpp.o
+[ 60%] Building CXX object src/CMakeFiles/ncnn.dir/layer/x86/relu_x86_avx.cpp.o
+[ 60%] Building CXX object src/CMakeFiles/ncnn.dir/layer/reshape.cpp.o
+[ 60%] Building CXX object src/CMakeFiles/ncnn.dir/layer/x86/reshape_x86.cpp.o
+[ 60%] Building CXX object src/CMakeFiles/ncnn.dir/layer/x86/reshape_x86_avx512.cpp.o
+[ 60%] Building CXX object src/CMakeFiles/ncnn.dir/layer/x86/reshape_x86_fma.cpp.o
+[ 60%] Building CXX object src/CMakeFiles/ncnn.dir/layer/x86/reshape_x86_avx.cpp.o
+[ 61%] Building CXX object src/CMakeFiles/ncnn.dir/layer/roipooling.cpp.o
+[ 61%] Building CXX object src/CMakeFiles/ncnn.dir/layer/scale.cpp.o
+[ 61%] Building CXX object src/CMakeFiles/ncnn.dir/layer/x86/scale_x86.cpp.o
+[ 61%] Building CXX object src/CMakeFiles/ncnn.dir/layer/x86/scale_x86_avx512.cpp.o
+[ 61%] Building CXX object src/CMakeFiles/ncnn.dir/layer/x86/scale_x86_fma.cpp.o
+[ 61%] Building CXX object src/CMakeFiles/ncnn.dir/layer/x86/scale_x86_avx.cpp.o
+[ 61%] Building CXX object src/CMakeFiles/ncnn.dir/layer/sigmoid.cpp.o
+[ 62%] Building CXX object src/CMakeFiles/ncnn.dir/layer/x86/sigmoid_x86.cpp.o
+[ 62%] Building CXX object src/CMakeFiles/ncnn.dir/layer/x86/sigmoid_x86_avx512.cpp.o
+[ 62%] Building CXX object src/CMakeFiles/ncnn.dir/layer/x86/sigmoid_x86_fma.cpp.o
+[ 62%] Building CXX object src/CMakeFiles/ncnn.dir/layer/x86/sigmoid_x86_avx.cpp.o
+[ 62%] Building CXX object src/CMakeFiles/ncnn.dir/layer/slice.cpp.o
+[ 62%] Building CXX object src/CMakeFiles/ncnn.dir/layer/x86/slice_x86.cpp.o
+[ 62%] Building CXX object src/CMakeFiles/ncnn.dir/layer/x86/slice_x86_avx512.cpp.o
+[ 63%] Building CXX object src/CMakeFiles/ncnn.dir/layer/x86/slice_x86_fma.cpp.o
+[ 63%] Building CXX object src/CMakeFiles/ncnn.dir/layer/x86/slice_x86_avx.cpp.o
+[ 63%] Building CXX object src/CMakeFiles/ncnn.dir/layer/softmax.cpp.o
+[ 63%] Building CXX object src/CMakeFiles/ncnn.dir/layer/x86/softmax_x86.cpp.o
+[ 63%] Building CXX object src/CMakeFiles/ncnn.dir/layer/x86/softmax_x86_avx512.cpp.o
+[ 63%] Building CXX object src/CMakeFiles/ncnn.dir/layer/x86/softmax_x86_fma.cpp.o
+[ 63%] Building CXX object src/CMakeFiles/ncnn.dir/layer/x86/softmax_x86_avx.cpp.o
+[ 64%] Building CXX object src/CMakeFiles/ncnn.dir/layer/split.cpp.o
+[ 64%] Building CXX object src/CMakeFiles/ncnn.dir/layer/tanh.cpp.o
+[ 64%] Building CXX object src/CMakeFiles/ncnn.dir/layer/x86/tanh_x86.cpp.o
+[ 64%] Building CXX object src/CMakeFiles/ncnn.dir/layer/x86/tanh_x86_avx512.cpp.o
+[ 64%] Building CXX object src/CMakeFiles/ncnn.dir/layer/x86/tanh_x86_fma.cpp.o
+[ 64%] Building CXX object src/CMakeFiles/ncnn.dir/layer/x86/tanh_x86_avx.cpp.o
+[ 65%] Building CXX object src/CMakeFiles/ncnn.dir/layer/threshold.cpp.o
+[ 65%] Building CXX object src/CMakeFiles/ncnn.dir/layer/tile.cpp.o
+[ 65%] Building CXX object src/CMakeFiles/ncnn.dir/layer/rnn.cpp.o
+[ 65%] Building CXX object src/CMakeFiles/ncnn.dir/layer/lstm.cpp.o
+[ 65%] Building CXX object src/CMakeFiles/ncnn.dir/layer/x86/lstm_x86.cpp.o
+[ 65%] Building CXX object src/CMakeFiles/ncnn.dir/layer/x86/lstm_x86_avx512.cpp.o
+[ 65%] Building CXX object src/CMakeFiles/ncnn.dir/layer/x86/lstm_x86_fma.cpp.o
+[ 66%] Building CXX object src/CMakeFiles/ncnn.dir/layer/x86/lstm_x86_avx.cpp.o
+[ 66%] Building CXX object src/CMakeFiles/ncnn.dir/layer/binaryop.cpp.o
+[ 66%] Building CXX object src/CMakeFiles/ncnn.dir/layer/x86/binaryop_x86.cpp.o
+[ 66%] Building CXX object src/CMakeFiles/ncnn.dir/layer/x86/binaryop_x86_avx512.cpp.o
+[ 66%] Building CXX object src/CMakeFiles/ncnn.dir/layer/x86/binaryop_x86_fma.cpp.o
+[ 66%] Building CXX object src/CMakeFiles/ncnn.dir/layer/x86/binaryop_x86_avx.cpp.o
+[ 66%] Building CXX object src/CMakeFiles/ncnn.dir/layer/unaryop.cpp.o
+[ 67%] Building CXX object src/CMakeFiles/ncnn.dir/layer/x86/unaryop_x86.cpp.o
+[ 67%] Building CXX object src/CMakeFiles/ncnn.dir/layer/x86/unaryop_x86_avx512.cpp.o
+[ 67%] Building CXX object src/CMakeFiles/ncnn.dir/layer/x86/unaryop_x86_fma.cpp.o
+[ 67%] Building CXX object src/CMakeFiles/ncnn.dir/layer/x86/unaryop_x86_avx.cpp.o
+[ 67%] Building CXX object src/CMakeFiles/ncnn.dir/layer/convolutiondepthwise.cpp.o
+[ 67%] Building CXX object src/CMakeFiles/ncnn.dir/layer/x86/convolutiondepthwise_x86.cpp.o
+[ 67%] Building CXX object src/CMakeFiles/ncnn.dir/layer/x86/convolutiondepthwise_x86_avx512.cpp.o
+[ 68%] Building CXX object src/CMakeFiles/ncnn.dir/layer/x86/convolutiondepthwise_x86_fma.cpp.o
+[ 68%] Building CXX object src/CMakeFiles/ncnn.dir/layer/x86/convolutiondepthwise_x86_avx.cpp.o
+[ 68%] Building CXX object src/CMakeFiles/ncnn.dir/layer/padding.cpp.o
+[ 68%] Building CXX object src/CMakeFiles/ncnn.dir/layer/x86/padding_x86.cpp.o
+[ 68%] Building CXX object src/CMakeFiles/ncnn.dir/layer/x86/padding_x86_avx512.cpp.o
+[ 68%] Building CXX object src/CMakeFiles/ncnn.dir/layer/x86/padding_x86_fma.cpp.o
+[ 68%] Building CXX object src/CMakeFiles/ncnn.dir/layer/x86/padding_x86_avx.cpp.o
+[ 69%] Building CXX object src/CMakeFiles/ncnn.dir/layer/squeeze.cpp.o
+[ 69%] Building CXX object src/CMakeFiles/ncnn.dir/layer/expanddims.cpp.o
+[ 69%] Building CXX object src/CMakeFiles/ncnn.dir/layer/normalize.cpp.o
+[ 69%] Building CXX object src/CMakeFiles/ncnn.dir/layer/permute.cpp.o
+[ 69%] Building CXX object src/CMakeFiles/ncnn.dir/layer/priorbox.cpp.o
+[ 69%] Building CXX object src/CMakeFiles/ncnn.dir/layer/detectionoutput.cpp.o
+[ 69%] Building CXX object src/CMakeFiles/ncnn.dir/layer/interp.cpp.o
+[ 70%] Building CXX object src/CMakeFiles/ncnn.dir/layer/x86/interp_x86.cpp.o
+[ 70%] Building CXX object src/CMakeFiles/ncnn.dir/layer/x86/interp_x86_avx512.cpp.o
+[ 70%] Building CXX object src/CMakeFiles/ncnn.dir/layer/x86/interp_x86_fma.cpp.o
+[ 70%] Building CXX object src/CMakeFiles/ncnn.dir/layer/x86/interp_x86_avx.cpp.o
+[ 70%] Building CXX object src/CMakeFiles/ncnn.dir/layer/deconvolutiondepthwise.cpp.o
+[ 70%] Building CXX object src/CMakeFiles/ncnn.dir/layer/x86/deconvolutiondepthwise_x86.cpp.o
+[ 70%] Building CXX object src/CMakeFiles/ncnn.dir/layer/x86/deconvolutiondepthwise_x86_avx512.cpp.o
+[ 71%] Building CXX object src/CMakeFiles/ncnn.dir/layer/x86/deconvolutiondepthwise_x86_fma.cpp.o
+[ 71%] Building CXX object src/CMakeFiles/ncnn.dir/layer/x86/deconvolutiondepthwise_x86_avx.cpp.o
+[ 71%] Building CXX object src/CMakeFiles/ncnn.dir/layer/shufflechannel.cpp.o
+[ 71%] Building CXX object src/CMakeFiles/ncnn.dir/layer/instancenorm.cpp.o
+[ 71%] Building CXX object src/CMakeFiles/ncnn.dir/layer/clip.cpp.o
+[ 71%] Building CXX object src/CMakeFiles/ncnn.dir/layer/x86/clip_x86.cpp.o
+[ 71%] Building CXX object src/CMakeFiles/ncnn.dir/layer/x86/clip_x86_avx512.cpp.o
+[ 72%] Building CXX object src/CMakeFiles/ncnn.dir/layer/x86/clip_x86_fma.cpp.o
+[ 72%] Building CXX object src/CMakeFiles/ncnn.dir/layer/x86/clip_x86_avx.cpp.o
+[ 72%] Building CXX object src/CMakeFiles/ncnn.dir/layer/reorg.cpp.o
+[ 72%] Building CXX object src/CMakeFiles/ncnn.dir/layer/yolodetectionoutput.cpp.o
+[ 72%] Building CXX object src/CMakeFiles/ncnn.dir/layer/quantize.cpp.o
+[ 72%] Building CXX object src/CMakeFiles/ncnn.dir/layer/x86/quantize_x86.cpp.o
+[ 73%] Building CXX object src/CMakeFiles/ncnn.dir/layer/x86/quantize_x86_avx512.cpp.o
+[ 73%] Building CXX object src/CMakeFiles/ncnn.dir/layer/x86/quantize_x86_fma.cpp.o
+[ 73%] Building CXX object src/CMakeFiles/ncnn.dir/layer/x86/quantize_x86_avx.cpp.o
+[ 73%] Building CXX object src/CMakeFiles/ncnn.dir/layer/dequantize.cpp.o
+[ 73%] Building CXX object src/CMakeFiles/ncnn.dir/layer/x86/dequantize_x86.cpp.o
+[ 73%] Building CXX object src/CMakeFiles/ncnn.dir/layer/x86/dequantize_x86_avx512.cpp.o
+[ 73%] Building CXX object src/CMakeFiles/ncnn.dir/layer/x86/dequantize_x86_fma.cpp.o
+[ 74%] Building CXX object src/CMakeFiles/ncnn.dir/layer/x86/dequantize_x86_avx.cpp.o
+[ 74%] Building CXX object src/CMakeFiles/ncnn.dir/layer/yolov3detectionoutput.cpp.o
+[ 74%] Building CXX object src/CMakeFiles/ncnn.dir/layer/x86/yolov3detectionoutput_x86.cpp.o
+[ 74%] Building CXX object src/CMakeFiles/ncnn.dir/layer/x86/yolov3detectionoutput_x86_avx512.cpp.o
+[ 74%] Building CXX object src/CMakeFiles/ncnn.dir/layer/x86/yolov3detectionoutput_x86_fma.cpp.o
+[ 74%] Building CXX object src/CMakeFiles/ncnn.dir/layer/x86/yolov3detectionoutput_x86_avx.cpp.o
+[ 74%] Building CXX object src/CMakeFiles/ncnn.dir/layer/psroipooling.cpp.o
+[ 75%] Building CXX object src/CMakeFiles/ncnn.dir/layer/roialign.cpp.o
+[ 75%] Building CXX object src/CMakeFiles/ncnn.dir/layer/x86/roialign_x86.cpp.o
+[ 75%] Building CXX object src/CMakeFiles/ncnn.dir/layer/x86/roialign_x86_avx512.cpp.o
+[ 75%] Building CXX object src/CMakeFiles/ncnn.dir/layer/x86/roialign_x86_fma.cpp.o
+[ 75%] Building CXX object src/CMakeFiles/ncnn.dir/layer/x86/roialign_x86_avx.cpp.o
+[ 75%] Building CXX object src/CMakeFiles/ncnn.dir/layer/packing.cpp.o
+[ 75%] Building CXX object src/CMakeFiles/ncnn.dir/layer/x86/packing_x86.cpp.o
+[ 76%] Building CXX object src/CMakeFiles/ncnn.dir/layer/x86/packing_x86_avx512.cpp.o
+[ 76%] Building CXX object src/CMakeFiles/ncnn.dir/layer/x86/packing_x86_fma.cpp.o
+[ 76%] Building CXX object src/CMakeFiles/ncnn.dir/layer/x86/packing_x86_avx.cpp.o
+[ 76%] Building CXX object src/CMakeFiles/ncnn.dir/layer/requantize.cpp.o
+[ 76%] Building CXX object src/CMakeFiles/ncnn.dir/layer/x86/requantize_x86.cpp.o
+[ 76%] Building CXX object src/CMakeFiles/ncnn.dir/layer/x86/requantize_x86_avx512.cpp.o
+[ 76%] Building CXX object src/CMakeFiles/ncnn.dir/layer/x86/requantize_x86_fma.cpp.o
+[ 77%] Building CXX object src/CMakeFiles/ncnn.dir/layer/x86/requantize_x86_avx.cpp.o
+[ 77%] Building CXX object src/CMakeFiles/ncnn.dir/layer/cast.cpp.o
+[ 77%] Building CXX object src/CMakeFiles/ncnn.dir/layer/x86/cast_x86.cpp.o
+[ 77%] Building CXX object src/CMakeFiles/ncnn.dir/layer/x86/cast_x86_avx512.cpp.o
+[ 77%] Building CXX object src/CMakeFiles/ncnn.dir/layer/x86/cast_x86_fma.cpp.o
+[ 77%] Building CXX object src/CMakeFiles/ncnn.dir/layer/x86/cast_x86_avx.cpp.o
+[ 77%] Building CXX object src/CMakeFiles/ncnn.dir/layer/x86/cast_x86_avx2.cpp.o
+[ 78%] Building CXX object src/CMakeFiles/ncnn.dir/layer/x86/cast_x86_f16c.cpp.o
+[ 78%] Building CXX object src/CMakeFiles/ncnn.dir/layer/hardsigmoid.cpp.o
+[ 78%] Building CXX object src/CMakeFiles/ncnn.dir/layer/x86/hardsigmoid_x86.cpp.o
+[ 78%] Building CXX object src/CMakeFiles/ncnn.dir/layer/x86/hardsigmoid_x86_avx512.cpp.o
+[ 78%] Building CXX object src/CMakeFiles/ncnn.dir/layer/x86/hardsigmoid_x86_fma.cpp.o
+[ 78%] Building CXX object src/CMakeFiles/ncnn.dir/layer/x86/hardsigmoid_x86_avx.cpp.o
+[ 79%] Building CXX object src/CMakeFiles/ncnn.dir/layer/selu.cpp.o
+[ 79%] Building CXX object src/CMakeFiles/ncnn.dir/layer/hardswish.cpp.o
+[ 79%] Building CXX object src/CMakeFiles/ncnn.dir/layer/x86/hardswish_x86.cpp.o
+[ 79%] Building CXX object src/CMakeFiles/ncnn.dir/layer/x86/hardswish_x86_avx512.cpp.o
+[ 79%] Building CXX object src/CMakeFiles/ncnn.dir/layer/x86/hardswish_x86_fma.cpp.o
+[ 79%] Building CXX object src/CMakeFiles/ncnn.dir/layer/x86/hardswish_x86_avx.cpp.o
+[ 79%] Building CXX object src/CMakeFiles/ncnn.dir/layer/noop.cpp.o
+[ 79%] Building CXX object src/CMakeFiles/ncnn.dir/layer/pixelshuffle.cpp.o
+[ 80%] Building CXX object src/CMakeFiles/ncnn.dir/layer/deepcopy.cpp.o
+[ 80%] Building CXX object src/CMakeFiles/ncnn.dir/layer/mish.cpp.o
+[ 80%] Building CXX object src/CMakeFiles/ncnn.dir/layer/x86/mish_x86.cpp.o
+[ 80%] Building CXX object src/CMakeFiles/ncnn.dir/layer/x86/mish_x86_avx512.cpp.o
+[ 80%] Building CXX object src/CMakeFiles/ncnn.dir/layer/x86/mish_x86_fma.cpp.o
+[ 80%] Building CXX object src/CMakeFiles/ncnn.dir/layer/x86/mish_x86_avx.cpp.o
+[ 80%] Building CXX object src/CMakeFiles/ncnn.dir/layer/statisticspooling.cpp.o
+[ 81%] Building CXX object src/CMakeFiles/ncnn.dir/layer/swish.cpp.o
+[ 81%] Building CXX object src/CMakeFiles/ncnn.dir/layer/x86/swish_x86.cpp.o
+[ 81%] Building CXX object src/CMakeFiles/ncnn.dir/layer/x86/swish_x86_avx512.cpp.o
+[ 81%] Building CXX object src/CMakeFiles/ncnn.dir/layer/x86/swish_x86_fma.cpp.o
+[ 81%] Building CXX object src/CMakeFiles/ncnn.dir/layer/x86/swish_x86_avx.cpp.o
+[ 81%] Building CXX object src/CMakeFiles/ncnn.dir/layer/gemm.cpp.o
+[ 82%] Building CXX object src/CMakeFiles/ncnn.dir/layer/x86/gemm_x86.cpp.o
+[ 82%] Building CXX object src/CMakeFiles/ncnn.dir/layer/x86/gemm_x86_avx512.cpp.o
+[ 82%] Building CXX object src/CMakeFiles/ncnn.dir/layer/x86/gemm_x86_fma.cpp.o
+[ 82%] Building CXX object src/CMakeFiles/ncnn.dir/layer/x86/gemm_x86_avx.cpp.o
+[ 82%] Building CXX object src/CMakeFiles/ncnn.dir/layer/groupnorm.cpp.o
+[ 82%] Building CXX object src/CMakeFiles/ncnn.dir/layer/x86/groupnorm_x86.cpp.o
+[ 82%] Building CXX object src/CMakeFiles/ncnn.dir/layer/x86/groupnorm_x86_avx512.cpp.o
+[ 83%] Building CXX object src/CMakeFiles/ncnn.dir/layer/x86/groupnorm_x86_fma.cpp.o
+[ 83%] Building CXX object src/CMakeFiles/ncnn.dir/layer/x86/groupnorm_x86_avx.cpp.o
+[ 83%] Building CXX object src/CMakeFiles/ncnn.dir/layer/layernorm.cpp.o
+[ 83%] Building CXX object src/CMakeFiles/ncnn.dir/layer/x86/layernorm_x86.cpp.o
+[ 83%] Building CXX object src/CMakeFiles/ncnn.dir/layer/x86/layernorm_x86_avx512.cpp.o
+[ 83%] Building CXX object src/CMakeFiles/ncnn.dir/layer/x86/layernorm_x86_fma.cpp.o
+[ 83%] Building CXX object src/CMakeFiles/ncnn.dir/layer/x86/layernorm_x86_avx.cpp.o
+[ 84%] Building CXX object src/CMakeFiles/ncnn.dir/layer/softplus.cpp.o
+[ 84%] Building CXX object src/CMakeFiles/ncnn.dir/layer/gru.cpp.o
+[ 84%] Building CXX object src/CMakeFiles/ncnn.dir/layer/multiheadattention.cpp.o
+[ 84%] Building CXX object src/CMakeFiles/ncnn.dir/layer/x86/multiheadattention_x86.cpp.o
+[ 84%] Building CXX object src/CMakeFiles/ncnn.dir/layer/x86/multiheadattention_x86_avx512.cpp.o
+[ 84%] Building CXX object src/CMakeFiles/ncnn.dir/layer/x86/multiheadattention_x86_fma.cpp.o
+[ 84%] Building CXX object src/CMakeFiles/ncnn.dir/layer/x86/multiheadattention_x86_avx.cpp.o
+[ 85%] Building CXX object src/CMakeFiles/ncnn.dir/layer/gelu.cpp.o
+[ 85%] Building CXX object src/CMakeFiles/ncnn.dir/layer/x86/gelu_x86.cpp.o
+[ 85%] Building CXX object src/CMakeFiles/ncnn.dir/layer/x86/gelu_x86_avx512.cpp.o
+[ 85%] Building CXX object src/CMakeFiles/ncnn.dir/layer/x86/gelu_x86_fma.cpp.o
+[ 85%] Building CXX object src/CMakeFiles/ncnn.dir/layer/x86/gelu_x86_avx.cpp.o
+[ 85%] Building CXX object src/CMakeFiles/ncnn.dir/layer/convolution1d.cpp.o
+[ 85%] Building CXX object src/CMakeFiles/ncnn.dir/layer/x86/convolution1d_x86.cpp.o
+[ 86%] Building CXX object src/CMakeFiles/ncnn.dir/layer/x86/convolution1d_x86_avx512.cpp.o
+[ 86%] Building CXX object src/CMakeFiles/ncnn.dir/layer/x86/convolution1d_x86_fma.cpp.o
+[ 86%] Building CXX object src/CMakeFiles/ncnn.dir/layer/x86/convolution1d_x86_avx.cpp.o
+[ 86%] Building CXX object src/CMakeFiles/ncnn.dir/layer/pooling1d.cpp.o
+[ 86%] Building CXX object src/CMakeFiles/ncnn.dir/layer/convolutiondepthwise1d.cpp.o
+[ 86%] Building CXX object src/CMakeFiles/ncnn.dir/layer/convolution3d.cpp.o
+[ 86%] Building CXX object src/CMakeFiles/ncnn.dir/layer/convolutiondepthwise3d.cpp.o
+[ 87%] Building CXX object src/CMakeFiles/ncnn.dir/layer/pooling3d.cpp.o
+[ 87%] Building CXX object src/CMakeFiles/ncnn.dir/layer/matmul.cpp.o
+[ 87%] Building CXX object src/CMakeFiles/ncnn.dir/layer/x86/matmul_x86.cpp.o
+[ 87%] Building CXX object src/CMakeFiles/ncnn.dir/layer/x86/matmul_x86_avx512.cpp.o
+[ 87%] Building CXX object src/CMakeFiles/ncnn.dir/layer/x86/matmul_x86_fma.cpp.o
+[ 87%] Building CXX object src/CMakeFiles/ncnn.dir/layer/x86/matmul_x86_avx.cpp.o
+[ 87%] Building CXX object src/CMakeFiles/ncnn.dir/layer/deconvolution1d.cpp.o
+[ 88%] Building CXX object src/CMakeFiles/ncnn.dir/layer/deconvolutiondepthwise1d.cpp.o
+[ 88%] Building CXX object src/CMakeFiles/ncnn.dir/layer/deconvolution3d.cpp.o
+[ 88%] Building CXX object src/CMakeFiles/ncnn.dir/layer/deconvolutiondepthwise3d.cpp.o
+[ 88%] Building CXX object src/CMakeFiles/ncnn.dir/layer/einsum.cpp.o
+[ 88%] Building CXX object src/CMakeFiles/ncnn.dir/layer/deformableconv2d.cpp.o
+[ 88%] Building CXX object src/CMakeFiles/ncnn.dir/layer/x86/deformableconv2d_x86.cpp.o
+[ 88%] Building CXX object src/CMakeFiles/ncnn.dir/layer/x86/deformableconv2d_x86_avx512.cpp.o
+[ 89%] Building CXX object src/CMakeFiles/ncnn.dir/layer/x86/deformableconv2d_x86_fma.cpp.o
+[ 89%] Building CXX object src/CMakeFiles/ncnn.dir/layer/x86/deformableconv2d_x86_avx.cpp.o
+In file included from /build/go-stable-diffusion/ncnn/src/layer/x86/deformableconv2d_x86.cpp:36:
+/build/go-stable-diffusion/ncnn/src/layer/x86/deformableconv2d_pack4.h: In function 'void ncnn::deformableconv2d_pack4_sse(const std::vector<ncnn::Mat>&, ncnn::Mat&, const ncnn::Mat&, const ncnn::Mat&, int, int, int, int, int, int, int, int, int, const ncnn::Mat&, const ncnn::Option&)':
+/build/go-stable-diffusion/ncnn/src/layer/x86/deformableconv2d_pack4.h:30:15: warning: unused variable 'size' [-Wunused-variable]
+   30 |     const int size = outw * outh;
+      |               ^~~~
+/build/go-stable-diffusion/ncnn/src/layer/x86/deformableconv2d_pack4.h:31:15: warning: unused variable 'maxk' [-Wunused-variable]
+   31 |     const int maxk = kernel_w * kernel_h;
+      |               ^~~~
+In file included from /build/go-stable-diffusion/ncnn/src/layer/x86/deformableconv2d_x86.cpp:37:
+/build/go-stable-diffusion/ncnn/src/layer/x86/deformableconv2d_pack1to4.h: In function 'void ncnn::deformableconv2d_pack1to4_sse(const std::vector<ncnn::Mat>&, ncnn::Mat&, const ncnn::Mat&, const ncnn::Mat&, int, int, int, int, int, int, int, int, int, const ncnn::Mat&, const ncnn::Option&)':
+/build/go-stable-diffusion/ncnn/src/layer/x86/deformableconv2d_pack1to4.h:30:15: warning: unused variable 'size' [-Wunused-variable]
+   30 |     const int size = outw * outh;
+      |               ^~~~
+/build/go-stable-diffusion/ncnn/src/layer/x86/deformableconv2d_pack1to4.h:31:15: warning: unused variable 'maxk' [-Wunused-variable]
+   31 |     const int maxk = kernel_w * kernel_h;
+      |               ^~~~
+In file included from /build/go-stable-diffusion/ncnn/src/layer/x86/deformableconv2d_x86.cpp:38:
+/build/go-stable-diffusion/ncnn/src/layer/x86/deformableconv2d_pack4to1.h: In function 'void ncnn::deformableconv2d_pack4to1_sse(const std::vector<ncnn::Mat>&, ncnn::Mat&, const ncnn::Mat&, const ncnn::Mat&, int, int, int, int, int, int, int, int, int, const ncnn::Mat&, const ncnn::Option&)':
+/build/go-stable-diffusion/ncnn/src/layer/x86/deformableconv2d_pack4to1.h:30:15: warning: unused variable 'size' [-Wunused-variable]
+   30 |     const int size = outw * outh;
+      |               ^~~~
+/build/go-stable-diffusion/ncnn/src/layer/x86/deformableconv2d_pack4to1.h:31:15: warning: unused variable 'maxk' [-Wunused-variable]
+   31 |     const int maxk = kernel_w * kernel_h;
+      |               ^~~~
+/build/go-stable-diffusion/ncnn/src/layer/x86/deformableconv2d_x86.cpp: In member function 'virtual int ncnn::DeformableConv2D_x86::forward(const std::vector<ncnn::Mat>&, std::vector<ncnn::Mat>&, const ncnn::Option&) const':
+/build/go-stable-diffusion/ncnn/src/layer/x86/deformableconv2d_x86.cpp:270:15: warning: unused variable 'num_input' [-Wunused-variable]
+  270 |     const int num_input = channels * elempack;
+      |               ^~~~~~~~~
+[ 89%] Building CXX object src/CMakeFiles/ncnn.dir/layer/glu.cpp.o
+[ 89%] Building CXX object src/CMakeFiles/ncnn.dir/layer/fold.cpp.o
+[ 89%] Building CXX object src/CMakeFiles/ncnn.dir/layer/unfold.cpp.o
+/build/go-stable-diffusion/ncnn/src/layer/fold.cpp: In member function 'virtual int ncnn::Fold::forward(const ncnn::Mat&, ncnn::Mat&, const ncnn::Option&) const':
+/build/go-stable-diffusion/ncnn/src/layer/fold.cpp:44:15: warning: unused variable 'size' [-Wunused-variable]
+   44 |     const int size = bottom_blob.w;
+      |               ^~~~
+In file included from /build/go-stable-diffusion/ncnn/build/src/layer/x86/deformableconv2d_x86_avx512.cpp:36:
+/build/go-stable-diffusion/ncnn/src/layer/x86/deformableconv2d_pack4.h: In function 'void ncnn::deformableconv2d_pack4_sse(const std::vector<ncnn::Mat>&, ncnn::Mat&, const ncnn::Mat&, const ncnn::Mat&, int, int, int, int, int, int, int, int, int, const ncnn::Mat&, const ncnn::Option&)':
+/build/go-stable-diffusion/ncnn/src/layer/x86/deformableconv2d_pack4.h:30:15: warning: unused variable 'size' [-Wunused-variable]
+   30 |     const int size = outw * outh;
+      |               ^~~~
+/build/go-stable-diffusion/ncnn/src/layer/x86/deformableconv2d_pack4.h:31:15: warning: unused variable 'maxk' [-Wunused-variable]
+   31 |     const int maxk = kernel_w * kernel_h;
+      |               ^~~~
+In file included from /build/go-stable-diffusion/ncnn/build/src/layer/x86/deformableconv2d_x86_avx512.cpp:37:
+/build/go-stable-diffusion/ncnn/src/layer/x86/deformableconv2d_pack1to4.h: In function 'void ncnn::deformableconv2d_pack1to4_sse(const std::vector<ncnn::Mat>&, ncnn::Mat&, const ncnn::Mat&, const ncnn::Mat&, int, int, int, int, int, int, int, int, int, const ncnn::Mat&, const ncnn::Option&)':
+/build/go-stable-diffusion/ncnn/src/layer/x86/deformableconv2d_pack1to4.h:30:15: warning: unused variable 'size' [-Wunused-variable]
+   30 |     const int size = outw * outh;
+      |               ^~~~
+/build/go-stable-diffusion/ncnn/src/layer/x86/deformableconv2d_pack1to4.h:31:15: warning: unused variable 'maxk' [-Wunused-variable]
+   31 |     const int maxk = kernel_w * kernel_h;
+      |               ^~~~
+In file included from /build/go-stable-diffusion/ncnn/build/src/layer/x86/deformableconv2d_x86_avx512.cpp:38:
+/build/go-stable-diffusion/ncnn/src/layer/x86/deformableconv2d_pack4to1.h: In function 'void ncnn::deformableconv2d_pack4to1_sse(const std::vector<ncnn::Mat>&, ncnn::Mat&, const ncnn::Mat&, const ncnn::Mat&, int, int, int, int, int, int, int, int, int, const ncnn::Mat&, const ncnn::Option&)':
+/build/go-stable-diffusion/ncnn/src/layer/x86/deformableconv2d_pack4to1.h:30:15: warning: unused variable 'size' [-Wunused-variable]
+   30 |     const int size = outw * outh;
+      |               ^~~~
+/build/go-stable-diffusion/ncnn/src/layer/x86/deformableconv2d_pack4to1.h:31:15: warning: unused variable 'maxk' [-Wunused-variable]
+   31 |     const int maxk = kernel_w * kernel_h;
+      |               ^~~~
+In file included from /build/go-stable-diffusion/ncnn/build/src/layer/x86/deformableconv2d_x86_avx512.cpp:41:
+/build/go-stable-diffusion/ncnn/src/layer/x86/deformableconv2d_pack8.h: In function 'void ncnn::deformableconv2d_pack8_avx(const std::vector<ncnn::Mat>&, ncnn::Mat&, const ncnn::Mat&, const ncnn::Mat&, int, int, int, int, int, int, int, int, int, const ncnn::Mat&, const ncnn::Option&)':
+/build/go-stable-diffusion/ncnn/src/layer/x86/deformableconv2d_pack8.h:30:15: warning: unused variable 'size' [-Wunused-variable]
+   30 |     const int size = outw * outh;
+      |               ^~~~
+/build/go-stable-diffusion/ncnn/src/layer/x86/deformableconv2d_pack8.h:31:15: warning: unused variable 'maxk' [-Wunused-variable]
+   31 |     const int maxk = kernel_w * kernel_h;
+      |               ^~~~
+In file included from /build/go-stable-diffusion/ncnn/build/src/layer/x86/deformableconv2d_x86_avx512.cpp:42:
+/build/go-stable-diffusion/ncnn/src/layer/x86/deformableconv2d_pack4to8.h: In function 'void ncnn::deformableconv2d_pack4to8_avx(const std::vector<ncnn::Mat>&, ncnn::Mat&, const ncnn::Mat&, const ncnn::Mat&, int, int, int, int, int, int, int, int, int, const ncnn::Mat&, const ncnn::Option&)':
+/build/go-stable-diffusion/ncnn/src/layer/x86/deformableconv2d_pack4to8.h:30:15: warning: unused variable 'size' [-Wunused-variable]
+   30 |     const int size = outw * outh;
+      |               ^~~~
+/build/go-stable-diffusion/ncnn/src/layer/x86/deformableconv2d_pack4to8.h:31:15: warning: unused variable 'maxk' [-Wunused-variable]
+   31 |     const int maxk = kernel_w * kernel_h;
+      |               ^~~~
+In file included from /build/go-stable-diffusion/ncnn/build/src/layer/x86/deformableconv2d_x86_avx512.cpp:43:
+/build/go-stable-diffusion/ncnn/src/layer/x86/deformableconv2d_pack1to8.h: In function 'void ncnn::deformableconv2d_pack1to8_avx(const std::vector<ncnn::Mat>&, ncnn::Mat&, const ncnn::Mat&, const ncnn::Mat&, int, int, int, int, int, int, int, int, int, const ncnn::Mat&, const ncnn::Option&)':
+/build/go-stable-diffusion/ncnn/src/layer/x86/deformableconv2d_pack1to8.h:30:15: warning: unused variable 'size' [-Wunused-variable]
+   30 |     const int size = outw * outh;
+      |               ^~~~
+/build/go-stable-diffusion/ncnn/src/layer/x86/deformableconv2d_pack1to8.h:31:15: warning: unused variable 'maxk' [-Wunused-variable]
+   31 |     const int maxk = kernel_w * kernel_h;
+      |               ^~~~
+In file included from /build/go-stable-diffusion/ncnn/build/src/layer/x86/deformableconv2d_x86_avx512.cpp:44:
+/build/go-stable-diffusion/ncnn/src/layer/x86/deformableconv2d_pack8to4.h: In function 'void ncnn::deformableconv2d_pack8to4_avx(const std::vector<ncnn::Mat>&, ncnn::Mat&, const ncnn::Mat&, const ncnn::Mat&, int, int, int, int, int, int, int, int, int, const ncnn::Mat&, const ncnn::Option&)':
+/build/go-stable-diffusion/ncnn/src/layer/x86/deformableconv2d_pack8to4.h:30:15: warning: unused variable 'size' [-Wunused-variable]
+   30 |     const int size = outw * outh;
+      |               ^~~~
+/build/go-stable-diffusion/ncnn/src/layer/x86/deformableconv2d_pack8to4.h:31:15: warning: unused variable 'maxk' [-Wunused-variable]
+   31 |     const int maxk = kernel_w * kernel_h;
+      |               ^~~~
+In file included from /build/go-stable-diffusion/ncnn/build/src/layer/x86/deformableconv2d_x86_avx512.cpp:45:
+/build/go-stable-diffusion/ncnn/src/layer/x86/deformableconv2d_pack8to1.h: In function 'void ncnn::deformableconv2d_pack8to1_avx(const std::vector<ncnn::Mat>&, ncnn::Mat&, const ncnn::Mat&, const ncnn::Mat&, int, int, int, int, int, int, int, int, int, const ncnn::Mat&, const ncnn::Option&)':
+/build/go-stable-diffusion/ncnn/src/layer/x86/deformableconv2d_pack8to1.h:30:15: warning: unused variable 'size' [-Wunused-variable]
+   30 |     const int size = outw * outh;
+      |               ^~~~
+/build/go-stable-diffusion/ncnn/src/layer/x86/deformableconv2d_pack8to1.h:31:15: warning: unused variable 'maxk' [-Wunused-variable]
+   31 |     const int maxk = kernel_w * kernel_h;
+      |               ^~~~
+In file included from /build/go-stable-diffusion/ncnn/build/src/layer/x86/deformableconv2d_x86_avx512.cpp:48:
+/build/go-stable-diffusion/ncnn/src/layer/x86/deformableconv2d_pack16.h: In function 'void ncnn::deformableconv2d_pack16_avx512(const std::vector<ncnn::Mat>&, ncnn::Mat&, const ncnn::Mat&, const ncnn::Mat&, int, int, int, int, int, int, int, int, int, const ncnn::Mat&, const ncnn::Option&)':
+/build/go-stable-diffusion/ncnn/src/layer/x86/deformableconv2d_pack16.h:30:15: warning: unused variable 'size' [-Wunused-variable]
+   30 |     const int size = outw * outh;
+      |               ^~~~
+/build/go-stable-diffusion/ncnn/src/layer/x86/deformableconv2d_pack16.h:31:15: warning: unused variable 'maxk' [-Wunused-variable]
+   31 |     const int maxk = kernel_w * kernel_h;
+      |               ^~~~
+In file included from /build/go-stable-diffusion/ncnn/build/src/layer/x86/deformableconv2d_x86_avx512.cpp:49:
+/build/go-stable-diffusion/ncnn/src/layer/x86/deformableconv2d_pack8to16.h: In function 'void ncnn::deformableconv2d_pack8to16_avx512(const std::vector<ncnn::Mat>&, ncnn::Mat&, const ncnn::Mat&, const ncnn::Mat&, int, int, int, int, int, int, int, int, int, const ncnn::Mat&, const ncnn::Option&)':
+/build/go-stable-diffusion/ncnn/src/layer/x86/deformableconv2d_pack8to16.h:30:15: warning: unused variable 'size' [-Wunused-variable]
+   30 |     const int size = outw * outh;
+      |               ^~~~
+/build/go-stable-diffusion/ncnn/src/layer/x86/deformableconv2d_pack8to16.h:31:15: warning: unused variable 'maxk' [-Wunused-variable]
+   31 |     const int maxk = kernel_w * kernel_h;
+      |               ^~~~
+In file included from /build/go-stable-diffusion/ncnn/build/src/layer/x86/deformableconv2d_x86_avx512.cpp:50:
+/build/go-stable-diffusion/ncnn/src/layer/x86/deformableconv2d_pack4to16.h: In function 'void ncnn::deformableconv2d_pack4to16_avx512(const std::vector<ncnn::Mat>&, ncnn::Mat&, const ncnn::Mat&, const ncnn::Mat&, int, int, int, int, int, int, int, int, int, const ncnn::Mat&, const ncnn::Option&)':
+/build/go-stable-diffusion/ncnn/src/layer/x86/deformableconv2d_pack4to16.h:30:15: warning: unused variable 'size' [-Wunused-variable]
+   30 |     const int size = outw * outh;
+      |               ^~~~
+/build/go-stable-diffusion/ncnn/src/layer/x86/deformableconv2d_pack4to16.h:31:15: warning: unused variable 'maxk' [-Wunused-variable]
+   31 |     const int maxk = kernel_w * kernel_h;
+      |               ^~~~
+In file included from /build/go-stable-diffusion/ncnn/build/src/layer/x86/deformableconv2d_x86_avx512.cpp:51:
+/build/go-stable-diffusion/ncnn/src/layer/x86/deformableconv2d_pack1to16.h: In function 'void ncnn::deformableconv2d_pack1to16_avx512(const std::vector<ncnn::Mat>&, ncnn::Mat&, const ncnn::Mat&, const ncnn::Mat&, int, int, int, int, int, int, int, int, int, const ncnn::Mat&, const ncnn::Option&)':
+/build/go-stable-diffusion/ncnn/src/layer/x86/deformableconv2d_pack1to16.h:30:15: warning: unused variable 'size' [-Wunused-variable]
+   30 |     const int size = outw * outh;
+      |               ^~~~
+/build/go-stable-diffusion/ncnn/src/layer/x86/deformableconv2d_pack1to16.h:31:15: warning: unused variable 'maxk' [-Wunused-variable]
+   31 |     const int maxk = kernel_w * kernel_h;
+      |               ^~~~
+In file included from /build/go-stable-diffusion/ncnn/build/src/layer/x86/deformableconv2d_x86_fma.cpp:36:
+/build/go-stable-diffusion/ncnn/src/layer/x86/deformableconv2d_pack4.h: In function 'void ncnn::deformableconv2d_pack4_sse(const std::vector<ncnn::Mat>&, ncnn::Mat&, const ncnn::Mat&, const ncnn::Mat&, int, int, int, int, int, int, int, int, int, const ncnn::Mat&, const ncnn::Option&)':
+/build/go-stable-diffusion/ncnn/src/layer/x86/deformableconv2d_pack4.h:30:15: warning: unused variable 'size' [-Wunused-variable]
+   30 |     const int size = outw * outh;
+      |               ^~~~
+/build/go-stable-diffusion/ncnn/src/layer/x86/deformableconv2d_pack4.h:31:15: warning: unused variable 'maxk' [-Wunused-variable]
+   31 |     const int maxk = kernel_w * kernel_h;
+      |               ^~~~
+In file included from /build/go-stable-diffusion/ncnn/build/src/layer/x86/deformableconv2d_x86_avx512.cpp:52:
+/build/go-stable-diffusion/ncnn/src/layer/x86/deformableconv2d_pack16to8.h: In function 'void ncnn::deformableconv2d_pack16to8_avx512(const std::vector<ncnn::Mat>&, ncnn::Mat&, const ncnn::Mat&, const ncnn::Mat&, int, int, int, int, int, int, int, int, int, const ncnn::Mat&, const ncnn::Option&)':
+/build/go-stable-diffusion/ncnn/src/layer/x86/deformableconv2d_pack16to8.h:30:15: warning: unused variable 'size' [-Wunused-variable]
+   30 |     const int size = outw * outh;
+      |               ^~~~
+/build/go-stable-diffusion/ncnn/src/layer/x86/deformableconv2d_pack16to8.h:31:15: warning: unused variable 'maxk' [-Wunused-variable]
+   31 |     const int maxk = kernel_w * kernel_h;
+      |               ^~~~
+In file included from /build/go-stable-diffusion/ncnn/build/src/layer/x86/deformableconv2d_x86_fma.cpp:37:
+/build/go-stable-diffusion/ncnn/src/layer/x86/deformableconv2d_pack1to4.h: In function 'void ncnn::deformableconv2d_pack1to4_sse(const std::vector<ncnn::Mat>&, ncnn::Mat&, const ncnn::Mat&, const ncnn::Mat&, int, int, int, int, int, int, int, int, int, const ncnn::Mat&, const ncnn::Option&)':
+/build/go-stable-diffusion/ncnn/src/layer/x86/deformableconv2d_pack1to4.h:30:15: warning: unused variable 'size' [-Wunused-variable]
+   30 |     const int size = outw * outh;
+      |               ^~~~
+/build/go-stable-diffusion/ncnn/src/layer/x86/deformableconv2d_pack1to4.h:31:15: warning: unused variable 'maxk' [-Wunused-variable]
+   31 |     const int maxk = kernel_w * kernel_h;
+      |               ^~~~
+In file included from /build/go-stable-diffusion/ncnn/build/src/layer/x86/deformableconv2d_x86_fma.cpp:38:
+/build/go-stable-diffusion/ncnn/src/layer/x86/deformableconv2d_pack4to1.h: In function 'void ncnn::deformableconv2d_pack4to1_sse(const std::vector<ncnn::Mat>&, ncnn::Mat&, const ncnn::Mat&, const ncnn::Mat&, int, int, int, int, int, int, int, int, int, const ncnn::Mat&, const ncnn::Option&)':
+/build/go-stable-diffusion/ncnn/src/layer/x86/deformableconv2d_pack4to1.h:30:15: warning: unused variable 'size' [-Wunused-variable]
+   30 |     const int size = outw * outh;
+      |               ^~~~
+/build/go-stable-diffusion/ncnn/src/layer/x86/deformableconv2d_pack4to1.h:31:15: warning: unused variable 'maxk' [-Wunused-variable]
+   31 |     const int maxk = kernel_w * kernel_h;
+      |               ^~~~
+In file included from /build/go-stable-diffusion/ncnn/build/src/layer/x86/deformableconv2d_x86_avx512.cpp:53:
+/build/go-stable-diffusion/ncnn/src/layer/x86/deformableconv2d_pack16to4.h: In function 'void ncnn::deformableconv2d_pack16to4_avx512(const std::vector<ncnn::Mat>&, ncnn::Mat&, const ncnn::Mat&, const ncnn::Mat&, int, int, int, int, int, int, int, int, int, const ncnn::Mat&, const ncnn::Option&)':
+/build/go-stable-diffusion/ncnn/src/layer/x86/deformableconv2d_pack16to4.h:30:15: warning: unused variable 'size' [-Wunused-variable]
+   30 |     const int size = outw * outh;
+      |               ^~~~
+/build/go-stable-diffusion/ncnn/src/layer/x86/deformableconv2d_pack16to4.h:31:15: warning: unused variable 'maxk' [-Wunused-variable]
+   31 |     const int maxk = kernel_w * kernel_h;
+      |               ^~~~
+In file included from /build/go-stable-diffusion/ncnn/build/src/layer/x86/deformableconv2d_x86_fma.cpp:41:
+/build/go-stable-diffusion/ncnn/src/layer/x86/deformableconv2d_pack8.h: In function 'void ncnn::deformableconv2d_pack8_avx(const std::vector<ncnn::Mat>&, ncnn::Mat&, const ncnn::Mat&, const ncnn::Mat&, int, int, int, int, int, int, int, int, int, const ncnn::Mat&, const ncnn::Option&)':
+/build/go-stable-diffusion/ncnn/src/layer/x86/deformableconv2d_pack8.h:30:15: warning: unused variable 'size' [-Wunused-variable]
+   30 |     const int size = outw * outh;
+      |               ^~~~
+/build/go-stable-diffusion/ncnn/src/layer/x86/deformableconv2d_pack8.h:31:15: warning: unused variable 'maxk' [-Wunused-variable]
+   31 |     const int maxk = kernel_w * kernel_h;
+      |               ^~~~
+In file included from /build/go-stable-diffusion/ncnn/build/src/layer/x86/deformableconv2d_x86_avx512.cpp:54:
+/build/go-stable-diffusion/ncnn/src/layer/x86/deformableconv2d_pack16to1.h: In function 'void ncnn::deformableconv2d_pack16to1_avx512(const std::vector<ncnn::Mat>&, ncnn::Mat&, const ncnn::Mat&, const ncnn::Mat&, int, int, int, int, int, int, int, int, int, const ncnn::Mat&, const ncnn::Option&)':
+/build/go-stable-diffusion/ncnn/src/layer/x86/deformableconv2d_pack16to1.h:30:15: warning: unused variable 'size' [-Wunused-variable]
+   30 |     const int size = outw * outh;
+      |               ^~~~
+/build/go-stable-diffusion/ncnn/src/layer/x86/deformableconv2d_pack16to1.h:31:15: warning: unused variable 'maxk' [-Wunused-variable]
+   31 |     const int maxk = kernel_w * kernel_h;
+      |               ^~~~
+In file included from /build/go-stable-diffusion/ncnn/build/src/layer/x86/deformableconv2d_x86_fma.cpp:42:
+/build/go-stable-diffusion/ncnn/src/layer/x86/deformableconv2d_pack4to8.h: In function 'void ncnn::deformableconv2d_pack4to8_avx(const std::vector<ncnn::Mat>&, ncnn::Mat&, const ncnn::Mat&, const ncnn::Mat&, int, int, int, int, int, int, int, int, int, const ncnn::Mat&, const ncnn::Option&)':
+/build/go-stable-diffusion/ncnn/src/layer/x86/deformableconv2d_pack4to8.h:30:15: warning: unused variable 'size' [-Wunused-variable]
+   30 |     const int size = outw * outh;
+      |               ^~~~
+/build/go-stable-diffusion/ncnn/src/layer/x86/deformableconv2d_pack4to8.h:31:15: warning: unused variable 'maxk' [-Wunused-variable]
+   31 |     const int maxk = kernel_w * kernel_h;
+      |               ^~~~
+In file included from /build/go-stable-diffusion/ncnn/build/src/layer/x86/deformableconv2d_x86_fma.cpp:43:
+/build/go-stable-diffusion/ncnn/src/layer/x86/deformableconv2d_pack1to8.h: In function 'void ncnn::deformableconv2d_pack1to8_avx(const std::vector<ncnn::Mat>&, ncnn::Mat&, const ncnn::Mat&, const ncnn::Mat&, int, int, int, int, int, int, int, int, int, const ncnn::Mat&, const ncnn::Option&)':
+/build/go-stable-diffusion/ncnn/src/layer/x86/deformableconv2d_pack1to8.h:30:15: warning: unused variable 'size' [-Wunused-variable]
+   30 |     const int size = outw * outh;
+      |               ^~~~
+/build/go-stable-diffusion/ncnn/src/layer/x86/deformableconv2d_pack1to8.h:31:15: warning: unused variable 'maxk' [-Wunused-variable]
+   31 |     const int maxk = kernel_w * kernel_h;
+      |               ^~~~
+/build/go-stable-diffusion/ncnn/build/src/layer/x86/deformableconv2d_x86_avx512.cpp: In member function 'virtual int ncnn::DeformableConv2D_x86_avx512::forward(const std::vector<ncnn::Mat>&, std::vector<ncnn::Mat>&, const ncnn::Option&) const':
+/build/go-stable-diffusion/ncnn/build/src/layer/x86/deformableconv2d_x86_avx512.cpp:270:15: warning: unused variable 'num_input' [-Wunused-variable]
+  270 |     const int num_input = channels * elempack;
+      |               ^~~~~~~~~
+In file included from /build/go-stable-diffusion/ncnn/build/src/layer/x86/deformableconv2d_x86_fma.cpp:44:
+/build/go-stable-diffusion/ncnn/src/layer/x86/deformableconv2d_pack8to4.h: In function 'void ncnn::deformableconv2d_pack8to4_avx(const std::vector<ncnn::Mat>&, ncnn::Mat&, const ncnn::Mat&, const ncnn::Mat&, int, int, int, int, int, int, int, int, int, const ncnn::Mat&, const ncnn::Option&)':
+/build/go-stable-diffusion/ncnn/src/layer/x86/deformableconv2d_pack8to4.h:30:15: warning: unused variable 'size' [-Wunused-variable]
+   30 |     const int size = outw * outh;
+      |               ^~~~
+/build/go-stable-diffusion/ncnn/src/layer/x86/deformableconv2d_pack8to4.h:31:15: warning: unused variable 'maxk' [-Wunused-variable]
+   31 |     const int maxk = kernel_w * kernel_h;
+      |               ^~~~
+In file included from /build/go-stable-diffusion/ncnn/build/src/layer/x86/deformableconv2d_x86_fma.cpp:45:
+/build/go-stable-diffusion/ncnn/src/layer/x86/deformableconv2d_pack8to1.h: In function 'void ncnn::deformableconv2d_pack8to1_avx(const std::vector<ncnn::Mat>&, ncnn::Mat&, const ncnn::Mat&, const ncnn::Mat&, int, int, int, int, int, int, int, int, int, const ncnn::Mat&, const ncnn::Option&)':
+/build/go-stable-diffusion/ncnn/src/layer/x86/deformableconv2d_pack8to1.h:30:15: warning: unused variable 'size' [-Wunused-variable]
+   30 |     const int size = outw * outh;
+      |               ^~~~
+/build/go-stable-diffusion/ncnn/src/layer/x86/deformableconv2d_pack8to1.h:31:15: warning: unused variable 'maxk' [-Wunused-variable]
+   31 |     const int maxk = kernel_w * kernel_h;
+      |               ^~~~
+/build/go-stable-diffusion/ncnn/build/src/layer/x86/deformableconv2d_x86_fma.cpp: In member function 'virtual int ncnn::DeformableConv2D_x86_fma::forward(const std::vector<ncnn::Mat>&, std::vector<ncnn::Mat>&, const ncnn::Option&) const':
+/build/go-stable-diffusion/ncnn/build/src/layer/x86/deformableconv2d_x86_fma.cpp:270:15: warning: unused variable 'num_input' [-Wunused-variable]
+  270 |     const int num_input = channels * elempack;
+      |               ^~~~~~~~~
+[ 89%] Building CXX object src/CMakeFiles/ncnn.dir/layer/gridsample.cpp.o
+[ 90%] Building CXX object src/CMakeFiles/ncnn.dir/layer/cumulativesum.cpp.o
+In file included from /build/go-stable-diffusion/ncnn/build/src/layer/x86/deformableconv2d_x86_avx.cpp:36:
+/build/go-stable-diffusion/ncnn/src/layer/x86/deformableconv2d_pack4.h: In function 'void ncnn::deformableconv2d_pack4_sse(const std::vector<ncnn::Mat>&, ncnn::Mat&, const ncnn::Mat&, const ncnn::Mat&, int, int, int, int, int, int, int, int, int, const ncnn::Mat&, const ncnn::Option&)':
+/build/go-stable-diffusion/ncnn/src/layer/x86/deformableconv2d_pack4.h:30:15: warning: unused variable 'size' [-Wunused-variable]
+   30 |     const int size = outw * outh;
+      |               ^~~~
+/build/go-stable-diffusion/ncnn/src/layer/x86/deformableconv2d_pack4.h:31:15: warning: unused variable 'maxk' [-Wunused-variable]
+   31 |     const int maxk = kernel_w * kernel_h;
+      |               ^~~~
+In file included from /build/go-stable-diffusion/ncnn/build/src/layer/x86/deformableconv2d_x86_avx.cpp:37:
+/build/go-stable-diffusion/ncnn/src/layer/x86/deformableconv2d_pack1to4.h: In function 'void ncnn::deformableconv2d_pack1to4_sse(const std::vector<ncnn::Mat>&, ncnn::Mat&, const ncnn::Mat&, const ncnn::Mat&, int, int, int, int, int, int, int, int, int, const ncnn::Mat&, const ncnn::Option&)':
+/build/go-stable-diffusion/ncnn/src/layer/x86/deformableconv2d_pack1to4.h:30:15: warning: unused variable 'size' [-Wunused-variable]
+   30 |     const int size = outw * outh;
+      |               ^~~~
+/build/go-stable-diffusion/ncnn/src/layer/x86/deformableconv2d_pack1to4.h:31:15: warning: unused variable 'maxk' [-Wunused-variable]
+   31 |     const int maxk = kernel_w * kernel_h;
+      |               ^~~~
+In file included from /build/go-stable-diffusion/ncnn/build/src/layer/x86/deformableconv2d_x86_avx.cpp:38:
+/build/go-stable-diffusion/ncnn/src/layer/x86/deformableconv2d_pack4to1.h: In function 'void ncnn::deformableconv2d_pack4to1_sse(const std::vector<ncnn::Mat>&, ncnn::Mat&, const ncnn::Mat&, const ncnn::Mat&, int, int, int, int, int, int, int, int, int, const ncnn::Mat&, const ncnn::Option&)':
+/build/go-stable-diffusion/ncnn/src/layer/x86/deformableconv2d_pack4to1.h:30:15: warning: unused variable 'size' [-Wunused-variable]
+   30 |     const int size = outw * outh;
+      |               ^~~~
+/build/go-stable-diffusion/ncnn/src/layer/x86/deformableconv2d_pack4to1.h:31:15: warning: unused variable 'maxk' [-Wunused-variable]
+   31 |     const int maxk = kernel_w * kernel_h;
+      |               ^~~~
+In file included from /build/go-stable-diffusion/ncnn/build/src/layer/x86/deformableconv2d_x86_avx.cpp:41:
+/build/go-stable-diffusion/ncnn/src/layer/x86/deformableconv2d_pack8.h: In function 'void ncnn::deformableconv2d_pack8_avx(const std::vector<ncnn::Mat>&, ncnn::Mat&, const ncnn::Mat&, const ncnn::Mat&, int, int, int, int, int, int, int, int, int, const ncnn::Mat&, const ncnn::Option&)':
+/build/go-stable-diffusion/ncnn/src/layer/x86/deformableconv2d_pack8.h:30:15: warning: unused variable 'size' [-Wunused-variable]
+   30 |     const int size = outw * outh;
+      |               ^~~~
+/build/go-stable-diffusion/ncnn/src/layer/x86/deformableconv2d_pack8.h:31:15: warning: unused variable 'maxk' [-Wunused-variable]
+   31 |     const int maxk = kernel_w * kernel_h;
+      |               ^~~~
+In file included from /build/go-stable-diffusion/ncnn/build/src/layer/x86/deformableconv2d_x86_avx.cpp:42:
+/build/go-stable-diffusion/ncnn/src/layer/x86/deformableconv2d_pack4to8.h: In function 'void ncnn::deformableconv2d_pack4to8_avx(const std::vector<ncnn::Mat>&, ncnn::Mat&, const ncnn::Mat&, const ncnn::Mat&, int, int, int, int, int, int, int, int, int, const ncnn::Mat&, const ncnn::Option&)':
+/build/go-stable-diffusion/ncnn/src/layer/x86/deformableconv2d_pack4to8.h:30:15: warning: unused variable 'size' [-Wunused-variable]
+   30 |     const int size = outw * outh;
+      |               ^~~~
+/build/go-stable-diffusion/ncnn/src/layer/x86/deformableconv2d_pack4to8.h:31:15: warning: unused variable 'maxk' [-Wunused-variable]
+   31 |     const int maxk = kernel_w * kernel_h;
+      |               ^~~~
+In file included from /build/go-stable-diffusion/ncnn/build/src/layer/x86/deformableconv2d_x86_avx.cpp:43:
+/build/go-stable-diffusion/ncnn/src/layer/x86/deformableconv2d_pack1to8.h: In function 'void ncnn::deformableconv2d_pack1to8_avx(const std::vector<ncnn::Mat>&, ncnn::Mat&, const ncnn::Mat&, const ncnn::Mat&, int, int, int, int, int, int, int, int, int, const ncnn::Mat&, const ncnn::Option&)':
+/build/go-stable-diffusion/ncnn/src/layer/x86/deformableconv2d_pack1to8.h:30:15: warning: unused variable 'size' [-Wunused-variable]
+   30 |     const int size = outw * outh;
+      |               ^~~~
+/build/go-stable-diffusion/ncnn/src/layer/x86/deformableconv2d_pack1to8.h:31:15: warning: unused variable 'maxk' [-Wunused-variable]
+   31 |     const int maxk = kernel_w * kernel_h;
+      |               ^~~~
+In file included from /build/go-stable-diffusion/ncnn/build/src/layer/x86/deformableconv2d_x86_avx.cpp:44:
+/build/go-stable-diffusion/ncnn/src/layer/x86/deformableconv2d_pack8to4.h: In function 'void ncnn::deformableconv2d_pack8to4_avx(const std::vector<ncnn::Mat>&, ncnn::Mat&, const ncnn::Mat&, const ncnn::Mat&, int, int, int, int, int, int, int, int, int, const ncnn::Mat&, const ncnn::Option&)':
+/build/go-stable-diffusion/ncnn/src/layer/x86/deformableconv2d_pack8to4.h:30:15: warning: unused variable 'size' [-Wunused-variable]
+   30 |     const int size = outw * outh;
+      |               ^~~~
+/build/go-stable-diffusion/ncnn/src/layer/x86/deformableconv2d_pack8to4.h:31:15: warning: unused variable 'maxk' [-Wunused-variable]
+   31 |     const int maxk = kernel_w * kernel_h;
+      |               ^~~~
+In file included from /build/go-stable-diffusion/ncnn/build/src/layer/x86/deformableconv2d_x86_avx.cpp:45:
+/build/go-stable-diffusion/ncnn/src/layer/x86/deformableconv2d_pack8to1.h: In function 'void ncnn::deformableconv2d_pack8to1_avx(const std::vector<ncnn::Mat>&, ncnn::Mat&, const ncnn::Mat&, const ncnn::Mat&, int, int, int, int, int, int, int, int, int, const ncnn::Mat&, const ncnn::Option&)':
+/build/go-stable-diffusion/ncnn/src/layer/x86/deformableconv2d_pack8to1.h:30:15: warning: unused variable 'size' [-Wunused-variable]
+   30 |     const int size = outw * outh;
+      |               ^~~~
+/build/go-stable-diffusion/ncnn/src/layer/x86/deformableconv2d_pack8to1.h:31:15: warning: unused variable 'maxk' [-Wunused-variable]
+   31 |     const int maxk = kernel_w * kernel_h;
+      |               ^~~~
+/build/go-stable-diffusion/ncnn/build/src/layer/x86/deformableconv2d_x86_avx.cpp: In member function 'virtual int ncnn::DeformableConv2D_x86_avx::forward(const std::vector<ncnn::Mat>&, std::vector<ncnn::Mat>&, const ncnn::Option&) const':
+/build/go-stable-diffusion/ncnn/build/src/layer/x86/deformableconv2d_x86_avx.cpp:270:15: warning: unused variable 'num_input' [-Wunused-variable]
+  270 |     const int num_input = channels * elempack;
+      |               ^~~~~~~~~
+[ 90%] Building CXX object src/CMakeFiles/ncnn.dir/layer/copyto.cpp.o
+[ 90%] Linking CXX static library libncnn.a
+make[5]: Leaving directory '/build/go-stable-diffusion/ncnn/build'
+[ 90%] Built target ncnn
+make[5]: Entering directory '/build/go-stable-diffusion/ncnn/build'
+make[5]: Entering directory '/build/go-stable-diffusion/ncnn/build'
+make[5]: Entering directory '/build/go-stable-diffusion/ncnn/build'
+make[5]: Entering directory '/build/go-stable-diffusion/ncnn/build'
+make[5]: Entering directory '/build/go-stable-diffusion/ncnn/build'
+make[5]: Entering directory '/build/go-stable-diffusion/ncnn/build'
+make[5]: Entering directory '/build/go-stable-diffusion/ncnn/build'
+Scanning dependencies of target benchncnn
+make[5]: Leaving directory '/build/go-stable-diffusion/ncnn/build'
+make[5]: Entering directory '/build/go-stable-diffusion/ncnn/build'
+make[5]: Entering directory '/build/go-stable-diffusion/ncnn/build'
+Scanning dependencies of target yolox
+Scanning dependencies of target mobilenetv2ssdlite
+make[5]: Leaving directory '/build/go-stable-diffusion/ncnn/build'
+make[5]: Leaving directory '/build/go-stable-diffusion/ncnn/build'
+Scanning dependencies of target yolov5_pnnx
+Scanning dependencies of target mobilenetssd
+Scanning dependencies of target yolov7
+Scanning dependencies of target squeezenet_c_api
+make[5]: Leaving directory '/build/go-stable-diffusion/ncnn/build'
+make[5]: Entering directory '/build/go-stable-diffusion/ncnn/build'
+make[5]: Leaving directory '/build/go-stable-diffusion/ncnn/build'
+make[5]: Leaving directory '/build/go-stable-diffusion/ncnn/build'
+make[5]: Leaving directory '/build/go-stable-diffusion/ncnn/build'
+make[5]: Entering directory '/build/go-stable-diffusion/ncnn/build'
+Scanning dependencies of target yolov7_pnnx
+make[5]: Leaving directory '/build/go-stable-diffusion/ncnn/build'
+make[5]: Entering directory '/build/go-stable-diffusion/ncnn/build'
+make[5]: Entering directory '/build/go-stable-diffusion/ncnn/build'
+make[5]: Entering directory '/build/go-stable-diffusion/ncnn/build'
+[ 90%] Building CXX object benchmark/CMakeFiles/benchncnn.dir/benchncnn.cpp.o
+[ 90%] Building CXX object examples/CMakeFiles/mobilenetv2ssdlite.dir/mobilenetv2ssdlite.cpp.o
+make[5]: Entering directory '/build/go-stable-diffusion/ncnn/build'
+[ 90%] Building CXX object examples/CMakeFiles/yolov5_pnnx.dir/yolov5_pnnx.cpp.o
+[ 90%] Building CXX object examples/CMakeFiles/yolox.dir/yolox.cpp.o
+make[5]: Entering directory '/build/go-stable-diffusion/ncnn/build'
+[ 90%] Building CXX object examples/CMakeFiles/squeezenet_c_api.dir/squeezenet_c_api.cpp.o
+[ 90%] Building CXX object examples/CMakeFiles/yolov7.dir/yolov7.cpp.o
+[ 90%] Building CXX object examples/CMakeFiles/yolov7_pnnx.dir/yolov7_pnnx.cpp.o
+[ 91%] Building CXX object examples/CMakeFiles/mobilenetssd.dir/mobilenetssd.cpp.o
+[ 91%] Linking CXX executable benchncnn
+[ 91%] Linking CXX executable mobilenetv2ssdlite
+[ 92%] Linking CXX executable squeezenet_c_api
+make[5]: Leaving directory '/build/go-stable-diffusion/ncnn/build'
+[ 92%] Built target benchncnn
+make[5]: Entering directory '/build/go-stable-diffusion/ncnn/build'
+Scanning dependencies of target yolov3
+make[5]: Leaving directory '/build/go-stable-diffusion/ncnn/build'
+make[5]: Entering directory '/build/go-stable-diffusion/ncnn/build'
+[ 93%] Building CXX object examples/CMakeFiles/yolov3.dir/yolov3.cpp.o
+[ 93%] Linking CXX executable mobilenetssd
+[ 94%] Linking CXX executable yolox
+[ 95%] Linking CXX executable yolov5_pnnx
+[ 95%] Linking CXX executable yolov7
+[ 95%] Linking CXX executable yolov7_pnnx
+make[5]: Leaving directory '/build/go-stable-diffusion/ncnn/build'
+[ 95%] Built target squeezenet_c_api
+make[5]: Entering directory '/build/go-stable-diffusion/ncnn/build'
+Scanning dependencies of target fasterrcnn
+make[5]: Leaving directory '/build/go-stable-diffusion/ncnn/build'
+make[5]: Leaving directory '/build/go-stable-diffusion/ncnn/build'
+make[5]: Entering directory '/build/go-stable-diffusion/ncnn/build'
+make[5]: Leaving directory '/build/go-stable-diffusion/ncnn/build'
+[ 95%] Built target mobilenetssd
+make[5]: Entering directory '/build/go-stable-diffusion/ncnn/build'
+[ 95%] Building CXX object examples/CMakeFiles/fasterrcnn.dir/fasterrcnn.cpp.o
+[ 95%] Built target mobilenetv2ssdlite
+Scanning dependencies of target rvm
+make[5]: Leaving directory '/build/go-stable-diffusion/ncnn/build'
+make[5]: Entering directory '/build/go-stable-diffusion/ncnn/build'
+make[5]: Entering directory '/build/go-stable-diffusion/ncnn/build'
+Scanning dependencies of target yolov2
+make[5]: Leaving directory '/build/go-stable-diffusion/ncnn/build'
+make[5]: Entering directory '/build/go-stable-diffusion/ncnn/build'
+[ 95%] Building CXX object examples/CMakeFiles/rvm.dir/rvm.cpp.o
+[ 95%] Building CXX object examples/CMakeFiles/yolov2.dir/yolov2.cpp.o
+make[5]: Leaving directory '/build/go-stable-diffusion/ncnn/build'
+[ 95%] Built target yolox
+make[5]: Entering directory '/build/go-stable-diffusion/ncnn/build'
+Scanning dependencies of target scrfd
+make[5]: Leaving directory '/build/go-stable-diffusion/ncnn/build'
+make[5]: Entering directory '/build/go-stable-diffusion/ncnn/build'
+make[5]: Leaving directory '/build/go-stable-diffusion/ncnn/build'
+[ 95%] Linking CXX executable yolov3
+[ 95%] Building CXX object examples/CMakeFiles/scrfd.dir/scrfd.cpp.o
+[ 95%] Built target yolov5_pnnx
+make[5]: Entering directory '/build/go-stable-diffusion/ncnn/build'
+Scanning dependencies of target scrfd_crowdhuman
+make[5]: Leaving directory '/build/go-stable-diffusion/ncnn/build'
+make[5]: Entering directory '/build/go-stable-diffusion/ncnn/build'
+[ 95%] Building CXX object examples/CMakeFiles/scrfd_crowdhuman.dir/scrfd_crowdhuman.cpp.o
+make[5]: Leaving directory '/build/go-stable-diffusion/ncnn/build'
+[ 95%] Built target yolov7
+make[5]: Entering directory '/build/go-stable-diffusion/ncnn/build'
+Scanning dependencies of target rfcn
+make[5]: Leaving directory '/build/go-stable-diffusion/ncnn/build'
+make[5]: Entering directory '/build/go-stable-diffusion/ncnn/build'
+[ 95%] Building CXX object examples/CMakeFiles/rfcn.dir/rfcn.cpp.o
+make[5]: Leaving directory '/build/go-stable-diffusion/ncnn/build'
+[ 95%] Built target yolov7_pnnx
+make[5]: Entering directory '/build/go-stable-diffusion/ncnn/build'
+Scanning dependencies of target squeezenet
+make[5]: Leaving directory '/build/go-stable-diffusion/ncnn/build'
+make[5]: Entering directory '/build/go-stable-diffusion/ncnn/build'
+[ 95%] Building CXX object examples/CMakeFiles/squeezenet.dir/squeezenet.cpp.o
+make[5]: Leaving directory '/build/go-stable-diffusion/ncnn/build'
+[ 95%] Built target yolov3
+make[5]: Entering directory '/build/go-stable-diffusion/ncnn/build'
+Scanning dependencies of target squeezenetssd
+make[5]: Leaving directory '/build/go-stable-diffusion/ncnn/build'
+make[5]: Entering directory '/build/go-stable-diffusion/ncnn/build'
+[ 95%] Building CXX object examples/CMakeFiles/squeezenetssd.dir/squeezenetssd.cpp.o
+[ 95%] Linking CXX executable rvm
+[ 95%] Linking CXX executable yolov2
+[ 95%] Linking CXX executable fasterrcnn
+[ 95%] Linking CXX executable squeezenet
+[ 96%] Linking CXX executable rfcn
+[ 96%] Linking CXX executable scrfd
+[ 96%] Linking CXX executable scrfd_crowdhuman
+make[5]: Leaving directory '/build/go-stable-diffusion/ncnn/build'
+make[5]: Leaving directory '/build/go-stable-diffusion/ncnn/build'
+[ 96%] Built target yolov2
+make[5]: Entering directory '/build/go-stable-diffusion/ncnn/build'
+[ 96%] Built target rvm
+make[5]: Entering directory '/build/go-stable-diffusion/ncnn/build'
+Scanning dependencies of target shufflenetv2
+make[5]: Leaving directory '/build/go-stable-diffusion/ncnn/build'
+make[5]: Entering directory '/build/go-stable-diffusion/ncnn/build'
+Scanning dependencies of target simplepose
+make[5]: Leaving directory '/build/go-stable-diffusion/ncnn/build'
+make[5]: Entering directory '/build/go-stable-diffusion/ncnn/build'
+[ 97%] Building CXX object examples/CMakeFiles/shufflenetv2.dir/shufflenetv2.cpp.o
+[ 97%] Linking CXX executable squeezenetssd
+[ 97%] Building CXX object examples/CMakeFiles/simplepose.dir/simplepose.cpp.o
+make[5]: Leaving directory '/build/go-stable-diffusion/ncnn/build'
+[ 97%] Built target fasterrcnn
+make[5]: Leaving directory '/build/go-stable-diffusion/ncnn/build'
+make[5]: Entering directory '/build/go-stable-diffusion/ncnn/build'
+[ 97%] Built target squeezenet
+make[5]: Entering directory '/build/go-stable-diffusion/ncnn/build'
+Scanning dependencies of target retinaface
+make[5]: Leaving directory '/build/go-stable-diffusion/ncnn/build'
+make[5]: Entering directory '/build/go-stable-diffusion/ncnn/build'
+make[5]: Leaving directory '/build/go-stable-diffusion/ncnn/build'
+[ 97%] Building CXX object examples/CMakeFiles/retinaface.dir/retinaface.cpp.o
+Scanning dependencies of target peleenetssd_seg
+make[5]: Leaving directory '/build/go-stable-diffusion/ncnn/build'
+make[5]: Entering directory '/build/go-stable-diffusion/ncnn/build'
+[ 97%] Built target scrfd
+[ 97%] Building CXX object examples/CMakeFiles/peleenetssd_seg.dir/peleenetssd_seg.cpp.o
+make[5]: Leaving directory '/build/go-stable-diffusion/ncnn/build'
+make[5]: Entering directory '/build/go-stable-diffusion/ncnn/build'
+[ 97%] Built target scrfd_crowdhuman
+make[5]: Entering directory '/build/go-stable-diffusion/ncnn/build'
+Scanning dependencies of target yolact
+make[5]: Leaving directory '/build/go-stable-diffusion/ncnn/build'
+make[5]: Entering directory '/build/go-stable-diffusion/ncnn/build'
+make[5]: Leaving directory '/build/go-stable-diffusion/ncnn/build'
+[ 97%] Building CXX object examples/CMakeFiles/yolact.dir/yolact.cpp.o
+Scanning dependencies of target nanodet
+make[5]: Leaving directory '/build/go-stable-diffusion/ncnn/build'
+make[5]: Entering directory '/build/go-stable-diffusion/ncnn/build'
+[ 97%] Built target rfcn
+make[5]: Entering directory '/build/go-stable-diffusion/ncnn/build'
+[ 97%] Building CXX object examples/CMakeFiles/nanodet.dir/nanodet.cpp.o
+Scanning dependencies of target yolov5
+make[5]: Leaving directory '/build/go-stable-diffusion/ncnn/build'
+make[5]: Entering directory '/build/go-stable-diffusion/ncnn/build'
+[ 97%] Building CXX object examples/CMakeFiles/yolov5.dir/yolov5.cpp.o
+make[5]: Leaving directory '/build/go-stable-diffusion/ncnn/build'
+[ 97%] Built target squeezenetssd
+make[5]: Entering directory '/build/go-stable-diffusion/ncnn/build'
+Scanning dependencies of target nanodetplus_pnnx
+make[5]: Leaving directory '/build/go-stable-diffusion/ncnn/build'
+make[5]: Entering directory '/build/go-stable-diffusion/ncnn/build'
+[ 97%] Building CXX object examples/CMakeFiles/nanodetplus_pnnx.dir/nanodetplus_pnnx.cpp.o
+[ 97%] Linking CXX executable shufflenetv2
+[ 97%] Linking CXX executable simplepose
+make[5]: Leaving directory '/build/go-stable-diffusion/ncnn/build'
+[ 97%] Built target shufflenetv2
+make[5]: Entering directory '/build/go-stable-diffusion/ncnn/build'
+Scanning dependencies of target yolov4
+make[5]: Leaving directory '/build/go-stable-diffusion/ncnn/build'
+make[5]: Entering directory '/build/go-stable-diffusion/ncnn/build'
+[ 97%] Linking CXX executable peleenetssd_seg
+[ 97%] Building CXX object examples/CMakeFiles/yolov4.dir/yolov4.cpp.o
+make[5]: Leaving directory '/build/go-stable-diffusion/ncnn/build'
+[ 98%] Linking CXX executable nanodet
+[ 98%] Built target simplepose
+make[5]: Entering directory '/build/go-stable-diffusion/ncnn/build'
+Scanning dependencies of target p2pnet
+make[5]: Leaving directory '/build/go-stable-diffusion/ncnn/build'
+[ 98%] Linking CXX executable yolact
+[ 98%] Linking CXX executable yolov5
+make[5]: Entering directory '/build/go-stable-diffusion/ncnn/build'
+[ 99%] Building CXX object examples/CMakeFiles/p2pnet.dir/p2pnet.cpp.o
+[ 99%] Linking CXX executable retinaface
+[ 99%] Linking CXX executable nanodetplus_pnnx
+make[5]: Leaving directory '/build/go-stable-diffusion/ncnn/build'
+[ 99%] Built target peleenetssd_seg
+make[5]: Entering directory '/build/go-stable-diffusion/ncnn/build'
+Scanning dependencies of target ncnnoptimize
+make[5]: Leaving directory '/build/go-stable-diffusion/ncnn/build'
+make[5]: Entering directory '/build/go-stable-diffusion/ncnn/build'
+[ 99%] Building CXX object tools/CMakeFiles/ncnnoptimize.dir/ncnnoptimize.cpp.o
+make[5]: Leaving directory '/build/go-stable-diffusion/ncnn/build'
+[ 99%] Built target nanodet
+make[5]: Entering directory '/build/go-stable-diffusion/ncnn/build'
+Scanning dependencies of target ncnn2mem
+make[5]: Leaving directory '/build/go-stable-diffusion/ncnn/build'
+make[5]: Entering directory '/build/go-stable-diffusion/ncnn/build'
+make[5]: Leaving directory '/build/go-stable-diffusion/ncnn/build'
+make[5]: Leaving directory '/build/go-stable-diffusion/ncnn/build'
+[ 99%] Building CXX object tools/CMakeFiles/ncnn2mem.dir/ncnn2mem.cpp.o
+[ 99%] Built target yolact
+make[5]: Entering directory '/build/go-stable-diffusion/ncnn/build'
+[ 99%] Built target yolov5
+make[5]: Entering directory '/build/go-stable-diffusion/ncnn/build'
+Scanning dependencies of target ncnn2int8
+make[5]: Leaving directory '/build/go-stable-diffusion/ncnn/build'
+make[5]: Entering directory '/build/go-stable-diffusion/ncnn/build'
+Scanning dependencies of target ncnn2table
+make[5]: Leaving directory '/build/go-stable-diffusion/ncnn/build'
+make[5]: Entering directory '/build/go-stable-diffusion/ncnn/build'
+[ 99%] Building CXX object tools/quantize/CMakeFiles/ncnn2int8.dir/ncnn2int8.cpp.o
+[100%] Building CXX object tools/quantize/CMakeFiles/ncnn2table.dir/ncnn2table.cpp.o
+[100%] Linking CXX executable yolov4
+make[5]: Leaving directory '/build/go-stable-diffusion/ncnn/build'
+[100%] Built target retinaface
+[100%] Building CXX object tools/quantize/CMakeFiles/ncnn2table.dir/imreadwrite.cpp.o
+make[5]: Leaving directory '/build/go-stable-diffusion/ncnn/build'
+[100%] Built target nanodetplus_pnnx
+[100%] Linking CXX executable ncnn2mem
+[100%] Linking CXX executable p2pnet
+make[5]: Leaving directory '/build/go-stable-diffusion/ncnn/build'
+[100%] Built target ncnn2mem
+make[5]: Leaving directory '/build/go-stable-diffusion/ncnn/build'
+[100%] Built target yolov4
+make[5]: Leaving directory '/build/go-stable-diffusion/ncnn/build'
+[100%] Built target p2pnet
+[100%] Linking CXX executable ncnn2int8
+make[5]: Leaving directory '/build/go-stable-diffusion/ncnn/build'
+[100%] Built target ncnn2int8
+[100%] Linking CXX executable ncnnoptimize
+make[5]: Leaving directory '/build/go-stable-diffusion/ncnn/build'
+[100%] Built target ncnnoptimize
+[100%] Linking CXX executable ncnn2table
+make[5]: Leaving directory '/build/go-stable-diffusion/ncnn/build'
+[100%] Built target ncnn2table
+make[4]: Leaving directory '/build/go-stable-diffusion/ncnn/build'
+make[3]: Leaving directory '/build/go-stable-diffusion/ncnn/build'
+cp -rf overrides/* stable-diffusion/x86/vs2019_opencv-mobile_ncnn-dll_demo/vs2019_opencv-mobile_ncnn-dll_demo/
+g++ -I./ncnn -I./ncnn/src -I./ncnn/build/src/ -I. -I./stable-diffusion/x86/vs2019_opencv-mobile_ncnn-dll_demo/vs2019_opencv-mobile_ncnn-dll_demo  -O3 -DNDEBUG -std=c++17 -fPIC -Wall -Wextra -Wpedantic -Wcast-qual -Wno-unused-function stablediffusion.cpp -o stablediffusion.o -c 
+In file included from stablediffusion.cpp:14:
+./stable-diffusion/x86/vs2019_opencv-mobile_ncnn-dll_demo/vs2019_opencv-mobile_ncnn-dll_demo/diffusion_slover.cpp: In member function 'ncnn::Mat DiffusionSlover::sampler_txt2img(int, int, ncnn::Mat&, ncnn::Mat&)':
+./stable-diffusion/x86/vs2019_opencv-mobile_ncnn-dll_demo/vs2019_opencv-mobile_ncnn-dll_demo/diffusion_slover.cpp:282:21: warning: comparison of integer expressions of different signedness: 'int' and 'std::vector<float>::size_type' {aka 'long unsigned int'} [-Wsign-compare]
+  282 |   for (int i = 0; i < sigma.size() - 1; i++) {
+      |                   ~~^~~~~~~~~~~~~~~~~~
+./stable-diffusion/x86/vs2019_opencv-mobile_ncnn-dll_demo/vs2019_opencv-mobile_ncnn-dll_demo/diffusion_slover.cpp:283:22: warning: format '%d' expects argument of type 'int', but argument 3 has type 'std::vector<float>::size_type' {aka 'long unsigned int'} [-Wformat=]
+  283 |    printf("step:%2d/%d\t", i + 1, sigma.size() - 1);
+      |                     ~^            ~~~~~~~~~~~~~~~~
+      |                      |                         |
+      |                      int                       std::vector<float>::size_type {aka long unsigned int}
+      |                     %ld
+./stable-diffusion/x86/vs2019_opencv-mobile_ncnn-dll_demo/vs2019_opencv-mobile_ncnn-dll_demo/diffusion_slover.cpp: In member function 'ncnn::Mat DiffusionSlover::sampler_img2img(int, int, ncnn::Mat&, ncnn::Mat&, std::vector<ncnn::Mat>&)':
+./stable-diffusion/x86/vs2019_opencv-mobile_ncnn-dll_demo/vs2019_opencv-mobile_ncnn-dll_demo/diffusion_slover.cpp:419:21: warning: comparison of integer expressions of different signedness: 'int' and 'std::vector<float>::size_type' {aka 'long unsigned int'} [-Wsign-compare]
+  419 |   for (int i = 0; i < sub_sigma.size() - 1; i++) {
+      |                   ~~^~~~~~~~~~~~~~~~~~~~~~
+./stable-diffusion/x86/vs2019_opencv-mobile_ncnn-dll_demo/vs2019_opencv-mobile_ncnn-dll_demo/diffusion_slover.cpp:420:22: warning: format '%d' expects argument of type 'int', but argument 3 has type 'std::vector<float>::size_type' {aka 'long unsigned int'} [-Wformat=]
+  420 |    printf("step:%2d/%d\t", i+1, sub_sigma.size()-1);
+      |                     ~^          ~~~~~~~~~~~~~~~~~~
+      |                      |                          |
+      |                      int                        std::vector<float>::size_type {aka long unsigned int}
+      |                     %ld
+In file included from stablediffusion.cpp:17:
+./stable-diffusion/x86/vs2019_opencv-mobile_ncnn-dll_demo/vs2019_opencv-mobile_ncnn-dll_demo/prompt_slover.cpp: In member function 'ncnn::Mat PromptSlover::get_conditioning(std::string&)':
+./stable-diffusion/x86/vs2019_opencv-mobile_ncnn-dll_demo/vs2019_opencv-mobile_ncnn-dll_demo/prompt_slover.cpp:58:43: warning: comparison of integer expressions of different signedness: 'int' and 'std::vector<std::vector<int> >::size_type' {aka 'long unsigned int'} [-Wsign-compare]
+   58 |   for (int it_tokenized = 0; it_tokenized < tokenized.size(); it_tokenized++) {
+      |                              ~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~
+./stable-diffusion/x86/vs2019_opencv-mobile_ncnn-dll_demo/vs2019_opencv-mobile_ncnn-dll_demo/prompt_slover.cpp:63:13: warning: comparison of integer expressions of different signedness: 'int' and 'std::vector<int>::size_type' {aka 'long unsigned int'} [-Wsign-compare]
+   63 |    while (i < tokens.size()) {
+      |           ~~^~~~~~~~~~~~~~~
+./stable-diffusion/x86/vs2019_opencv-mobile_ncnn-dll_demo/vs2019_opencv-mobile_ncnn-dll_demo/prompt_slover.cpp: In member function 'std::vector<std::pair<std::__cxx11::basic_string<char>, float> > PromptSlover::parse_prompt_attention(std::string&)':
+./stable-diffusion/x86/vs2019_opencv-mobile_ncnn-dll_demo/vs2019_opencv-mobile_ncnn-dll_demo/prompt_slover.cpp:183:41: warning: comparison of integer expressions of different signedness: 'int' and 'std::vector<std::pair<std::__cxx11::basic_string<char>, float> >::size_type' {aka 'long unsigned int'} [-Wsign-compare]
+  183 |    for (int p = round_brackets.top(); p < res.size(); p++) {
+      |                                       ~~^~~~~~~~~~~~
+./stable-diffusion/x86/vs2019_opencv-mobile_ncnn-dll_demo/vs2019_opencv-mobile_ncnn-dll_demo/prompt_slover.cpp:189:42: warning: comparison of integer expressions of different signedness: 'int' and 'std::vector<std::pair<std::__cxx11::basic_string<char>, float> >::size_type' {aka 'long unsigned int'} [-Wsign-compare]
+  189 |    for (int p = square_brackets.top(); p < res.size(); p++) {
+      |                                        ~~^~~~~~~~~~~~
+./stable-diffusion/x86/vs2019_opencv-mobile_ncnn-dll_demo/vs2019_opencv-mobile_ncnn-dll_demo/prompt_slover.cpp:200:40: warning: comparison of integer expressions of different signedness: 'int' and 'std::vector<std::pair<std::__cxx11::basic_string<char>, float> >::size_type' {aka 'long unsigned int'} [-Wsign-compare]
+  200 |   for (int p = round_brackets.top(); p < res.size(); p++) {
+      |                                      ~~^~~~~~~~~~~~
+./stable-diffusion/x86/vs2019_opencv-mobile_ncnn-dll_demo/vs2019_opencv-mobile_ncnn-dll_demo/prompt_slover.cpp:207:41: warning: comparison of integer expressions of different signedness: 'int' and 'std::vector<std::pair<std::__cxx11::basic_string<char>, float> >::size_type' {aka 'long unsigned int'} [-Wsign-compare]
+  207 |   for (int p = square_brackets.top(); p < res.size(); p++) {
+      |                                       ~~^~~~~~~~~~~~
+./stable-diffusion/x86/vs2019_opencv-mobile_ncnn-dll_demo/vs2019_opencv-mobile_ncnn-dll_demo/prompt_slover.cpp:214:15: warning: comparison of integer expressions of different signedness: 'int' and 'std::vector<std::pair<std::__cxx11::basic_string<char>, float> >::size_type' {aka 'long unsigned int'} [-Wsign-compare]
+  214 |  while (i + 1 < res.size()) {
+      |         ~~~~~~^~~~~~~~~~~~
+./stable-diffusion/x86/vs2019_opencv-mobile_ncnn-dll_demo/vs2019_opencv-mobile_ncnn-dll_demo/prompt_slover.cpp: In member function 'std::vector<std::__cxx11::basic_string<char> > PromptSlover::split(std::string)':
+./stable-diffusion/x86/vs2019_opencv-mobile_ncnn-dll_demo/vs2019_opencv-mobile_ncnn-dll_demo/prompt_slover.cpp:242:11: warning: comparison of integer expressions of different signedness: 'std::__cxx11::basic_string<char>::size_type' {aka 'long unsigned int'} and 'int' [-Wsign-compare]
+  242 |   if (pos < size)
+      |       ~~~~^~~~~~
+mkdir -p unpack && cd unpack && ar x ../ncnn/build/src/libncnn.a
+ar src libstablediffusion.a stablediffusion.o unpack/absval.cpp.o unpack/allocator.cpp.o unpack/batchnorm.cpp.o unpack/batchnorm_x86.cpp.o unpack/batchnorm_x86_avx.cpp.o unpack/batchnorm_x86_avx512.cpp.o unpack/batchnorm_x86_fma.cpp.o unpack/benchmark.cpp.o unpack/bias.cpp.o unpack/bias_x86.cpp.o unpack/bias_x86_avx.cpp.o unpack/bias_x86_avx512.cpp.o unpack/bias_x86_fma.cpp.o unpack/binaryop.cpp.o unpack/binaryop_x86.cpp.o unpack/binaryop_x86_avx.cpp.o unpack/binaryop_x86_avx512.cpp.o unpack/binaryop_x86_fma.cpp.o unpack/blob.cpp.o unpack/bnll.cpp.o unpack/bnll_x86.cpp.o unpack/bnll_x86_avx.cpp.o unpack/bnll_x86_avx512.cpp.o unpack/bnll_x86_fma.cpp.o unpack/c_api.cpp.o unpack/cast.cpp.o unpack/cast_x86.cpp.o unpack/cast_x86_avx.cpp.o unpack/cast_x86_avx2.cpp.o unpack/cast_x86_avx512.cpp.o unpack/cast_x86_f16c.cpp.o unpack/cast_x86_fma.cpp.o unpack/clip.cpp.o unpack/clip_x86.cpp.o unpack/clip_x86_avx.cpp.o unpack/clip_x86_avx512.cpp.o unpack/clip_x86_fma.cpp.o unpack/command.cpp.o unpack/concat.cpp.o unpack/concat_x86.cpp.o unpack/concat_x86_avx.cpp.o unpack/concat_x86_avx512.cpp.o unpack/concat_x86_fma.cpp.o unpack/convolution.cpp.o unpack/convolution1d.cpp.o unpack/convolution1d_x86.cpp.o unpack/convolution1d_x86_avx.cpp.o unpack/convolution1d_x86_avx512.cpp.o unpack/convolution1d_x86_fma.cpp.o unpack/convolution3d.cpp.o unpack/convolution_x86.cpp.o unpack/convolution_x86_avx.cpp.o unpack/convolution_x86_avx2.cpp.o unpack/convolution_x86_avx512.cpp.o unpack/convolution_x86_avx512vnni.cpp.o unpack/convolution_x86_fma.cpp.o unpack/convolution_x86_xop.cpp.o unpack/convolutiondepthwise.cpp.o unpack/convolutiondepthwise1d.cpp.o unpack/convolutiondepthwise3d.cpp.o unpack/convolutiondepthwise_x86.cpp.o unpack/convolutiondepthwise_x86_avx.cpp.o unpack/convolutiondepthwise_x86_avx512.cpp.o unpack/convolutiondepthwise_x86_fma.cpp.o unpack/copyto.cpp.o unpack/cpu.cpp.o unpack/crop.cpp.o unpack/crop_x86.cpp.o unpack/crop_x86_avx.cpp.o unpack/crop_x86_avx512.cpp.o unpack/crop_x86_fma.cpp.o unpack/cumulativesum.cpp.o unpack/datareader.cpp.o unpack/deconvolution.cpp.o unpack/deconvolution1d.cpp.o unpack/deconvolution3d.cpp.o unpack/deconvolution_x86.cpp.o unpack/deconvolution_x86_avx.cpp.o unpack/deconvolution_x86_avx512.cpp.o unpack/deconvolution_x86_fma.cpp.o unpack/deconvolutiondepthwise.cpp.o unpack/deconvolutiondepthwise1d.cpp.o unpack/deconvolutiondepthwise3d.cpp.o unpack/deconvolutiondepthwise_x86.cpp.o unpack/deconvolutiondepthwise_x86_avx.cpp.o unpack/deconvolutiondepthwise_x86_avx512.cpp.o unpack/deconvolutiondepthwise_x86_fma.cpp.o unpack/deepcopy.cpp.o unpack/deformableconv2d.cpp.o unpack/deformableconv2d_x86.cpp.o unpack/deformableconv2d_x86_avx.cpp.o unpack/deformableconv2d_x86_avx512.cpp.o unpack/deformableconv2d_x86_fma.cpp.o unpack/dequantize.cpp.o unpack/dequantize_x86.cpp.o unpack/dequantize_x86_avx.cpp.o unpack/dequantize_x86_avx512.cpp.o unpack/dequantize_x86_fma.cpp.o unpack/detectionoutput.cpp.o unpack/dropout.cpp.o unpack/dropout_x86.cpp.o unpack/dropout_x86_avx.cpp.o unpack/dropout_x86_avx512.cpp.o unpack/dropout_x86_fma.cpp.o unpack/einsum.cpp.o unpack/eltwise.cpp.o unpack/eltwise_x86.cpp.o unpack/eltwise_x86_avx.cpp.o unpack/eltwise_x86_avx512.cpp.o unpack/eltwise_x86_fma.cpp.o unpack/elu.cpp.o unpack/elu_x86.cpp.o unpack/elu_x86_avx.cpp.o unpack/elu_x86_avx512.cpp.o unpack/elu_x86_fma.cpp.o unpack/embed.cpp.o unpack/exp.cpp.o unpack/expanddims.cpp.o unpack/flatten.cpp.o unpack/flatten_x86.cpp.o unpack/flatten_x86_avx.cpp.o unpack/flatten_x86_avx512.cpp.o unpack/flatten_x86_fma.cpp.o unpack/fold.cpp.o unpack/gelu.cpp.o unpack/gelu_x86.cpp.o unpack/gelu_x86_avx.cpp.o unpack/gelu_x86_avx512.cpp.o unpack/gelu_x86_fma.cpp.o unpack/gemm.cpp.o unpack/gemm_x86.cpp.o unpack/gemm_x86_avx.cpp.o unpack/gemm_x86_avx512.cpp.o unpack/gemm_x86_fma.cpp.o unpack/glu.cpp.o unpack/gpu.cpp.o unpack/gridsample.cpp.o unpack/groupnorm.cpp.o unpack/groupnorm_x86.cpp.o unpack/groupnorm_x86_avx.cpp.o unpack/groupnorm_x86_avx512.cpp.o unpack/groupnorm_x86_fma.cpp.o unpack/gru.cpp.o unpack/hardsigmoid.cpp.o unpack/hardsigmoid_x86.cpp.o unpack/hardsigmoid_x86_avx.cpp.o unpack/hardsigmoid_x86_avx512.cpp.o unpack/hardsigmoid_x86_fma.cpp.o unpack/hardswish.cpp.o unpack/hardswish_x86.cpp.o unpack/hardswish_x86_avx.cpp.o unpack/hardswish_x86_avx512.cpp.o unpack/hardswish_x86_fma.cpp.o unpack/innerproduct.cpp.o unpack/innerproduct_x86.cpp.o unpack/innerproduct_x86_avx.cpp.o unpack/innerproduct_x86_avx512.cpp.o unpack/innerproduct_x86_f16c.cpp.o unpack/innerproduct_x86_fma.cpp.o unpack/input.cpp.o unpack/instancenorm.cpp.o unpack/interp.cpp.o unpack/interp_x86.cpp.o unpack/interp_x86_avx.cpp.o unpack/interp_x86_avx512.cpp.o unpack/interp_x86_fma.cpp.o unpack/layer.cpp.o unpack/layernorm.cpp.o unpack/layernorm_x86.cpp.o unpack/layernorm_x86_avx.cpp.o unpack/layernorm_x86_avx512.cpp.o unpack/layernorm_x86_fma.cpp.o unpack/log.cpp.o unpack/lrn.cpp.o unpack/lrn_x86.cpp.o unpack/lrn_x86_avx.cpp.o unpack/lrn_x86_avx512.cpp.o unpack/lrn_x86_fma.cpp.o unpack/lstm.cpp.o unpack/lstm_x86.cpp.o unpack/lstm_x86_avx.cpp.o unpack/lstm_x86_avx512.cpp.o unpack/lstm_x86_fma.cpp.o unpack/mat.cpp.o unpack/mat_pixel.cpp.o unpack/mat_pixel_affine.cpp.o unpack/mat_pixel_drawing.cpp.o unpack/mat_pixel_resize.cpp.o unpack/mat_pixel_rotate.cpp.o unpack/matmul.cpp.o unpack/matmul_x86.cpp.o unpack/matmul_x86_avx.cpp.o unpack/matmul_x86_avx512.cpp.o unpack/matmul_x86_fma.cpp.o unpack/memorydata.cpp.o unpack/mish.cpp.o unpack/mish_x86.cpp.o unpack/mish_x86_avx.cpp.o unpack/mish_x86_avx512.cpp.o unpack/mish_x86_fma.cpp.o unpack/modelbin.cpp.o unpack/multiheadattention.cpp.o unpack/multiheadattention_x86.cpp.o unpack/multiheadattention_x86_avx.cpp.o unpack/multiheadattention_x86_avx512.cpp.o unpack/multiheadattention_x86_fma.cpp.o unpack/mvn.cpp.o unpack/net.cpp.o unpack/noop.cpp.o unpack/normalize.cpp.o unpack/option.cpp.o unpack/packing.cpp.o unpack/packing_x86.cpp.o unpack/packing_x86_avx.cpp.o unpack/packing_x86_avx512.cpp.o unpack/packing_x86_fma.cpp.o unpack/padding.cpp.o unpack/padding_x86.cpp.o unpack/padding_x86_avx.cpp.o unpack/padding_x86_avx512.cpp.o unpack/padding_x86_fma.cpp.o unpack/paramdict.cpp.o unpack/permute.cpp.o unpack/pipeline.cpp.o unpack/pipelinecache.cpp.o unpack/pixelshuffle.cpp.o unpack/pooling.cpp.o unpack/pooling1d.cpp.o unpack/pooling3d.cpp.o unpack/pooling_x86.cpp.o unpack/pooling_x86_avx.cpp.o unpack/pooling_x86_avx512.cpp.o unpack/pooling_x86_fma.cpp.o unpack/power.cpp.o unpack/prelu.cpp.o unpack/prelu_x86.cpp.o unpack/prelu_x86_avx.cpp.o unpack/prelu_x86_avx512.cpp.o unpack/prelu_x86_fma.cpp.o unpack/priorbox.cpp.o unpack/proposal.cpp.o unpack/psroipooling.cpp.o unpack/quantize.cpp.o unpack/quantize_x86.cpp.o unpack/quantize_x86_avx.cpp.o unpack/quantize_x86_avx512.cpp.o unpack/quantize_x86_fma.cpp.o unpack/reduction.cpp.o unpack/relu.cpp.o unpack/relu_x86.cpp.o unpack/relu_x86_avx.cpp.o unpack/relu_x86_avx512.cpp.o unpack/relu_x86_fma.cpp.o unpack/reorg.cpp.o unpack/requantize.cpp.o unpack/requantize_x86.cpp.o unpack/requantize_x86_avx.cpp.o unpack/requantize_x86_avx512.cpp.o unpack/requantize_x86_fma.cpp.o unpack/reshape.cpp.o unpack/reshape_x86.cpp.o unpack/reshape_x86_avx.cpp.o unpack/reshape_x86_avx512.cpp.o unpack/reshape_x86_fma.cpp.o unpack/rnn.cpp.o unpack/roialign.cpp.o unpack/roialign_x86.cpp.o unpack/roialign_x86_avx.cpp.o unpack/roialign_x86_avx512.cpp.o unpack/roialign_x86_fma.cpp.o unpack/roipooling.cpp.o unpack/scale.cpp.o unpack/scale_x86.cpp.o unpack/scale_x86_avx.cpp.o unpack/scale_x86_avx512.cpp.o unpack/scale_x86_fma.cpp.o unpack/selu.cpp.o unpack/shufflechannel.cpp.o unpack/sigmoid.cpp.o unpack/sigmoid_x86.cpp.o unpack/sigmoid_x86_avx.cpp.o unpack/sigmoid_x86_avx512.cpp.o unpack/sigmoid_x86_fma.cpp.o unpack/simpleocv.cpp.o unpack/simpleomp.cpp.o unpack/simplestl.cpp.o unpack/slice.cpp.o unpack/slice_x86.cpp.o unpack/slice_x86_avx.cpp.o unpack/slice_x86_avx512.cpp.o unpack/slice_x86_fma.cpp.o unpack/softmax.cpp.o unpack/softmax_x86.cpp.o unpack/softmax_x86_avx.cpp.o unpack/softmax_x86_avx512.cpp.o unpack/softmax_x86_fma.cpp.o unpack/softplus.cpp.o unpack/split.cpp.o unpack/squeeze.cpp.o unpack/statisticspooling.cpp.o unpack/swish.cpp.o unpack/swish_x86.cpp.o unpack/swish_x86_avx.cpp.o unpack/swish_x86_avx512.cpp.o unpack/swish_x86_fma.cpp.o unpack/tanh.cpp.o unpack/tanh_x86.cpp.o unpack/tanh_x86_avx.cpp.o unpack/tanh_x86_avx512.cpp.o unpack/tanh_x86_fma.cpp.o unpack/threshold.cpp.o unpack/tile.cpp.o unpack/unaryop.cpp.o unpack/unaryop_x86.cpp.o unpack/unaryop_x86_avx.cpp.o unpack/unaryop_x86_avx512.cpp.o unpack/unaryop_x86_fma.cpp.o unpack/unfold.cpp.o unpack/yolodetectionoutput.cpp.o unpack/yolov3detectionoutput.cpp.o unpack/yolov3detectionoutput_x86.cpp.o unpack/yolov3detectionoutput_x86_avx.cpp.o unpack/yolov3detectionoutput_x86_avx512.cpp.o unpack/yolov3detectionoutput_x86_fma.cpp.o
+make[2]: Leaving directory '/build/go-stable-diffusion'
+make -C go-llama BUILD_TYPE= libbinding.a
+make[2]: Entering directory '/build/go-llama'
+I llama.cpp build info: 
+I UNAME_S:  Linux
+I UNAME_P:  unknown
+I UNAME_M:  x86_64
+I CFLAGS:   -I./llama.cpp -I. -O3 -DNDEBUG -std=c11 -fPIC -Wall -Wextra -Wpedantic -Wcast-qual -Wdouble-promotion -Wshadow -Wstrict-prototypes -Wpointer-arith -Wno-unused-function -pthread -march=native -mtune=native
+I CXXFLAGS: -I./llama.cpp -I. -I./llama.cpp/examples -I./examples -O3 -DNDEBUG -std=c++11 -fPIC -Wall -Wextra -Wpedantic -Wcast-qual -Wno-unused-function -pthread
+I LDFLAGS:  
+I BUILD_TYPE:  
+I CMAKE_ARGS:  
+I EXTRA_TARGETS:  
+I CC:       cc (Debian 10.2.1-6) 10.2.1 20210110
+I CXX:      g++ (Debian 10.2.1-6) 10.2.1 20210110
+
+mkdir -p build
+cd build && cmake ../llama.cpp  && make VERBOSE=1 ggml && cp -rf CMakeFiles/ggml.dir/ggml.c.o ../llama.cpp/ggml.o
+-- The C compiler identification is GNU 10.2.1
+-- The CXX compiler identification is GNU 10.2.1
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Check for working C compiler: /usr/bin/cc - skipped
+-- Detecting C compile features
+-- Detecting C compile features - done
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Check for working CXX compiler: /usr/bin/c++ - skipped
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- Found Git: /usr/bin/git (found version "2.30.2") 
+-- Looking for pthread.h
+-- Looking for pthread.h - found
+-- Performing Test CMAKE_HAVE_LIBC_PTHREAD
+-- Performing Test CMAKE_HAVE_LIBC_PTHREAD - Failed
+-- Check if compiler accepts -pthread
+-- Check if compiler accepts -pthread - yes
+-- Found Threads: TRUE  
+-- CMAKE_SYSTEM_PROCESSOR: x86_64
+-- x86 detected
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /build/go-llama/build
+make[3]: Entering directory '/build/go-llama/build'
+/usr/bin/cmake -S/build/go-llama/llama.cpp -B/build/go-llama/build --check-build-system CMakeFiles/Makefile.cmake 0
+make  -f CMakeFiles/Makefile2 ggml
+make[4]: Entering directory '/build/go-llama/build'
+/usr/bin/cmake -S/build/go-llama/llama.cpp -B/build/go-llama/build --check-build-system CMakeFiles/Makefile.cmake 0
+/usr/bin/cmake -E cmake_progress_start /build/go-llama/build/CMakeFiles 1
+make  -f CMakeFiles/Makefile2 CMakeFiles/ggml.dir/all
+make[5]: Entering directory '/build/go-llama/build'
+make  -f CMakeFiles/ggml.dir/build.make CMakeFiles/ggml.dir/depend
+make[6]: Entering directory '/build/go-llama/build'
+cd /build/go-llama/build && /usr/bin/cmake -E cmake_depends "Unix Makefiles" /build/go-llama/llama.cpp /build/go-llama/llama.cpp /build/go-llama/build /build/go-llama/build /build/go-llama/build/CMakeFiles/ggml.dir/DependInfo.cmake --color=
+Dependee "/build/go-llama/build/CMakeFiles/ggml.dir/DependInfo.cmake" is newer than depender "/build/go-llama/build/CMakeFiles/ggml.dir/depend.internal".
+Dependee "/build/go-llama/build/CMakeFiles/CMakeDirectoryInformation.cmake" is newer than depender "/build/go-llama/build/CMakeFiles/ggml.dir/depend.internal".
+Scanning dependencies of target ggml
+make[6]: Leaving directory '/build/go-llama/build'
+make  -f CMakeFiles/ggml.dir/build.make CMakeFiles/ggml.dir/build
+make[6]: Entering directory '/build/go-llama/build'
+[100%] Building C object CMakeFiles/ggml.dir/ggml.c.o
+/usr/bin/cc  -I/build/go-llama/llama.cpp/. -O3 -DNDEBUG -Wall -Wextra -Wpedantic -Wcast-qual -Wdouble-promotion -Wshadow -Wstrict-prototypes -Wpointer-arith -mf16c -mfma -mavx -mavx2 -pthread -std=gnu11 -o CMakeFiles/ggml.dir/ggml.c.o -c /build/go-llama/llama.cpp/ggml.c
+make[6]: Leaving directory '/build/go-llama/build'
+[100%] Built target ggml
+make[5]: Leaving directory '/build/go-llama/build'
+/usr/bin/cmake -E cmake_progress_start /build/go-llama/build/CMakeFiles 0
+make[4]: Leaving directory '/build/go-llama/build'
+make[3]: Leaving directory '/build/go-llama/build'
+make -C llama.cpp llama.o
+make[3]: Entering directory '/build/go-llama/llama.cpp'
+I llama.cpp build info: 
+I UNAME_S:  Linux
+I UNAME_P:  unknown
+I UNAME_M:  x86_64
+I CFLAGS:   -I.              -O3 -std=c11   -fPIC -DNDEBUG -Wall -Wextra -Wpedantic -Wcast-qual -Wdouble-promotion -Wshadow -Wstrict-prototypes -Wpointer-arith -pthread -march=native -mtune=native
+I CXXFLAGS: -I. -I./examples -O3 -std=c++11 -fPIC -DNDEBUG -Wall -Wextra -Wpedantic -Wcast-qual -Wno-unused-function -Wno-multichar -pthread -march=native -mtune=native
+I LDFLAGS:  
+I CC:       cc (Debian 10.2.1-6) 10.2.1 20210110
+I CXX:      g++ (Debian 10.2.1-6) 10.2.1 20210110
+
+g++ -I. -I./examples -O3 -std=c++11 -fPIC -DNDEBUG -Wall -Wextra -Wpedantic -Wcast-qual -Wno-unused-function -Wno-multichar -pthread -march=native -mtune=native -c llama.cpp -o llama.o
+make[3]: Leaving directory '/build/go-llama/llama.cpp'
+make -C llama.cpp common.o
+make[3]: Entering directory '/build/go-llama/llama.cpp'
+I llama.cpp build info: 
+I UNAME_S:  Linux
+I UNAME_P:  unknown
+I UNAME_M:  x86_64
+I CFLAGS:   -I.              -O3 -std=c11   -fPIC -DNDEBUG -Wall -Wextra -Wpedantic -Wcast-qual -Wdouble-promotion -Wshadow -Wstrict-prototypes -Wpointer-arith -pthread -march=native -mtune=native
+I CXXFLAGS: -I. -I./examples -O3 -std=c++11 -fPIC -DNDEBUG -Wall -Wextra -Wpedantic -Wcast-qual -Wno-unused-function -Wno-multichar -pthread -march=native -mtune=native
+I LDFLAGS:  
+I CC:       cc (Debian 10.2.1-6) 10.2.1 20210110
+I CXX:      g++ (Debian 10.2.1-6) 10.2.1 20210110
+
+g++ -I. -I./examples -O3 -std=c++11 -fPIC -DNDEBUG -Wall -Wextra -Wpedantic -Wcast-qual -Wno-unused-function -Wno-multichar -pthread -march=native -mtune=native -c examples/common.cpp -o common.o
+make[3]: Leaving directory '/build/go-llama/llama.cpp'
+g++ -I./llama.cpp -I. -I./llama.cpp/examples -I./examples -O3 -DNDEBUG -std=c++11 -fPIC -Wall -Wextra -Wpedantic -Wcast-qual -Wno-unused-function -pthread -I./llama.cpp -I./llama.cpp/examples binding.cpp -o binding.o -c 
+binding.cpp: In function 'int llama_predict(void*, void*, char*, bool)':
+binding.cpp:255:42: warning: cast from type 'const char*' to type 'char*' casts away qualifiers [-Wcast-qual]
+  255 |             if (!tokenCallback(state_pr, (char*)token_str)) {
+      |                                          ^~~~~~~~~~~~~~~~
+ar src libbinding.a llama.cpp/ggml.o  llama.cpp/common.o llama.cpp/llama.o binding.o
+make[2]: Leaving directory '/build/go-llama'
+make -C go-bert libgobert.a
+make[2]: Entering directory '/build/go-bert'
+I go-gpt4all-j build info: 
+I UNAME_S:  Linux
+I UNAME_P:  unknown
+I UNAME_M:  x86_64
+I CFLAGS:   -I. -I./bert.cpp/ggml/include/ggml/ -I./bert.cpp/ -I -O3 -DNDEBUG -std=c11 -fPIC -Wall -Wextra -Wpedantic -Wcast-qual -Wdouble-promotion -Wshadow -Wstrict-prototypes -Wpointer-arith -Wno-unused-function -pthread -march=native -mtune=native
+I CXXFLAGS: -I. -I./bert.cpp/ggml/include/ggml/ -I./bert.cpp/ -O3 -DNDEBUG -std=c++17 -fPIC -Wall -Wextra -Wpedantic -Wcast-qual -Wno-unused-function -Wno-multichar -pthread -march=native -mtune=native
+I LDFLAGS:  
+I CMAKEFLAGS:  
+I CC:       cc (Debian 10.2.1-6) 10.2.1 20210110
+I CXX:      g++ (Debian 10.2.1-6) 10.2.1 20210110
+
+sed "s/#include <regex>/#include <regex>\n#include <unordered_map>/" bert.cpp/bert.cpp > bert.cpp/bert.tmp && mv bert.cpp/bert.tmp bert.cpp/bert.cpp
+cd bert.cpp/build && cmake .. -DBUILD_SHARED_LIBS=OFF -DCMAKE_BUILD_TYPE=Release && make
+-- CMAKE_SYSTEM_PROCESSOR: x86_64
+-- x86 detected
+-- CMAKE_SYSTEM_PROCESSOR: x86_64
+-- x86 detected
+-- Linux detected
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /build/go-bert/bert.cpp/build
+make[3]: Entering directory '/build/go-bert/bert.cpp/build'
+make[4]: Entering directory '/build/go-bert/bert.cpp/build'
+make[5]: Entering directory '/build/go-bert/bert.cpp/build'
+make[5]: Leaving directory '/build/go-bert/bert.cpp/build'
+[ 16%] Built target ggml
+make[5]: Entering directory '/build/go-bert/bert.cpp/build'
+Scanning dependencies of target bert
+make[5]: Leaving directory '/build/go-bert/bert.cpp/build'
+make[5]: Entering directory '/build/go-bert/bert.cpp/build'
+[ 25%] Building CXX object CMakeFiles/bert.dir/bert.cpp.o
+[ 33%] Linking CXX static library libbert.a
+make[5]: Leaving directory '/build/go-bert/bert.cpp/build'
+[ 33%] Built target bert
+make[5]: Entering directory '/build/go-bert/bert.cpp/build'
+make[5]: Leaving directory '/build/go-bert/bert.cpp/build'
+make[5]: Entering directory '/build/go-bert/bert.cpp/build'
+[ 41%] Linking CXX executable ../bin/test_tokenizer
+make[5]: Leaving directory '/build/go-bert/bert.cpp/build'
+[ 50%] Built target test_tokenizer
+make[5]: Entering directory '/build/go-bert/bert.cpp/build'
+make[5]: Leaving directory '/build/go-bert/bert.cpp/build'
+make[5]: Entering directory '/build/go-bert/bert.cpp/build'
+[ 58%] Linking CXX executable ../bin/main
+make[5]: Leaving directory '/build/go-bert/bert.cpp/build'
+[ 66%] Built target main
+make[5]: Entering directory '/build/go-bert/bert.cpp/build'
+make[5]: Leaving directory '/build/go-bert/bert.cpp/build'
+make[5]: Entering directory '/build/go-bert/bert.cpp/build'
+[ 75%] Linking CXX executable ../bin/server
+make[5]: Leaving directory '/build/go-bert/bert.cpp/build'
+[ 83%] Built target server
+make[5]: Entering directory '/build/go-bert/bert.cpp/build'
+make[5]: Leaving directory '/build/go-bert/bert.cpp/build'
+make[5]: Entering directory '/build/go-bert/bert.cpp/build'
+[ 91%] Linking CXX executable ../bin/quantize
+make[5]: Leaving directory '/build/go-bert/bert.cpp/build'
+[100%] Built target quantize
+make[4]: Leaving directory '/build/go-bert/bert.cpp/build'
+make[3]: Leaving directory '/build/go-bert/bert.cpp/build'
+cp bert.cpp/build/CMakeFiles/bert.dir/bert.cpp.o bert.o
+g++ -I. -I./bert.cpp/ggml/include/ggml/ -I./bert.cpp/ -O3 -DNDEBUG -std=c++17 -fPIC -Wall -Wextra -Wpedantic -Wcast-qual -Wno-unused-function -Wno-multichar -pthread -march=native -mtune=native gobert.cpp -o gobert.o -c 
+In file included from gobert.cpp:6:
+./bert.cpp/bert.cpp: In function 'bert_ctx* bert_load_from_file(const char*)':
+./bert.cpp/bert.cpp:471:13: warning: C++ designated initializers only available with '-std=c++2a' or '-std=gnu++2a' [-Wpedantic]
+  471 |             .mem_size = model_mem_req,
+      |             ^
+./bert.cpp/bert.cpp:472:13: warning: C++ designated initializers only available with '-std=c++2a' or '-std=gnu++2a' [-Wpedantic]
+  472 |             .mem_buffer = NULL,
+      |             ^
+./bert.cpp/bert.cpp:473:13: warning: C++ designated initializers only available with '-std=c++2a' or '-std=gnu++2a' [-Wpedantic]
+  473 |             .no_alloc = false,
+      |             ^
+./bert.cpp/bert.cpp:611:89: warning: format '%lld' expects argument of type 'long long int', but argument 5 has type 'int64_t' {aka 'long int'} [-Wformat=]
+  611 |                 fprintf(stderr, "%s: tensor '%s' has wrong shape in model file: got [%lld, %lld], expected [%lld, %lld]\n",
+      |                                                                                      ~~~^
+      |                                                                                         |
+      |                                                                                         long long int
+      |                                                                                      %ld
+  612 |                         __func__, name.data(), tensor->ne[0], tensor->ne[1], ne[0], ne[1]);
+      |                                                ~~~~~~~~~~~~~                             
+      |                                                            |
+      |                                                            int64_t {aka long int}
+./bert.cpp/bert.cpp:611:95: warning: format '%lld' expects argument of type 'long long int', but argument 6 has type 'int64_t' {aka 'long int'} [-Wformat=]
+  611 |                 fprintf(stderr, "%s: tensor '%s' has wrong shape in model file: got [%lld, %lld], expected [%lld, %lld]\n",
+      |                                                                                            ~~~^
+      |                                                                                               |
+      |                                                                                               long long int
+      |                                                                                            %ld
+  612 |                         __func__, name.data(), tensor->ne[0], tensor->ne[1], ne[0], ne[1]);
+      |                                                               ~~~~~~~~~~~~~                    
+      |                                                                           |
+      |                                                                           int64_t {aka long int}
+./bert.cpp/bert.cpp:611:112: warning: format '%lld' expects argument of type 'long long int', but argument 7 has type 'int64_t' {aka 'long int'} [-Wformat=]
+  611 |                 fprintf(stderr, "%s: tensor '%s' has wrong shape in model file: got [%lld, %lld], expected [%lld, %lld]\n",
+      |                                                                                                             ~~~^
+      |                                                                                                                |
+      |                                                                                                                long long int
+      |                                                                                                             %ld
+  612 |                         __func__, name.data(), tensor->ne[0], tensor->ne[1], ne[0], ne[1]);
+      |                                                                              ~~~~~                              
+      |                                                                                  |
+      |                                                                                  int64_t {aka long int}
+./bert.cpp/bert.cpp:611:118: warning: format '%lld' expects argument of type 'long long int', but argument 8 has type 'int64_t' {aka 'long int'} [-Wformat=]
+  611 |                 fprintf(stderr, "%s: tensor '%s' has wrong shape in model file: got [%lld, %lld], expected [%lld, %lld]\n",
+      |                                                                                                                   ~~~^
+      |                                                                                                                      |
+      |                                                                                                                      long long int
+      |                                                                                                                   %ld
+  612 |                         __func__, name.data(), tensor->ne[0], tensor->ne[1], ne[0], ne[1]);
+      |                                                                                     ~~~~~                             
+      |                                                                                         |
+      |                                                                                         int64_t {aka long int}
+./bert.cpp/bert.cpp:625:37: warning: format '%lld' expects argument of type 'long long int', but argument 3 has type 'int64_t' {aka 'long int'} [-Wformat=]
+  625 |                 printf("%24s - [%5lld, %5lld], type = %6s, %6.2f MB, %9zu bytes\n", name.data(), ne[0], ne[1], ftype_str[ftype], ggml_bert_nbytes(tensor) / 1024.0 / 1024.0, ggml_bert_nbytes(tensor));
+      |                                 ~~~~^                                                            ~~~~~
+      |                                     |                                                                |
+      |                                     long long int                                                    int64_t {aka long int}
+      |                                 %5ld
+./bert.cpp/bert.cpp:625:44: warning: format '%lld' expects argument of type 'long long int', but argument 4 has type 'int64_t' {aka 'long int'} [-Wformat=]
+  625 |                 printf("%24s - [%5lld, %5lld], type = %6s, %6.2f MB, %9zu bytes\n", name.data(), ne[0], ne[1], ftype_str[ftype], ggml_bert_nbytes(tensor) / 1024.0 / 1024.0, ggml_bert_nbytes(tensor));
+      |                                        ~~~~^                                                            ~~~~~
+      |                                            |                                                                |
+      |                                            long long int                                                    int64_t {aka long int}
+      |                                        %5ld
+./bert.cpp/bert.cpp:656:101: warning: format '%llu' expects argument of type 'long long unsigned int', but argument 6 has type 'long unsigned int' [-Wformat=]
+  656 |                 fprintf(stderr, "%s: tensor '%s' has wrong size in model file: got %zu, expected %llu\n",
+      |                                                                                                  ~~~^
+      |                                                                                                     |
+      |                                                                                                     long long unsigned int
+      |                                                                                                  %lu
+  657 |                         __func__, name.data(), ggml_bert_nbytes(tensor), nelements * bpe);
+      |                                                                          ~~~~~~~~~~~~~~~             
+      |                                                                                    |
+      |                                                                                    long unsigned int
+./bert.cpp/bert.cpp:693:32: warning: format '%d' expects argument of type 'int', but argument 3 has type 'size_t' {aka 'long unsigned int'} [-Wformat=]
+  693 |     printf("%s: mem_per_token %d KB, mem_per_input %lld MB\n", __func__, new_bert->mem_per_token / (1 << 10), new_bert->mem_per_input / (1 << 20));
+      |                               ~^                                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+      |                                |                                                                 |
+      |                                int                                                               size_t {aka long unsigned int}
+      |                               %ld
+./bert.cpp/bert.cpp:693:55: warning: format '%lld' expects argument of type 'long long int', but argument 4 has type 'int64_t' {aka 'long int'} [-Wformat=]
+  693 |     printf("%s: mem_per_token %d KB, mem_per_input %lld MB\n", __func__, new_bert->mem_per_token / (1 << 10), new_bert->mem_per_input / (1 << 20));
+      |                                                    ~~~^                                                       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+      |                                                       |                                                                               |
+      |                                                       long long int                                                                   int64_t {aka long int}
+      |                                                    %ld
+./bert.cpp/bert.cpp: In function 'void bert_eval_batch(bert_ctx*, int32_t, int32_t, bert_vocab_id**, int32_t*, float**)':
+./bert.cpp/bert.cpp:777:13: warning: C++ designated initializers only available with '-std=c++2a' or '-std=gnu++2a' [-Wpedantic]
+  777 |             .mem_size = buf_compute.size,
+      |             ^
+./bert.cpp/bert.cpp:778:13: warning: C++ designated initializers only available with '-std=c++2a' or '-std=gnu++2a' [-Wpedantic]
+  778 |             .mem_buffer = buf_compute.data,
+      |             ^
+./bert.cpp/bert.cpp:779:13: warning: C++ designated initializers only available with '-std=c++2a' or '-std=gnu++2a' [-Wpedantic]
+  779 |             .no_alloc = false,
+      |             ^
+gobert.cpp: In function 'int bert_token_embeddings(void*, void*, int*, int, float*)':
+gobert.cpp:32:23: warning: comparison of integer expressions of different signedness: 'int' and 'std::vector<float>::size_type' {aka 'long unsigned int'} [-Wsign-compare]
+   32 |     for (int i = 0; i < embeddings.size(); i++) {
+      |                     ~~^~~~~~~~~~~~~~~~~~~
+gobert.cpp:19:19: warning: unused variable 't_main_start_us' [-Wunused-variable]
+   19 |     const int64_t t_main_start_us = ggml_bert_time_us();
+      |                   ^~~~~~~~~~~~~~~
+gobert.cpp:24:9: warning: unused variable 'N' [-Wunused-variable]
+   24 |     int N = bert_n_max_tokens(bctx);
+      |         ^
+gobert.cpp: In function 'int bert_embeddings(void*, void*, float*)':
+gobert.cpp:53:23: warning: comparison of integer expressions of different signedness: 'int' and 'std::vector<float>::size_type' {aka 'long unsigned int'} [-Wsign-compare]
+   53 |     for (int i = 0; i < embeddings.size(); i++) {
+      |                     ~~^~~~~~~~~~~~~~~~~~~
+gobert.cpp:39:19: warning: unused variable 't_main_start_us' [-Wunused-variable]
+   39 |     const int64_t t_main_start_us = ggml_bert_time_us();
+      |                   ^~~~~~~~~~~~~~~
+cd bert.cpp/build && make VERBOSE=1 ggml && cp -rf ggml/src/CMakeFiles/ggml.dir/ggml.c.o ../../ggml.o
+make[3]: Entering directory '/build/go-bert/bert.cpp/build'
+/usr/bin/cmake -S/build/go-bert/bert.cpp -B/build/go-bert/bert.cpp/build --check-build-system CMakeFiles/Makefile.cmake 0
+make  -f CMakeFiles/Makefile2 ggml
+make[4]: Entering directory '/build/go-bert/bert.cpp/build'
+/usr/bin/cmake -S/build/go-bert/bert.cpp -B/build/go-bert/bert.cpp/build --check-build-system CMakeFiles/Makefile.cmake 0
+/usr/bin/cmake -E cmake_progress_start /build/go-bert/bert.cpp/build/CMakeFiles 2
+make  -f CMakeFiles/Makefile2 ggml/src/CMakeFiles/ggml.dir/all
+make[5]: Entering directory '/build/go-bert/bert.cpp/build'
+make  -f ggml/src/CMakeFiles/ggml.dir/build.make ggml/src/CMakeFiles/ggml.dir/depend
+make[6]: Entering directory '/build/go-bert/bert.cpp/build'
+cd /build/go-bert/bert.cpp/build && /usr/bin/cmake -E cmake_depends "Unix Makefiles" /build/go-bert/bert.cpp /build/go-bert/bert.cpp/ggml/src /build/go-bert/bert.cpp/build /build/go-bert/bert.cpp/build/ggml/src /build/go-bert/bert.cpp/build/ggml/src/CMakeFiles/ggml.dir/DependInfo.cmake --color=
+make[6]: Leaving directory '/build/go-bert/bert.cpp/build'
+make  -f ggml/src/CMakeFiles/ggml.dir/build.make ggml/src/CMakeFiles/ggml.dir/build
+make[6]: Entering directory '/build/go-bert/bert.cpp/build'
+make[6]: Nothing to be done for 'ggml/src/CMakeFiles/ggml.dir/build'.
+make[6]: Leaving directory '/build/go-bert/bert.cpp/build'
+[100%] Built target ggml
+make[5]: Leaving directory '/build/go-bert/bert.cpp/build'
+/usr/bin/cmake -E cmake_progress_start /build/go-bert/bert.cpp/build/CMakeFiles 0
+make[4]: Leaving directory '/build/go-bert/bert.cpp/build'
+make[3]: Leaving directory '/build/go-bert/bert.cpp/build'
+ar src libgobert.a gobert.o ggml.o 
+make[2]: Leaving directory '/build/go-bert'
+make -C go-gpt2 libgpt2.a
+make[2]: Entering directory '/build/go-gpt2'
+I go-gpt4all-j build info: 
+I UNAME_S:  Linux
+I UNAME_P:  unknown
+I UNAME_M:  x86_64
+I CFLAGS:   -I. -I./ggml.cpp/include/ggml/ -I./ggml.cpp/examples/ -I -O3 -DNDEBUG -std=c11 -fPIC -Wall -Wextra -Wpedantic -Wcast-qual -Wdouble-promotion -Wshadow -Wstrict-prototypes -Wpointer-arith -Wno-unused-function -pthread -march=native -mtune=native
+I CXXFLAGS: -I. -I./ggml.cpp/include/ggml/ -I./ggml.cpp/examples/ -O3 -DNDEBUG -std=c++17 -fPIC -Wall -Wextra -Wpedantic -Wcast-qual -Wno-unused-function -Wno-multichar -pthread -march=native -mtune=native
+I LDFLAGS:  
+I CMAKEFLAGS:  
+I CC:       cc (Debian 10.2.1-6) 10.2.1 20210110
+I CXX:      g++ (Debian 10.2.1-6) 10.2.1 20210110
+
+g++ -I. -I./ggml.cpp/include/ggml/ -I./ggml.cpp/examples/ -O3 -DNDEBUG -std=c++17 -fPIC -Wall -Wextra -Wpedantic -Wcast-qual -Wno-unused-function -Wno-multichar -pthread -march=native -mtune=native stablelm.cpp -o stablelm.o -c 
+stablelm.cpp: In function 'bool stablelm_model_load(const string&, stablelm_model&, gpt_vocab&)':
+stablelm.cpp:211:13: warning: C++ designated initializers only available with '-std=c++2a' or '-std=gnu++2a' [-Wpedantic]
+  211 |             .mem_size   = ctx_size,
+      |             ^
+stablelm.cpp:212:13: warning: C++ designated initializers only available with '-std=c++2a' or '-std=gnu++2a' [-Wpedantic]
+  212 |             .mem_buffer = NULL,
+      |             ^
+stablelm.cpp:213:13: warning: C++ designated initializers only available with '-std=c++2a' or '-std=gnu++2a' [-Wpedantic]
+  213 |             .no_alloc   = false,
+      |             ^
+stablelm.cpp:229:19: warning: unused variable 'n_ctx' [-Wunused-variable]
+  229 |         const int n_ctx   = hparams.n_ctx;
+      |                   ^~~~~
+stablelm.cpp:160:26: warning: unused variable 'wtype2' [-Wunused-variable]
+  160 |     const ggml_gpt2_type wtype2 = GGML_TYPE_F32;
+      |                          ^~~~~~
+stablelm.cpp: In function 'bool stablelm_eval(const stablelm_model&, int, int, const std::vector<int>&, std::vector<float>&, size_t&)':
+stablelm.cpp:449:9: warning: C++ designated initializers only available with '-std=c++2a' or '-std=gnu++2a' [-Wpedantic]
+  449 |         .mem_size   = buf_size,
+      |         ^
+stablelm.cpp:450:9: warning: C++ designated initializers only available with '-std=c++2a' or '-std=gnu++2a' [-Wpedantic]
+  450 |         .mem_buffer = buf,
+      |         ^
+stablelm.cpp:451:9: warning: C++ designated initializers only available with '-std=c++2a' or '-std=gnu++2a' [-Wpedantic]
+  451 |         .no_alloc   = false,
+      |         ^
+stablelm.cpp:455:36: warning: C++ designated initializers only available with '-std=c++2a' or '-std=gnu++2a' [-Wpedantic]
+  455 |     struct ggml_gpt2_cgraph gf = { .n_threads = n_threads };
+      |                                    ^
+stablelm.cpp:455:59: warning: missing initializer for member 'ggml_gpt2_cgraph::n_nodes' [-Wmissing-field-initializers]
+  455 |     struct ggml_gpt2_cgraph gf = { .n_threads = n_threads };
+      |                                                           ^
+stablelm.cpp:455:59: warning: missing initializer for member 'ggml_gpt2_cgraph::n_leafs' [-Wmissing-field-initializers]
+stablelm.cpp:455:59: warning: missing initializer for member 'ggml_gpt2_cgraph::work_size' [-Wmissing-field-initializers]
+stablelm.cpp:455:59: warning: missing initializer for member 'ggml_gpt2_cgraph::work' [-Wmissing-field-initializers]
+stablelm.cpp:455:59: warning: missing initializer for member 'ggml_gpt2_cgraph::nodes' [-Wmissing-field-initializers]
+stablelm.cpp:455:59: warning: missing initializer for member 'ggml_gpt2_cgraph::grads' [-Wmissing-field-initializers]
+stablelm.cpp:455:59: warning: missing initializer for member 'ggml_gpt2_cgraph::leafs' [-Wmissing-field-initializers]
+stablelm.cpp:455:59: warning: missing initializer for member 'ggml_gpt2_cgraph::perf_runs' [-Wmissing-field-initializers]
+stablelm.cpp:455:59: warning: missing initializer for member 'ggml_gpt2_cgraph::perf_cycles' [-Wmissing-field-initializers]
+stablelm.cpp:455:59: warning: missing initializer for member 'ggml_gpt2_cgraph::perf_time_us' [-Wmissing-field-initializers]
+stablelm.cpp: In function 'int stablelm_predict(void*, void*, char*)':
+stablelm.cpp:697:23: warning: comparison of integer expressions of different signedness: 'int' and 'std::vector<int>::size_type' {aka 'long unsigned int'} [-Wsign-compare]
+  697 |     for (int i = 0; i < embd_inp.size(); i++) {
+      |                     ~~^~~~~~~~~~~~~~~~~
+stablelm.cpp:708:33: warning: comparison of integer expressions of different signedness: 'int' and 'std::vector<int>::size_type' {aka 'long unsigned int'} [-Wsign-compare]
+  708 |     for (int i = embd.size(); i < embd_inp.size() + params.n_predict; i++) {
+      |                               ~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+stablelm.cpp:724:15: warning: comparison of integer expressions of different signedness: 'int' and 'std::vector<int>::size_type' {aka 'long unsigned int'} [-Wsign-compare]
+  724 |         if (i >= embd_inp.size()) {
+      |             ~~^~~~~~~~~~~~~~~~~~
+stablelm.cpp:746:31: warning: comparison of integer expressions of different signedness: 'int' and 'std::vector<int>::size_type' {aka 'long unsigned int'} [-Wsign-compare]
+  746 |             for (int k = i; k < embd_inp.size(); k++) {
+      |                             ~~^~~~~~~~~~~~~~~~~
+stablelm.cpp:748:33: warning: comparison of integer expressions of different signedness: 'std::vector<int>::size_type' {aka 'long unsigned int'} and 'int32_t' {aka 'int'} [-Wsign-compare]
+  748 |                 if (embd.size() > params.n_batch) {
+      |                     ~~~~~~~~~~~~^~~~~~~~~~~~~~~~
+stablelm.cpp:672:19: warning: unused variable 't_main_start_us' [-Wunused-variable]
+  672 |     const int64_t t_main_start_us = ggml_gpt2_time_us();
+      |                   ^~~~~~~~~~~~~~~
+stablelm.cpp:680:13: warning: unused variable 't_load_us' [-Wunused-variable]
+  680 |     int64_t t_load_us = 0;
+      |             ^~~~~~~~~
+g++ -I. -I./ggml.cpp/include/ggml/ -I./ggml.cpp/examples/ -O3 -DNDEBUG -std=c++17 -fPIC -Wall -Wextra -Wpedantic -Wcast-qual -Wno-unused-function -Wno-multichar -pthread -march=native -mtune=native redpajama.cpp -o redpajama.o -c 
+redpajama.cpp: In function 'bool redpajama_model_load(const string&, redpajama_model&, gpt_vocab&)':
+redpajama.cpp:203:13: warning: C++ designated initializers only available with '-std=c++2a' or '-std=gnu++2a' [-Wpedantic]
+  203 |             .mem_size   = ctx_size,
+      |             ^
+redpajama.cpp:204:13: warning: C++ designated initializers only available with '-std=c++2a' or '-std=gnu++2a' [-Wpedantic]
+  204 |             .mem_buffer = NULL,
+      |             ^
+redpajama.cpp:205:13: warning: C++ designated initializers only available with '-std=c++2a' or '-std=gnu++2a' [-Wpedantic]
+  205 |             .no_alloc   = false,
+      |             ^
+redpajama.cpp:221:19: warning: unused variable 'n_ctx' [-Wunused-variable]
+  221 |         const int n_ctx   = hparams.n_ctx;
+      |                   ^~~~~
+redpajama.cpp:301:56: warning: format '%lld' expects argument of type 'long long int', but argument 4 has type 'long int' [-Wformat=]
+  301 |         printf("%s: memory_size = %8.2f MB, n_mem = %lld\n", __func__, memory_size/1024.0/1024.0, n_mem);
+      |                                                     ~~~^                                          ~~~~~
+      |                                                        |                                          |
+      |                                                        long long int                              long int
+      |                                                     %ld
+redpajama.cpp: In function 'bool redpajama_eval(const redpajama_model&, int, int, const std::vector<int>&, std::vector<float>&, size_t&)':
+redpajama.cpp:426:9: warning: C++ designated initializers only available with '-std=c++2a' or '-std=gnu++2a' [-Wpedantic]
+  426 |         .mem_size   = buf_size,
+      |         ^
+redpajama.cpp:427:9: warning: C++ designated initializers only available with '-std=c++2a' or '-std=gnu++2a' [-Wpedantic]
+  427 |         .mem_buffer = buf,
+      |         ^
+redpajama.cpp:428:9: warning: C++ designated initializers only available with '-std=c++2a' or '-std=gnu++2a' [-Wpedantic]
+  428 |         .no_alloc   = false,
+      |         ^
+redpajama.cpp:432:36: warning: C++ designated initializers only available with '-std=c++2a' or '-std=gnu++2a' [-Wpedantic]
+  432 |     struct ggml_gpt2_cgraph gf = { .n_threads = n_threads };
+      |                                    ^
+redpajama.cpp:432:59: warning: missing initializer for member 'ggml_gpt2_cgraph::n_nodes' [-Wmissing-field-initializers]
+  432 |     struct ggml_gpt2_cgraph gf = { .n_threads = n_threads };
+      |                                                           ^
+redpajama.cpp:432:59: warning: missing initializer for member 'ggml_gpt2_cgraph::n_leafs' [-Wmissing-field-initializers]
+redpajama.cpp:432:59: warning: missing initializer for member 'ggml_gpt2_cgraph::work_size' [-Wmissing-field-initializers]
+redpajama.cpp:432:59: warning: missing initializer for member 'ggml_gpt2_cgraph::work' [-Wmissing-field-initializers]
+redpajama.cpp:432:59: warning: missing initializer for member 'ggml_gpt2_cgraph::nodes' [-Wmissing-field-initializers]
+redpajama.cpp:432:59: warning: missing initializer for member 'ggml_gpt2_cgraph::grads' [-Wmissing-field-initializers]
+redpajama.cpp:432:59: warning: missing initializer for member 'ggml_gpt2_cgraph::leafs' [-Wmissing-field-initializers]
+redpajama.cpp:432:59: warning: missing initializer for member 'ggml_gpt2_cgraph::perf_runs' [-Wmissing-field-initializers]
+redpajama.cpp:432:59: warning: missing initializer for member 'ggml_gpt2_cgraph::perf_cycles' [-Wmissing-field-initializers]
+redpajama.cpp:432:59: warning: missing initializer for member 'ggml_gpt2_cgraph::perf_time_us' [-Wmissing-field-initializers]
+redpajama.cpp: In function 'int redpajama_predict(void*, void*, char*)':
+redpajama.cpp:678:33: warning: comparison of integer expressions of different signedness: 'int' and 'std::vector<int>::size_type' {aka 'long unsigned int'} [-Wsign-compare]
+  678 |     for (int i = embd.size(); i < embd_inp.size() + params.n_predict; i++) {
+      |                               ~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+redpajama.cpp:694:15: warning: comparison of integer expressions of different signedness: 'int' and 'std::vector<int>::size_type' {aka 'long unsigned int'} [-Wsign-compare]
+  694 |         if (i >= embd_inp.size()) {
+      |             ~~^~~~~~~~~~~~~~~~~~
+redpajama.cpp:716:31: warning: comparison of integer expressions of different signedness: 'int' and 'std::vector<int>::size_type' {aka 'long unsigned int'} [-Wsign-compare]
+  716 |             for (int k = i; k < embd_inp.size(); k++) {
+      |                             ~~^~~~~~~~~~~~~~~~~
+redpajama.cpp:718:33: warning: comparison of integer expressions of different signedness: 'std::vector<int>::size_type' {aka 'long unsigned int'} and 'int32_t' {aka 'int'} [-Wsign-compare]
+  718 |                 if (embd.size() > params.n_batch) {
+      |                     ~~~~~~~~~~~~^~~~~~~~~~~~~~~~
+redpajama.cpp:647:19: warning: unused variable 't_main_start_us' [-Wunused-variable]
+  647 |     const int64_t t_main_start_us = ggml_gpt2_time_us();
+      |                   ^~~~~~~~~~~~~~~
+redpajama.cpp:657:13: warning: unused variable 't_load_us' [-Wunused-variable]
+  657 |     int64_t t_load_us = 0;
+      |             ^~~~~~~~~
+g++ -I. -I./ggml.cpp/include/ggml/ -I./ggml.cpp/examples/ -O3 -DNDEBUG -std=c++17 -fPIC -Wall -Wextra -Wpedantic -Wcast-qual -Wno-unused-function -Wno-multichar -pthread -march=native -mtune=native starcoder.cpp -o starcoder.o -c 
+starcoder.cpp: In function 'bool starcoder_model_load(const string&, starcoder_model&, gpt_vocab&)':
+starcoder.cpp:212:13: warning: C++ designated initializers only available with '-std=c++2a' or '-std=gnu++2a' [-Wpedantic]
+  212 |             .mem_size   = ctx_size,
+      |             ^
+starcoder.cpp:213:13: warning: C++ designated initializers only available with '-std=c++2a' or '-std=gnu++2a' [-Wpedantic]
+  213 |             .mem_buffer = NULL,
+      |             ^
+starcoder.cpp:214:13: warning: C++ designated initializers only available with '-std=c++2a' or '-std=gnu++2a' [-Wpedantic]
+  214 |             .no_alloc   = false,
+      |             ^
+starcoder.cpp: In function 'bool starcoder_eval(const starcoder_model&, int, int, const std::vector<int>&, std::vector<float>&, size_t&)':
+starcoder.cpp:439:9: warning: C++ designated initializers only available with '-std=c++2a' or '-std=gnu++2a' [-Wpedantic]
+  439 |         .mem_size   = buf_size,
+      |         ^
+starcoder.cpp:440:9: warning: C++ designated initializers only available with '-std=c++2a' or '-std=gnu++2a' [-Wpedantic]
+  440 |         .mem_buffer = buf,
+      |         ^
+starcoder.cpp:441:9: warning: C++ designated initializers only available with '-std=c++2a' or '-std=gnu++2a' [-Wpedantic]
+  441 |         .no_alloc   = false,
+      |         ^
+starcoder.cpp: In function 'int starcoder_predict(void*, void*, char*)':
+starcoder.cpp:754:33: warning: comparison of integer expressions of different signedness: 'int' and 'std::vector<int>::size_type' {aka 'long unsigned int'} [-Wsign-compare]
+  754 |     for (int i = embd.size(); i < embd_inp.size() + params.n_predict; i++) {
+      |                               ~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+starcoder.cpp:770:15: warning: comparison of integer expressions of different signedness: 'int' and 'std::vector<int>::size_type' {aka 'long unsigned int'} [-Wsign-compare]
+  770 |         if (i >= embd_inp.size()) {
+      |             ~~^~~~~~~~~~~~~~~~~~
+starcoder.cpp:792:31: warning: comparison of integer expressions of different signedness: 'int' and 'std::vector<int>::size_type' {aka 'long unsigned int'} [-Wsign-compare]
+  792 |             for (int k = i; k < embd_inp.size(); k++) {
+      |                             ~~^~~~~~~~~~~~~~~~~
+starcoder.cpp:794:33: warning: comparison of integer expressions of different signedness: 'std::vector<int>::size_type' {aka 'long unsigned int'} and 'int32_t' {aka 'int'} [-Wsign-compare]
+  794 |                 if (embd.size() >= params.n_batch) {
+      |                     ~~~~~~~~~~~~^~~~~~~~~~~~~~~~~
+starcoder.cpp:720:19: warning: unused variable 't_main_start_us' [-Wunused-variable]
+  720 |     const int64_t t_main_start_us = ggml_gpt2_time_us();
+      |                   ^~~~~~~~~~~~~~~
+starcoder.cpp:731:13: warning: unused variable 't_load_us' [-Wunused-variable]
+  731 |     int64_t t_load_us = 0;
+      |             ^~~~~~~~~
+mkdir build
+cd build && cmake ../ggml.cpp  && make VERBOSE=1 ggml && cp -rf src/CMakeFiles/ggml.dir/ggml.c.o ../ggml.o
+-- The C compiler identification is GNU 10.2.1
+-- The CXX compiler identification is GNU 10.2.1
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Check for working C compiler: /usr/bin/cc - skipped
+-- Detecting C compile features
+-- Detecting C compile features - done
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Check for working CXX compiler: /usr/bin/c++ - skipped
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- Found Git: /usr/bin/git (found version "2.30.2") 
+-- Looking for pthread.h
+-- Looking for pthread.h - found
+-- Performing Test CMAKE_HAVE_LIBC_PTHREAD
+-- Performing Test CMAKE_HAVE_LIBC_PTHREAD - Failed
+-- Looking for pthread_create in pthreads
+-- Looking for pthread_create in pthreads - not found
+-- Looking for pthread_create in pthread
+-- Looking for pthread_create in pthread - found
+-- Found Threads: TRUE  
+-- CMAKE_SYSTEM_PROCESSOR: x86_64
+-- x86 detected
+-- Linux detected
+-- x86 detected
+-- Linux detected
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /build/go-gpt2/build
+make[3]: Entering directory '/build/go-gpt2/build'
+/usr/bin/cmake -S/build/go-gpt2/ggml.cpp -B/build/go-gpt2/build --check-build-system CMakeFiles/Makefile.cmake 0
+make  -f CMakeFiles/Makefile2 ggml
+make[4]: Entering directory '/build/go-gpt2/build'
+/usr/bin/cmake -S/build/go-gpt2/ggml.cpp -B/build/go-gpt2/build --check-build-system CMakeFiles/Makefile.cmake 0
+/usr/bin/cmake -E cmake_progress_start /build/go-gpt2/build/CMakeFiles 2
+make  -f CMakeFiles/Makefile2 src/CMakeFiles/ggml.dir/all
+make[5]: Entering directory '/build/go-gpt2/build'
+make  -f src/CMakeFiles/ggml.dir/build.make src/CMakeFiles/ggml.dir/depend
+make[6]: Entering directory '/build/go-gpt2/build'
+cd /build/go-gpt2/build && /usr/bin/cmake -E cmake_depends "Unix Makefiles" /build/go-gpt2/ggml.cpp /build/go-gpt2/ggml.cpp/src /build/go-gpt2/build /build/go-gpt2/build/src /build/go-gpt2/build/src/CMakeFiles/ggml.dir/DependInfo.cmake --color=
+Dependee "/build/go-gpt2/build/src/CMakeFiles/ggml.dir/DependInfo.cmake" is newer than depender "/build/go-gpt2/build/src/CMakeFiles/ggml.dir/depend.internal".
+Dependee "/build/go-gpt2/build/src/CMakeFiles/CMakeDirectoryInformation.cmake" is newer than depender "/build/go-gpt2/build/src/CMakeFiles/ggml.dir/depend.internal".
+Scanning dependencies of target ggml
+make[6]: Leaving directory '/build/go-gpt2/build'
+make  -f src/CMakeFiles/ggml.dir/build.make src/CMakeFiles/ggml.dir/build
+make[6]: Entering directory '/build/go-gpt2/build'
+[ 50%] Building C object src/CMakeFiles/ggml.dir/ggml.c.o
+cd /build/go-gpt2/build/src && /usr/bin/cc  -I/build/go-gpt2/ggml.cpp/src/. -I/build/go-gpt2/ggml.cpp/src/../include -I/build/go-gpt2/ggml.cpp/src/../include/ggml -Wall                                       -Wextra                                     -Wpedantic                                  -Wshadow                                    -Wcast-qual                                 -Wstrict-prototypes                         -Wpointer-arith                             -Wdouble-promotion                          -Wno-unused-function                     -Werror=vla -mavx -mavx2 -mfma -mf16c -msse3 -O3 -DNDEBUG -std=gnu11 -o CMakeFiles/ggml.dir/ggml.c.o -c /build/go-gpt2/ggml.cpp/src/ggml.c
