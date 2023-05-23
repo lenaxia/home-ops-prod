@@ -58,9 +58,7 @@ spec:
             #  mkdir -p $MODELS_PATH
             #  wget $URL -O "$MODELS_PATH/$filename"
             #fi
-            sdurl="https://${SECRET_DEV_DOMAIN}/public/stablediffusion.tar"
-            echo $sdurl
-            wget $sdurl -P $MODELS_PATH
+            wget "https://s3.${SECRET_DEV_DOMAIN}/public/stablediffusion.tar" -P $MODELS_PATH
             tar -xzvf $MODELS+PATH/stablediffusion.tar -C $MODELS_PATH
             rm -rf $MODELS_PATH/stablediffusion.tar
 
