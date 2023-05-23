@@ -16,8 +16,6 @@ spec:
         namespace: flux-system
   # See https://github.com/bjw-s/helm-charts/blob/main/charts/library/common/values.yaml
   values:
-    podAnnotations:
-      secret.reloader.stakater.com/reload: *appname
 
     image: 
       repository: quay.io/go-skynet/local-ai
@@ -34,8 +32,8 @@ spec:
       value: /tmp
     - name: BUILD_TYPE
       value: openblas
-    - name: GO_TAGS
-      value: stablediffusion
+        #    - name: GO_TAGS
+        #      value: stablediffusion
     - name: DEBUG
       value: "true"
         #
@@ -53,11 +51,6 @@ spec:
         command: ["/bin/sh", "-c"]
         args:
           - |
-            #url=$URL
-            #if [[ ! -f "$MODELS_PATH/$filename" ]]; then
-            #  mkdir -p $MODELS_PATH
-            #  wget $URL -O "$MODELS_PATH/$filename"
-            #fi
             wget "https://s3.${SECRET_DEV_DOMAIN}/public/stablediffusion.tar" -P /tmp
             tar -xzvf /tmp/stablediffusion.tar -C $MODELS_PATH
             rm -rf /tmp/stablediffusion.tar
@@ -76,7 +69,6 @@ spec:
     persistence:
       models:
         enabled: true
-          #existingClaim: localai-volume
         storageClass: local-path
         size: 30Gi
         type: pvc
