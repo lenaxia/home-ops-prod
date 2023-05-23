@@ -8,8 +8,6 @@ metadata:
   labels:
     substitution.flux.home.arpa/enabled: "true"
 spec:
-  dependsOn:
-    - name: cluster-storage-longhorn
   path: ./cluster/apps/home/localai/app
   prune: true
   sourceRef:
