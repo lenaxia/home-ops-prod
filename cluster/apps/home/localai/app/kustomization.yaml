@@ -12,6 +12,9 @@ configMapGenerator:
   - name: poststart-sh
     files:
       - postStart.sh
+  - name: stablediffusion-yaml
+    files:
+      - stablediffusion.yaml
 generatorOptions:
   disableNameSuffixHash: true
   annotations:

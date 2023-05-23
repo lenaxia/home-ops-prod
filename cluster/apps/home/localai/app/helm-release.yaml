@@ -47,31 +47,31 @@ spec:
         #            - -c
         #            - /postStart.sh
 
-        #    initContainers:
-        #      download-model:
-        #        image: busybox@sha256:b5d6fe0712636ceb7430189de28819e195e8966372edfc2d9409d79402a0dc16
-        #        command: ["/bin/sh", "-c"]
-        #        args:
-        #          - |
-        #            url=$URL
-        #            file=${url##*/}
-        #            filename=${file%.*}
-        #            echo "MODELS_PATH: $MODELS_PATH"
-        #            echo "File Path: $MODELS_PATH/$filename"
-        #            if [[ ! -f "$MODELS_PATH/$filename" ]]; then
-        #              mkdir -p $MODELS_PATH
-        #              wget $URL -O "$MODELS_PATH/$filename"
-        #            fi
-        #        env:
-        #          - name: URL
-        #            value: "https://gpt4all.io/models/ggml-gpt4all-j.bin"
-        #          - name: MODELS_PATH
-        #            value: "/models"
-        #        volumeMounts:
-        #          - name: models 
-        #            mountPath: /models
-        #        securityContext:
-        #          runAsUser: 0
+    initContainers:
+      download-model:
+        image: busybox@sha256:b5d6fe0712636ceb7430189de28819e195e8966372edfc2d9409d79402a0dc16
+        command: ["/bin/sh", "-c"]
+        args:
+          - |
+            #url=$URL
+            #if [[ ! -f "$MODELS_PATH/$filename" ]]; then
+            #  mkdir -p $MODELS_PATH
+            #  wget $URL -O "$MODELS_PATH/$filename"
+            #fi
+            wget "https://${SECRET_DEV_DOMAIN}/public/stablediffusion.tar" -P /tmp
+            tar -xzvf /tmp/stablediffusion.tar -C $MODELS_PATH
+            rm -rf /tmp/stablediffusion.tar
+
+        env:
+          - name: URL
+            value: "https://gpt4all.io/models/ggml-gpt4all-j.bin"
+          - name: MODELS_PATH
+            value: "/models"
+        volumeMounts:
+          - name: models 
+            mountPath: /models
+        securityContext:
+          runAsUser: 0
 
     persistence:
       models:
