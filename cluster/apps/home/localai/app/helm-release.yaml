@@ -86,7 +86,7 @@ spec:
         type: LoadBalancer
         ports:
           http:
-            port: 8080
+            port: &port 8080
 
     ingress:
       main:
@@ -111,3 +111,19 @@ spec:
     
     nodeSelector:
       node-role.kubernetes.io/worker: "true"
+
+    probes:
+      liveness: &probes
+        enabled: false
+        custom: true
+        spec:
+          httpGet:
+            path: /
+            port: *port
+          initialDelaySeconds: 0
+          periodSeconds: 10
+          timeoutSeconds: 1
+          failureThreshold: 3
+      readiness: *probes
+      startup:
+        enabled: false
