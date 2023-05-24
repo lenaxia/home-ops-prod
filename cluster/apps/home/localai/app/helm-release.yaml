@@ -32,8 +32,8 @@ spec:
       value: /tmp
     - name: BUILD_TYPE
       value: openblas
-        #    - name: GO_TAGS
-        #      value: stablediffusion
+    - name: GO_TAGS
+      value: stablediffusion
     - name: DEBUG
       value: "true"
         #
