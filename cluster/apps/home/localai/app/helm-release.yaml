@@ -43,11 +43,14 @@ spec:
         command: ["/bin/sh", "-c"]
         args:
           - |
+            ## A simpler and more secure way if you have a way of staging an archive with the files you need
             #wget "https://s3.${SECRET_DEV_DOMAIN}/public/stablediffusion.tar" -P /tmp
             #tar -xzvf /tmp/stablediffusion.tar -C $MODELS_PATH
             #rm -rf /tmp/stablediffusion.tar
 
-            # download the model files from github
+            ## A more general and less secure way that grab all the files from github
+            ## Details here: https://github.com/go-skynet/LocalAI
+            ## And here: https://github.com/lenaxia/stablediffusion-bins/releases/tag/2023.05.24
             mkdir $MODELS_PATH/stablediffusion_assets
             wget "https://raw.githubusercontent.com/EdVince/Stable-Diffusion-NCNN/main/x86/linux/assets/AutoencoderKL-256-256-fp16-opt.param" -P $MODELS_PATH/stablediffusion_assets
             wget "https://raw.githubusercontent.com/EdVince/Stable-Diffusion-NCNN/main/x86/linux/assets/AutoencoderKL-512-512-fp16-opt.param" -P $MODELS_PATH/stablediffusion_assets
@@ -120,17 +123,27 @@ spec:
       node-role.kubernetes.io/worker: "true"
 
     probes:
-      liveness: &probes
+      liveness: 
         enabled: false
         custom: true
         spec:
           httpGet:
-            path: /
+            path: /healthz
             port: *port
-          initialDelaySeconds: 400
+          initialDelaySeconds: 0
           periodSeconds: 30 
           timeoutSeconds: 1
           failureThreshold: 3
-      readiness: *probes
+      readiness: 
+        enabled: false
+        custom: true
+        spec:
+          httpGet:
+            path: /readyz
+            port: *port
+          initialDelaySeconds: 0
+          periodSeconds: 30 
+          timeoutSeconds: 1
+          failureThreshold: 3
       startup:
         enabled: false
