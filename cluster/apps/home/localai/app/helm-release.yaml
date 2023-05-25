@@ -23,7 +23,7 @@ spec:
 
     env:
     - name: THREADS
-      value: 8 
+      value: 14
     - name: CONTEXT_SIZE
       value: 1024
     - name: MODELS_PATH
@@ -36,14 +36,6 @@ spec:
       value: stablediffusion
     - name: DEBUG
       value: "true"
-        #
-        #    lifecycle:
-        #      postStart:
-        #        exec:
-        #          command:
-        #            - /bin/bash
-        #            - -c
-        #            - /postStart.sh
 
     initContainers:
       download-model:
@@ -73,13 +65,6 @@ spec:
         size: 30Gi
         type: pvc
         accessMode: ReadWriteOnce
-          #      poststart:
-          #        enabled: true
-          #        type: configMap
-          #        name: poststart-sh
-          #        subPath: postStart.sh
-          #        mountPath: /postStart.sh
-          #        defaultMode: 0777
 
     service:
       main:
@@ -93,9 +78,9 @@ spec:
         enabled: true
         annotations:
           hajimari.io/enable: "true"
-          hajimari.io/icon: game-icons:meal
+          hajimari.io/icon: eos-icons:ai
           hajimari.io/info: Local AI
-          hajimari.io/group: documents
+          hajimari.io/group: home
           cert-manager.io/cluster-issuer: "letsencrypt-production"
           traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
           traefik.ingress.kubernetes.io/router.middlewares: networking-chain-authelia@kubernetescrd
@@ -114,13 +99,13 @@ spec:
 
     probes:
       liveness: &probes
-        enabled: false
+        enabled: true
         custom: true
         spec:
           httpGet:
             path: /
             port: *port
-          initialDelaySeconds: 0
+          initialDelaySeconds: 400
           periodSeconds: 30 
           timeoutSeconds: 1
           failureThreshold: 3
