@@ -43,21 +43,31 @@ spec:
         command: ["/bin/sh", "-c"]
         args:
           - |
-            wget "https://s3.${SECRET_DEV_DOMAIN}/public/stablediffusion.tar" -P /tmp
-            tar -xzvf /tmp/stablediffusion.tar -C $MODELS_PATH
-            rm -rf /tmp/stablediffusion.tar
+            #wget "https://s3.${SECRET_DEV_DOMAIN}/public/stablediffusion.tar" -P /tmp
+            #tar -xzvf /tmp/stablediffusion.tar -C $MODELS_PATH
+            #rm -rf /tmp/stablediffusion.tar
 
             # download the model files from github
-            #            mkdir $MODELS_PATH/stablediffusion_assets
-            #            wget "https://raw.githubusercontent.com/EdVince/Stable-Diffusion-NCNN/main/x86/linux/assets/AutoencoderKL-256-256-fp16-opt.param" -P $MODELS_PATH/stablediffusion_assets
-            #            wget "https://raw.githubusercontent.com/EdVince/Stable-Diffusion-NCNN/main/x86/linux/assets/AutoencoderKL-512-512-fp16-opt.param" -P $MODELS_PATH/stablediffusion_assets
-            #            wget "https://raw.githubusercontent.com/EdVince/Stable-Diffusion-NCNN/main/x86/linux/assets/AutoencoderKL-base-fp16.param" -P $MODELS_PATH/stablediffusion_assets
-            #            wget "https://raw.githubusercontent.com/EdVince/Stable-Diffusion-NCNN/main/x86/linux/assets/FrozenCLIPEmbedder-fp16.param" -P $MODELS_PATH/stablediffusion_assets
-            #            wget "https://raw.githubusercontent.com/EdVince/Stable-Diffusion-NCNN/main/x86/linux/assets/UNetModel-256-256-MHA-fp16-opt.param" -P $MODELS_PATH/stablediffusion_assets
-            #            wget "https://raw.githubusercontent.com/EdVince/Stable-Diffusion-NCNN/main/x86/linux/assets/UNetModel-512-512-MHA-fp16-opt.param" -P $MODELS_PATH/stablediffusion_assets
-            #            wget "https://raw.githubusercontent.com/EdVince/Stable-Diffusion-NCNN/main/x86/linux/assets/UNetModel-base-MHA-fp16.param" -P $MODELS_PATH/stablediffusion_assets
-            #            wget "https://github.com/EdVince/Stable-Diffusion-NCNN/raw/main/x86/linux/assets/log_sigmas.bin" -P $MODELS_PATH/stablediffusion_assets
-            #            wget "https://raw.githubusercontent.com/EdVince/Stable-Diffusion-NCNN/main/x86/linux/assets/vocab.txt" -P $MODELS_PATH/stablediffusion_assets
+            mkdir $MODELS_PATH/stablediffusion_assets
+            wget "https://raw.githubusercontent.com/EdVince/Stable-Diffusion-NCNN/main/x86/linux/assets/AutoencoderKL-256-256-fp16-opt.param" -P $MODELS_PATH/stablediffusion_assets
+            wget "https://raw.githubusercontent.com/EdVince/Stable-Diffusion-NCNN/main/x86/linux/assets/AutoencoderKL-512-512-fp16-opt.param" -P $MODELS_PATH/stablediffusion_assets
+            wget "https://raw.githubusercontent.com/EdVince/Stable-Diffusion-NCNN/main/x86/linux/assets/AutoencoderKL-base-fp16.param" -P $MODELS_PATH/stablediffusion_assets
+            wget "https://raw.githubusercontent.com/EdVince/Stable-Diffusion-NCNN/main/x86/linux/assets/FrozenCLIPEmbedder-fp16.param" -P $MODELS_PATH/stablediffusion_assets
+            wget "https://raw.githubusercontent.com/EdVince/Stable-Diffusion-NCNN/main/x86/linux/assets/UNetModel-256-256-MHA-fp16-opt.param" -P $MODELS_PATH/stablediffusion_assets
+            wget "https://raw.githubusercontent.com/EdVince/Stable-Diffusion-NCNN/main/x86/linux/assets/UNetModel-512-512-MHA-fp16-opt.param" -P $MODELS_PATH/stablediffusion_assets
+            wget "https://raw.githubusercontent.com/EdVince/Stable-Diffusion-NCNN/main/x86/linux/assets/UNetModel-base-MHA-fp16.param" -P $MODELS_PATH/stablediffusion_assets
+            wget "https://github.com/EdVince/Stable-Diffusion-NCNN/raw/main/x86/linux/assets/log_sigmas.bin" -P $MODELS_PATH/stablediffusion_assets
+            wget "https://raw.githubusercontent.com/EdVince/Stable-Diffusion-NCNN/main/x86/linux/assets/vocab.txt" -P $MODELS_PATH/stablediffusion_assets
+            wget "https://github.com/lenaxia/stablediffusion-bins/releases/download/2023.05.24/UNetModel-MHA-fp16.bin" -P $MODELS_PATH/stablediffusion_assets
+            wget "https://github.com/lenaxia/stablediffusion-bins/releases/download/2023.05.24/FrozenCLIPEmbedder-fp16.bin" -P $MODELS_PATH/stablediffusion_assets
+            wget "https://github.com/lenaxia/stablediffusion-bins/releases/download/2023.05.24/AutoencoderKL-fp16.bin" -P $MODELS_PATH/stablediffusion_assets
+            wget "https://github.com/lenaxia/stablediffusion-bins/releases/download/2023.05.24/AutoencoderKL-encoder-512-512-fp16.bin" -P $MODELS_PATH/stablediffusion_assets
+        
+            cat << "EOF" >> $MODELS_PATH/stablediffusion.yaml
+            name: stablediffusion
+            backend: stablediffusion
+            asset_dir: stablediffusion_assets
+            EOF
 
         env:
           - name: URL
