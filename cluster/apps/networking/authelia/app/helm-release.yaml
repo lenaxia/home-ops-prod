@@ -269,6 +269,7 @@ spec:
             - "collabora.${SECRET_DEV_DOMAIN}"
             - "minio.${SECRET_DEV_DOMAIN}"
             - "hass.${SECRET_DEV_DOMAIN}"
+            - "ai.${SECRET_DEV_DOMAIN}"
           policy: bypass
           networks:
             - private
