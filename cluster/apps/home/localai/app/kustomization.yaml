@@ -6,16 +6,3 @@ commonLabels:
   app.kubernetes.io/instance: *app
 resources:
   - helm-release.yaml
-    #  - config-pvc.yaml
-  - secret.sops.yaml
-configMapGenerator:
-  - name: poststart-sh
-    files:
-      - postStart.sh
-  - name: stablediffusion-yaml
-    files:
-      - stablediffusion.yaml
-generatorOptions:
-  disableNameSuffixHash: true
-  annotations:
-    kustomize.toolkit.fluxcd.io/substitute: disabled
