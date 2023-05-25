@@ -47,6 +47,18 @@ spec:
             tar -xzvf /tmp/stablediffusion.tar -C $MODELS_PATH
             rm -rf /tmp/stablediffusion.tar
 
+            # download the model files from github
+            mkdir $MODELS_PATH/stablediffusion_assets
+            wget "https://raw.githubusercontent.com/EdVince/Stable-Diffusion-NCNN/main/x86/linux/assets/AutoencoderKL-256-256-fp16-opt.param" -P $MODELS_PATH/stablediffusion_assets
+            wget "https://raw.githubusercontent.com/EdVince/Stable-Diffusion-NCNN/main/x86/linux/assets/AutoencoderKL-512-512-fp16-opt.param" -P $MODELS_PATH/stablediffusion_assets
+            wget "https://raw.githubusercontent.com/EdVince/Stable-Diffusion-NCNN/main/x86/linux/assets/AutoencoderKL-base-fp16.param" -P $MODELS_PATH/stablediffusion_assets
+            wget "https://raw.githubusercontent.com/EdVince/Stable-Diffusion-NCNN/main/x86/linux/assets/FrozenCLIPEmbedder-fp16.param" -P $MODELS_PATH/stablediffusion_assets
+            wget "https://raw.githubusercontent.com/EdVince/Stable-Diffusion-NCNN/main/x86/linux/assets/UNetModel-256-256-MHA-fp16-opt.param" -P $MODELS_PATH/stablediffusion_assets
+            wget "https://raw.githubusercontent.com/EdVince/Stable-Diffusion-NCNN/main/x86/linux/assets/UNetModel-512-512-MHA-fp16-opt.param" -P $MODELS_PATH/stablediffusion_assets
+            wget "https://raw.githubusercontent.com/EdVince/Stable-Diffusion-NCNN/main/x86/linux/assets/UNetModel-base-MHA-fp16.param" -P $MODELS_PATH/stablediffusion_assets
+            wget "https://github.com/EdVince/Stable-Diffusion-NCNN/raw/main/x86/linux/assets/log_sigmas.bin" -P $MODELS_PATH/stablediffusion_assets
+            wget "https://raw.githubusercontent.com/EdVince/Stable-Diffusion-NCNN/main/x86/linux/assets/vocab.txt" -P $MODELS_PATH/stablediffusion_assets
+
         env:
           - name: URL
             value: "https://gpt4all.io/models/ggml-gpt4all-j.bin"
@@ -99,7 +111,7 @@ spec:
 
     probes:
       liveness: &probes
-        enabled: true
+        enabled: false
         custom: true
         spec:
           httpGet:
