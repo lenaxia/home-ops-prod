@@ -1,0 +1,51 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    app.kubernetes.io/instance: local-ai
+    app.kubernetes.io/name: local-ai
+  name: local-ai
+  namespace: default
+spec:
+  containers:
+  - env:
+    - name: IMAGE_PATH
+      value: /tmp
+    - name: BUILD_TYPE
+      value: openblas
+    - name: GO_TAGS
+      value: stablediffusion
+    - name: DEBUG
+      value: "true"
+    - name: THREADS
+      value: "8"
+    - name: CONTEXT_SIZE
+      value: "1024"
+    - name: MODELS_PATH
+      value: /models
+    image: quay.io/go-skynet/local-ai:master
+    imagePullPolicy: Always
+    name: local-ai
+    volumeMounts:
+    - mountPath: /models
+      name: models
+  initContainers:
+  - command:
+    - /bin/sh
+    - -c
+    args:
+      - |
+        wget "https://s3.thekao.cloud/public/stablediffusion.tar" -P /tmp
+        tar -xzvf /tmp/stablediffusion.tar -C /models
+        rm -rf /tmp/stablediffusion.tar
+    image: busybox
+    imagePullPolicy: Always
+    name: download-model
+    volumeMounts:
+    - mountPath: /models
+      name: models
+  restartPolicy: Always
+  volumes:
+  - name: models
+    persistentVolumeClaim:
+      claimName: local-ai-data
