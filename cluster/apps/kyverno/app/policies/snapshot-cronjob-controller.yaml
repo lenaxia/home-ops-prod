@@ -3,6 +3,7 @@ apiVersion: kyverno.io/v1
 kind: ClusterPolicy
 metadata:
   name: snapshot-cronjob-controller
+  namespace: kyverno
   annotations:
     policies.kyverno.io/title: Snapshot CronJob controller
     policies.kyverno.io/subject: PersistentVolumeClaim

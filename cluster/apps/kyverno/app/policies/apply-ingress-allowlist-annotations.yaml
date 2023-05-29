@@ -3,6 +3,7 @@ apiVersion: kyverno.io/v1
 kind: ClusterPolicy
 metadata:
   name: apply-ingress-allowlist-annotations
+  namespace: kyverno
   annotations:
     policies.kyverno.io/title: Apply Ingress allowlist Annotations
     policies.kyverno.io/subject: Ingress
