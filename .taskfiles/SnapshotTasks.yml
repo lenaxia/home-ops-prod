@@ -5,9 +5,9 @@ x-preconditions: &preconditions
   - &has-app
     sh: kubectl get deploy,sts -A | awk '/{{.APP}}\s/{print $1}' | grep .
     msg: "App '{{.APP}}' not found"
-  - &has-cronjob
-    sh: kubectl get cronjob -n {{.NAMESPACE}} {{.APP}}-{{.VOLUME}}-snapshot
-    msg: "CronJob '{{.APP}}-{{.VOLUME}}-snapshot' in namespace '{{.NAMESPACE}}' not found"
+      #  - &has-cronjob
+      #    sh: kubectl get cronjob -n {{.NAMESPACE}} {{.APP}}-{{.VOLUME}}-snapshot
+      #    msg: "CronJob '{{.APP}}-{{.VOLUME}}-snapshot' in namespace '{{.NAMESPACE}}' not found"
   - &has-volume
     sh: kubectl get pvc -n {{.NAMESPACE}} {{.VOLUME}}
     msg: "PersistentVolumeClaim '{{.VOLUME}}' in namespace '{{.NAMESPACE}}' not found"
