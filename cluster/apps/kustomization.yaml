@@ -8,7 +8,6 @@ resources:
   - ./databases/redis/ks.yaml
   - ./databases/redis-operator/ks.yaml
   - ./databases/cloudnative-pg/ks.yaml
-    #  - ./databases/cloudnative-pg/clusters
   - ./databases/influxdb/ks.yaml
     #- ./databases/telegraf/ks.yaml
 
