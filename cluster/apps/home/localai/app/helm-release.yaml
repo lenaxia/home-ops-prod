@@ -147,3 +147,10 @@ spec:
           failureThreshold: 3
       startup:
         enabled: false
+
+    resources:
+      requests:
+        cpu: 200m
+        memory: 2000Mi
+      limits:
+        memory: 40000Mi
