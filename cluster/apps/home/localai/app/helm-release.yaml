@@ -23,9 +23,9 @@ spec:
 
     env:
     - name: THREADS
-      value: 14
+      value: 6
     - name: CONTEXT_SIZE
-      value: 1024
+      value: 512
     - name: MODELS_PATH
       value: "/models"
     - name: IMAGE_PATH
