@@ -86,7 +86,7 @@ spec:
     persistence:
       models:
         enabled: true
-        storageClass: local-path
+        storageClass: longhorn
         size: 30Gi
         type: pvc
         accessMode: ReadWriteOnce
