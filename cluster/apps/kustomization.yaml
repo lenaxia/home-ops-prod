@@ -35,7 +35,7 @@ resources:
   - ./home/babybuddy/ks.yaml
   - ./home/babybuddy-ava/ks.yaml
   - ./home/node-red/ks.yaml
-    #- ./home/localai/ks.yaml
+  - ./home/localai/ks.yaml
   - ./home/home-assistant/ks.yaml
   - ./home/zwavejs/ks.yaml
   - ./home/mosquitto/ks.yaml
