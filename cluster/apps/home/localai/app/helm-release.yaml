@@ -4,7 +4,7 @@ metadata:
   name: &appname localai
   namespace: home
 spec:
-  interval: 20m
+  interval: 5m
   chart:
     spec:
       chart: app-template
