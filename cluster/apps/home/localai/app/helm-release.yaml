@@ -23,7 +23,7 @@ spec:
 
     env:
     - name: THREADS
-      value: 4
+      value: 8
     - name: CONTEXT_SIZE
       value: 512
     - name: MODELS_PATH
