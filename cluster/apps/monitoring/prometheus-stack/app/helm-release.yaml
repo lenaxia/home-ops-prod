@@ -15,11 +15,11 @@ spec:
         namespace: flux-system
   install:
     remediation:
-      retries: 7
+      retries: 5
     crds: Create
   upgrade:
     remediation:
-      retries: 8
+      retries: 5
     crds: CreateReplace
   # https://github.com/prometheus-community/helm-charts/blob/main/charts/kube-prometheus-stack/values.yaml
   values:
