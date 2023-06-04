@@ -140,7 +140,7 @@ spec:
           httpGet:
             path: /healthz
             port: *port
-          initialDelaySeconds:  240
+          initialDelaySeconds: 300
           periodSeconds: 30 
           timeoutSeconds: 1
           failureThreshold: 4
@@ -151,7 +151,7 @@ spec:
           httpGet:
             path: /readyz
             port: *port
-          initialDelaySeconds: 240
+          initialDelaySeconds: 300
           periodSeconds: 30 
           timeoutSeconds: 1
           failureThreshold: 4
