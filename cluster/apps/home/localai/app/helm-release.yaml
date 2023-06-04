@@ -23,7 +23,7 @@ spec:
 
     env:
     - name: THREADS
-      value: 8
+      value: 4
     - name: CONTEXT_SIZE
       value: 512
     - name: MODELS_PATH
@@ -132,27 +132,27 @@ spec:
 
     probes:
       liveness: 
-        enabled: false
+        enabled: true
         custom: true
         spec:
           httpGet:
             path: /healthz
             port: *port
-          initialDelaySeconds: 0
+          initialDelaySeconds: 300 
           periodSeconds: 30 
           timeoutSeconds: 1
-          failureThreshold: 3
+          failureThreshold: 4
       readiness: 
-        enabled: false
+        enabled: true
         custom: true
         spec:
           httpGet:
             path: /readyz
             port: *port
-          initialDelaySeconds: 0
+          initialDelaySeconds: 300
           periodSeconds: 30 
           timeoutSeconds: 1
-          failureThreshold: 3
+          failureThreshold: 4
       startup:
         enabled: false
 
