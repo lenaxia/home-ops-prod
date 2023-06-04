@@ -23,7 +23,7 @@ spec:
 
     env:
     - name: THREADS
-      value: 4
+      value: 8
     - name: CONTEXT_SIZE
       value: 512
     - name: MODELS_PATH
@@ -138,7 +138,7 @@ spec:
           httpGet:
             path: /healthz
             port: *port
-          initialDelaySeconds: 300 
+          initialDelaySeconds:  240
           periodSeconds: 30 
           timeoutSeconds: 1
           failureThreshold: 4
@@ -149,7 +149,7 @@ spec:
           httpGet:
             path: /readyz
             port: *port
-          initialDelaySeconds: 300
+          initialDelaySeconds: 240
           periodSeconds: 30 
           timeoutSeconds: 1
           failureThreshold: 4
