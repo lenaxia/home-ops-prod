@@ -31,7 +31,7 @@ spec:
     - name: IMAGE_PATH
       value: /tmp
     - name: BUILD_TYPE
-      value: clblast
+      value: openblas
     - name: GO_TAGS
       value: stablediffusion
     - name: DEBUG
