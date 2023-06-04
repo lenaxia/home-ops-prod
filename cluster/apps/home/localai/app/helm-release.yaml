@@ -23,7 +23,7 @@ spec:
 
     env:
     - name: THREADS
-      value: 6
+      value: 4
     - name: CONTEXT_SIZE
       value: 512
     - name: MODELS_PATH
@@ -36,6 +36,14 @@ spec:
       value: stablediffusion
     - name: DEBUG
       value: "true"
+
+    lifecycle:
+      postStart:
+        exec:
+          command:
+            - /bin/bash
+            - -c
+            - apt install libclblast-dev -y
 
     initContainers:
       download-model:
@@ -150,6 +158,7 @@ spec:
 
     resources:
       requests:
+        gpu.intel.com/i915: 1
         cpu: 200m
         memory: 2000Mi
       limits:
