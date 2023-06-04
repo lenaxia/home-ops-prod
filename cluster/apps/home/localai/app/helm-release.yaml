@@ -34,8 +34,8 @@ spec:
       value: clblas
     - name: GO_TAGS
       value: stablediffusion
-        #    - name: LLAMA_CLBLAST
-        #      value: 1
+    - name: LLAMA_CLBLAST
+      value: 1
     - name: DEBUG
       value: "true"
 
@@ -143,7 +143,7 @@ spec:
           initialDelaySeconds: 300
           periodSeconds: 30 
           timeoutSeconds: 1
-          failureThreshold: 4
+          failureThreshold: 6
       readiness: 
         enabled: true
         custom: true
@@ -154,7 +154,7 @@ spec:
           initialDelaySeconds: 300
           periodSeconds: 30 
           timeoutSeconds: 1
-          failureThreshold: 4
+          failureThreshold: 6
       startup:
         enabled: false
 
