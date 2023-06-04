@@ -34,6 +34,8 @@ spec:
       value: clblast
     - name: GO_TAGS
       value: stablediffusion
+    - name: LLAMA_CLBLAST
+      value: 1
     - name: DEBUG
       value: "true"
 
