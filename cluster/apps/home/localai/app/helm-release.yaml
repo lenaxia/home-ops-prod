@@ -31,11 +31,12 @@ spec:
     - name: IMAGE_PATH
       value: /tmp
     - name: BUILD_TYPE
-      value: clblas
+      value: openblas
+#      value: clblas
+#    - name: LLAMA_CLBLAST
+#      value: 1
     - name: GO_TAGS
       value: stablediffusion
-    - name: LLAMA_CLBLAST
-      value: 1
     - name: DEBUG
       value: "true"
 
