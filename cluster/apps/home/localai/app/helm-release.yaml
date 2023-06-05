@@ -127,7 +127,7 @@ spec:
           hajimari.io/enable: "true"
           hajimari.io/icon: eos-icons:ai
           hajimari.io/info: Local AI
-          hajimari.io/group: home
+          hajimari.io/group: "Home"
           cert-manager.io/cluster-issuer: "letsencrypt-production"
           traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
           traefik.ingress.kubernetes.io/router.middlewares: networking-chain-authelia@kubernetescrd
