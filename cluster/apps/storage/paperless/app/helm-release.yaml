@@ -23,8 +23,7 @@ spec:
           name: *appname
     env:
       COMPOSE_PROJECT_NAME: *appname
-      CSRF_TRUSTED_ORIGINS: https://paperless.${SECRET_DEV_DOMAIN}, http://127.0.0.1:8000
-      PAPERLESS_URL: &host paperless.${SECRET_DEV_DOMAIN}
+      PAPERLESS_URL: https://paperless.${SECRET_DEV_DOMAIN}
       USERMAP_UID: 568
       USERMAP_GID: 568
       PAPERLESS_CONSUMPTION_DIR: /paperless/consume
@@ -62,7 +61,7 @@ spec:
           traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
           traefik.ingress.kubernetes.io/router.middlewares: networking-chain-authelia@kubernetescrd
         hosts:
-          - host: *host 
+          - host: &host paperless.${SECRET_DEV_DOMAIN}
             paths:
               - path: /
                 pathType: Prefix
