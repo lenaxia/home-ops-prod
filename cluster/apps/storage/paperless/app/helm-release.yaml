@@ -23,7 +23,8 @@ spec:
           name: *appname
     env:
       COMPOSE_PROJECT_NAME: *appname
-      PAPERLESS_URL: &host paperless.${SECRET_DOMAIN}
+      CSRF_TRUSTED_ORIGINS: https://paperless.${SECRET_DEV_DOMAIN}, http://127.0.0.1:8000
+      PAPERLESS_URL: &host paperless.${SECRET_DEV_DOMAIN}
       USERMAP_UID: 568
       USERMAP_GID: 568
       PAPERLESS_CONSUMPTION_DIR: /paperless/consume
@@ -37,7 +38,7 @@ spec:
       PAPERLESS_CONSUMER_SUBDIRS_AS_TAGS: true
       PAPERLESS_OCR_LANGUAGE: eng
       PAPERLESS_ENABLE_HTTP_REMOTE_USER: true
-      PAPERLESS_TIME_ZONE: ${TZ}
+      PAPERLESS_TIME_ZONE: ${TIMEZONE}
       PAPERLESS_TASK_WORKERS: 2
       PAPERLESS_REDIS: redis://localhost:6379
       PAPERLESS_TIKA_ENABLED: 1
