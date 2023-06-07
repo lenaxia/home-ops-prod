@@ -11,6 +11,8 @@ spec:
   dependsOn:
     - name: cluster-storage-longhorn
     - name: cluster-databases-postgres-clusters
+    - name: cluster-databases-redis
+    - name: cluster-databases-redis-lb
   path: ./cluster/apps/storage/paperless/app
   prune: true
   sourceRef:

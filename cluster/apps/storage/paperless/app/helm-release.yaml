@@ -14,10 +14,6 @@ spec:
         kind: HelmRepository
         name: bjw-s-charts
         namespace: flux-system
-  dependsOn:
-    - name: cluster-databases-postgres-clusters
-    - name: cluster-databases-redis
-    - name: cluster-databases-redis-lb
   values:
     image:
       repository: ghcr.io/paperless-ngx/paperless-ngx
