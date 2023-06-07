@@ -347,6 +347,8 @@ spec:
             - "library.${SECRET_DEV_DOMAIN}"
             - "plex.${SECRET_DEV_DOMAIN}"
             - "request.${SECRET_DEV_DOMAIN}"
+            #storage
+            - "paperless.${SECRET_DEV_DOMAIN}"
             #utilities
             - "hajimari.${SECRET_DEV_DOMAIN}"
           domain_regex:
