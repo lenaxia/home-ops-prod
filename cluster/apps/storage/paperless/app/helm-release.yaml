@@ -1,11 +1,12 @@
 ---
+# yaml-language-server: $schema=https://kubernetes-schemas.devbu.io/helm.toolkit.fluxcd.io/helmrelease_v2beta1.json
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
   name: &appname paperless
   namespace: storage
 spec:
-  interval: 5m
+  interval: 30m
   chart:
     spec:
       chart: app-template
@@ -14,40 +15,60 @@ spec:
         kind: HelmRepository
         name: bjw-s-charts
         namespace: flux-system
+  maxHistory: 2
+  install:
+    createNamespace: true
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  uninstall:
+    keepHistory: false
   values:
+    initContainers:
+      01-init-db:
+        image: ghcr.io/onedr0p/postgres-init:14.8
+        imagePullPolicy: IfNotPresent
+        envFrom: &envFrom
+          - secretRef:
+              name: *appname
+    controller:
+      type: statefulset
+      annotations:
+        reloader.stakater.com/auto: "true"
     image:
       repository: ghcr.io/paperless-ngx/paperless-ngx
       tag: 1.15.1
-    envFrom:
-      - secretRef:
-          name: *appname
+
     env:
-      COMPOSE_PROJECT_NAME: *appname
-      PAPERLESS_URL: https://paperless.${SECRET_DEV_DOMAIN}
-      USERMAP_UID: 568
-      USERMAP_GID: 568
-      PAPERLESS_CONSUMPTION_DIR: /paperless/consume
-      PAPERLESS_DATA_DIR: /paperless/data
-      PAPERLESS_MEDIA_ROOT: /paperless/media
-      PAPERLESS_FILENAME_FORMAT: "{created_year}/{correspondent}/{title}"
-      PAPERLESS_FILENAME_FORMAT_REMOVE_NONE: true
       PAPERLESS_CONSUMER_POLLING: 60
-      PAPERLESS_CONSUMER_DELETE_DUPLICATES: true
-      PAPERLESS_CONSUMER_RECURSIVE: true
-      PAPERLESS_CONSUMER_SUBDIRS_AS_TAGS: true
+      PAPERLESS_CONSUMER_RECURSIVE: "true"
+      PAPERLESS_CONSUMER_SUBDIRS_AS_TAGS: "true"
+      PAPERLESS_CONSUMPTION_DIR: /library/consume
+      PAPERLESS_DATA_DIR: /library/data
+      PAPERLESS_ENABLE_HTTP_REMOTE_USER: "true"
+      PAPERLESS_EXPORT_DIR: /library/export
+      PAPERLESS_HTTP_REMOTE_USER_HEADER_NAME: HTTP_REMOTE_USER
+      PAPERLESS_MEDIA_ROOT: /library/media
       PAPERLESS_OCR_LANGUAGE: eng
-      PAPERLESS_ENABLE_HTTP_REMOTE_USER: true
-      PAPERLESS_TIME_ZONE: ${TIMEZONE}
-      PAPERLESS_TASK_WORKERS: 2
+      PAPERLESS_PORT: &port 80
       PAPERLESS_REDIS: redis://localhost:6379
+      PAPERLESS_TASK_WORKERS: 2
       PAPERLESS_TIKA_ENABLED: 1
       PAPERLESS_TIKA_GOTENBERG_ENDPOINT: http://localhost:3000
       PAPERLESS_TIKA_ENDPOINT: http://localhost:9998
+      PAPERLESS_TIME_ZONE: ${TIMEZONE}
+      PAPERLESS_URL: https://paperless.${SECRET_DEV_DOMAIN}
+      USERMAP_UID: 568
+      USERMAP_GID: 568
+    envFrom: *envFrom
     service:
       main:
         ports:
           http:
-            port: 8000
+            port: *port
     ingress:
       main:
         enabled: true
@@ -69,20 +90,25 @@ spec:
           - hosts:
               - *host
     persistence:
-      data:
+      library:
         enabled: true
-        mountPath: /paperless
         existingClaim: paperless-nfs
-
+        mountPath: /library
+    resources:
+      requests:
+        cpu: 100m
+        memory: 1000Mi
+      limits:
+        memory: 5000Mi
     sidecars:
       gotenburg:
         image: thecodingmachine/gotenberg:7.8.3
         imagePullPolicy: IfNotPresent
         env:
           - { name: DISABLE_GOOGLE_CHROME, value: "1" }
-      tika:
-        image: ghcr.io/paperless-ngx/tika:2.7.0-full
-        imagePullPolicy: IfNotPresent
       redis:
         image: public.ecr.aws/docker/library/redis:7.0.11
+        imagePullPolicy: IfNotPresent
+      tika:
+        image: ghcr.io/paperless-ngx/tika:2.7.0-full
         imagePullPolicy: IfNotPresent
