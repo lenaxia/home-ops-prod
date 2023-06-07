@@ -24,8 +24,8 @@ spec:
     env:
       COMPOSE_PROJECT_NAME: *appname
       PAPERLESS_URL: &host paperless.${SECRET_DOMAIN}
-      USERMAP_UID: 33
-      USERMAP_GID: 33
+      USERMAP_UID: 568
+      USERMAP_GID: 568
       PAPERLESS_CONSUMPTION_DIR: /paperless/consume
       PAPERLESS_DATA_DIR: /paperless/data
       PAPERLESS_MEDIA_ROOT: /paperless/media
@@ -81,4 +81,7 @@ spec:
           - { name: DISABLE_GOOGLE_CHROME, value: "1" }
       tika:
         image: ghcr.io/paperless-ngx/tika:2.7.0-full
+        imagePullPolicy: IfNotPresent
+      redis:
+        image: public.ecr.aws/docker/library/redis:7.0.11
         imagePullPolicy: IfNotPresent
