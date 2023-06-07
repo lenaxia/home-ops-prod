@@ -27,13 +27,6 @@ spec:
   uninstall:
     keepHistory: false
   values:
-    initContainers:
-      01-init-db:
-        image: ghcr.io/onedr0p/postgres-init:14.8
-        imagePullPolicy: IfNotPresent
-        envFrom: &envFrom
-          - secretRef:
-              name: *appname
     controller:
       type: statefulset
       annotations:
@@ -63,7 +56,9 @@ spec:
       PAPERLESS_URL: https://paperless.${SECRET_DEV_DOMAIN}
       USERMAP_UID: 568
       USERMAP_GID: 568
-    envFrom: *envFrom
+    envFrom: 
+      - secretRef:
+        name: *appname
     service:
       main:
         ports:
