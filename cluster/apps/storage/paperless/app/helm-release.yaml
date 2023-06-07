@@ -56,9 +56,9 @@ spec:
       PAPERLESS_URL: https://paperless.${SECRET_DEV_DOMAIN}
       USERMAP_UID: 568
       USERMAP_GID: 568
-    envFrom: 
+    envFrom:
       - secretRef:
-        name: *appname
+          name: *appname
     service:
       main:
         ports:
