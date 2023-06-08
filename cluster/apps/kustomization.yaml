@@ -45,7 +45,7 @@ resources:
 
   # Monitoring Namespace
   - ./monitoring/flux
-    #  - ./monitoring/prometheus-stack/ks.yaml
+  - ./monitoring/prometheus-stack/ks.yaml
   - ./monitoring/grafana/ks.yaml
   #- ./monitoring/loki/ks.yaml
   #- ./monitoring/vector/ks.yaml
