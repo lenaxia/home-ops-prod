@@ -38,7 +38,7 @@ spec:
         type: LoadBalancer
         annotations:
           coredns.io/hostname: redis.${SECRET_DEV_DOMAIN}
-        loadBalancerIPs: ["${SVC_REDIS_ADDR}"]
+        loadBalancerIP: ${SVC_REDIS_ADDR}
         externalTrafficPolicy: Local
         ports:
           http:
