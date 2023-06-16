@@ -78,10 +78,32 @@ spec:
           http:
             port: *port
 
+              #    ingress:
+              #      enabled: true
+              #      ingressClassName: "traefik"
+              #      annotations:
+              #        hajimari.io/enable: "true"
+              #        hajimari.io/icon: "list-status"
+              #        hajimari.io/appName: "Ragnarok Online"
+              #        hajimari.io/group: "Home"
+              #        cert-manager.io/cluster-issuer: "letsencrypt-production"
+              #        traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
+              #        traefik.ingress.kubernetes.io/router.middlewares: networking-chain-authelia@kubernetescrd
+              #      hosts:
+              #        - host: &uri "ro.${SECRET_DEV_DOMAIN}"
+              #          paths:
+              #            - path: /
+              #              pathType: Prefix
+              #      tls:
+              #        - hosts:
+              #          - *uri
+              #          secretName: *uri
+
     ingress:
       enabled: true
-      ingressClassName: "traefik"
-      annotations:
+      hostname: &uri "ro.${SECRET_DEV_DOMAIN}"
+      path: /
+      annotations: 
         hajimari.io/enable: "true"
         hajimari.io/icon: "list-status"
         hajimari.io/appName: "Ragnarok Online"
@@ -89,15 +111,9 @@ spec:
         cert-manager.io/cluster-issuer: "letsencrypt-production"
         traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
         traefik.ingress.kubernetes.io/router.middlewares: networking-chain-authelia@kubernetescrd
-      hosts:
-        - host: &uri "ro.${SECRET_DEV_DOMAIN}"
-          paths:
-            - path: /
-              pathType: Prefix
-      tls:
-        - hosts:
-          - *uri
-          secretName: *uri
+      ingressClassName: "traefik"
+      tls: true
+
 
     resources:
       requests:
