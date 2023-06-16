@@ -41,15 +41,9 @@ spec:
         command: ["/bin/sh", "-c"]
         args:
           - |
-            mkdir -p /app/skill
-            wget https://s3.thekao.cloud/public/irowiki-skillsim.tar -P /app/skill
-            tar -xf /app/skill/irowiki-skillsim.tar -C /app/skill --overwrite
-            rm -rf /app/skill/irowiki-skillsim.tar
-
-            mkdir -p /app/stat
-            wget https://s3.thekao.cloud/public/irowiki-statcalc.tar -P /app/stat
-            tar -xf /app/stat/irowiki-statcalc.tar -C /app/stat --overwrite
-            rm -rf /app/stat/irowiki-statcalc.tar
+            wget https://s3.thekao.cloud/public/ragnarok-calcs.tar -P /app
+            tar -xf /app/ragnarok-calcs.tar -C /app --overwrite
+            rm -rf /app/ragnarok-calcs.tar
         volumeMounts:
           - name: nginx-www
             mountPath: /app
