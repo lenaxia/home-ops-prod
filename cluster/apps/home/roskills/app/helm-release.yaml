@@ -1,0 +1,114 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: roskills
+  namespace: default
+spec:
+  interval: 5m
+  chart:
+    spec:
+      chart: nginx
+      version: 13.2.21
+      sourceRef:
+        kind: HelmRepository
+        name: bitnami
+        namespace: flux-system
+      interval: 5m
+  install:
+    createNamespace: true
+    remediation:
+      retries: 3
+  upgrade:
+    remediation:
+      retries: 3
+      remediateLastFailure: true
+    cleanupOnFail: true
+  values:
+    image:
+      registry: docker.io
+      repository: bitnami/nginx
+      tag: latest
+    pullPolicy: IfNotPresent
+    debug: false
+    replicaCount: 1
+    updateStrategy:
+      type: RollingUpdate
+      rollingUpdate: {}
+    initContainers:
+      - name: download-content
+        image: busybox@sha256:6e494387c901caf429c1bf77bd92fb82b33a68c0e19f6d1aa6a3ac8d27a7049d
+        command: ["/bin/sh", "-c"]
+        args:
+          - |
+            mkdir -p /app/skill
+            wget https://s3.thekao.cloud/public/irowiki-skillsim.tar -P /app/skill
+            tar -xf /app/skill/irowiki-skillsim.tar -C /app/skill --overwrite
+            rm -rf /app/skill/irowiki-skillsim.tar
+
+            mkdir -p /app/stat
+            wget https://s3.thekao.cloud/public/irowiki-statcalc.tar -P /app/stat
+            tar -xf /app/stat/irowiki-statcalc.tar -C /app/stat --overwrite
+            rm -rf /app/stat/irowiki-statcalc.tar
+        volumeMounts:
+          - name: nginx-www
+            mountPath: /app
+    serverBlock: |-
+      server {
+        listen 80;
+        server_name ${SECRET_DEV_DOMAIN} www.${SECRET_DEV_DOMAIN};
+      }
+      server {
+        listen 80;
+        server_name ${SECRET_DEV_DOMAIN} ${SECRET_DEV_DOMAIN};
+      }
+
+    extraVolumes:
+      - name: nginx-www 
+        emptyDir: {}
+    extraVolumeMounts:
+      - name: nginx-www
+        mountPath: /app
+
+    persistence:
+      data:
+        enabled: true
+        existingClaim: nginx-www
+
+    service:
+      ports:
+        http: &port 8080
+      type: LoadBalancer
+      main:
+        ports:
+          http:
+            port: *port
+
+    ingress:
+      enabled: true
+      ingressClassName: "traefik"
+      annotations:
+        hajimari.io/enable: "true"
+        hajimari.io/icon: "list-status"
+        hajimari.io/appName: "Ragnarok Online"
+        hajimari.io/group: "Home"
+        cert-manager.io/cluster-issuer: "letsencrypt-production"
+        traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
+        traefik.ingress.kubernetes.io/router.middlewares: networking-chain-authelia@kubernetescrd
+      hosts:
+        - host: &uri "ro.${SECRET_DEV_DOMAIN}"
+          paths:
+            - path: /
+              pathType: Prefix
+      tls:
+        - hosts:
+          - *uri
+          secretName: *uri
+
+    resources:
+      requests:
+        cpu: 15m
+        memory: 79M
+      limits:
+        cpu: 15m
+        memory: 79M

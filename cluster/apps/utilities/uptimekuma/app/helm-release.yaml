@@ -57,7 +57,6 @@ spec:
           hajimari.io/appName: "Service Status"
           hajimari.io/group: "Utilities"
           cert-manager.io/cluster-issuer: "letsencrypt-production"
-          #cert-manager.io/cluster-issuer: "ca-issuer"
           traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
           traefik.ingress.kubernetes.io/router.middlewares: networking-chain-authelia@kubernetescrd
         hosts:

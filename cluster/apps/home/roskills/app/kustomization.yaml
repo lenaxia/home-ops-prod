@@ -1,0 +1,12 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: home
+commonLabels:
+  app.kubernetes.io/name: &app babybuddy
+  app.kubernetes.io/instance: *app
+resources:
+  - helm-release.yaml
+  - config-pvc.yaml
+  - secret.sops.yaml
+patchesStrategicMerge:
+  - patches/patch-postgres.yaml
