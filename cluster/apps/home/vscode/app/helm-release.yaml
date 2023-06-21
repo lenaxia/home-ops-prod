@@ -28,7 +28,7 @@ spec:
             - -c
             - >
               sudo usermod -aG sudo abc
-              echo "abc ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers
+              sudo echo "abc ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers
 
 
     podAnnotations:
