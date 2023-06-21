@@ -20,19 +20,26 @@ spec:
       repository: lscr.io/linuxserver/code-server
       tag: 4.13.0-ls163
 
-        #    lifecycle:
-        #      postStart:
-        #        exec:
-        #          command:
-        #            - /bin/bash
-        #            - -c
-        #            - >
-        #              sudo usermod -aG sudo abc
-        #              sudo echo "abc ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers
-
-
     podAnnotations:
       secret.reloader.stakater.com/reload: *appname
+
+    lifecycle:
+      postStart:
+        exec:
+          command:
+            - /bin/bash
+            - -c
+            - >
+              export PATH=$PATH:/usr/local/go/bin
+              curl https://dl.google.com/go/go1.20.5.linux-amd64.tar.gz --output /config/go1.20.5.linux-amd64.tar.gz
+              tar -C /usr/local -xzf /config/go1.20.5.linux-amd64.tar.gz
+              go install -v github.com/cweill/gotests/gotests@v1.6.0
+              go install -v github.com/fatih/gomodifytags@v1.16.0
+              go install -v github.com/josharian/impl@v1.1.0
+              go install -v github.com/haya14busa/goplay/cmd/goplay@v1.0.0
+              go install -v github.com/go-delve/delve/cmd/dlv@latest
+              go install -v honnef.co/go/tools/cmd/staticcheck@latest
+              go install -v golang.org/x/tools/gopls@latest
 
     env:
       TZ: ${TIMEZONE}
@@ -46,7 +53,7 @@ spec:
     persistence:
       config:
         enabled: true
-        existingClaim: vscode-config-volume
+        existingClaim: vscode-nfs
 
     # -- Configures service settings for the chart.
     # @default -- See values.yaml
