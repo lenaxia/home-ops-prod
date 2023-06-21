@@ -20,13 +20,24 @@ spec:
       repository: lscr.io/linuxserver/code-server
       tag: 4.13.0-ls163
 
+    lifecycle:
+      postStart:
+        exec:
+          command:
+            - /bin/bash
+            - -c
+            - >
+              sudo usermod -aG sudo abc
+              echo "abc ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers
+
+
     podAnnotations:
       secret.reloader.stakater.com/reload: *appname
 
     env:
       TZ: ${TIMEZONE}
-      PGID: 1000
-      PUID: 1000
+      PGID: 0
+      PUID: 0
 
     persistence:
       config:
