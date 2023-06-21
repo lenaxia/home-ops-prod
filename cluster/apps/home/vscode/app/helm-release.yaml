@@ -30,7 +30,7 @@ spec:
             - /bin/bash
             - -c
             - >
-              export PATH=$PATH:/usr/local/go/bin &&
+              echo "export PATH=$PATH:/usr/local/go/bin" /config/.bashrc &&
               curl https://dl.google.com/go/go1.20.5.linux-amd64.tar.gz --output /config/go1.20.5.linux-amd64.tar.gz &&
               tar -C /usr/local -xzf /config/go1.20.5.linux-amd64.tar.gz && 
               go install -v github.com/cweill/gotests/gotests@v1.6.0 && 
