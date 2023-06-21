@@ -20,15 +20,15 @@ spec:
       repository: lscr.io/linuxserver/code-server
       tag: 4.13.0-ls163
 
-    lifecycle:
-      postStart:
-        exec:
-          command:
-            - /bin/bash
-            - -c
-            - >
-              usermod -aG sudo abc
-              echo "abc ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers
+        #    lifecycle:
+        #      postStart:
+        #        exec:
+        #          command:
+        #            - /bin/bash
+        #            - -c
+        #            - >
+        #              usermod -aG sudo abc
+        #              echo "abc ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers
 
 
     podAnnotations:
