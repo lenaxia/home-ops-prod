@@ -18,7 +18,7 @@ spec:
   values:
     image:
       repository: lscr.io/linuxserver/vscodium
-      tag: 4.13.0-ls163
+      tag: 1.79.2
 
     podAnnotations:
       secret.reloader.stakater.com/reload: *appname
