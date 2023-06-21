@@ -27,8 +27,8 @@ spec:
         #            - /bin/bash
         #            - -c
         #            - >
-        #              usermod -aG sudo abc
-        #              echo "abc ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers
+        #              sudo usermod -aG sudo abc
+        #              sudo echo "abc ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers
 
 
     podAnnotations:
@@ -38,6 +38,10 @@ spec:
       TZ: ${TIMEZONE}
       PGID: 1000
       PUID: 1000
+
+    envFrom:
+      - secretRef:
+          name: *appname
 
     persistence:
       config:
