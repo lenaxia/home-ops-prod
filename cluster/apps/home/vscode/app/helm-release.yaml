@@ -62,9 +62,8 @@ spec:
       main:
         ports:
           http:
-            port: 8443
-          test:
-            port: 8080
+            port: 80
+            targetPort: 8443
         type: LoadBalancer
 
     ingress:
