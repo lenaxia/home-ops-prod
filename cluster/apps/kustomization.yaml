@@ -37,6 +37,7 @@ resources:
   - ./home/babybuddy-ava/ks.yaml
   - ./home/node-red/ks.yaml
   - ./home/vscode/ks.yaml
+  - ./home/vscodium/ks.yaml
   - ./home/roskills/ks.yaml
   - ./home/localai/ks.yaml
   - ./home/home-assistant/ks.yaml
