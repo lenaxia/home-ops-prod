@@ -301,6 +301,7 @@ spec:
         # Admin services - 2 Factor
         - domain:
             - "traefik.${SECRET_DEV_DOMAIN}"
+            - "code.${SECRET_DEV_DOMAIN}"
             #media
             - "tv.${SECRET_DEV_DOMAIN}"
             - "tautulli.${SECRET_DEV_DOMAIN}"
