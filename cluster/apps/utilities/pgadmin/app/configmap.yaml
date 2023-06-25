@@ -4,8 +4,8 @@ kind: ConfigMap
 metadata:
   name: pgadmin
 data:
-  PGADMIN_DEFAULT_EMAIL: mike@kao.family
-  PGADMIN_DEFAULT_PASSWORD: faith6510
+  PGADMIN_DEFAULT_EMAIL: lenaxia
+  PGADMIN_DEFAULT_PASSWORD: lenaxia
   PGADMIN_SERVER_JSON_FILE: /pgadmin4/servers.json
 ---
 apiVersion: v1
