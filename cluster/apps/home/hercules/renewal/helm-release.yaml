@@ -26,7 +26,7 @@ spec:
     env:
       MYSQL_HOST: ${SVC_MARIADB_PRIMARY_ADDR}
       MYSQL_PORT: 3306
-      MYSQL_DATABASE: raganrok-renewal
+      MYSQL_DATABASE: ragnarok-renewal
 
       # -- Set the application database type
     envFrom:
