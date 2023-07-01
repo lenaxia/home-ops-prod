@@ -1,0 +1,77 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: &appname hercules-renewal
+  namespace: home
+spec:
+  interval: 5m
+  chart:
+    spec:
+      chart: app-template
+      version: 1.5.1
+      interval: 16m
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s-charts
+        namespace: flux-system
+  # See https://github.com/bjw-s/helm-charts/blob/main/charts/library/common/values.yaml
+  values:
+    image:
+      repository: ghcr.io/lenaxia/hercules
+      tag: renewal-20190605
+
+    podAnnotations:
+      secret.reloader.stakater.com/reload: *appname
+
+    env:
+      MYSQL_HOST: 192.168.12.15
+      MYSQL_PORT: 3306
+      MYSQL_DATABASE: raganrok-renewal
+
+      # -- Set the application database type
+    envFrom:
+      - secretRef:
+          name: *appname 
+
+    persistence:
+      config:
+        enabled: true
+        accessMode: ReadWriteOnce
+        existingClaim: hercules-renewal-volume
+
+    # -- Configures service settings for the chart.
+    # @default -- See values.yaml
+    service:
+      main:
+        type: LoadBalancer
+        loadBalancerIP: "${SVC_HERCULES_RENEWAL_ADDR}"
+        externalTrafficPolicy: Local
+        ports:
+          http:
+            port: 6900
+            targetPort: 6900
+          char:
+            port: 6121
+            targetPort: 6121
+          map:
+            port: 5121
+            targetPort: 5121
+
+    ingress:
+      main:
+        enabled: true
+        annotations:
+          cert-manager.io/cluster-issuer: "letsencrypt-production"
+          traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
+          traefik.ingress.kubernetes.io/router.middlewares: networking-chain-authelia@kubernetescrd
+        hosts:
+        - host: &uri ro-login-renewal.${SECRET_DEV_DOMAIN}
+          paths:
+          - path: /
+            pathType: Prefix
+        tls:
+        - hosts:
+            - *uri
+          secretName: *uri
+    nodeSelector:
+      node-role.kubernetes.io/worker: "true"

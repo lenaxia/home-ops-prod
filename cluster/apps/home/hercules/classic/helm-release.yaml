@@ -1,7 +1,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
-  name: &appname vscodium
+  name: &appname hercules-classic
   namespace: home
 spec:
   interval: 5m
@@ -17,47 +17,55 @@ spec:
   # See https://github.com/bjw-s/helm-charts/blob/main/charts/library/common/values.yaml
   values:
     image:
-      repository: lscr.io/linuxserver/vscodium
-      tag: 1.79.2
+      repository: ghcr.io/lenaxia/hercules
+      tag: classic-20190605
 
     podAnnotations:
       secret.reloader.stakater.com/reload: *appname
 
     env:
-      TZ: ${TIMEZONE}
-      PGID: 1000
-      PUID: 1000
+      MYSQL_HOST: 192.168.12.15
+      MYSQL_PORT: 3306
+      MYSQL_DATABASE: ragnarok
 
+      # -- Set the application database type
     envFrom:
       - secretRef:
-          name: *appname
+          name: *appname 
 
     persistence:
       config:
         enabled: true
-        existingClaim: vscodium-config-volume
+        accessMode: ReadWriteOnce
+        existingClaim: hercules-classic-volume
 
     # -- Configures service settings for the chart.
     # @default -- See values.yaml
     service:
       main:
+        type: LoadBalancer
+        loadBalancerIP: "${SVC_HERCULES_CLASSIC_ADDR}"
+        externalTrafficPolicy: Local
         ports:
           http:
-            port: 8443
+            port: 6900
+            targetPort: 6900
+          char:
+            port: 6121
+            targetPort: 6121
+          map:
+            port: 5121
+            targetPort: 5121
 
     ingress:
       main:
         enabled: true
         annotations:
-          hajimari.io/enable: "true"
-          hajimari.io/icon: cib:visual-studio-code
-          hajimari.io/info: "Visual Sudio Code"
-          hajimari.io/group: "Home"
           cert-manager.io/cluster-issuer: "letsencrypt-production"
           traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
           traefik.ingress.kubernetes.io/router.middlewares: networking-chain-authelia@kubernetescrd
         hosts:
-        - host: &uri vs.${SECRET_DEV_DOMAIN}
+        - host: &uri ro-login-classic.${SECRET_DEV_DOMAIN}
           paths:
           - path: /
             pathType: Prefix
