@@ -24,7 +24,7 @@ spec:
       secret.reloader.stakater.com/reload: *appname
 
     env:
-      MYSQL_HOST: 192.168.12.15
+      MYSQL_HOST: ${SVC_MARIADB_PRIMARY_ADDR}
       MYSQL_PORT: 3306
       MYSQL_DATABASE: raganrok-renewal
 
