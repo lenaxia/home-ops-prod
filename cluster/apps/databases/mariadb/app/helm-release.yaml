@@ -28,8 +28,8 @@ spec:
     architecture: replication
     auth:
       existingSecret: mariadb-secret
-      database: ""
-      username: ""
+      database: "ragnarok"
+      username: "ragnarok"
     primary:
       persistence:
         enabled: true
