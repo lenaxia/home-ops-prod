@@ -25,6 +25,7 @@ spec:
   uninstall:
     keepHistory: false
   values:
+    architecture: replication
     auth:
       existingSecret: mariadb-secret
       database: ""

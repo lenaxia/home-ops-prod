@@ -30,8 +30,8 @@ spec:
             - /bin/bash
             - -c
             - >
-              apt update && apt upgrade &&
-              apt install neovim &&
+              apt update && apt upgrade -y &&
+              apt install neovim -y &&
               export PATH=$PATH:/usr/local/go/bin:/usr/local/bin/nvim &&
               echo "export PATH=$PATH:/usr/local/go/bin:/usr/local/bin/nvim" /config/.bashrc &&
               curl https://dl.google.com/go/go1.20.5.linux-amd64.tar.gz --output /config/go1.20.5.linux-amd64.tar.gz &&
