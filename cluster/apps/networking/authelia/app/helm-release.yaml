@@ -95,7 +95,7 @@ spec:
       default_redirection_url: https://authelia.${SECRET_DEV_DOMAIN}
     
       ## Options are totp, webauthn, mobile_push.
-      default_2fa_method: ""
+      default_2fa_method: "mobile_push"
     
       theme: light
     
@@ -301,6 +301,7 @@ spec:
         # Admin services - 2 Factor
         - domain:
             - "traefik.${SECRET_DEV_DOMAIN}"
+            - "code.${SECRET_DEV_DOMAIN}"
             #media
             - "tv.${SECRET_DEV_DOMAIN}"
             - "tautulli.${SECRET_DEV_DOMAIN}"
