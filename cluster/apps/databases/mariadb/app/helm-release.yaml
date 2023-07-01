@@ -40,6 +40,8 @@ spec:
     secondary:
       name: replica
       replicaCount: 2
+      persistence:
+        storageClass: local-path
     metrics:
       enabled: true
       serviceMonitor:
