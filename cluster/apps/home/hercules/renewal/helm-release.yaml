@@ -43,7 +43,7 @@ spec:
 # ...
     initContainers:
       init-db:
-        image: busybox:latest  # use an image with curl
+        image: alpine:latest  # use an image with curl
         command: ["/bin/sh", "-c"]
         args:
         - >
