@@ -83,6 +83,7 @@ spec:
               name: hercules-renewal
               key: MYSQL_PASSWORD
         - name: MYSQL_DATABASE
+          valueFrom:
             secretKeyRef:
               name: hercules-renewal
               key: MYSQL_DATABASE
