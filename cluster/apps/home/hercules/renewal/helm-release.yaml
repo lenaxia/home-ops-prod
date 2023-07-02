@@ -46,12 +46,13 @@ spec:
         image: ubuntu:latest  # use an image with curl
         command: ["/bin/sh", "-c"]
         args:
-        - >
-          apt-get update && apt-get install -y wget && \
-          wget -O sql-files.tar.gz https://s3.thekao.cloud/public/ragnarok/ro-herc-renewal-sql.tar.gz && \
-          tar -xzf sql-files.tar.gz -C /docker-entrypoint-initdb.d/ && \
-          rm sql-files.tar.gz && \
-          for file in /docker-entrypoint-initdb.d/*; do printf "File: $file\n"; cat "$file"; done
+          - |
+            apt-get update && apt-get install -y curl &&
+            curl https://s3.thekao.cloud/public/ragnarok/ro-herc-renewal-sql.tar.gz -o sql-files.tar.gz &&
+            tar -xzf sql-files.tar.gz -C /docker-entrypoint-initdb.d/ &&
+            rm sql-files.tar.gz &&
+            echo 'Listing the contents of /docker-entrypoint-initdb.d/: ' &&
+            for file in /docker-entrypoint-initdb.d/*; do echo 'File:' $file; cat $file; done
         volumeMounts:
           - name: db-scripts
             mountPath: /docker-entrypoint-initdb.d
@@ -59,9 +60,8 @@ spec:
         image: mariadb:10.5
         command: ["sh", "-c"]
         args:
-        - >
-          for file in /docker-entrypoint-initdb.d/*; do printf "File: $file\n"; cat "$file"; done
-          /docker-entrypoint-initdb.d/entrypoint.sh
+          - "for file in /docker-entrypoint-initdb.d/*; do echo 'File:' $file; cat $file; done"
+          - "/docker-entrypoint-initdb.d/entrypoint.sh"
         env:
         - name: MYSQL_HOST
           valueFrom:
