@@ -61,7 +61,8 @@ spec:
         args:
         - >
           echo "CREATE DATABASE IF NOT EXISTS ${MYSQL_DATABASE}; GRANT ALL PRIVILEGES ON ${MYSQL_DATABASE}.* TO '${MYSQL_USERNAME}'@'%' IDENTIFIED BY '${MYSQL_PASSWORD}'; FLUSH PRIVILEGES;" | mysql -h ${MYSQL_HOST} -u root -p${MYSQL_ROOT_PASSWORD} && \
-          for file in /docker-entrypoint-initdb.d/*.sql; do
+          for file in /docker-entrypoint-initdb.d/*.sql
+          do
             mysql -h ${MYSQL_HOST} -u ${MYSQL_USERNAME} -p${MYSQL_PASSWORD} ${MYSQL_DATABASE} < $file;
           done
         env:
