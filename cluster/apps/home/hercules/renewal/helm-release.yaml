@@ -60,17 +60,8 @@ spec:
         command: ["sh", "-c"]
         args:
         - >
-          echo "params"
-          echo ${MYSQL_HOST}
-          echo ${MYSQL_USERNAME}
-          echo ${MYSQL_PASSWORD} 
-          echo ${MYSQL_DATABASE}
-          echo "/params"
-          echo "CREATE DATABASE IF NOT EXISTS ${MYSQL_DATABASE}; GRANT ALL PRIVILEGES ON ${MYSQL_DATABASE}.* TO '${MYSQL_USERNAME}'@'%' IDENTIFIED BY '${MYSQL_PASSWORD}'; FLUSH PRIVILEGES;" | mysql -h ${MYSQL_HOST} -u root -p${MYSQL_ROOT_PASSWORD} && \
-          for file in /docker-entrypoint-initdb.d/*.sql
-          do
-            mysql -h ${MYSQL_HOST} -u ${MYSQL_USERNAME} -p ${MYSQL_PASSWORD} ${MYSQL_DATABASE} < $file;
-          done
+          ls /docker-entrypoint-initdb.d &&
+          /docker-entrypoint-initdb.d/entrypoint.sh
         env:
         - name: MYSQL_HOST
           valueFrom:
@@ -111,6 +102,13 @@ spec:
       db-scripts:
         enabled: true
         type: emptyDir
+      entrypoint-sh:
+        enabled: true
+        type: configMap
+        name: entrypoint-sh
+        subPath: entrypoint.sh
+        mountPath: /db-scripts/entrypoint.sh
+        defaultMode: 0777
 
     # -- Configures service settings for the chart.
     # @default -- See values.yaml

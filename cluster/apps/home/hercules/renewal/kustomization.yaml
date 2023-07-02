@@ -8,3 +8,11 @@ resources:
   - helm-release.yaml
   - config-pvc.yaml
   - secret.sops.yaml
+configMapGenerator:
+  - name: entrypoint-sh
+    files:
+      - entrypoint.sh
+generatorOptions:
+  disableNameSuffixHash: true
+  annotations:
+    kustomize.toolkit.fluxcd.io/substitute: disabled
