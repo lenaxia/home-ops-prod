@@ -33,6 +33,42 @@ spec:
       - secretRef:
           name: *appname 
 
+# ...
+    initContainers:
+      - name: init-db
+        image: appropriate/curl:latest  # use an image with curl
+        command: ["/bin/sh", "-c"]
+        args:
+        - >
+          curl -O https://your-remote-location/sql-files.tar.gz && \
+          tar -xzf sql-files.tar.gz -C /docker-entrypoint-initdb.d/ && \
+          rm sql-files.tar.gz
+        volumeMounts:
+          - name: db-scripts
+            mountPath: /docker-entrypoint-initdb.d
+      - name: load-db
+        image: mariadb:10.5
+        command: ["sh", "-c"]
+        args:
+        - >
+          for file in /docker-entrypoint-initdb.d/*.sql; do
+            mysql -h ${MYSQL_HOST} -u root -p${MYSQL_ROOT_PASSWORD} ${MYSQL_DATABASE} < $file;
+          done
+        env:
+        - name: MYSQL_ROOT_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: my-secret
+              key: password
+        volumeMounts:
+          - name: db-scripts
+            mountPath: /docker-entrypoint-initdb.d
+    volumes:
+      - name: db-scripts
+        emptyDir: {}  # Use emptyDir as the volume shared between init containers
+# ...
+
+
     persistence:
       config:
         enabled: true

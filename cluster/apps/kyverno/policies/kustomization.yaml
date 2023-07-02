@@ -9,3 +9,4 @@ resources:
   #  - snapshot-cronjob-controller.yaml
   - sync-postgres-secrets.yaml
   - sync-redis-secrets.yaml
+  - sync-mariadb-secrets.yaml
