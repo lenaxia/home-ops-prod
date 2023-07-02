@@ -33,6 +33,7 @@ spec:
         valueFrom:
           secretKeyRef:
             name: mariadb-secret
+            key: port
 
       # -- Set the application database type
     envFrom:
