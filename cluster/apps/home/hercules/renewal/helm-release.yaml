@@ -43,11 +43,11 @@ spec:
 # ...
     initContainers:
       init-db:
-        image: busybox:latest  # use an image with curl
+        image: appropriate/curl:latest  # use an image with curl
         command: ["/bin/sh", "-c"]
         args:
         - >
-          wget -O /docker-entrypoint-initdb.d/sql-files.tar.gz https://s3.thekao.cloud/public/ragnarok/ro-herc-renewal-sql.tar.gz && \
+          curl https://s3.thekao.cloud/public/ragnarok/ro-herc-renewal-sql.tar.gz -o sql-files.tar.gz && \
           tar -xzf sql-files.tar.gz -C /docker-entrypoint-initdb.d/ && \
           rm sql-files.tar.gz
         volumeMounts:
