@@ -43,11 +43,12 @@ spec:
 # ...
     initContainers:
       init-db:
-        image: alpine:latest  # use an image with curl
+        image: ubuntu:latest  # use an image with curl
         command: ["/bin/sh", "-c"]
         args:
         - >
-          apk add --no-cache curl && curl --version && which curl && \
+          #apk add --no-cache curl && curl --version && which curl && \
+          apt-get update && apt-get install -y curl && \
           /usr/bin/curl https://s3.thekao.cloud/public/ragnarok/ro-herc-renewal-sql.tar.gz -o sql-files.tar.gz && \
           tar -xzf sql-files.tar.gz -C /docker-entrypoint-initdb.d/ && \
           rm sql-files.tar.gz
