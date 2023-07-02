@@ -41,7 +41,7 @@ spec:
 
 # ...
     initContainers:
-      - name: init-db
+      init-db:
         image: busybox:latest  # use an image with curl
         command: ["/bin/sh", "-c"]
         args:
@@ -52,7 +52,7 @@ spec:
         volumeMounts:
           - name: db-scripts
             mountPath: /docker-entrypoint-initdb.d
-      - name: load-db
+      load-db:
         image: mariadb:10.5
         command: ["sh", "-c"]
         args:
