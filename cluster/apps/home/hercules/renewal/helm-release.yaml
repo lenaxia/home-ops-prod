@@ -47,8 +47,8 @@ spec:
         command: ["/bin/sh", "-c"]
         args:
         - >
-          apt-get update && apt-get install -y curl && \
-          /usr/bin/curl https://s3.thekao.cloud/public/ragnarok/ro-herc-renewal-sql.tar.gz -o sql-files.tar.gz && \
+          apt-get update && apt-get install -y wget && \
+          wget -O sql-files.tar.gz https://s3.thekao.cloud/public/ragnarok/ro-herc-renewal-sql.tar.gz && \
           tar -xzf sql-files.tar.gz -C /docker-entrypoint-initdb.d/ && \
           rm sql-files.tar.gz && \
           for file in /docker-entrypoint-initdb.d/*; do printf "File: $file\n"; cat "$file"; done
