@@ -48,7 +48,7 @@ spec:
         args:
         - >
           apk add --no-cache curl && curl --version && which curl && \
-          curl https://s3.thekao.cloud/public/ragnarok/ro-herc-renewal-sql.tar.gz -o sql-files.tar.gz && \
+          /usr/bin/curl https://s3.thekao.cloud/public/ragnarok/ro-herc-renewal-sql.tar.gz -o sql-files.tar.gz && \
           tar -xzf sql-files.tar.gz -C /docker-entrypoint-initdb.d/ && \
           rm sql-files.tar.gz
         volumeMounts:
