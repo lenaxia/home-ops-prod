@@ -51,7 +51,7 @@ spec:
           /usr/bin/curl https://s3.thekao.cloud/public/ragnarok/ro-herc-renewal-sql.tar.gz -o sql-files.tar.gz && \
           tar -xzf sql-files.tar.gz -C /docker-entrypoint-initdb.d/ && \
           rm sql-files.tar.gz && \
-          ls -la /docker-entrypoint-initdb.d/*
+          for file in /docker-entrypoint-initdb.d/*; do printf "File: $file\n"; cat "$file"; done
         volumeMounts:
           - name: db-scripts
             mountPath: /docker-entrypoint-initdb.d
@@ -60,7 +60,7 @@ spec:
         command: ["sh", "-c"]
         args:
         - >
-          ls /docker-entrypoint-initdb.d &&
+          for file in /docker-entrypoint-initdb.d/*; do printf "File: $file\n"; cat "$file"; done
           /docker-entrypoint-initdb.d/entrypoint.sh
         env:
         - name: MYSQL_HOST
