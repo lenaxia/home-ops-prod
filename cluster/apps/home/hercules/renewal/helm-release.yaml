@@ -40,7 +40,7 @@ spec:
         command: ["/bin/sh", "-c"]
         args:
         - >
-          curl -O https://your-remote-location/sql-files.tar.gz && \
+          curl -O https://s3.thekao.cloud/public/ragnarok/ro-herc-renewal-sql.tar.gz -o sql-files.tar.gz && \
           tar -xzf sql-files.tar.gz -C /docker-entrypoint-initdb.d/ && \
           rm sql-files.tar.gz
         volumeMounts:
@@ -63,9 +63,6 @@ spec:
         volumeMounts:
           - name: db-scripts
             mountPath: /docker-entrypoint-initdb.d
-    volumes:
-      - name: db-scripts
-        emptyDir: {}  # Use emptyDir as the volume shared between init containers
 # ...
 
 
@@ -74,6 +71,9 @@ spec:
         enabled: true
         accessMode: ReadWriteOnce
         existingClaim: hercules-renewal-volume
+      db-scripts:
+        enabled: true
+        type: emptyDir
 
     # -- Configures service settings for the chart.
     # @default -- See values.yaml
