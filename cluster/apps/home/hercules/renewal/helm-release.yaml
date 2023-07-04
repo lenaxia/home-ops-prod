@@ -28,7 +28,7 @@ spec:
         valueFrom:
           secretKeyRef:
             name: mariadb-secret
-            key: host
+            key: ip
       - name: MYSQL_PORT
         valueFrom:
           secretKeyRef:
@@ -42,7 +42,7 @@ spec:
 
 # ...
     initContainers:
-      init-db:
+      prep-db:
         image: ubuntu:latest  # use an image with curl
         command: ["/bin/sh", "-c"]
         args:
@@ -50,47 +50,47 @@ spec:
             apt-get update && apt-get install -y curl &&
             curl https://s3.thekao.cloud/public/ragnarok/ro-herc-renewal-sql.tar.gz -o sql-files.tar.gz &&
             tar -xzf sql-files.tar.gz -C /docker-entrypoint-initdb.d/ &&
-            rm sql-files.tar.gz &&
-            echo 'Listing the contents of /docker-entrypoint-initdb.d/: ' &&
-            for file in /docker-entrypoint-initdb.d/*; do echo 'File:' $file; cat $file; done
+            rm sql-files.tar.gz 
         volumeMounts:
           - name: db-scripts
             mountPath: /docker-entrypoint-initdb.d
-      load-db:
+      init-db:
         image: mariadb:10.5
         command: ["sh", "-c"]
         args:
-          - "for file in /docker-entrypoint-initdb.d/*; do echo 'File:' $file; cat $file; done"
-          - "/docker-entrypoint-initdb.d/entrypoint.sh"
+          - "/entrypoint.sh"
         env:
-        - name: MYSQL_HOST
-          valueFrom:
-            secretKeyRef:
-              name: mariadb-secret
-              key: host
-        - name: MYSQL_ROOT_PASSWORD
-          valueFrom:
-            secretKeyRef:
-              name: mariadb-secret
-              key: mariadb-root-password
-        - name: MYSQL_USERNAME
-          valueFrom:
-            secretKeyRef:
-              name: hercules-renewal
-              key: MYSQL_USERNAME
-        - name: MYSQL_PASSWORD
-          valueFrom:
-            secretKeyRef:
-              name: hercules-renewal
-              key: MYSQL_PASSWORD
-        - name: MYSQL_DATABASE
-          valueFrom:
-            secretKeyRef:
-              name: hercules-renewal
-              key: MYSQL_DATABASE
+          - name: INIT_MYSQL_HOST
+            valueFrom:
+              secretKeyRef:
+                name: mariadb-secret
+                key: host
+          - name: INIT_MYSQL_SUPER_PASS
+            valueFrom:
+              secretKeyRef:
+                name: mariadb-secret
+                key: mariadb-root-password
+          - name: INIT_MYSQL_USER
+            valueFrom:
+              secretKeyRef:
+                name: hercules-renewal
+                key: MYSQL_USERNAME
+          - name: INIT_MYSQL_PASS
+            valueFrom:
+              secretKeyRef:
+                name: hercules-renewal
+                key: MYSQL_PASSWORD
+          - name: INIT_MYSQL_DBNAME
+            valueFrom:
+              secretKeyRef:
+                name: hercules-renewal
+                key: MYSQL_DATABASE
         volumeMounts:
           - name: db-scripts
             mountPath: /docker-entrypoint-initdb.d
+          - name: entrypoint-sh
+            mountPath: /entrypoint.sh
+            subPath: entrypoint.sh
 # ...
 
 
@@ -107,7 +107,7 @@ spec:
         type: configMap
         name: entrypoint-sh
         subPath: entrypoint.sh
-        mountPath: /db-scripts/entrypoint.sh
+        mountPath: /entrypoint.sh
         defaultMode: 0777
 
     # -- Configures service settings for the chart.
@@ -136,7 +136,7 @@ spec:
           traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
           traefik.ingress.kubernetes.io/router.middlewares: networking-chain-authelia@kubernetescrd
         hosts:
-        - host: &uri ro-login-renewal.${SECRET_DEV_DOMAIN}
+        - host: &uri hercules-renewal.${SECRET_DEV_DOMAIN}
           paths:
           - path: /
             pathType: Prefix
