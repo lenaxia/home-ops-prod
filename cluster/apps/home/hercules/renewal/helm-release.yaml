@@ -134,12 +134,29 @@ spec:
         annotations:
           cert-manager.io/cluster-issuer: "letsencrypt-production"
           traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
-          traefik.ingress.kubernetes.io/router.middlewares: networking-chain-authelia@kubernetescrd
+          traefik.ingress.kubernetes.io/router.middlewares: networking-chain-no-auth@kubernetescrd
         hosts:
-        - host: &uri hercules-renewal.${SECRET_DEV_DOMAIN}
+        - host: &uri hercules-re-login.${SECRET_DEV_DOMAIN}
           paths:
-          - path: /
-            pathType: Prefix
+            paths:
+              - path: /
+                pathType: Prefix
+                service:
+                  port: 6900
+        - host: &uri hercules-re-char.${SECRET_DEV_DOMAIN}
+          paths:
+            paths:
+              - path: /notifications/hub/negotiate
+                pathType: Prefix
+                service:
+                  port: 5900
+        - host: &uri hercules-re-map.${SECRET_DEV_DOMAIN}
+          paths:
+            paths:
+              - path: /notifications/hub
+                pathType: Prefix
+                service:
+                  port: 5800
         tls:
         - hosts:
             - *uri
