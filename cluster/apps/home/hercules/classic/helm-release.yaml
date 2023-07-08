@@ -55,7 +55,7 @@ spec:
           - name: db-scripts
             mountPath: /docker-entrypoint-initdb.d
       init-db:
-        image: mariadb:10.5
+        image: mariadb:11.0
         command: ["sh", "-c"]
         args:
           - "/entrypoint.sh"
