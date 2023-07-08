@@ -24,20 +24,91 @@ spec:
       secret.reloader.stakater.com/reload: *appname
 
     env:
-      MYSQL_HOST: ${SVC_MARIADB_PRIMARY_ADDR}
-      MYSQL_PORT: 3306
-      MYSQL_DATABASE: ragnarok
+      - name: MYSQL_HOST
+        valueFrom:
+          secretKeyRef:
+            name: mariadb-secret
+            key: ip
+      - name: MYSQL_PORT
+        valueFrom:
+          secretKeyRef:
+            name: mariadb-secret
+            key: port
 
       # -- Set the application database type
     envFrom:
       - secretRef:
           name: *appname 
 
+# ...
+    initContainers:
+      prep-db:
+        image: ubuntu:latest  # use an image with curl
+        command: ["/bin/sh", "-c"]
+        args:
+          - |
+            apt-get update && apt-get install -y curl &&
+            curl https://s3.thekao.cloud/public/ragnarok/ro-herc-classic-sql.tar.gz -o sql-files.tar.gz &&
+            tar -xzf sql-files.tar.gz -C /docker-entrypoint-initdb.d/ &&
+            rm sql-files.tar.gz
+        volumeMounts:
+          - name: db-scripts
+            mountPath: /docker-entrypoint-initdb.d
+      init-db:
+        image: mariadb:10.5
+        command: ["sh", "-c"]
+        args:
+          - "/entrypoint.sh"
+        env:
+          - name: INIT_MYSQL_HOST
+            valueFrom:
+              secretKeyRef:
+                name: mariadb-secret
+                key: host
+          - name: INIT_MYSQL_SUPER_PASS
+            valueFrom:
+              secretKeyRef:
+                name: mariadb-secret
+                key: mariadb-root-password
+          - name: INIT_MYSQL_USER
+            valueFrom:
+              secretKeyRef:
+                name: *appname
+                key: MYSQL_USERNAME
+          - name: INIT_MYSQL_PASS
+            valueFrom:
+              secretKeyRef:
+                name: *appname
+                key: MYSQL_PASSWORD
+          - name: INIT_MYSQL_DBNAME
+            valueFrom:
+              secretKeyRef:
+                name: *appname
+                key: MYSQL_DATABASE
+        volumeMounts:
+          - name: db-scripts
+            mountPath: /docker-entrypoint-initdb.d
+          - name: entrypoint-sh
+            mountPath: /entrypoint.sh
+            subPath: entrypoint.sh
+# ...
+
+
     persistence:
       config:
         enabled: true
         accessMode: ReadWriteOnce
         existingClaim: hercules-classic-volume
+      db-scripts:
+        enabled: true
+        type: emptyDir
+      entrypoint-sh:
+        enabled: true
+        type: configMap
+        name: entrypoint-sh
+        subPath: entrypoint.sh
+        mountPath: /entrypoint.sh
+        defaultMode: 0777
 
     # -- Configures service settings for the chart.
     # @default -- See values.yaml
