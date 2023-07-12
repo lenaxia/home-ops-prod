@@ -30,19 +30,19 @@ spec:
             - /bin/bash
             - -c
             - >
-              apt update && apt upgrade -y &&
-              apt install neovim -y &&
-              export PATH=$PATH:/usr/local/go/bin:/usr/local/bin/nvim &&
-              echo "export PATH=$PATH:/usr/local/go/bin:/usr/local/bin/nvim" /config/.bashrc &&
-              curl https://dl.google.com/go/go1.20.5.linux-amd64.tar.gz --output /config/go1.20.5.linux-amd64.tar.gz &&
-              tar -C /usr/local -xzf /config/go1.20.5.linux-amd64.tar.gz && 
-              go install -v github.com/cweill/gotests/gotests@v1.6.0 && 
-              go install -v github.com/fatih/gomodifytags@v1.16.0 &&
-              go install -v github.com/josharian/impl@v1.1.0 &&
-              go install -v github.com/haya14busa/goplay/cmd/goplay@v1.0.0 &&
-              go install -v github.com/go-delve/delve/cmd/dlv@latest &&
-              go install -v honnef.co/go/tools/cmd/staticcheck@latest &&
-              go install -v golang.org/x/tools/gopls@latest
+              apt update && apt upgrade -y #&&
+              #apt install neovim -y &&
+              #export PATH=$PATH:/usr/local/go/bin:/usr/local/bin/nvim &&
+              #echo "export PATH=$PATH:/usr/local/go/bin:/usr/local/bin/nvim" /config/.bashrc &&
+              #curl https://dl.google.com/go/go1.20.5.linux-amd64.tar.gz --output /config/go1.20.5.linux-amd64.tar.gz &&
+              #tar -C /usr/local -xzf /config/go1.20.5.linux-amd64.tar.gz && 
+              #go install -v github.com/cweill/gotests/gotests@v1.6.0 && 
+              #go install -v github.com/fatih/gomodifytags@v1.16.0 &&
+              #go install -v github.com/josharian/impl@v1.1.0 &&
+              #go install -v github.com/haya14busa/goplay/cmd/goplay@v1.0.0 &&
+              #go install -v github.com/go-delve/delve/cmd/dlv@latest &&
+              #go install -v honnef.co/go/tools/cmd/staticcheck@latest &&
+              #go install -v golang.org/x/tools/gopls@latest
 
     env:
       TZ: ${TIMEZONE}
