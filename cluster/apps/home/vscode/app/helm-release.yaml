@@ -36,6 +36,8 @@ spec:
             - -c
             - >
               apt update && apt upgrade -y &&
+              apt install openssh-server &&
+
               /app/code-server/lib/node /app/code-server --install-extension vscjava.vscode-java-pack --extensions-dir /config/extensions &&
 
 
