@@ -76,7 +76,7 @@ spec:
             targetPort: 8443
           ssh:
             port: 22
-            targetPort: 228443
+            targetPort: 22
         type: LoadBalancer
 
     ingress:
