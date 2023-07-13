@@ -128,22 +128,22 @@ spec:
             port: 5121
             targetPort: 5121
 
-    ingress:
-      main:
-        enabled: true
-        ingressClassName: "traefik"
-        annotations:
-          cert-manager.io/cluster-issuer: "letsencrypt-production"
-          traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
-          traefik.ingress.kubernetes.io/router.middlewares: networking-chain-no-auth@kubernetescrd
-        hosts:
-        - host: &uri hercules-re-login.${SECRET_DEV_DOMAIN}
-          paths:
-            paths:
-              - path: /
-                pathType: Prefix
-                service:
-                  port: 6900
+              #    ingress:
+              #      main:
+              #        enabled: true
+              #        ingressClassName: "traefik"
+              #        annotations:
+              #          cert-manager.io/cluster-issuer: "letsencrypt-production"
+              #          traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
+              #          traefik.ingress.kubernetes.io/router.middlewares: networking-chain-no-auth@kubernetescrd
+              #        hosts:
+              #        - host: &uri hercules-re-login.${SECRET_DEV_DOMAIN}
+              #          paths:
+              #            paths:
+              #              - path: /
+              #                pathType: Prefix
+              #                service:
+              #                  port: 6900
         #- host: &uri hercules-re-char.${SECRET_DEV_DOMAIN}
         #  paths:
         #    paths:
