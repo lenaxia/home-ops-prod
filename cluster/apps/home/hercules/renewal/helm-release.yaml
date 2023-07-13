@@ -131,6 +131,7 @@ spec:
     ingress:
       main:
         enabled: true
+        ingressClassName: "traefik"
         annotations:
           cert-manager.io/cluster-issuer: "letsencrypt-production"
           traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
@@ -146,14 +147,14 @@ spec:
         - host: &uri hercules-re-char.${SECRET_DEV_DOMAIN}
           paths:
             paths:
-              - path: /notifications/hub/negotiate
+              - path: /char
                 pathType: Prefix
                 service:
                   port: 5900
         - host: &uri hercules-re-map.${SECRET_DEV_DOMAIN}
           paths:
             paths:
-              - path: /notifications/hub
+              - path: /map
                 pathType: Prefix
                 service:
                   port: 5800
