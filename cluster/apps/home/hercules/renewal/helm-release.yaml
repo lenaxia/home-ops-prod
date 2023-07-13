@@ -158,9 +158,9 @@ spec:
         #        pathType: Prefix
         #        service:
         #          port: 5800
-        tls:
-        - hosts:
-            - *uri
-          secretName: *uri
+        #tls:
+        #- hosts:
+        #    - *uri
+        #  secretName: *uri
     nodeSelector:
       node-role.kubernetes.io/worker: "true"
