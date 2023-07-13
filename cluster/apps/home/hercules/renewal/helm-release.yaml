@@ -144,20 +144,20 @@ spec:
                 pathType: Prefix
                 service:
                   port: 6900
-        - host: &uri hercules-re-char.${SECRET_DEV_DOMAIN}
-          paths:
-            paths:
-              - path: /char
-                pathType: Prefix
-                service:
-                  port: 5900
-        - host: &uri hercules-re-map.${SECRET_DEV_DOMAIN}
-          paths:
-            paths:
-              - path: /map
-                pathType: Prefix
-                service:
-                  port: 5800
+        #- host: &uri hercules-re-char.${SECRET_DEV_DOMAIN}
+        #  paths:
+        #    paths:
+        #      - path: /char
+        #        pathType: Prefix
+        #        service:
+        #          port: 5900
+        #- host: &uri hercules-re-map.${SECRET_DEV_DOMAIN}
+        #  paths:
+        #    paths:
+        #      - path: /map
+        #        pathType: Prefix
+        #        service:
+        #          port: 5800
         tls:
         - hosts:
             - *uri
