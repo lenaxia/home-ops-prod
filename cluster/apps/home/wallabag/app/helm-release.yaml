@@ -24,16 +24,16 @@ spec:
       secret.reloader.stakater.com/reload: *appname
 
     env:
-      - name: MSYMFONY__ENV__DATABASE_HOST
-        valueFrom:
-          secretKeyRef:
-            name: postgres-superuser
-            key: host
-      - name: MSYMFONY__ENV__DATABASE_PORT
-        valueFrom:
-          secretKeyRef:
-            name: postgres-superuser
-            key: port
+#      - name: MSYMFONY__ENV__DATABASE_HOST
+#        valueFrom:
+#          secretKeyRef:
+#            name: postgres-superuser
+#            key: host
+#      - name: MSYMFONY__ENV__DATABASE_PORT
+#        valueFrom:
+#          secretKeyRef:
+#            name: postgres-superuser
+#            key: port
 #      - name: POSTGRES_USER
 #        valueFrom:
 #          secretKeyRef:
@@ -44,8 +44,8 @@ spec:
 #          secretKeyRef:
 #            name: postgres-superuser
 #            key: password
-      - name: SYMFONY__ENV__DATABASE_DRIVER
-        value: pdo_pgsql
+#      - name: SYMFONY__ENV__DATABASE_DRIVER
+#        value: pdo_pgsql
       - name: SYMFONY__ENV__DOMAIN_NAME
         value: https://read.${SECRET_DEV_DOMAIN}
 
