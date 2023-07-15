@@ -1,7 +1,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
-  name: &appname babybuddy
+  name: &appname wallabag
   namespace: home
 spec:
   values:
@@ -12,25 +12,25 @@ spec:
           - name: POSTGRES_HOST
             valueFrom:
               secretKeyRef:
-                name: *appname
-                key: DB_HOST
-          - name: POSTGRES_DB
-            valueFrom:
-              secretKeyRef:
-                name: *appname
-                key: DB_NAME
+                name: postgres-superuser
+                key: host
           - name: POSTGRES_SUPER_PASS
             valueFrom:
               secretKeyRef:
                 name: postgres-superuser
                 key: password
+          - name: POSTGRES_DB
+            valueFrom:
+              secretKeyRef:
+                name: *appname
+                key: SYMFONY__ENV__DATABASE_NAME
           - name: POSTGRES_USER
             valueFrom:
               secretKeyRef:
                 name: *appname
-                key: DB_NAME
+                key: SYMFONY__ENV__DATABASE_NAME
           - name: POSTGRES_PASS
             valueFrom:
               secretKeyRef:
                 name: *appname
-                key: DB_PASSWORD
+                key: SYMFONY__ENV__DATABASE_PASSWORD

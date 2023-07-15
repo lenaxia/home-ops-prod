@@ -34,16 +34,16 @@ spec:
           secretKeyRef:
             name: postgres-superuser
             key: port
-      - name: POSTGRES_USER
-        valueFrom:
-          secretKeyRef:
-            name: postgres-superuser
-            key: username
-      - name: POSTGRES_PASSWORD
-        valueFrom:
-          secretKeyRef:
-            name: postgres-superuser
-            key: password
+#      - name: POSTGRES_USER
+#        valueFrom:
+#          secretKeyRef:
+#            name: postgres-superuser
+#            key: username
+#      - name: POSTGRES_PASSWORD
+#        valueFrom:
+#          secretKeyRef:
+#            name: postgres-superuser
+#            key: password
       - name: SYMFONY__ENV__DATABASE_DRIVER
         value: pdo_pgsql
       - name: SYMFONY__ENV__DOMAIN_NAME
