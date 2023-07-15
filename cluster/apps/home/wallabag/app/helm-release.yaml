@@ -48,6 +48,10 @@ spec:
 #        value: pdo_pgsql
       - name: SYMFONY__ENV__DOMAIN_NAME
         value: https://read.${SECRET_DEV_DOMAIN}
+      - name: SYMFONY__ENV__TWOFACTOR_AUTH
+        value: false
+      - name: SYMFONY__ENV__FOSUSER_CONFIRMATION
+        value: false
 
 
       # -- Set the application database type
