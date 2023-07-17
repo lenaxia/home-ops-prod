@@ -39,9 +39,10 @@ spec:
               apt update && apt upgrade -y &&
 
               /app/code-server/lib/node /app/code-server --install-extension vscjava.vscode-java-pack --extensions-dir /config/extensions &&
+
+              apt install wget &&
               wget https://github.com/adoptium/temurin17-binaries/releases/download/jdk-17.0.7%2B7/OpenJDK17U-jdk_x64_linux_hotspot_17.0.7_7.tar.gz -O /config/OpenJDK17U-jdk_x64_linux_hotspot_17.0.7_7.tar.gz &&
-              mkdir /usr/lib/jvm -p
-              tar -xzvf /config/OpenJDK17U-jdk_x64_linux_hotspot_17.0.7_7.tar.gz -C /usr/lib/jvm &&
+              mkdir /usr/lib/jvm -p &&
 
               apt install neovim -y &&
               export PATH=$PATH:/usr/local/go/bin:/usr/local/bin/nvim &&
