@@ -34,3 +34,5 @@ resources:
   - angelnu.yaml
   - external-dns.yaml
   - go-skynet-charts.yaml
+  - piraeus.yaml
+  - backube.yaml
