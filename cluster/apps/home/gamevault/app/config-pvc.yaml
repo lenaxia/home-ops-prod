@@ -1,0 +1,68 @@
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: gamevault-images-nfs
+  namespace: storage
+spec:
+  capacity:
+    storage: 1Mi
+  accessModes:
+    - ReadWriteMany
+  storageClassName: gamevault-images-nfs
+  persistentVolumeReclaimPolicy: Retain
+  nfs:
+    server: ${NAS_ADDR}
+    path: /volume3/k8s-nfs/gamevault-images
+  mountOptions:
+    - nfsvers=3
+    - nconnect=8
+    - hard
+    - noatime
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: gamevault-images-nfs
+  namespace: storage
+spec:
+  accessModes:
+    - ReadWriteMany
+  storageClassName: gamevault-images-nfs
+  resources:
+    requests:
+      storage: 1Mi
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: gamevault-files-nfs
+  namespace: storage
+spec:
+  capacity:
+    storage: 1Mi
+  accessModes:
+    - ReadWriteMany
+  storageClassName: gamevault-files-nfs
+  persistentVolumeReclaimPolicy: Retain
+  nfs:
+    server: ${NAS_ADDR}
+    path: /volume3/k8s-nfs/gamevault-files
+  mountOptions:
+    - nfsvers=3
+    - nconnect=8
+    - hard
+    - noatime
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: gamevault-files-nfs
+  namespace: storage
+spec:
+  accessModes:
+    - ReadWriteMany
+  storageClassName: gamevault-files-nfs
+  resources:
+    requests:
+      storage: 1Mi

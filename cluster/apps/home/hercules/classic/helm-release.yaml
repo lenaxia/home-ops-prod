@@ -55,7 +55,7 @@ spec:
           - name: db-scripts
             mountPath: /docker-entrypoint-initdb.d
       init-db:
-        image: mariadb:10.11
+        image: mariadb:11.0
         command: ["sh", "-c"]
         args:
           - "/entrypoint.sh"
@@ -128,21 +128,22 @@ spec:
             port: 5121
             targetPort: 5121
 
-    ingress:
-      main:
-        enabled: true
-        annotations:
-          cert-manager.io/cluster-issuer: "letsencrypt-production"
-          traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
-          traefik.ingress.kubernetes.io/router.middlewares: networking-chain-authelia@kubernetescrd
-        hosts:
-        - host: &uri ro-login-classic.${SECRET_DEV_DOMAIN}
-          paths:
-          - path: /
-            pathType: Prefix
-        tls:
-        - hosts:
-            - *uri
-          secretName: *uri
+              #    ingress:
+              #      main:
+              #        enabled: true
+              #        annotations:
+              #          cert-manager.io/cluster-issuer: "letsencrypt-production"
+              #          traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
+              #          traefik.ingress.kubernetes.io/router.middlewares: networking-chain-authelia@kubernetescrd
+              #        hosts:
+              #        - host: &uri ro-login-classic.${SECRET_DEV_DOMAIN}
+              #          paths:
+              #          - path: /
+              #            pathType: Prefix
+              #        tls:
+              #        - hosts:
+              #            - *uri
+              #          secretName: *uri
+
     nodeSelector:
       node-role.kubernetes.io/worker: "true"

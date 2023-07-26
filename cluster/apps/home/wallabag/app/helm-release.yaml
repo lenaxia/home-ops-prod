@@ -1,7 +1,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
-  name: &appname babybuddy
+  name: &appname wallabag
   namespace: home
 spec:
   interval: 5m
@@ -17,23 +17,42 @@ spec:
   # See https://github.com/bjw-s/helm-charts/blob/main/charts/library/common/values.yaml
   values:
     image:
-      repository: lscr.io/linuxserver/babybuddy
-      tag: 2.0.3
+      repository: wallabag/wallabag
+      tag: 2.6.2
 
     podAnnotations:
       secret.reloader.stakater.com/reload: *appname
 
     env:
-      TZ: ${TIMEZONE}
-      PGID: 1000
-      PUID: 1000
-      NAP_START_MAX: 23:00
-      NAP_START_MIN: 08:00
-      CSRF_TRUSTED_ORIGINS: http://127.0.0.1:8000,https://baby.${SECRET_DEV_DOMAIN}
-      USE_24_HOUR_TIME_FORMAT: true
-      ALLOWED_HOSTS: baby.${SECRET_DEV_DOMAIN}
-      REVERSE_PROXY_AUTH: true
-        #PROXY_HEADER: Remote-User
+#      - name: MSYMFONY__ENV__DATABASE_HOST
+#        valueFrom:
+#          secretKeyRef:
+#            name: postgres-superuser
+#            key: host
+#      - name: MSYMFONY__ENV__DATABASE_PORT
+#        valueFrom:
+#          secretKeyRef:
+#            name: postgres-superuser
+#            key: port
+#      - name: POSTGRES_USER
+#        valueFrom:
+#          secretKeyRef:
+#            name: postgres-superuser
+#            key: username
+#      - name: POSTGRES_PASSWORD
+#        valueFrom:
+#          secretKeyRef:
+#            name: postgres-superuser
+#            key: password
+#      - name: SYMFONY__ENV__DATABASE_DRIVER
+#        value: pdo_pgsql
+      - name: SYMFONY__ENV__DOMAIN_NAME
+        value: https://read.${SECRET_DEV_DOMAIN}
+      - name: SYMFONY__ENV__TWOFACTOR_AUTH
+        value: false
+      - name: SYMFONY__ENV__FOSUSER_CONFIRMATION
+        value: false
+
 
       # -- Set the application database type
     envFrom:
@@ -44,7 +63,7 @@ spec:
       config:
         enabled: true
         accessMode: ReadWriteOnce
-        existingClaim: babybuddy-volume
+        existingClaim: wallabag-volume
 
     # -- Configures service settings for the chart.
     # @default -- See values.yaml
@@ -52,7 +71,7 @@ spec:
       main:
         ports:
           http:
-            port: 8000
+            port: 80
 
     ingress:
       main:
@@ -60,13 +79,13 @@ spec:
         annotations:
           hajimari.io/enable: "true"
           hajimari.io/icon: baby-bottle-outline
-          hajimari.io/info: "Baby Buddy"
+          hajimari.io/info: "Wallabag"
           hajimari.io/group: "Home"
           cert-manager.io/cluster-issuer: "letsencrypt-production"
           traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
           traefik.ingress.kubernetes.io/router.middlewares: networking-chain-authelia@kubernetescrd
         hosts:
-        - host: &uri baby.${SECRET_DEV_DOMAIN}
+        - host: &uri read.${SECRET_DEV_DOMAIN}
           paths:
           - path: /
             pathType: Prefix
