@@ -19,7 +19,7 @@ spec:
 
     image: 
       repository: quay.io/go-skynet/local-ai
-      tag: v1.18.0
+      tag: v1.22.0
 
     env:
     - name: THREADS
@@ -61,7 +61,7 @@ spec:
 
     initContainers:
       download-model:
-        image: busybox@sha256:b5d6fe0712636ceb7430189de28819e195e8966372edfc2d9409d79402a0dc16
+        image: busybox@sha256:3fbc632167424a6d997e74f52b878d7cc478225cffac6bc977eedfe51c7f4e79
         command: ["/bin/sh", "-c"]
         args:
           - |

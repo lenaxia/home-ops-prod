@@ -24,7 +24,7 @@ spec:
   values:
     image:
       repository: docker.io/jasongdove/ersatztv
-      tag: v0.7.8-vaapi
+      tag: v0.8.0-vaapi
       pullPolicy: Always
     env:
       TZ: "${TIMEZONE}"
