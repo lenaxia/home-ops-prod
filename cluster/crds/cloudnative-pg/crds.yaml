@@ -1,5 +1,5 @@
 ---
-apiVersion: source.toolkit.fluxcd.io/v1beta2
+apiVersion: source.toolkit.fluxcd.io/v1
 kind: GitRepository
 metadata:
   name: cloudnative-pg-source
@@ -9,7 +9,7 @@ spec:
   url: https://github.com/cloudnative-pg/cloudnative-pg.git
   ref:
     # renovate: datasource=github-releases depName=cloudnative-pg/cloudnative-pg
-    tag: "v1.20.1"
+    tag: "v1.20.2"
   ignore: |
     # exclude all
     /*
