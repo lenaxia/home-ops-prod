@@ -54,7 +54,7 @@ spec:
       # -- image repository
       repository: adguard/adguardhome
       # -- image tag
-      tag: v0.107.34
+      tag: v0.107.35
       # -- image pull policy
       pullPolicy: Always
     
