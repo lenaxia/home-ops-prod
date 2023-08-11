@@ -1,4 +1,4 @@
-apiversion: kustomize.config.k8s.io/v1beta1
+opiversion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
   - ./kyverno/ks.yaml
@@ -37,7 +37,7 @@ resources:
   - ./home/babybuddy/ks.yaml
   - ./home/babybuddy-ava/ks.yaml
   #- ./home/wallabag/ks.yaml
-  #- ./home/grocy/ks.yaml
+  - ./home/grocy/ks.yaml
   - ./home/gamevault/ks.yaml
   - ./home/node-red/ks.yaml
   - ./home/vscode/ks.yaml
