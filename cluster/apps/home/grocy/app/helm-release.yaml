@@ -38,6 +38,16 @@ spec:
       PUID: "1000"
       PGID: "1000"
 
+    sidecars:
+      barcodebuddy:
+        image: f0rc3/barcodebuddy:v1.8.1.6
+        imagePullPolicy: Always
+        env:
+          - { name: TZ, value: ${TIMEZONE} }
+          - { name: ATTACH_BARCODESCANNER, value: false }
+          - { name: PUID, value: 1000 }
+          - { name: PGID, value: 1000 }
+
     service:
       main:
         ports:
