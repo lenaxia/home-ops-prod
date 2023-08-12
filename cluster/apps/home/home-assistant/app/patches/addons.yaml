@@ -4,7 +4,7 @@ apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
   name: home-assistant
-  namespace: home
+  namespace: &namespace home
 spec:
   values:
     addons:
@@ -27,8 +27,10 @@ spec:
           enabled: true
           ingressClassName: "traefik"
           annotations:
+            cert-manager.io/cluster-issuer: letsencrypt-production
             hajimari.io/appName: "Hass Config"
             hajimari.io/icon: cib:visual-studio-code
+            hajimari.io/group: *namespace
           hosts:
             - host: &host "hass-code.${SECRET_DEV_DOMAIN}"
               paths:
