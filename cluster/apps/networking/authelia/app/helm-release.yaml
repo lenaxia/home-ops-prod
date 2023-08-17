@@ -263,6 +263,13 @@ spec:
           resources:
             - "^/api/.*$"
             - "^/api"
+        # Grocy API
+        - domain_regex:
+            - 'grocy.*\.${SECRET_DEV_DOMAIN}$'
+          policy: bypass
+          resources:
+            - "^/api/.*$"
+            - "^/api"
         # Local only bypass policies
         - domain: 
             - "ldap.${SECRET_DEV_DOMAIN}"
