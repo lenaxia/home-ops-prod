@@ -28,10 +28,10 @@ spec:
       annotations:
         reloader.stakater.com/auto: "true"
     image:
-      repository: pklaus/brother_ql_web
-      tag: alpine_9e20b6d
+      repository: andreheuer/brother_ql_web-grocy
+      tag: v1.1.1
 
-    command: ["/bin/sh", "-c", "./brother_ql_web.py --model QL-810W tcp://192.168.0.83"]
+    command: ["/bin/sh", "-c", "./brother_ql_web.py --model QL-810W tcp://192.168.0.83 --default-label-size 62red"]
 
     service:
       main:
