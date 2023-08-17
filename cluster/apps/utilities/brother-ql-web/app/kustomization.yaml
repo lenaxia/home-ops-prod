@@ -2,10 +2,7 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 namespace: utilities
 commonLabels:
-  app.kubernetes.io/name: &app vaultwarden
+  app.kubernetes.io/name: &app brother-ql-web
   app.kubernetes.io/instance: *app
 resources:
-  - config-pvc.yaml
   - helm-release.yaml
-    #- cronjob.yaml
-  - secret.sops.yaml
