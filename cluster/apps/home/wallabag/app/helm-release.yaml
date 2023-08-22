@@ -18,7 +18,7 @@ spec:
   values:
     image:
       repository: wallabag/wallabag
-      tag: 2.6.2
+      tag: 2.6.4
 
     podAnnotations:
       secret.reloader.stakater.com/reload: *appname
