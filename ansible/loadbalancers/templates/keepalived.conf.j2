@@ -30,28 +30,37 @@ vrrp_script chk_{{ hc.name }} {
 #       Add a wraparound capability that would detect when there are still VIPs
 #       to configure but no more lbs, so that the roundrobin would restart from 
 #       the initial lb
+{% set lb_count = groups['loadbalancers']|length %}
+
+# Manage each virtual IP.
 {% for vip in virtualIPs %}
 {% set outer_loop = loop %}
-{% set lb_count = groups['loadbalancers']|length %}
-{% set lb_idx = loop.index0 %}
+{% set lb_idx = loop.index0 % lb_count %} 
+
+{% if lb_count == 1 %}
+{% set state = 'MASTER' %}
+{% set priority = 101 %}
+{% else %}
+{% set state = 'MASTER' if ansible_host == groups['loadbalancers'][lb_idx] else 'BACKUP' %}
+{% set priority = '101' if ansible_host == groups['loadbalancers'][lb_idx] else '100' %}
+{% endif %}
 
 vrrp_instance vrrp_{{ loop.index0 }} {
-   interface {{ virtualIPs[loop.index0].config.interface | default('eth0') }}
-   state {{ 'MASTER' if ansible_host == groups['loadbalancers'][lb_idx] else 'BACKUP' }}
+   interface {{ vip.config.interface | default('eth0') }}
+   state {{ state }}
    virtual_router_id 5{{ loop.index0 }}
-   priority {{ '101' if ansible_host == groups['loadbalancers'][lb_idx] else '100' }}
+   priority {{ priority }}
    virtual_ipaddress_excluded {
-       {{ virtualIPs[loop.index0].ip }}
+       {{ vip.ip }}
    }
    track_interface {
-       {{ virtualIPs[loop.index0].config.interface | default('eth0') }} weight -2
+       {{ vip.config.interface | default('eth0') }} weight -2
    }
    track_script {
       chk_sshd
-{% for healthcheck in virtualIPs[outer_loop.index0].healthchecks %}
-      chk_{{ virtualIPs[outer_loop.index0].healthchecks[loop.index0] }}
+{% for healthcheck in vip.healthchecks %}
+      chk_{{ healthcheck }}
 {% endfor %}
    }
 }
 {% endfor %}
-

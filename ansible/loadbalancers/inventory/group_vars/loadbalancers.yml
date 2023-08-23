@@ -3,6 +3,16 @@ blocky_version: "0.20"
 loadbalancers:
   - name: kube_cp_prod
     group: controlplane
+    vip: 192.168.4.10
+    config:
+      traffic_mode: tcp
+      frontend_port: 6443   # health check will be created on port +1
+      backend_port: 6443
+      balance: roundrobin
+      monitor_uri: /healthz
+  - name: kube_cp_dev
+    group: controlplane_dev
+    vip: 192.168.4.11
     config:
       traffic_mode: tcp
       frontend_port: 6443   # health check will be created on port +1
@@ -11,11 +21,13 @@ loadbalancers:
       monitor_uri: /healthz
 
 virtualIPs:
-  - ip: 192.168.4.10
+  - name: prod
+    ip: 192.168.4.10
     healthchecks: 
       - haproxy
       - k3s_cp
-  - ip: 192.168.4.11
+  - name: dev
+    ip: 192.168.4.11
     healthchecks: 
       - haproxy
       - k3s_cp
