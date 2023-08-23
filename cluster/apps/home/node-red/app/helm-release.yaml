@@ -19,17 +19,17 @@ spec:
       repository: nodered/node-red
       tag: 3.0.2
       pullPolicy: Always
-    lifecycle:
-      postStart:
-        exec:
-          command:
-            - /bin/bash
-            - -c
-            - >
-              cp /package.json /data &&
-              cp /settings.js /data &&
-              cd /data &&
-              npm install
+        #    lifecycle:
+        #      postStart:
+        #        exec:
+        #          command:
+        #            - /bin/bash
+        #            - -c
+        #            - >
+        #              cp /package.json /data &&
+        #              cp /settings.js /data &&
+        #              cd /data &&
+        #              npm install
     
     # -- environment variables.
     # @default -- See below
