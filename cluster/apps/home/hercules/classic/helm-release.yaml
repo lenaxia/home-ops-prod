@@ -59,9 +59,6 @@ spec:
         command: ["sh", "-c"]
         args:
           - |
-            mkdir /docker-entrypoint-initdb.d
-            cp /db-scripts/* /docker-entrypoint-initdb.d
-            ls -la /docker-entrypoint-initdb.d
             /entrypoint.sh
         env:
           - name: INIT_MYSQL_HOST
