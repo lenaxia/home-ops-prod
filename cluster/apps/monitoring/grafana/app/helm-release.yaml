@@ -30,6 +30,8 @@ spec:
       GF_DATE_FORMATS_FULL_DATE: "MMM Do, YYYY hh:mm:ss a"
       GF_SECURITY_ALLOW_EMBEDDING: true
       GF_SECURITY_COOKIE_SAMESITE: grafana
+      # due to conflicting users https://github.com/grafana/grafana/issues/70203#issuecomment-1609850174
+      GF_AUTH_OAUTH_ALLOW_INSECURE_EMAIL_LOOKUP: true
     envFromSecret: *app
     admin:
       existingSecret: grafana-admin-creds
