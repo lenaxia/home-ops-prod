@@ -107,6 +107,7 @@ spec:
         type: pvc
         storageClass: longhorn
         size: 1Gi
+        accessMode: RWX
       entrypoint-sh:
         enabled: true
         type: configMap
