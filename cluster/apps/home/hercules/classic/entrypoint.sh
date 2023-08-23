@@ -33,7 +33,7 @@ user_exists=$(\
 
 if [[ -z "${user_exists}" ]]; then
     printf "\e[1;32m%-6s\e[m\n" "Create User ${INIT_MYSQL_USER} ..."
-    mysql --host="${INIT_MYSQL_HOST}" --user="${INIT_MYSQL_SUPER_USER}" --execute="CREATE USER '${INIT_MYSQL_USER}'@'%' IDENTIFIED BY '${INIT_MYSQL_PASS}';"
+    mysql --host="${INIT_MYSQL_HOST}" --user="${INIT_MYSQL_SUPER_USER}" --execute="CREATE USER ${INIT_MYSQL_USER}@'%' IDENTIFIED BY '${INIT_MYSQL_PASS}';"
 fi
 
 for dbname in ${INIT_MYSQL_DBNAME}; do
