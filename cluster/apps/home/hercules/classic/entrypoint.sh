@@ -55,8 +55,8 @@ done
 for f in /docker-entrypoint-initdb.d/*; do
     case "$f" in
         *.sh)     echo "$0: running $f"; . "$f" ;;
-        *.sql)    echo "$0: running $f"; mysql --host="${INIT_MYSQL_HOST}" --user="${INIT_MYSQL_SUPER_USER}" < "$f" && echo ;;
-        *.sql.gz) echo "$0: running $f"; gunzip -c "$f" | mysql --host="${INIT_MYSQL_HOST}" --user="${INIT_MYSQL_SUPER_USER}" && echo ;;
+        *.sql)    echo "$0: running $f"; mysql --host="${INIT_MYSQL_HOST}" --user="${INIT_MYSQL_SUPER_USER}" --database="${INIT_MYSQL_DBNAME}" < "$f" && echo ;;
+        *.sql.gz) echo "$0: running $f"; gunzip -c "$f" | mysql --host="${INIT_MYSQL_HOST}" --user="${INIT_MYSQL_SUPER_USER}" --database="${INIT_MYSQL_DBNAME}" && echo ;;
         *)        echo "$0: ignoring $f" ;;
     esac
     echo
