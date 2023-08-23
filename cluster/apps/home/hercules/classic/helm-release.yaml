@@ -104,7 +104,7 @@ spec:
         existingClaim: hercules-classic-volume
       db-scripts:
         enabled: true
-        type: emptyDir
+        type: longhorn
       entrypoint-sh:
         enabled: true
         type: configMap
