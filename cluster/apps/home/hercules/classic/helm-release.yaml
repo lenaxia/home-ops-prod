@@ -28,14 +28,13 @@ spec:
         valueFrom:
           secretKeyRef:
             name: mariadb-secret
-            key: ip
+            key: host 
       - name: MYSQL_PORT
         valueFrom:
           secretKeyRef:
             name: mariadb-secret
             key: port
 
-      # -- Set the application database type
     envFrom:
       - secretRef:
           name: *appname 
