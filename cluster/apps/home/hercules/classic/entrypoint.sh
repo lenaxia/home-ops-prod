@@ -50,3 +50,14 @@ for dbname in ${INIT_MYSQL_DBNAME}; do
     printf "\e[1;32m%-6s\e[m\n" "Update User Privileges on Database ..."
     mysql --host="${INIT_MYSQL_HOST}" --user="${INIT_MYSQL_SUPER_USER}" --execute="GRANT ALL PRIVILEGES ON ${dbname}.* TO '${INIT_MYSQL_USER}'@'%'; FLUSH PRIVILEGES;"
 done
+
+# Execute scripts from /docker-entrypoint-initdb.d
+for f in /docker-entrypoint-initdb.d/*; do
+    case "$f" in
+        *.sh)     echo "$0: running $f"; . "$f" ;;
+        *.sql)    echo "$0: running $f"; mysql --host="${INIT_MYSQL_HOST}" --user="${INIT_MYSQL_SUPER_USER}" < "$f" && echo ;;
+        *.sql.gz) echo "$0: running $f"; gunzip -c "$f" | mysql --host="${INIT_MYSQL_HOST}" --user="${INIT_MYSQL_SUPER_USER}" && echo ;;
+        *)        echo "$0: ignoring $f" ;;
+    esac
+    echo
+done
