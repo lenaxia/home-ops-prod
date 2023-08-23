@@ -28,7 +28,7 @@ spec:
         valueFrom:
           secretKeyRef:
             name: mariadb-secret
-            key: host 
+            key: ip
       - name: MYSQL_PORT
         valueFrom:
           secretKeyRef:
