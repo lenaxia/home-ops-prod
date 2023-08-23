@@ -60,6 +60,8 @@ spec:
         command: ["sh", "-c"]
         args:
           - |
+            mkdir /docker-entrypoint-initdb.d
+            cp /db-scripts/* /docker-entrypoint-initdb.d
             ls -la /docker-entrypoint-initdb.d
             /entrypoint.sh
         env:
@@ -90,7 +92,7 @@ spec:
                 key: MYSQL_DATABASE
         volumeMounts:
           - name: db-scripts
-            mountPath: /docker-entrypoint-initdb.d
+            mountPath: /db-scripts
           - name: entrypoint-sh
             mountPath: /entrypoint.sh
             subPath: entrypoint.sh
