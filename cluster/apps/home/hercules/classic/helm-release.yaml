@@ -51,6 +51,7 @@ spec:
             curl https://s3.thekao.cloud/public/ragnarok/ro-herc-classic-sql.tar.gz -o sql-files.tar.gz &&
             tar -xzf sql-files.tar.gz -C /docker-entrypoint-initdb.d/ &&
             rm sql-files.tar.gz
+            ls -la /docker-entrypoint-initdb.d
         volumeMounts:
           - name: db-scripts
             mountPath: /docker-entrypoint-initdb.d
@@ -58,7 +59,9 @@ spec:
         image: mariadb:10.5
         command: ["sh", "-c"]
         args:
-          - "/entrypoint.sh"
+          - |
+            ls -la /docker-entrypoint-initdb.d
+            /entrypoint.sh
         env:
           - name: INIT_MYSQL_HOST
             valueFrom:
