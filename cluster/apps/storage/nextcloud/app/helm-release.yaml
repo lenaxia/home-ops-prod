@@ -332,7 +332,7 @@ spec:
       enabled: true
       image:
         repository: nginx
-        tag: 1.23-alpine
+        tag: 1.25-alpine
 
     internalDatabase:
       enabled: false
