@@ -55,10 +55,11 @@ spec:
           - name: db-scripts
             mountPath: /docker-entrypoint-initdb.d
       init-db:
-        image: mariadb:10.5
+        image: ubuntu:latest
         command: ["sh", "-c"]
         args:
           - |
+            apt-get update && apt-get install -y mysql-client &&
             /entrypoint.sh
         env:
           - name: MARIADB_ROOT_PASSWORD

@@ -51,15 +51,15 @@ for dbname in ${INIT_MYSQL_DBNAME}; do
     mysql --host="${INIT_MYSQL_HOST}" --user="${INIT_MYSQL_SUPER_USER}" --execute="GRANT ALL PRIVILEGES ON ${dbname}.* TO '${INIT_MYSQL_USER}'@'%'; FLUSH PRIVILEGES;"
 done
 
-for dbname in ${INIT_MYSQL_DBNAME}; do
-    # Execute scripts from /docker-entrypoint-initdb.d
-    for f in /docker-entrypoint-initdb.d/*; do
-        case "$f" in
-            *.sh)     echo "$0: running $f"; . "$f" ;;
-            *.sql)    echo "$0: running $f"; mysql --host="${INIT_MYSQL_HOST}" --user="${INIT_MYSQL_SUPER_USER}" --database="${dbname}" < "$f" && echo ;;
-            *.sql.gz) echo "$0: running $f"; gunzip -c "$f" | mysql --host="${INIT_MYSQL_HOST}" --user="${INIT_MYSQL_SUPER_USER}" --database="${dbname}" && echo ;;
-            *)        echo "$0: ignoring $f" ;;
-        esac
-        echo
-    done
-done
+#for dbname in ${INIT_MYSQL_DBNAME}; do
+#    # Execute scripts from /docker-entrypoint-initdb.d
+#    for f in /docker-entrypoint-initdb.d/*; do
+#        case "$f" in
+#            *.sh)     echo "$0: running $f"; . "$f" ;;
+#            *.sql)    echo "$0: running $f"; mysql --host="${INIT_MYSQL_HOST}" --user="${INIT_MYSQL_SUPER_USER}" --database="${dbname}" < "$f" && echo ;;
+#            *.sql.gz) echo "$0: running $f"; gunzip -c "$f" | mysql --host="${INIT_MYSQL_HOST}" --user="${INIT_MYSQL_SUPER_USER}" --database="${dbname}" && echo ;;
+#            *)        echo "$0: ignoring $f" ;;
+#        esac
+#        echo
+#    done
+#done
