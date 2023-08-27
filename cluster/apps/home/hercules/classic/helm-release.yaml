@@ -56,10 +56,10 @@ spec:
             mountPath: /docker-entrypoint-initdb.d
       init-db:
         image: mariadb:11.0
-        command: ["sh", "-c"]
-        args:
-          - |
-            /entrypoint.sh
+          #        command: ["sh", "-c"]
+          #        args:
+          #          - |
+          #            /entrypoint.sh
         env:
           - name: INIT_MYSQL_HOST
             valueFrom:
