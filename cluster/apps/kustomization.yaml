@@ -6,7 +6,7 @@ resources:
 
   # Databases
   - ./databases/redis/ks.yaml
-    #- ./databases/redis-operator/ks.yaml
+  - ./databases/redis-operator/ks.yaml
   - ./databases/cloudnative-pg/ks.yaml
   - ./databases/mariadb/ks.yaml
   - ./databases/influxdb/ks.yaml
@@ -40,7 +40,7 @@ resources:
   - ./home/node-red/ks.yaml
   - ./home/vscode/ks.yaml
   - ./home/roskills/ks.yaml
-    #- ./home/localai/ks.yaml
+  - ./home/localai/ks.yaml
   - ./home/home-assistant/ks.yaml
   - ./home/zwavejs/ks.yaml
   - ./home/mosquitto/ks.yaml
