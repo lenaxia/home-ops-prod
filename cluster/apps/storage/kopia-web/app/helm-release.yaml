@@ -51,7 +51,6 @@ spec:
       - --address=0.0.0.0:80
       - --metrics-listen-addr=0.0.0.0:8080
       - --without-password
-      - --ui-default-page-size=100
     service:
       main:
         type: LoadBalancer
