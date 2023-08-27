@@ -32,7 +32,7 @@ spec:
       strategy: RollingUpdate
     image:
       repository: docker.io/outlinewiki/outline
-      tag: 0.70.2
+      tag: 0.71.0
       pullPolicy: Always
     envFrom:
       - secretRef:
