@@ -55,10 +55,12 @@ spec:
           - name: db-scripts
             mountPath: /docker-entrypoint-initdb.d
       init-db:
-        image: mariadb:10.11
+        image: ubuntu:latest
         command: ["sh", "-c"]
         args:
-          - "/entrypoint.sh"
+          - |
+            apt-get update && apt-get install -y mysql-client &&
+            /entrypoint.sh
         env:
           - name: INIT_MYSQL_HOST
             valueFrom:

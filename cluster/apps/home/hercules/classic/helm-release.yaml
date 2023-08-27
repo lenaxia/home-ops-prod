@@ -62,11 +62,6 @@ spec:
             apt-get update && apt-get install -y mysql-client &&
             /entrypoint.sh
         env:
-          - name: MARIADB_ROOT_PASSWORD
-            valueFrom:
-              secretKeyRef:
-                name: mariadb-secret
-                key: mariadb-root-password
           - name: INIT_MYSQL_HOST
             valueFrom:
               secretKeyRef:
