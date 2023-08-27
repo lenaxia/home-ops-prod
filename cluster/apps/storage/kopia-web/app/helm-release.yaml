@@ -48,7 +48,6 @@ spec:
       - server
       - --metrics-listen-addr
       - 0.0.0.0:8080
-      - --without-password
     service:
       main:
         type: LoadBalancer
