@@ -16,7 +16,7 @@ resources:
   - ./kube-system/intel-device-plugin/ks.yaml
   - ./kube-system/reloader
   - ./kube-system/descheduler
-  ##- ./kube-system/metrics-server  # k3s already comes with a metrics server
+  #- ./kube-system/metrics-server  # k3s already comes with a metrics server
 
   # Storage
   - ./storage/nextcloud/ks.yaml
@@ -31,7 +31,6 @@ resources:
   - ./networking/cert-manager/ks.yaml
   - ./networking/metallb/ks.yaml
   - ./networking/external-dns/ks.yaml
-  #- ./networking/multus/ks.yaml
   
   # Home
   - ./home/babybuddy/ks.yaml
@@ -76,7 +75,7 @@ resources:
 
   # Utilities Namespace
   - ./utilities/vaultwarden/ks.yaml
-  #- ./utilities/vaultwarden-ldap/ks.yaml
+  - ./utilities/vaultwarden-ldap/ks.yaml
   - ./utilities/uptimekuma/ks.yaml
   - ./utilities/smokeping/ks.yaml
   #- ./utilities/changedetection/ks.yaml
