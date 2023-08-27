@@ -10,7 +10,6 @@ metadata:
 spec:
   dependsOn:
     - name: cluster-databases-postgres-clusters
-    - name: cluster-databases-redis-operator
     - name: cluster-storage-longhorn
   path: ./cluster/apps/storage/nextcloud/app
   prune: true
