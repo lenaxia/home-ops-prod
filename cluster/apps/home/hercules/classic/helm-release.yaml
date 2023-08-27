@@ -55,11 +55,11 @@ spec:
           - name: db-scripts
             mountPath: /docker-entrypoint-initdb.d
       init-db:
-        image: mariadb:11.0
-          #        command: ["sh", "-c"]
-          #        args:
-          #          - |
-          #            /entrypoint.sh
+        image: mariadb:10.11
+        command: ["sh", "-c"]
+        args:
+          - |
+            /entrypoint.sh
         env:
           - name: MARIADB_ROOT_PASSWORD
             valueFrom:
