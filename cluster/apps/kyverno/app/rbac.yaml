@@ -27,3 +27,6 @@ rules:
   - cronjobs
   verbs:
   - create
+  - update
+  - patch
+  - delete
