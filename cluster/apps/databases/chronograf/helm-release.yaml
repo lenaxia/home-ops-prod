@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: chronograf
-      version: 1.2.5
+      version: 1.2.6
       sourceRef:
         kind: HelmRepository
         name: influxdata-charts
