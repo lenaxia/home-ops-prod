@@ -1,4 +1,4 @@
-npiversion: kustomize.config.k8s.io/v1beta1
+apiversion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
   - ./kyverno/ks.yaml
@@ -28,7 +28,7 @@ resources:
   # Networking
   - ./networking/traefik/ks.yaml
   - ./networking/authelia/ks.yaml
-  - ./networking/cert-manager/ks.yaml
+    #- ./networking/cert-manager/ks.yaml
   - ./networking/metallb/ks.yaml
   - ./networking/external-dns/ks.yaml
   
