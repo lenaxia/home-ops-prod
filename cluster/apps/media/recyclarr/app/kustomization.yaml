@@ -5,7 +5,7 @@ kind: Kustomization
 namespace: media
 resources:
   - ./secret.sops.yaml
-  - ./helmrelease.yaml
+  - ./helm-release.yaml
 configMapGenerator:
   - name: recyclarr-configmap
     files:
