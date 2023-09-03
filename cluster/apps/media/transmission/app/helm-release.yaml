@@ -19,20 +19,20 @@ spec:
   values:
     podLabels:
       app: *appname
-
     controller:
       type: statefulset
       annotations:
         reloader.stakater.com/auto: "true"
-    image:
-      repository: ghcr.io/onedr0p/transmission
-      tag: "4.0.3"
-      pullPolicy: Always
     podSecurityContext:
       runAsUser: 568
       runAsGroup: 568
       fsGroup: 568
       fsGroupChangePolicy: OnRootMismatch
+
+    image:
+      repository: ghcr.io/onedr0p/transmission
+      tag: "4.0.3"
+      pullPolicy: Always
     
     env:
       TZ: "${TIMEZONE}"

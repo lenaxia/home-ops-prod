@@ -7,17 +7,25 @@ spec:
   releaseName: *appname
   chart:
     spec:
-      chart: *appname
+      chart: app-template
+      version: 1.5.1
       sourceRef:
         kind: HelmRepository
-        name: k8s-at-home
+        name: bjw-s-charts
         namespace: flux-system
-  interval: 5m
+  interval: 6m
   values:
     podLabels:
       app: *appname
+    controller:
+      type: statefulset
+      annotations:
+        reloader.stakater.com/auto: "true"
     podSecurityContext:
+      runAsUser: 568
+      runAsGroup: 568
       fsGroup: 568
+      fsGroupChangePolicy: OnRootMismatch
 
     image:
       repository: ghcr.io/k8s-at-home/radarr-develop
@@ -39,6 +47,12 @@ spec:
             port: 7878
         type: ClusterIP
     
+#    volumeClaimTemplates:
+#      - name: config
+#        mountPath: /config
+#        accessMode: ReadWriteOnce
+#        size: 3Gi
+#        storageClass: longhorn
     persistence:
       config:
         enabled: true
