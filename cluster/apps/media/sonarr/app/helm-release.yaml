@@ -2,27 +2,34 @@ apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
   name: &appname sonarr
-  namespace: media
+  namespace: &namespace media
 spec:
   releaseName: *appname
   chart:
     spec:
-      chart: *appname
-      version: "16.3.2"
+      chart: app-template
+      version: 1.5.1
       sourceRef:
         kind: HelmRepository
-        name: k8s-at-home
+        name: bjw-s-charts
         namespace: flux-system
   interval: 6m
   values:
     podLabels:
       app: *appname
+    controller:
+      type: statefulset
+      annotations:
+        reloader.stakater.com/auto: "true"
     podSecurityContext:
+      runAsUser: 568
+      runAsGroup: 568
       fsGroup: 568
+      fsGroupChangePolicy: OnRootMismatch
 
     image:
-      repository: ghcr.io/k8s-at-home/sonarr-develop
-      tag: "v3.0.9.1555"
+      repository: ghcr.io/onedr0p/sonarr-develop
+      tag: 4.0.0.629@sha256:08b0b74ebfa56c21d3055576ae3157feb63a79bbba3d4b12b1b9eb188c1b55e1
       pullPolicy: Always
     
     # -- environment variables.
@@ -40,6 +47,12 @@ spec:
             port: 8989
         type: ClusterIP
     
+#    volumeClaimTemplates:
+#      - name: config
+#        mountPath: /config
+#        accessMode: ReadWriteOnce
+#        size: 3Gi
+#        storageClass: longhorn
     persistence:
       config:
         enabled: true
