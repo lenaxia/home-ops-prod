@@ -24,8 +24,15 @@ spec:
   values:
     podLabels:
       app: *appname
+    controller:
+      type: statefulset
+      annotations:
+        reloader.stakater.com/auto: "true"
     podSecurityContext:
+      runAsUser: 568
+      runAsGroup: 568
       fsGroup: 568
+      fsGroupChangePolicy: OnRootMismatch
 
     image:
       repository: lscr.io/linuxserver/nzbhydra2
@@ -41,7 +48,13 @@ spec:
         ports:
           http:
             port: 5076
-    
+
+#    volumeClaimTemplates:
+#      - name: config
+#        mountPath: /config
+#        accessMode: ReadWriteOnce
+#        size: 1Gi
+#        storageClass: longhorn 
     persistence:
       config:
         enabled: true

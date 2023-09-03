@@ -19,8 +19,15 @@ spec:
   values:
     podLabels:
       app: *appname
+    controller:
+      type: statefulset
+      annotations:
+        reloader.stakater.com/auto: "true"
     podSecurityContext:
+      runAsUser: 568
+      runAsGroup: 568
       fsGroup: 568
+      fsGroupChangePolicy: OnRootMismatch
 
     image:
       repository: lscr.io/linuxserver/nzbget
@@ -36,7 +43,14 @@ spec:
           http:
             port: 6789
         type: ClusterIP
-    
+
+
+#    volumeClaimTemplates:
+#      - name: config
+#        mountPath: /config
+#        accessMode: ReadWriteOnce
+#        size: 1Gi
+#        storageClass: longhorn
     persistence:
       config:
         enabled: true
@@ -83,5 +97,5 @@ spec:
           - hosts:
             - *uri
             secretName: *uri
-              #    nodeSelector:
-              #      node-role.kubernetes.io/worker: "true"
+    nodeSelector:
+      node-role.kubernetes.io/worker: "true"
