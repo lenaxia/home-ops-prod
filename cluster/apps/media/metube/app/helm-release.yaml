@@ -22,6 +22,11 @@ spec:
     remediation:
       retries: 8
   values:
+    controller:
+      type: statefulset
+      replicas: 1
+      annotations:
+        reloader.stakater.com/auto: "true"
     image:
       repository: docker.io/alexta69/metube
       tag: latest
@@ -32,7 +37,7 @@ spec:
       YTDL_OPTIONS: '{"writethumbnail": true, "writesubtitles": true, "subtitleslangs": ["en", "-live_chat"], "merge_output_format": "mp4", "postprocessors": [{"key": "Exec", "exec_cmd": "chmod 0664", "when": "after_move"}, {"key": "FFmpegEmbedSubtitle", "already_have_subtitle": false}, {"key": "FFmpegMetadata", "add_metadata": true, "add_chapters": true}, { "key": "EmbedThumbnail", "already_have_thumbnail": true}]}'
     service:
       main:
-        type: LoadBalancer
+        type: ClusterIP
         externalTrafficPolicy: Local
         ports:
           http:
@@ -46,7 +51,6 @@ spec:
           hajimari.io/icon: "youtube"
           hajimari.io/group: "Media"
           cert-manager.io/cluster-issuer: "letsencrypt-production"
-            ##cert-manager.io/cluster-issuer: "ca-issuer"
           traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
           traefik.ingress.kubernetes.io/router.middlewares: networking-chain-authelia@kubernetescrd
         hosts:
@@ -73,10 +77,14 @@ spec:
 #      readiness: *probes
 #      startup:
 #        enabled: false
+
+    volumeClaimTemplates:
+      - name: config
+        mountPath: /config
+        accessMode: ReadWriteOnce
+        size: 3Gi
+        storageClass: longhorn
     persistence:
-      config:
-        enabled: true
-        existingClaim: metube-config-volume
       downloads:
         enabled: true
         type: custom
