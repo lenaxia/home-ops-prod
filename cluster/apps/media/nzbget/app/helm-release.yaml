@@ -24,10 +24,7 @@ spec:
       annotations:
         reloader.stakater.com/auto: "true"
     podSecurityContext:
-      runAsUser: 568
-      runAsGroup: 568
       fsGroup: 568
-      fsGroupChangePolicy: OnRootMismatch
 
     image:
       repository: lscr.io/linuxserver/nzbget
