@@ -23,7 +23,7 @@ spec:
       retries: 5
   values:
     podLabels:
-      app: *appname
+      app: *app
     controller:
       type: statefulset
       annotations:
