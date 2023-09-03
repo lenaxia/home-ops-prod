@@ -22,6 +22,12 @@ spec:
     remediation:
       retries: 5
   values:
+    podLabels:
+      app: *appname
+    controller:
+      type: statefulset
+      annotations:
+        reloader.stakater.com/auto: "true"
     image:
       repository: ghcr.io/linuxserver/overseerr
       tag: latest
@@ -50,6 +56,12 @@ spec:
       readiness: *probes
       startup:
         enabled: false
+#    volumeClaimTemplates:
+#      - name: config
+#        mountPath: /config
+#        accessMode: ReadWriteOnce
+#        size: 3Gi
+#        storageClass: longhorn
     persistence:
       config:
         enabled: true
