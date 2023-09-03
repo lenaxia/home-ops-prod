@@ -1,0 +1,121 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: &appname transmission
+  namespace: &namespace media
+  labels:
+    app: *appname
+spec:
+  releaseName: *appname
+  chart:
+    spec:
+      chart: app-template
+      version: 1.5.1
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s-charts
+        namespace: flux-system
+  interval: 6m
+  values:
+    podLabels:
+      app: *appname
+
+    controller:
+      type: statefulset
+      annotations:
+        reloader.stakater.com/auto: "true"
+    image:
+      repository: ghcr.io/onedr0p/transmission
+      tag: "4.0.3"
+      pullPolicy: Always
+    podSecurityContext:
+      runAsUser: 568
+      runAsGroup: 568
+      fsGroup: 568
+      fsGroupChangePolicy: OnRootMismatch
+    
+    env:
+      TZ: "${TIMEZONE}"
+      TRANSMISSION__BLOCKLIST_URL: "https://mirror.codebucket.de/transmission/blocklist.p2p.gz"
+      TRANSMISSION__DOWNLOAD_DIR: "/downloads"
+      TRANSMISSION__INCOMPLETE_DIR_ENABLED: TRUE
+      TRANSMISSION__INCOMPLETE_DIR: "/unfinished"
+      TRANSMISSION__RPC_PORT: &port 9091
+      TRANSMISSION__PEER_PORT: &peerport 51413
+      TRANSMISSION__RATIO_LIMIT: 1
+      TRANSMISSION__RATIO_LIMIT_ENABLED: true
+      TRANSMISSION__SPEED_LIMIT_UP_ENABLED: true
+      TRANSMISSION__SPEED_LIMIT_UP: 8000
+      TRANSMISSION__UTP_ENABLED: false
+      TRANSMISSION__UMASK: 7
+      TRANSMISSION__WATCH_DIR: "/downloads/[Torrents]/Autoload"
+      TRANSMISSION__WATCH_DIR_ENABLED: true
+      TRANSMISSION__WATCH_FORCE_GENERIC: true
+    
+    service:
+      main:
+        ports:
+          http:
+            port: *port
+        type: ClusterIP
+      utptcp:
+        enabled: true
+        type: LoadBalancer
+        externalTrafficPolicy: Local
+        ports:
+          utptcp:
+            enabled: true
+            port: *peerport
+            protocol: TCP
+            targetPort: *peerport
+
+    volumeClaimTemplates:
+      - name: config
+        mountPath: /config
+        accessMode: ReadWriteOnce
+        size: 1Gi
+        storageClass: longhorn
+    persistence:
+      unfinished:
+        enabled: true
+        type: emptyDir
+        medium: Memory
+      omoikane:
+        enabled: true
+        type: custom
+        volumeSpec:
+          nfs:
+            server: ${NAS_ADDR}
+            path: /volume1/omoikane
+        mountPath: /omoikane
+      downloads:
+        enabled: true
+        type: custom
+        volumeSpec:
+          nfs:
+            server: ${NAS_ADDR}
+            path: /volume2/downloads
+        mountPath: /downloads
+
+    ingress:
+      main:
+        enabled: true
+        ingressClassName: "traefik"
+        annotations:
+          hajimari.io/enable: "true"
+          hajimari.io/icon: "mdi:cloud-download"
+          hajimari.io/group: "Media"
+          cert-manager.io/cluster-issuer: "letsencrypt-production"
+          traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
+          traefik.ingress.kubernetes.io/router.middlewares: networking-chain-authelia@kubernetescrd
+        hosts:
+          - host: &uri "transmission.${SECRET_DEV_DOMAIN}"
+            paths:
+              - path: /
+                pathType: Prefix
+        tls:
+          - hosts:
+            - *uri
+            secretName: *uri
+    nodeSelector:
+      node-role.kubernetes.io/worker: "true"

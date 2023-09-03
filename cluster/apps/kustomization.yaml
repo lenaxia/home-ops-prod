@@ -66,6 +66,7 @@ resources:
   - ./media/radarr/ks.yaml
   - ./media/bazarr/ks.yaml
   - ./media/readarr/ks.yaml
+  - ./media/transmission/ks.yaml
   - ./media/nzbget/ks.yaml
   - ./media/nzbhydra2/ks.yaml
   - ./media/metube/ks.yaml
