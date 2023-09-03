@@ -15,14 +15,10 @@ spec:
         kind: HelmRepository
         name: bjw-s-charts
         namespace: flux-system
-  interval: 5m
+  interval: 6m
   values:
     podLabels:
       app: *appname
-    controller:
-      type: statefulset
-      annotations:
-        reloader.stakater.com/auto: "true"
     podSecurityContext:
       fsGroup: 568
 
@@ -40,14 +36,7 @@ spec:
           http:
             port: 6789
         type: ClusterIP
-
-
-#    volumeClaimTemplates:
-#      - name: config
-#        mountPath: /config
-#        accessMode: ReadWriteOnce
-#        size: 1Gi
-#        storageClass: longhorn
+    
     persistence:
       config:
         enabled: true
