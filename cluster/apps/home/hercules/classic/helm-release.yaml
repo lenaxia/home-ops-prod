@@ -103,10 +103,7 @@ spec:
         existingClaim: hercules-classic-volume
       db-scripts:
         enabled: true
-        type: pvc
-        storageClass: longhorn
-        size: 1Gi
-        accessMode: ReadWriteMany 
+        type: emptyDir
       entrypoint-sh:
         enabled: true
         type: configMap
