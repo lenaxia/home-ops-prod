@@ -42,6 +42,7 @@ resources:
   - ./home/roskills/ks.yaml
   - ./home/localai/ks.yaml
   - ./home/home-assistant/ks.yaml
+  - ./home/frigate/ks.yaml
   - ./home/zwavejs/ks.yaml
   - ./home/mosquitto/ks.yaml
   - ./home/hercules/ks.yaml
