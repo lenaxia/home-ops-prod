@@ -43,9 +43,9 @@ spec:
     env:
       TZ: ${TIMEZONE}
       LIBVA_DRIVER_NAME: i965
-    envFrom:
-      - secretRef:
-          name: frigate-secret
+#    envFrom:
+#      - secretRef:
+#                  name: frigate-secret
     service:
       main:
         ports:
