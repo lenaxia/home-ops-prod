@@ -16,4 +16,4 @@ spec:
 #            vendor: { op: In, value: ["1a6e", "18d1"] }
         - feature: pci.device
           matchExpressions:
-            vendor: { op: In, value: ["089a"] }
+            vendor: { op: In, value: ["1ac1"] }
