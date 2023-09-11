@@ -11,9 +11,9 @@ spec:
       labels:
         google.feature.node.kubernetes.io/coral: "true"
       matchFeatures:
-        - feature: usb.device
-          matchExpressions:
-            vendor: { op: In, value: ["1a6e", "18d1"] }
+#        - feature: usb.device
+#          matchExpressions:
+#            vendor: { op: In, value: ["1a6e", "18d1"] }
         - feature: pci.device
           matchExpressions:
             vendor: { op: In, value: ["089a"] }
