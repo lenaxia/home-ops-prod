@@ -245,6 +245,7 @@ spec:
         # Require 2fa in all access modes
         - domain:
             - "dsm.${SECRET_DEV_DOMAIN}"
+            - "ygg.${SECRET_DEV_DOMAIN}"
             - "guac.${SECRET_DEV_DOMAIN}"
             - "amole.${SECRET_DEV_DOMAIN}"
           policy: two_factor
@@ -318,6 +319,7 @@ spec:
             - "sonarr.${SECRET_DEV_DOMAIN}"
             - "radarr.${SECRET_DEV_DOMAIN}"
             - "nzbget.${SECRET_DEV_DOMAIN}"
+            - "transmission.${SECRET_DEV_DOMAIN}"
             - "nzbhydra.${SECRET_DEV_DOMAIN}"
             - "calibre.${SECRET_DEV_DOMAIN}"
             - "change.${SECRET_DEV_DOMAIN}"
