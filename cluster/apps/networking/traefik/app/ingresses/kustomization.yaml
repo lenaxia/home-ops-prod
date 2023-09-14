@@ -6,6 +6,7 @@ resources:
     #- vaultwarden.yaml # this has been migrated to k3s so no longer needs to point to ruri
   - proxmox.yaml
   - synology-dsm.yaml
+  - synology-ygg.yaml
   - synology-moments.yaml
     #  - synology-drive.yaml
   - portainer.yaml
