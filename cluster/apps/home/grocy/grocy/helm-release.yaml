@@ -29,7 +29,7 @@ spec:
         reloader.stakater.com/auto: "true"
     image:
       repository: linuxserver/grocy
-      tag: 4.0.2
+      tag: 4.0.3
     env:
       TZ: "${TIMEZONE}"
       GROCY_CULTURE: "en_US"
