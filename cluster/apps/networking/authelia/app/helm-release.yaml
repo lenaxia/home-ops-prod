@@ -358,6 +358,7 @@ spec:
             #media
             - "library.${SECRET_DEV_DOMAIN}"
             - "plex.${SECRET_DEV_DOMAIN}"
+            - "jelly.${SECRET_DEV_DOMAIN}"
             - "request.${SECRET_DEV_DOMAIN}"
             #storage
             - "paperless.${SECRET_DEV_DOMAIN}"
