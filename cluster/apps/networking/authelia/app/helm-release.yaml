@@ -291,6 +291,7 @@ spec:
             - "hub.${SECRET_DEV_DOMAIN}"
             #synology
             - "drive.${SECRET_DEV_DOMAIN}"
+            - "file.${SECRET_DEV_DOMAIN}"
             - "moments.${SECRET_DEV_DOMAIN}"
             - "photos.${SECRET_DEV_DOMAIN}"
             #utilities
