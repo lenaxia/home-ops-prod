@@ -2,22 +2,22 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: synology-drive
+  name: synology-photos
   namespace: networking
   annotations:
-    coredns.io/hostname: "drive.${SECRET_DEV_DOMAIN}"
+    coredns.io/hostname: "photos.${SECRET_DEV_DOMAIN}"
     cert-manager.io/cluster-issuer: letsencrypt-production
     traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
-    traefik.ingress.kubernetes.io/router.middlewares: networking-chain-synology-drive@kubernetescrd
+    traefik.ingress.kubernetes.io/router.middlewares: networking-chain-synology-photos@kubernetescrd
 spec:
   ingressClassName: traefik
   rules:
-    - host: &host "drive.${SECRET_DEV_DOMAIN}"
+    - host: &host "photos.${SECRET_DEV_DOMAIN}"
       http:
         paths:
           - backend:
               service:
-                name: synology-drive
+                name: synology-photos
                 port:
                   number: 80
             path: /
@@ -30,7 +30,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: synology-drive
+  name: synology-photos
   namespace: networking
 spec:
   ports:
@@ -41,7 +41,7 @@ spec:
 apiVersion: v1
 kind: Endpoints
 metadata:
-  name: synology-drive
+  name: synology-photos
   namespace: networking
 subsets:
   - addresses:
@@ -52,21 +52,21 @@ subsets:
 apiVersion: traefik.containo.us/v1alpha1
 kind: Middleware
 metadata:
-  name: middlewares-synology-drive-addprefix
+  name: middlewares-synology-photos-addprefix
   namespace: networking
 spec:
   addPrefix:
-    prefix: "/drive"
+    prefix: "/photos"
 ---
 apiVersion: traefik.containo.us/v1alpha1
 kind: Middleware
 metadata:
-  name: chain-synology-drive
+  name: chain-synology-photos
   namespace: networking
 spec:
   chain:
     middlewares:
       - name: middlewares-rate-limit
-      - name: middlewares-synology-drive-addprefix
+      - name: middlewares-synology-photos-addprefix
       - name: middlewares-secure-headers
       - name: middlewares-authelia
