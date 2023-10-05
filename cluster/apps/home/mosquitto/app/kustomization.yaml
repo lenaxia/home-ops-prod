@@ -5,6 +5,5 @@ commonLabels:
   app.kubernetes.io/name: &app mosquitto
   app.kubernetes.io/instance: *app
 resources:
-  - config-pvc.yaml
   - secret.sops.yaml
   - helm-release.yaml
