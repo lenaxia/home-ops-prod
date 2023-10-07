@@ -6,6 +6,7 @@ resources:
   - proxmox.yaml
   - synology-dsm.yaml
   - synology-ygg.yaml
+  - synology-file.yaml
   - synology-photos.yaml
   - synology-drive.yaml
   - portainer.yaml
