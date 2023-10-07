@@ -4,7 +4,7 @@ commonLabels:
   app.kubernetes.io/name: &app hajimari
   app.kubernetes.io/instance: *app
 resources:
-  - config-pvc.yaml
+  #- config-pvc.yaml
   - helm-release.yaml
     #- ingress.yaml
 

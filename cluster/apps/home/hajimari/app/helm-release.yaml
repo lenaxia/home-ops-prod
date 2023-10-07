@@ -105,8 +105,8 @@ spec:
 
     persistence:
       data:
-        enabled: true
-        existingClaim: hajimari-config
+        enabled: false
+        #existingClaim: hajimari-config
     podAnnotations:
       configmap.reloader.stakater.com/reload: *app
     resources:
