@@ -67,12 +67,18 @@ spec:
       - name: webfinger-json
         configMap: 
           name: webfinger-json
+      - name: protect-hidden-files-conf
+        configMap: 
+          name: protect-hidden-files-conf
     extraVolumeMounts:
       - name: nginx-www
         mountPath: /app
       - name: webfinger-json
         mountPath: /app/webfinger.json
         subPath: webfinger.json
+      - name: protect-hidden-files-conf
+        mountPath: /opt/bitnami/nginx/conf/bitnami/protect-hidden-files.conf
+        subPath: protect-hidden-files.conf
 
     livenessProbe:
       enabled: true
