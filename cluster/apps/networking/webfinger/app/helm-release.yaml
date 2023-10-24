@@ -68,14 +68,14 @@ spec:
 
     livenessProbe:
       enabled: true
-      initialDelaySeconds: 60 
+      initialDelaySeconds: 30 
       timeoutSeconds: 5
       periodSeconds: 10
       failureThreshold: 6
       successThreshold: 1
     readinessProbe:
       enabled: true
-      initialDelaySeconds: 60
+      initialDelaySeconds: 30
       timeoutSeconds: 3
       periodSeconds: 5
       failureThreshold: 3
@@ -83,7 +83,7 @@ spec:
 
     service:
       ports:
-        http: &port 8080
+        http: &port 80
       type: LoadBalancer
       main:
         ports:
