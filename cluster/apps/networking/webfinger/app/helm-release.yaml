@@ -45,6 +45,16 @@ spec:
 #        volumeMounts:
 #          - name: nginx-www
 #            mountPath: /app
+#
+    serverBlock: |-
+      server {
+        listen 80;
+        server_name ${SECRET_DEV_DOMAIN} www.${SECRET_DEV_DOMAIN};
+      }
+      server {
+        listen 80;
+        server_name ${SECRET_DEV_DOMAIN} ${SECRET_DEV_DOMAIN};
+      }
 
     extraVolumes:
       - name: nginx-www 
