@@ -50,8 +50,6 @@ spec:
       server {
         listen 80;
 
-        root /app
-
         # Allow access to .well-known explicitly
         location ^~ /.well-known/ {
             allow all;
