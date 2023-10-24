@@ -6,3 +6,11 @@ commonLabels:
   app.kubernetes.io/instance: *app
 resources:
   - helm-release.yaml
+configMapGenerator:
+  - name: webfinger-json
+    files:
+      - webfinger.json
+generatorOptions:
+  disableNameSuffixHash: true
+  annotations:
+    kustomize.toolkit.fluxcd.io/substitute: disabled

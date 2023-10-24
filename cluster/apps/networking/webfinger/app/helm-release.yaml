@@ -41,9 +41,7 @@ spec:
 #        command: ["/bin/sh", "-c"]
 #        args:
 #          - |
-#            wget https://s3.thekao.cloud/public/ragnarok-calcs.tar -P /app
-#            tar -xf /app/ragnarok-calcs.tar -C /app --overwrite
-#            rm -rf /app/ragnarok-calcs.tar
+#            wget https://s3.thekao.cloud/public/webfinger.json -P /app
 #        volumeMounts:
 #          - name: nginx-www
 #            mountPath: /app
@@ -55,19 +53,12 @@ spec:
               # Your other configuration or proxy_pass here
           }
       
-          location /.well-known/webfinger {
-              return 200 '{
-                "subject": "acct:tailscale@${SECRET_DEV_DOMAIN}",
-                "links": [
-                  {
-                    "rel": "http://openid.net/specs/connect/1.0/issuer",
-                    "href": "https://authelia.${SECRET_DEV_DOMAIN}"
-                  }
-                ]
-              }';
+          location = /.well-known/webfinger {
+              alias /app/webfinger.json;  # Point to the file path
               add_header Content-Type application/json;
           }
       }
+
     extraVolumes:
       - name: nginx-www 
         emptyDir: {}
@@ -79,6 +70,13 @@ spec:
       data:
         enabled: true
         existingClaim: nginx-www
+      webfinger-json:
+        enabled: true
+        type: configMap
+        name: webfinger-json
+        subPath: webfinger.json
+        mountPath: /app/webfinger.json
+        defaultMode: 0777
 
     service:
       ports:
