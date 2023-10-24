@@ -54,7 +54,7 @@ spec:
           }
       
           location = /.well-known/webfinger {
-              alias /app/webfinger.json;  # Point to the file path
+              root /app;  # Point to the file path
               add_header Content-Type application/json;
           }
       }
