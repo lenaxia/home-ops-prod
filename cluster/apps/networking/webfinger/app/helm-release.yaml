@@ -1,0 +1,110 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: webfinger
+  namespace: networking 
+spec:
+  interval: 5m
+  chart:
+    spec:
+      chart: nginx
+      version: 15.2.1
+      sourceRef:
+        kind: HelmRepository
+        name: bitnami
+        namespace: flux-system
+      interval: 5m
+  install:
+    createNamespace: true
+    remediation:
+      retries: 3
+  upgrade:
+    remediation:
+      retries: 3
+      remediateLastFailure: true
+    cleanupOnFail: true
+  values:
+    image:
+      registry: docker.io
+      repository: bitnami/nginx
+      tag: latest
+    pullPolicy: IfNotPresent
+    debug: false
+    replicaCount: 1
+    updateStrategy:
+      type: RollingUpdate
+      rollingUpdate: {}
+#    initContainers:
+#      - name: download-content
+#        image: busybox@sha256:3fbc632167424a6d997e74f52b878d7cc478225cffac6bc977eedfe51c7f4e79
+#        command: ["/bin/sh", "-c"]
+#        args:
+#          - |
+#            wget https://s3.thekao.cloud/public/ragnarok-calcs.tar -P /app
+#            tar -xf /app/ragnarok-calcs.tar -C /app --overwrite
+#            rm -rf /app/ragnarok-calcs.tar
+#        volumeMounts:
+#          - name: nginx-www
+#            mountPath: /app
+    serverBlock: |-
+      server {
+          listen 80;
+          server_name ${SECRET_DEV_DOMAIN} www.${SECRET_DEV_DOMAIN};
+          location / {
+              # Your other configuration or proxy_pass here
+          }
+      
+          location /.well-known/webfinger {
+              return 200 '{
+                "subject": "acct:tailscale@${SECRET_DEV_DOMAIN}",
+                "links": [
+                  {
+                    "rel": "http://openid.net/specs/connect/1.0/issuer",
+                    "href": "https://authelia.${SECRET_DEV_DOMAIN}"
+                  }
+                ]
+              }';
+              add_header Content-Type application/json;
+          }
+      }
+    extraVolumes:
+      - name: nginx-www 
+        emptyDir: {}
+    extraVolumeMounts:
+      - name: nginx-www
+        mountPath: /app
+
+    persistence:
+      data:
+        enabled: true
+        existingClaim: nginx-www
+
+    service:
+      ports:
+        http: &port 8080
+      type: LoadBalancer
+      main:
+        ports:
+          http:
+            port: *port
+
+    ingress:
+      enabled: true
+      hostname: &uri "${SECRET_DEV_DOMAIN}"
+      path: /
+      annotations: 
+        cert-manager.io/cluster-issuer: "letsencrypt-production"
+        traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
+        traefik.ingress.kubernetes.io/router.middlewares: networking-chain-authelia@kubernetescrd
+      ingressClassName: "traefik"
+      tls: true
+
+
+    resources:
+      requests:
+        cpu: 15m
+        memory: 79M
+      limits:
+        cpu: 15m
+        memory: 79M
