@@ -50,7 +50,7 @@ spec:
       server {
         listen 80;
         server_name ${SECRET_DEV_DOMAIN} www.${SECRET_DEV_DOMAIN};
-        root /app
+        root /app;
       }
 
     extraVolumes:
