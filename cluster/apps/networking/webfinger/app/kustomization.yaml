@@ -5,5 +5,5 @@ commonLabels:
   app.kubernetes.io/name: &app webfinger
   app.kubernetes.io/instance: *app
 resources:
-  - helm-release.yaml
+  #  - helm-release.yaml
   - secret.sops.yaml
