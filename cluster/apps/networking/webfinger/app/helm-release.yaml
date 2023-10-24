@@ -50,15 +50,17 @@ spec:
       server {
         listen 80;
 
+        root /app
+
         # Allow access to .well-known explicitly
         location ^~ /.well-known/ {
             allow all;
         }
 
-        location = /.well-known/webfinger {
-            alias /app/webfinger.json;  # Point to the file path
-            add_header Content-Type application/json;
-        }
+        #        location = /.well-known/webfinger {
+        #            alias /app/webfinger.json;  # Point to the file path
+        #            add_header Content-Type application/json;
+        #        }
 
         error_log /app/error.log debug;
       }
@@ -77,7 +79,7 @@ spec:
       - name: nginx-www
         mountPath: /app
       - name: webfinger-json
-        mountPath: /app/webfinger.json
+        mountPath: /app/.well-known/webfinger
         subPath: webfinger.json
       - name: protect-hidden-files-conf
         mountPath: /opt/bitnami/nginx/conf/bitnami/protect-hidden-files.conf
