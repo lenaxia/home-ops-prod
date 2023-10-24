@@ -45,19 +45,6 @@ spec:
 #        volumeMounts:
 #          - name: nginx-www
 #            mountPath: /app
-    serverBlock: |-
-      server {
-          listen 80;
-          server_name ${SECRET_DEV_DOMAIN} www.${SECRET_DEV_DOMAIN};
-          location / {
-              # Your other configuration or proxy_pass here
-          }
-      
-          location = /.well-known/webfinger {
-              alias /app/webfinger.json;  # Point to the file path
-              add_header Content-Type application/json;
-          }
-      }
 
     extraVolumes:
       - name: nginx-www 
@@ -69,7 +56,7 @@ spec:
       - name: nginx-www
         mountPath: /app
       - name: webfinger-json
-        mountPath: /app/webfinger.json
+        mountPath: /app/.well-known/webfinger
         subPath: webfinger.json
 
     livenessProbe:
