@@ -109,7 +109,7 @@ spec:
 
     ingress:
       enabled: true
-      hostname: &uri "test.${SECRET_DEV_DOMAIN}"
+      hostname: &uri "${SECRET_DEV_DOMAIN}"
       path: /
       annotations: 
         cert-manager.io/cluster-issuer: "letsencrypt-production"
