@@ -256,6 +256,13 @@ spec:
             - "^/admin/.*$"
             - "^/admin"
           policy: two_factor
+        # Webfinger
+        - domain_regex:
+            - '${SECRET_DEV_DOMAIN}$'
+          policy: bypass
+          resources:
+            - "^/.well-known/.*$"
+            - "^/.well-known"
         # Baby API
         - domain_regex:
            #- "baby.${SECRET_DEV_DOMAIN}"
