@@ -70,13 +70,13 @@ spec:
       data:
         enabled: true
         existingClaim: nginx-www
-      webfinger-json:
-        enabled: true
-        type: configMap
-        name: webfinger-json
-        subPath: webfinger.json
-        mountPath: /app/webfinger.json
-        defaultMode: 0777
+          #      webfinger-json:
+          #        enabled: true
+          #        type: configMap
+          #        name: webfinger-json
+          #        subPath: webfinger.json
+          #        mountPath: /app/webfinger.json
+          #        defaultMode: 0777
 
     service:
       ports:
