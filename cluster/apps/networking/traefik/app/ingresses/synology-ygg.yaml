@@ -45,6 +45,6 @@ metadata:
   namespace: networking
 subsets:
   - addresses:
-      - ip: "10.244.0.121"
+      - ip: "100.95.90.148"
     ports:
       - port: 5000
