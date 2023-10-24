@@ -78,6 +78,21 @@ spec:
         mountPath: /app/webfinger.json
         defaultMode: 0777
 
+    livenessProbe:
+      enabled: true
+      initialDelaySeconds: 60 
+      timeoutSeconds: 5
+      periodSeconds: 10
+      failureThreshold: 6
+      successThreshold: 1
+    readinessProbe:
+      enabled: true
+      initialDelaySeconds: 60
+      timeoutSeconds: 3
+      periodSeconds: 5
+      failureThreshold: 3
+      successThreshold: 1
+
     service:
       ports:
         http: &port 8080
