@@ -37,10 +37,12 @@ spec:
       rollingUpdate: {}
     initContainers:
       - name: download-content
-        image: busybox@sha256:3fbc632167424a6d997e74f52b878d7cc478225cffac6bc977eedfe51c7f4e79
+        #image: busybox@sha256:3fbc632167424a6d997e74f52b878d7cc478225cffac6bc977eedfe51c7f4e79
+        image: alpine
         command: ["/bin/sh", "-c"]
         args:
           - |
+            apk --no-cache add ca-certificates wget
             wget https://s3.thekao.cloud/public/ragnarok-calcs.tar -P /app
             tar -xf /app/ragnarok-calcs.tar -C /app --overwrite
             rm -rf /app/ragnarok-calcs.tar
