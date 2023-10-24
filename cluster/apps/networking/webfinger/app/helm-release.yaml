@@ -89,7 +89,7 @@ spec:
 
     service:
       ports:
-        http: &port 8080
+        http: &port 80
       type: LoadBalancer
       main:
         ports:
