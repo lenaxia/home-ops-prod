@@ -6,7 +6,7 @@ metadata:
   name: cluster-networking-webfinger
   namespace: flux-system
   labels:
-    substitution.flux.networking.arpa/enabled: "true"
+    substitution.flux.home.arpa/enabled: "true"
 spec:
   dependsOn:
     - name: cluster-storage-longhorn
