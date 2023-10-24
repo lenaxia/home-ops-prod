@@ -49,7 +49,11 @@ spec:
     serverBlock: |-
       server {
         listen 80;
-        server_name ${SECRET_DEV_DOMAIN} www.${SECRET_DEV_DOMAIN} test.${SECRET_DEV_DOMAIN};
+
+        # Allow access to .well-known explicitly
+        location ^~ /.well-known/ {
+            allow all;
+        }
 
         location = /.well-known/webfinger {
             alias /app/webfinger.json;  # Point to the file path
