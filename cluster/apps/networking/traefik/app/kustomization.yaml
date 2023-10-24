@@ -6,5 +6,4 @@ commonLabels:
 resources:
   - helm-release.yaml
   - middlewares
-  - ingresses
   - secret.sops.yaml
