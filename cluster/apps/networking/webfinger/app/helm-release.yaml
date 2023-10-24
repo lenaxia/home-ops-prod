@@ -72,7 +72,7 @@ spec:
         existingClaim: nginx-www
       webfinger-json:
         enabled: true
-        type: secret
+        type: configMap
         name: webfinger-json
         subPath: webfinger.json
         mountPath: /app/webfinger.json
