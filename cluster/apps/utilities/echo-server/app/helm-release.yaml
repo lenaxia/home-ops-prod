@@ -26,7 +26,7 @@ spec:
     replicaCount: 1
     image:
       repository: docker.io/ealen/echo-server
-      tag: 0.7.1
+      tag: 0.8.12
       pullPolicy: Always
     service:
       type: LoadBalancer
