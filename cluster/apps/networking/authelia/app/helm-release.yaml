@@ -265,8 +265,8 @@ spec:
             - "^/.well-known"
         # Baby API
         - domain_regex:
-           #- "baby.${SECRET_DEV_DOMAIN}"
             - 'baby.*\.${SECRET_DEV_DOMAIN}$'
+            - 'babypanda.*\.${SECRET_DEV_DOMAIN}$'
           policy: bypass
           resources:
             - "^/api/.*$"
