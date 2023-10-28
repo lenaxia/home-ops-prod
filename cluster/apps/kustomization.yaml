@@ -36,6 +36,7 @@ resources:
   # Home
   - ./home/babybuddy/ks.yaml
   - ./home/babybuddy-ava/ks.yaml
+  - ./home/babybuddy-pandaria/ks.yaml
   - ./home/grocy/ks.yaml
   - ./home/gamevault/ks.yaml
   - ./home/node-red/ks.yaml
