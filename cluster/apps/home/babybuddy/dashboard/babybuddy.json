@@ -30,6 +30,55 @@
   "panels": [
     {
       "datasource": {
+        "type": "prometheus",
+        "uid": "PBFA97CFB590B2093"
+      },
+      "description": "",
+      "gridPos": {
+        "h": 2,
+        "w": 24,
+        "x": 0,
+        "y": 0
+      },
+      "id": 30,
+      "options": {
+        "bgColor": "",
+        "clockType": "24 hour",
+        "countdownSettings": {
+          "endCountdownTime": "2023-06-26T14:50:32-07:00",
+          "endText": "00:00:00"
+        },
+        "countupSettings": {
+          "beginCountupTime": "2023-06-26T14:50:32-07:00",
+          "beginText": "00:00:00"
+        },
+        "dateSettings": {
+          "dateFormat": "YYYY-MM-DD",
+          "fontSize": "20px",
+          "fontWeight": "normal",
+          "locale": "",
+          "showDate": false
+        },
+        "fontMono": false,
+        "mode": "time",
+        "refresh": "dashboard",
+        "timeSettings": {
+          "fontSize": "40",
+          "fontWeight": "normal"
+        },
+        "timezone": "",
+        "timezoneSettings": {
+          "fontSize": "12px",
+          "fontWeight": "normal",
+          "showTimezone": false,
+          "zoneFormat": "offsetAbbv"
+        }
+      },
+      "pluginVersion": "2.1.3",
+      "type": "grafana-clock-panel"
+    },
+    {
+      "datasource": {
         "type": "postgres",
         "uid": "3rLxRGx4z"
       },
@@ -74,7 +123,7 @@
         "h": 4,
         "w": 6,
         "x": 0,
-        "y": 0
+        "y": 2
       },
       "id": 29,
       "options": {
@@ -94,7 +143,7 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "9.3.6",
+      "pluginVersion": "10.1.1",
       "targets": [
         {
           "datasource": {
@@ -210,7 +259,7 @@
         "h": 4,
         "w": 6,
         "x": 6,
-        "y": 0
+        "y": 2
       },
       "id": 6,
       "options": {
@@ -230,7 +279,7 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "9.3.6",
+      "pluginVersion": "10.1.1",
       "targets": [
         {
           "datasource": {
@@ -240,7 +289,7 @@
           "editorMode": "code",
           "format": "table",
           "rawQuery": true,
-          "rawSql": "SELECT\r\n  \"time\" as timestamp,\r\n  extract(epoch from (CURRENT_TIMESTAMP(0)::TIMESTAMP WITH TIME ZONE - \"time\")) as event\r\nFROM\r\n  core_pumping\r\nUNION\r\nSELECT\r\n  \"start\" as timestamp,\r\n  extract(epoch from (CURRENT_TIMESTAMP(0)::TIMESTAMP WITH TIME ZONE - \"start\")) as event\r\nFROM\r\n  core_feeding\r\nWHERE method IN ( 'both breasts', 'right breast', 'left breast')\r\nORDER BY timestamp",
+          "rawSql": "SELECT\r\n  \"start\" as timestamp,\r\n  extract(epoch from (CURRENT_TIMESTAMP(0)::TIMESTAMP WITH TIME ZONE - \"start\")) as timeSince\r\nFROM\r\n  core_pumping\r\nUNION\r\nSELECT\r\n  \"start\" as timestamp,\r\n  extract(epoch from (CURRENT_TIMESTAMP(0)::TIMESTAMP WITH TIME ZONE - \"start\")) as event\r\nFROM\r\n  core_feeding\r\nWHERE method IN ( 'both breasts', 'right breast', 'left breast')\r\nORDER BY timestamp",
           "refId": "A",
           "sql": {
             "columns": [
@@ -293,7 +342,7 @@
         "h": 4,
         "w": 6,
         "x": 12,
-        "y": 0
+        "y": 2
       },
       "id": 4,
       "options": {
@@ -313,7 +362,7 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "9.3.6",
+      "pluginVersion": "10.1.1",
       "targets": [
         {
           "datasource": {
@@ -376,7 +425,7 @@
         "h": 4,
         "w": 6,
         "x": 18,
-        "y": 0
+        "y": 2
       },
       "id": 7,
       "options": {
@@ -396,7 +445,7 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "9.3.6",
+      "pluginVersion": "10.1.1",
       "targets": [
         {
           "datasource": {
@@ -489,6 +538,12 @@
           },
           "custom": {
             "fillOpacity": 100,
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
             "lineWidth": 0,
             "spanNulls": false
           },
@@ -549,10 +604,10 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 6,
+        "h": 5,
         "w": 24,
         "x": 0,
-        "y": 4
+        "y": 6
       },
       "id": 2,
       "options": {
@@ -639,7 +694,7 @@
           "format": "table",
           "hide": false,
           "rawQuery": true,
-          "rawSql": "SELECT\r\n  \"time\" as timestamp, 'Pumping' as pumping\r\nFROM\r\n  core_pumping\r\nGROUP BY timestamp\r\nUNION\r\nSELECT\r\n  \"time\" + INTERVAL '45 min' as timestamp, 'None' as pumping\r\nFROM\r\n  core_pumping\r\nGROUP BY timestamp",
+          "rawSql": "SELECT\r\n  start as timestamp, 'Pumping' as pumping\r\nFROM\r\n  core_pumping\r\nGROUP BY timestamp\r\nUNION\r\nSELECT\r\n  \"end\" as timestamp, 'None' as pumping\r\nFROM\r\n  core_pumping\r\nGROUP BY timestamp\r\n",
           "refId": "Pumping",
           "sql": {
             "columns": [
@@ -668,7 +723,7 @@
           "format": "table",
           "hide": false,
           "rawQuery": true,
-          "rawSql": "SELECT\r\n  start as timestamp, 'Napping' as sleeping\r\nFROM\r\n  core_sleep\r\nWHERE napping is TRUE\r\nGROUP BY timestamp\r\nUNION\r\nSELECT\r\n  start as timestamp, 'Sleeping' as sleeping\r\nFROM\r\n  core_sleep\r\nWHERE napping is FALSE\r\nGROUP BY timestamp\r\nUNION\r\nSELECT\r\n  \"end\" as timestamp, 'None' as sleeping\r\nFROM\r\n  core_sleep\r\nGROUP BY timestamp\r\n",
+          "rawSql": "SELECT\r\n  start as timestamp, 'Napping' as sleeping\r\nFROM\r\n  core_sleep\r\nWHERE nap is TRUE\r\nGROUP BY timestamp\r\nUNION\r\nSELECT\r\n  start as timestamp, 'Sleeping' as sleeping\r\nFROM\r\n  core_sleep\r\nWHERE nap is FALSE\r\nGROUP BY timestamp\r\nUNION\r\nSELECT\r\n  \"end\" as timestamp, 'None' as sleeping\r\nFROM\r\n  core_sleep\r\nGROUP BY timestamp\r\n",
           "refId": "Sleep",
           "sql": {
             "columns": [
@@ -699,7 +754,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 10
+        "y": 11
       },
       "id": 17,
       "panels": [],
@@ -767,12 +822,13 @@
         "h": 7,
         "w": 8,
         "x": 0,
-        "y": 11
+        "y": 12
       },
       "id": 9,
       "options": {
         "barRadius": 0.2,
         "barWidth": 1,
+        "fullHighlight": false,
         "groupWidth": 2.5,
         "legend": {
           "calcs": [],
@@ -886,12 +942,13 @@
         "h": 7,
         "w": 8,
         "x": 8,
-        "y": 11
+        "y": 12
       },
       "id": 15,
       "options": {
         "barRadius": 0.2,
         "barWidth": 0.97,
+        "fullHighlight": false,
         "groupWidth": 0.7,
         "legend": {
           "calcs": [],
@@ -919,7 +976,7 @@
           "editorMode": "code",
           "format": "table",
           "rawQuery": true,
-          "rawSql": "SELECT\r\n  extract(hour from \"time\") as hour,\r\n  avg(amount) as avgAmount\r\nFROM\r\n  core_pumping\r\nWHERE \"time\" > CURRENT_TIMESTAMP(0)::TIMESTAMP WITH TIME ZONE - INTERVAL '14 days'\r\nGROUP BY hour\r\nORDER BY hour",
+          "rawSql": "SELECT\r\n  extract(hour from start) as hour,\r\n  extract(epoch from avg(duration))*1000 as avgDuration\r\nFROM\r\n  core_pumping\r\nWHERE \"start\" > CURRENT_TIMESTAMP(0)::TIMESTAMP WITH TIME ZONE - INTERVAL '14 days'\r\nGROUP BY hour\r\nORDER BY hour",
           "refId": "A",
           "sql": {
             "columns": [
@@ -1004,12 +1061,13 @@
         "h": 7,
         "w": 8,
         "x": 16,
-        "y": 11
+        "y": 12
       },
       "id": 14,
       "options": {
         "barRadius": 0.2,
         "barWidth": 0.97,
+        "fullHighlight": false,
         "groupWidth": 0.7,
         "legend": {
           "calcs": [],
@@ -1063,371 +1121,376 @@
       "type": "barchart"
     },
     {
-      "collapsed": true,
+      "collapsed": false,
       "gridPos": {
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 18
+        "y": 19
       },
       "id": 21,
-      "panels": [
-        {
-          "datasource": {
-            "type": "postgres",
-            "uid": "3rLxRGx4z"
-          },
-          "fieldConfig": {
-            "defaults": {
-              "color": {
-                "mode": "thresholds"
-              },
-              "custom": {
-                "axisCenteredZero": false,
-                "axisColorMode": "text",
-                "axisLabel": "",
-                "axisPlacement": "auto",
-                "fillOpacity": 100,
-                "gradientMode": "opacity",
-                "hideFrom": {
-                  "legend": false,
-                  "tooltip": false,
-                  "viz": false
-                },
-                "lineWidth": 1,
-                "scaleDistribution": {
-                  "type": "linear"
-                },
-                "thresholdsStyle": {
-                  "mode": "off"
-                }
-              },
-              "mappings": [],
-              "thresholds": {
-                "mode": "absolute",
-                "steps": [
-                  {
-                    "color": "dark-yellow"
-                  }
-                ]
-              },
-              "unit": "massg"
-            },
-            "overrides": [
-              {
-                "matcher": {
-                  "id": "byName",
-                  "options": "hour"
-                },
-                "properties": [
-                  {
-                    "id": "unit",
-                    "value": "none"
-                  }
-                ]
-              }
-            ]
-          },
-          "gridPos": {
-            "h": 8,
-            "w": 8,
-            "x": 0,
-            "y": 19
-          },
-          "id": 22,
-          "options": {
-            "barRadius": 0.2,
-            "barWidth": 0.97,
-            "groupWidth": 0.7,
-            "legend": {
-              "calcs": [],
-              "displayMode": "list",
-              "placement": "bottom",
-              "showLegend": false
-            },
-            "orientation": "auto",
-            "showValue": "never",
-            "stacking": "none",
-            "tooltip": {
-              "mode": "single",
-              "sort": "none"
-            },
-            "xField": "hour",
-            "xTickLabelRotation": -90,
-            "xTickLabelSpacing": 0
-          },
-          "targets": [
-            {
-              "datasource": {
-                "type": "postgres",
-                "uid": "3rLxRGx4z"
-              },
-              "editorMode": "code",
-              "format": "table",
-              "rawQuery": true,
-              "rawSql": "SELECT\r\n  extract(hour from start) as hour,\r\n  avg(amount) as avgAmount\r\nFROM\r\n  core_feeding\r\nGROUP BY hour\r\nORDER BY hour",
-              "refId": "A",
-              "sql": {
-                "columns": [
-                  {
-                    "parameters": [],
-                    "type": "function"
-                  }
-                ],
-                "groupBy": [
-                  {
-                    "property": {
-                      "type": "string"
-                    },
-                    "type": "groupBy"
-                  }
-                ],
-                "limit": 50
-              }
-            }
-          ],
-          "title": "Average Amount Fed by Hour of Day",
-          "transformations": [],
-          "type": "barchart"
-        },
-        {
-          "datasource": {
-            "type": "postgres",
-            "uid": "3rLxRGx4z"
-          },
-          "fieldConfig": {
-            "defaults": {
-              "color": {
-                "mode": "thresholds"
-              },
-              "custom": {
-                "axisCenteredZero": false,
-                "axisColorMode": "text",
-                "axisLabel": "",
-                "axisPlacement": "auto",
-                "fillOpacity": 100,
-                "gradientMode": "opacity",
-                "hideFrom": {
-                  "legend": false,
-                  "tooltip": false,
-                  "viz": false
-                },
-                "lineWidth": 1,
-                "scaleDistribution": {
-                  "type": "linear"
-                },
-                "thresholdsStyle": {
-                  "mode": "off"
-                }
-              },
-              "mappings": [],
-              "thresholds": {
-                "mode": "absolute",
-                "steps": [
-                  {
-                    "color": "dark-purple"
-                  }
-                ]
-              },
-              "unit": "massg"
-            },
-            "overrides": [
-              {
-                "matcher": {
-                  "id": "byName",
-                  "options": "hour"
-                },
-                "properties": [
-                  {
-                    "id": "unit",
-                    "value": "none"
-                  }
-                ]
-              }
-            ]
-          },
-          "gridPos": {
-            "h": 8,
-            "w": 8,
-            "x": 8,
-            "y": 19
-          },
-          "id": 24,
-          "options": {
-            "barRadius": 0.2,
-            "barWidth": 0.97,
-            "groupWidth": 0.7,
-            "legend": {
-              "calcs": [],
-              "displayMode": "list",
-              "placement": "bottom",
-              "showLegend": false
-            },
-            "orientation": "auto",
-            "showValue": "never",
-            "stacking": "none",
-            "tooltip": {
-              "mode": "single",
-              "sort": "none"
-            },
-            "xField": "hour",
-            "xTickLabelRotation": -90,
-            "xTickLabelSpacing": 0
-          },
-          "targets": [
-            {
-              "datasource": {
-                "type": "postgres",
-                "uid": "3rLxRGx4z"
-              },
-              "editorMode": "code",
-              "format": "table",
-              "rawQuery": true,
-              "rawSql": "SELECT\r\n  extract(hour from \"time\") as hour,\r\n  avg(amount) as avgAmount\r\nFROM\r\n  core_pumping\r\nGROUP BY hour\r\nORDER BY hour",
-              "refId": "A",
-              "sql": {
-                "columns": [
-                  {
-                    "parameters": [],
-                    "type": "function"
-                  }
-                ],
-                "groupBy": [
-                  {
-                    "property": {
-                      "type": "string"
-                    },
-                    "type": "groupBy"
-                  }
-                ],
-                "limit": 50
-              }
-            }
-          ],
-          "title": "Average Amount Pumped by Hour of Day ",
-          "transformations": [],
-          "type": "barchart"
-        },
-        {
-          "datasource": {
-            "type": "postgres",
-            "uid": "3rLxRGx4z"
-          },
-          "fieldConfig": {
-            "defaults": {
-              "color": {
-                "mode": "thresholds"
-              },
-              "custom": {
-                "axisCenteredZero": false,
-                "axisColorMode": "text",
-                "axisLabel": "",
-                "axisPlacement": "auto",
-                "fillOpacity": 100,
-                "gradientMode": "opacity",
-                "hideFrom": {
-                  "legend": false,
-                  "tooltip": false,
-                  "viz": false
-                },
-                "lineWidth": 1,
-                "scaleDistribution": {
-                  "type": "linear"
-                },
-                "thresholdsStyle": {
-                  "mode": "off"
-                }
-              },
-              "mappings": [],
-              "thresholds": {
-                "mode": "absolute",
-                "steps": [
-                  {
-                    "color": "dark-blue"
-                  }
-                ]
-              },
-              "unit": "ms"
-            },
-            "overrides": [
-              {
-                "matcher": {
-                  "id": "byName",
-                  "options": "hour"
-                },
-                "properties": [
-                  {
-                    "id": "unit"
-                  }
-                ]
-              }
-            ]
-          },
-          "gridPos": {
-            "h": 8,
-            "w": 8,
-            "x": 16,
-            "y": 19
-          },
-          "id": 23,
-          "options": {
-            "barRadius": 0.2,
-            "barWidth": 0.97,
-            "groupWidth": 0.7,
-            "legend": {
-              "calcs": [],
-              "displayMode": "list",
-              "placement": "bottom",
-              "showLegend": false
-            },
-            "orientation": "auto",
-            "showValue": "never",
-            "stacking": "none",
-            "tooltip": {
-              "mode": "single",
-              "sort": "none"
-            },
-            "xField": "hour",
-            "xTickLabelRotation": -90,
-            "xTickLabelSpacing": 0
-          },
-          "targets": [
-            {
-              "datasource": {
-                "type": "postgres",
-                "uid": "3rLxRGx4z"
-              },
-              "editorMode": "code",
-              "format": "table",
-              "rawQuery": true,
-              "rawSql": "SELECT\r\n  extract(hour from start) as hour,\r\n  extract(epoch from avg(duration))*1000 as avgDuration\r\nFROM\r\n  core_feeding\r\nGROUP BY hour\r\nORDER BY hour",
-              "refId": "A",
-              "sql": {
-                "columns": [
-                  {
-                    "parameters": [],
-                    "type": "function"
-                  }
-                ],
-                "groupBy": [
-                  {
-                    "property": {
-                      "type": "string"
-                    },
-                    "type": "groupBy"
-                  }
-                ],
-                "limit": 50
-              }
-            }
-          ],
-          "title": "Average Nap Duration by Hour of Day",
-          "transformations": [],
-          "type": "barchart"
-        }
-      ],
+      "panels": [],
       "title": "By Hour Averages, All Time",
       "type": "row"
+    },
+    {
+      "datasource": {
+        "type": "postgres",
+        "uid": "3rLxRGx4z"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "fillOpacity": 100,
+            "gradientMode": "opacity",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineWidth": 1,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "dark-yellow",
+                "value": null
+              }
+            ]
+          },
+          "unit": "massg"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "hour"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "none"
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 8,
+        "x": 0,
+        "y": 20
+      },
+      "id": 22,
+      "options": {
+        "barRadius": 0.2,
+        "barWidth": 0.97,
+        "fullHighlight": false,
+        "groupWidth": 0.7,
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": false
+        },
+        "orientation": "auto",
+        "showValue": "never",
+        "stacking": "none",
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        },
+        "xField": "hour",
+        "xTickLabelRotation": -90,
+        "xTickLabelSpacing": 0
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "postgres",
+            "uid": "3rLxRGx4z"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "rawQuery": true,
+          "rawSql": "SELECT\r\n  extract(hour from start) as hour,\r\n  avg(amount) as avgAmount\r\nFROM\r\n  core_feeding\r\nGROUP BY hour\r\nORDER BY hour",
+          "refId": "A",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          }
+        }
+      ],
+      "title": "Average Amount Fed by Hour of Day",
+      "transformations": [],
+      "type": "barchart"
+    },
+    {
+      "datasource": {
+        "type": "postgres",
+        "uid": "3rLxRGx4z"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "fillOpacity": 100,
+            "gradientMode": "opacity",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineWidth": 1,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "dark-purple",
+                "value": null
+              }
+            ]
+          },
+          "unit": "massg"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "hour"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "none"
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 8,
+        "x": 8,
+        "y": 20
+      },
+      "id": 24,
+      "options": {
+        "barRadius": 0.2,
+        "barWidth": 0.97,
+        "fullHighlight": false,
+        "groupWidth": 0.7,
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": false
+        },
+        "orientation": "auto",
+        "showValue": "never",
+        "stacking": "none",
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        },
+        "xField": "hour",
+        "xTickLabelRotation": -90,
+        "xTickLabelSpacing": 0
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "postgres",
+            "uid": "3rLxRGx4z"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "rawQuery": true,
+          "rawSql": "SELECT\r\n  extract(hour from start) as hour,\r\n  extract(epoch from avg(duration))*1000 as avgDuration\r\nFROM\r\n  core_pumping\r\nGROUP BY hour\r\nORDER BY hour",
+          "refId": "A",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          }
+        }
+      ],
+      "title": "Average Amount Pumped by Hour of Day ",
+      "transformations": [],
+      "type": "barchart"
+    },
+    {
+      "datasource": {
+        "type": "postgres",
+        "uid": "3rLxRGx4z"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "fillOpacity": 100,
+            "gradientMode": "opacity",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineWidth": 1,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "dark-blue",
+                "value": null
+              }
+            ]
+          },
+          "unit": "ms"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "hour"
+            },
+            "properties": [
+              {
+                "id": "unit"
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 8,
+        "x": 16,
+        "y": 20
+      },
+      "id": 23,
+      "options": {
+        "barRadius": 0.2,
+        "barWidth": 0.97,
+        "fullHighlight": false,
+        "groupWidth": 0.7,
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": false
+        },
+        "orientation": "auto",
+        "showValue": "never",
+        "stacking": "none",
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        },
+        "xField": "hour",
+        "xTickLabelRotation": -90,
+        "xTickLabelSpacing": 0
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "postgres",
+            "uid": "3rLxRGx4z"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "rawQuery": true,
+          "rawSql": "SELECT\r\n  extract(hour from start) as hour,\r\n  extract(epoch from avg(duration))*1000 as avgDuration\r\nFROM\r\n  core_feeding\r\nGROUP BY hour\r\nORDER BY hour",
+          "refId": "A",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          }
+        }
+      ],
+      "title": "Average Nap Duration by Hour of Day",
+      "transformations": [],
+      "type": "barchart"
     },
     {
       "collapsed": false,
@@ -1435,7 +1498,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 19
+        "y": 28
       },
       "id": 26,
       "panels": [],
@@ -1454,7 +1517,9 @@
           },
           "custom": {
             "align": "center",
-            "displayMode": "auto",
+            "cellOptions": {
+              "type": "auto"
+            },
             "inspect": false
           },
           "mappings": [],
@@ -1511,11 +1576,13 @@
         "h": 4,
         "w": 8,
         "x": 0,
-        "y": 20
+        "y": 29
       },
       "id": 28,
       "options": {
+        "cellHeight": "sm",
         "footer": {
+          "countRows": false,
           "fields": "",
           "reducer": [
             "sum"
@@ -1525,7 +1592,7 @@
         "showHeader": true,
         "sortBy": []
       },
-      "pluginVersion": "9.3.6",
+      "pluginVersion": "10.1.1",
       "targets": [
         {
           "datasource": {
@@ -1570,21 +1637,38 @@
       "type": "table"
     }
   ],
-  "refresh": "5s",
-  "schemaVersion": 37,
+  "refresh": false,
+  "schemaVersion": 38,
   "style": "dark",
   "tags": [],
   "templating": {
-    "list": []
+    "list": [
+      {
+        "current": {},
+        "definition": "",
+        "hide": 2,
+        "includeAll": false,
+        "label": "Database Name",
+        "multi": false,
+        "name": "db_name",
+        "options": [],
+        "query": "",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "type": "query"
+      }
+    ]
   },
   "time": {
-    "from": "now-24h",
-    "to": "now"
+    "from": "2023-02-11T22:10:00.000Z",
+    "to": "2023-09-05T03:08:13.143Z"
   },
   "timepicker": {},
   "timezone": "",
   "title": "BabyBuddy",
   "uid": "w1Ejunx4k",
-  "version": 44,
+  "version": 51,
   "weekStart": ""
 }
