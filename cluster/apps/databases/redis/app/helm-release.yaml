@@ -27,6 +27,8 @@ spec:
   uninstall:
     keepHistory: false
   values:
+    image:
+      debug: true
     auth:
       enabled: true
       sentinel: true
