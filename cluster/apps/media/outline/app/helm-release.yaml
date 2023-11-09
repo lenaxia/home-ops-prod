@@ -90,7 +90,7 @@ spec:
       opt:
         enabled: true
         existingClaim: "outline-volume"
-        mountPath: /opt/outline
+        mountPath: /opt/outline/server/storage
           #      redis-ts:
           #        enabled: true
           #        type: configMap
