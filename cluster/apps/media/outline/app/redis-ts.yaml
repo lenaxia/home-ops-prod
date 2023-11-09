@@ -1,3 +1,19 @@
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+    name: outline-volume
+    labels:
+      app: outline
+      snapshot.home.arpa/enabled: "false"
+spec:
+    accessModes:
+        - ReadWriteMany
+    storageClassName: local-path
+    resources:
+        requests:
+            storage: 5Gi
+---
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -21,7 +37,7 @@ data:
       showFriendlyErrorStack: env.ENVIRONMENT === "development",
     
       retryStrategy(times: number) {
-        Logger.warn(`Retrying redis connection: attempt ${times}`);
+        Logger.warn(`Blah Retrying redis connection: attempt ${times}`);
         return Math.min(times * 100, 3000);
       },
     
@@ -75,12 +91,12 @@ data:
             throw new Error(`Failed to initialize redis client: ${error}`);
           }
         }
+        this.attachEventListeners();
     
         // More than the default of 10 listeners is expected for the amount of queues
         // we're running. Increase the max here to prevent a warning in the console:
         // https://github.com/OptimalBits/bull/issues/1192
         this.setMaxListeners(100);
-        this.attachEventListeners();
       }
     
       private static client: RedisAdapter;

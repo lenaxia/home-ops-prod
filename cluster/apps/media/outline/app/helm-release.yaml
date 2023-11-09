@@ -87,6 +87,9 @@ spec:
         memory: 500Mi
 
     persistence:
+      opt:
+        enabled: true
+        existingClaim: "outline-volume"
       redis-ts:
         enabled: true
         type: configMap
