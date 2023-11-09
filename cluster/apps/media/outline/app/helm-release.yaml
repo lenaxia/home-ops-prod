@@ -90,10 +90,10 @@ spec:
       opt:
         enabled: true
         existingClaim: "outline-volume"
-      redis-ts:
-        enabled: true
-        type: configMap
-        name: redis-ts
-        subPath: redis.ts
-        mountPath: /opt/outline/server/storage/redis.ts
-        defaultMode: 0777
+          #      redis-ts:
+          #        enabled: true
+          #        type: configMap
+          #        name: redis-ts
+          #        subPath: redis.ts
+          #        mountPath: /opt/outline/server/storage/redis.ts
+          #        defaultMode: 0777
