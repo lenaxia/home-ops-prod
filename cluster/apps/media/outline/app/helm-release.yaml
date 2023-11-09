@@ -86,15 +86,3 @@ spec:
       limits:
         memory: 500Mi
 
-    persistence:
-      opt:
-        enabled: true
-        existingClaim: "outline-volume"
-        mountPath: /opt/outline/server/storage
-          #      redis-ts:
-          #        enabled: true
-          #        type: configMap
-          #        name: redis-ts
-          #        subPath: redis.ts
-          #        mountPath: /opt/outline/server/storage/redis.ts
-          #        defaultMode: 0777
