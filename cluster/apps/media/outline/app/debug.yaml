@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: ubuntu-debug
+spec:
+  containers:
+  - name: ubuntu
+    image: ubuntu
+    command: ["/bin/sleep", "infinity"]
+    volumeMounts:
+    - mountPath: "/mnt/outline"
+      name: outline-volume
+  volumes:
+  - name: outline-volume
+    persistentVolumeClaim:
+      claimName: outline-volume
