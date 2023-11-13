@@ -6,19 +6,21 @@ metadata:
   namespace: media
 spec:
   values:
-    initContainers:
-      init-db:
-        image: ghcr.io/onedr0p/postgres-initdb:14.8
-        env:
-          - name: POSTGRES_HOST
-            value: defaultpg-rw.databases.svc.cluster.local
-          - name: POSTGRES_DB
-            value: *app
-          - name: POSTGRES_SUPER_PASS
-            valueFrom:
-              secretKeyRef:
-                name: postgres-superuser
-                key: password
-        envFrom:
-          - secretRef:
-              name: *app
+    controllers:
+      main:
+        initContainers:
+          init-db:
+            image: ghcr.io/onedr0p/postgres-initdb:14.8
+            env:
+              - name: POSTGRES_HOST
+                value: defaultpg-rw.databases.svc.cluster.local
+              - name: POSTGRES_DB
+                value: *app
+              - name: POSTGRES_SUPER_PASS
+                valueFrom:
+                  secretKeyRef:
+                    name: postgres-superuser
+                    key: password
+            envFrom:
+              - secretRef:
+                  name: *app
