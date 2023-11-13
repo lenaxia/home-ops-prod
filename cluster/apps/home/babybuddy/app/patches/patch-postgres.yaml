@@ -9,7 +9,9 @@ spec:
       main:
         initContainers:
           - name: init-db
-            image: ghcr.io/onedr0p/postgres-initdb:14.8
+            image: 
+              repository: ghcr.io/onedr0p/postgres-initdb
+              tag: 14.8
             env:
               - name: POSTGRES_HOST
                 valueFrom:

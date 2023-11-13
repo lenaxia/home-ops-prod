@@ -7,19 +7,23 @@ metadata:
   namespace: monitoring
 spec:
   values:
-    initContainers:
-      init-geoip:
-        image: docker.io/maxmindinc/geoipupdate:v6.0
-        env:
-          - name: GEOIPUPDATE_EDITION_IDS
-            value: GeoLite2-City
-          - name: GEOIPUPDATE_FREQUENCY
-            value: "0"
-          - name: GEOIPUPDATE_VERBOSE
-            value: "true"
-        envFrom:
-          - secretRef:
-              name: vector-aggregator-secret
-        volumeMounts:
-          - name: geoip
-            mountPath: /usr/share/GeoIP
+    controllers:
+      main:
+        initContainers:
+          - name: init-geoip
+            image: 
+              repository: docker.io/maxmindinc/geoipupdate
+              tag: v6.0
+            env:
+              - name: GEOIPUPDATE_EDITION_IDS
+                value: GeoLite2-City
+              - name: GEOIPUPDATE_FREQUENCY
+                value: "0"
+              - name: GEOIPUPDATE_VERBOSE
+                value: "true"
+            envFrom:
+              - secretRef:
+                  name: vector-aggregator-secret
+            volumeMounts:
+              - name: geoip
+                mountPath: /usr/share/GeoIP
