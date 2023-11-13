@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 1.5.1
+      version: 2.0.2
       sourceRef:
         kind: HelmRepository
         name: bjw-s-charts
@@ -23,6 +23,21 @@ spec:
     remediation:
       retries: 4
   values:
+    defaultPodOptions:
+      nodeSelector:
+        node-role.kubernetes.io/worker: 'true'
+    controllers:
+      main:
+        containers:
+          main:
+            image:
+              repository: ghcr.io/dgtlmoon/changedetection.io
+              tag: 0.45.1
+              pullPolicy: Always
+
+            env:
+              TZ: ${TIMEZONE}
+
     service:
       main:
         primary: true
@@ -34,40 +49,34 @@ spec:
         type: LoadBalancer
         externalTrafficPolicy: Local
 
-    image:
-      repository: ghcr.io/dgtlmoon/changedetection.io
-      tag: 0.45.1
-      pullPolicy: Always
-    
-    env:
-      TZ: ${TIMEZONE}
-    
-    persistence:
-      data:
-        enabled: true
-        mountPath: /datastore
-        existingClaim: changedetection-data-volume
-
     ingress:
       main:
         enabled: true
-        ingressClassName: "traefik"
         annotations:
-          hajimari.io/enable: "true"
-          hajimari.io/icon: "swap-horizontal"
-          hajimari.io/appName: "Change Detection"
-          cert-manager.io/cluster-issuer: "letsencrypt-production"
-          traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
+          hajimari.io/enable: 'true'
+          hajimari.io/icon: swap-horizontal
+          hajimari.io/appName: Change Detection
+          cert-manager.io/cluster-issuer: letsencrypt-production
+          traefik.ingress.kubernetes.io/router.entrypoints: websecure
           traefik.ingress.kubernetes.io/router.middlewares: networking-chain-authelia@kubernetescrd
         hosts:
-          - host: &uri "change.${SECRET_DEV_DOMAIN}"
+          - host: &uri change.${SECRET_DEV_DOMAIN}
             paths:
               - path: /
                 pathType: Prefix
+                service:
+                  name: main
+                  port: http
         tls:
           - hosts:
-            - *uri
+              - *uri
             secretName: *uri
 
-    nodeSelector:
-      node-role.kubernetes.io/worker: "true"
+        className: traefik
+    persistence:
+      data:
+        enabled: true
+        existingClaim: changedetection-data-volume
+
+        globalMounts:
+          - path: /datastore
