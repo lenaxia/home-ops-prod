@@ -97,7 +97,7 @@ spec:
         #          - name: redis-socket
         #            mountPath: /run/redis
         - name: nextcloud-logger
-          image: docker.io/timberio/vector:0.32.1-debian
+          image: docker.io/timberio/vector:0.34.0-debian
           args: ["--config", "/run/vector.yaml"] 
           env:
           - name: PROCFS_ROOT
