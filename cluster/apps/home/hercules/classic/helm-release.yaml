@@ -22,7 +22,7 @@ spec:
     controllers:
       main:
         initContainers:
-          prep-db:
+          0-prep-db:
             command: [/bin/sh, -c]
             args:
               - |
@@ -37,7 +37,7 @@ spec:
             image:            # use an image with curl
               repository: ubuntu
               tag: latest
-          init-db:
+          1-init-db:
             command: [sh, -c]
             args:
               - |
@@ -75,23 +75,18 @@ spec:
               - name: entrypoint-sh
                 mountPath: /entrypoint.sh
                 subPath: entrypoint.sh
-# ...
-
-
             image:
               repository: ubuntu
               tag: latest
+
         containers:
           main:
             image:
               repository: ghcr.io/lenaxia/hercules
               tag: classic-20190605
-
             envFrom:
               - secretRef:
                   name: *appname
-
-# ...
             env:
               - name: MYSQL_HOST
                 valueFrom:
@@ -120,23 +115,6 @@ spec:
             port: 5121
             targetPort: 5121
 
-              #    ingress:
-              #      main:
-              #        enabled: true
-              #        annotations:
-              #          cert-manager.io/cluster-issuer: "letsencrypt-production"
-              #          traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
-              #          traefik.ingress.kubernetes.io/router.middlewares: networking-chain-authelia@kubernetescrd
-              #        hosts:
-              #        - host: &uri ro-login-classic.${SECRET_DEV_DOMAIN}
-              #          paths:
-              #          - path: /
-              #            pathType: Prefix
-              #        tls:
-              #        - hosts:
-              #            - *uri
-              #          secretName: *uri
-
     persistence:
       config:
         enabled: true
@@ -150,11 +128,9 @@ spec:
         type: configMap
         name: entrypoint-sh
         defaultMode: 0777
-
-    # -- Configures service settings for the chart.
-    # @default -- See values.yaml
         globalMounts:
           - path: /entrypoint.sh
             subPath: entrypoint.sh
+
     podAnnotations:
       secret.reloader.stakater.com/reload: *appname
