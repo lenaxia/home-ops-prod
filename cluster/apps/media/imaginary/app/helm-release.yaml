@@ -1,4 +1,3 @@
----
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
@@ -9,7 +8,7 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 1.5.1
+      version: 2.0.2
       sourceRef:
         kind: HelmRepository
         name: bjw-s-charts
@@ -22,67 +21,73 @@ spec:
     remediation:
       retries: 5
   values:
-    controller:
-      type: statefulset
-      replicas: 3
-      annotations:
-        reloader.stakater.com/auto: "true"
-    image:
-      repository: docker.io/nextcloud/aio-imaginary
-      tag: latest
-      pullPolicy: Always
-
-    command: ["/usr/local/bin/imaginary", "-return-size"]
-
-    service:
-      main:
-        type: LoadBalancer
-        ports:
-          http:
-            port: &port 9000
-
-    ingress:
-      main:
-        enabled: true
-        ingressClassName: "traefik"
-        annotations:
-          hajimari.io/enable: "true"
-          hajimari.io/icon: "image-size-select-large"
-          hajimari.io/group: "Media"
-          cert-manager.io/cluster-issuer: "letsencrypt-production"
-          traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
-          traefik.ingress.kubernetes.io/router.middlewares: networking-chain-authelia@kubernetescrd
-        hosts:
-          - host: &uri "imaginary.${SECRET_DEV_DOMAIN}"
-            paths:
-              - path: /
-                pathType: Prefix
-        tls:
-          - hosts:
-              - *uri
-            secretName: *uri
-
-    probes:
-      liveness: &probes
-        enabled: false
-        custom: true
-        spec:
-          httpGet:
-            path: /
-            port: *port
-          initialDelaySeconds: 0
-          periodSeconds: 10
-          timeoutSeconds: 1
-          failureThreshold: 3
-      readiness: *probes
-      startup:
-        enabled: false
- 
-    nodeSelector:
-      node-role.kubernetes.io/worker: "true"
+    defaultPodOptions:
+      nodeSelector:
+        node-role.kubernetes.io/worker: 'true'
 #    resources:
 #      requests:
 #        cpu: 10m
 #        memory: 50Mi
 #      limits:
 #        memory: 500Mi
+    controllers:
+      main:
+        type: statefulset
+        replicas: 3
+        annotations:
+          reloader.stakater.com/auto: 'true'
+        containers:
+          main:
+            image:
+              repository: docker.io/nextcloud/aio-imaginary
+              tag: latest
+              pullPolicy: Always
+
+            probes:
+              liveness: &probes
+                enabled: false
+                custom: true
+                spec:
+                  httpGet:
+                    path: /
+                    port: &port 9000
+
+                  initialDelaySeconds: 0
+                  periodSeconds: 10
+                  timeoutSeconds: 1
+                  failureThreshold: 3
+              readiness: *probes
+              startup:
+                enabled: false
+
+            command: [/usr/local/bin/imaginary, -return-size]
+    service:
+      main:
+        type: LoadBalancer
+        ports:
+          http:
+            port: *port
+    ingress:
+      main:
+        enabled: true
+        annotations:
+          hajimari.io/enable: 'true'
+          hajimari.io/icon: image-size-select-large
+          hajimari.io/group: Media
+          cert-manager.io/cluster-issuer: letsencrypt-production
+          traefik.ingress.kubernetes.io/router.entrypoints: websecure
+          traefik.ingress.kubernetes.io/router.middlewares: networking-chain-authelia@kubernetescrd
+        hosts:
+          - host: &uri imaginary.${SECRET_DEV_DOMAIN}
+            paths:
+              - path: /
+                pathType: Prefix
+                service:
+                  name: main
+                  port: http
+        tls:
+          - hosts:
+              - *uri
+            secretName: *uri
+
+        className: traefik
