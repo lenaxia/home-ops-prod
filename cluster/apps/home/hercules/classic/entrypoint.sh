@@ -51,3 +51,7 @@ for dbname in ${INIT_MYSQL_DBNAME}; do
     mysql --host="${INIT_MYSQL_HOST}" --user="${INIT_MYSQL_SUPER_USER}" --execute="GRANT ALL PRIVILEGES ON ${dbname}.* TO '${INIT_MYSQL_USER}'@'%'; FLUSH PRIVILEGES;"
 done
 
+for sql_file in /docker-entrypoint-initdb.d/*.sql; do
+    echo "Executing $sql_file"
+    mysql -h ${INIT_MYSQL_HOST} -u ${INIT_MYSQL_USER} -p${INIT_MYSQL_PASS} ${INIT_MYSQL_DBNAME} < $sql_file
+done
