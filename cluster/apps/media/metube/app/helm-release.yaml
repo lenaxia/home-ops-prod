@@ -1,4 +1,3 @@
----
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
@@ -9,7 +8,7 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 1.5.1
+      version: 2.0.2
       sourceRef:
         kind: HelmRepository
         name: bjw-s-charts
@@ -22,19 +21,44 @@ spec:
     remediation:
       retries: 8
   values:
-    controller:
-      type: statefulset
-      replicas: 1
-      annotations:
-        reloader.stakater.com/auto: "true"
-    image:
-      repository: docker.io/alexta69/metube
-      tag: latest
-      pullPolicy: Always
-    env:
-      TZ: "${TIMEZONE}"
-      OUTPUT_TEMPLATE: "%(upload_date)s - %(title)s [%(id)s].%(ext)s"
-      YTDL_OPTIONS: '{"writethumbnail": true, "writesubtitles": true, "subtitleslangs": ["en", "-live_chat"], "merge_output_format": "mp4", "postprocessors": [{"key": "Exec", "exec_cmd": "chmod 0664", "when": "after_move"}, {"key": "FFmpegEmbedSubtitle", "already_have_subtitle": false}, {"key": "FFmpegMetadata", "add_metadata": true, "add_chapters": true}, { "key": "EmbedThumbnail", "already_have_thumbnail": true}]}'
+    defaultPodOptions:
+      nodeSelector:
+        node-role.kubernetes.io/worker: 'true'
+#    resources:
+#      requests:
+#        cpu: 10m
+#        memory: 50Mi
+#      limits:
+#        memory: 500Mi
+    controllers:
+      main:
+        type: statefulset
+        replicas: 1
+        annotations:
+          reloader.stakater.com/auto: 'true'
+        containers:
+          main:
+            image:
+              repository: docker.io/alexta69/metube
+              tag: latest
+              pullPolicy: Always
+            env:
+              TZ: ${TIMEZONE}
+              OUTPUT_TEMPLATE: '%(upload_date)s - %(title)s [%(id)s].%(ext)s'
+              YTDL_OPTIONS: '{"writethumbnail": true, "writesubtitles": true, "subtitleslangs":
+                ["en", "-live_chat"], "merge_output_format": "mp4", "postprocessors":
+                [{"key": "Exec", "exec_cmd": "chmod 0664", "when": "after_move"},
+                {"key": "FFmpegEmbedSubtitle", "already_have_subtitle": false}, {"key":
+                "FFmpegMetadata", "add_metadata": true, "add_chapters": true}, { "key":
+                "EmbedThumbnail", "already_have_thumbnail": true}]}'
+        statefulset:
+          volumeClaimTemplates:
+            - name: config
+              accessMode: ReadWriteOnce
+              size: 3Gi
+              storageClass: longhorn
+              globalMounts:
+                - path: /config
     service:
       main:
         type: ClusterIP
@@ -45,19 +69,21 @@ spec:
     ingress:
       main:
         enabled: true
-        ingressClassName: "traefik"
         annotations:
-          hajimari.io/enable: "true"
-          hajimari.io/icon: "youtube"
-          hajimari.io/group: "Media"
-          cert-manager.io/cluster-issuer: "letsencrypt-production"
-          traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
+          hajimari.io/enable: 'true'
+          hajimari.io/icon: youtube
+          hajimari.io/group: Media
+          cert-manager.io/cluster-issuer: letsencrypt-production
+          traefik.ingress.kubernetes.io/router.entrypoints: websecure
           traefik.ingress.kubernetes.io/router.middlewares: networking-chain-authelia@kubernetescrd
         hosts:
-          - host: &uri "dl.${SECRET_DEV_DOMAIN}"
+          - host: &uri dl.${SECRET_DEV_DOMAIN}
             paths:
               - path: /
                 pathType: Prefix
+                service:
+                  name: main
+                  port: http
         tls:
           - hosts:
               - *uri
@@ -78,12 +104,7 @@ spec:
 #      startup:
 #        enabled: false
 
-    volumeClaimTemplates:
-      - name: config
-        mountPath: /config
-        accessMode: ReadWriteOnce
-        size: 3Gi
-        storageClass: longhorn
+        className: traefik
     persistence:
       downloads:
         enabled: true
@@ -91,13 +112,6 @@ spec:
         volumeSpec:
           nfs:
             server: ${NAS_ADDR}
-            path: "/volume2/downloads/[Plex Temp Library]/YouTube"
-        mountPath: /downloads
-    nodeSelector:
-      node-role.kubernetes.io/worker: "true"
-#    resources:
-#      requests:
-#        cpu: 10m
-#        memory: 50Mi
-#      limits:
-#        memory: 500Mi
+            path: /volume2/downloads/[Plex Temp Library]/YouTube
+        globalMounts:
+          - path: /downloads
