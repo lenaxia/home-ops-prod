@@ -8,7 +8,7 @@ spec:
     controllers:
       main:
         initContainers:
-          - name: init-db:
+          - name: init-db
             image: ghcr.io/onedr0p/postgres-initdb:14.8
             env:
               - name: POSTGRES_HOST
