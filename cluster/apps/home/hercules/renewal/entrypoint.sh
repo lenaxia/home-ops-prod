@@ -33,7 +33,7 @@ user_exists=$(\
 
 if [[ -z "${user_exists}" ]]; then
     printf "\e[1;32m%-6s\e[m\n" "Create User ${INIT_MYSQL_USER} ..."
-    mysql --host="${INIT_MYSQL_HOST}" --user="${INIT_MYSQL_SUPER_USER}" --execute="CREATE USER '${INIT_MYSQL_USER}'@'%' IDENTIFIED BY '${INIT_MYSQL_PASS}';"
+    mysql --host="${INIT_MYSQL_HOST}" --user="${INIT_MYSQL_SUPER_USER}" --execute="CREATE USER ${INIT_MYSQL_USER}@'%' IDENTIFIED BY '${INIT_MYSQL_PASS}';"
 fi
 
 for dbname in ${INIT_MYSQL_DBNAME}; do
@@ -49,4 +49,9 @@ for dbname in ${INIT_MYSQL_DBNAME}; do
     fi
     printf "\e[1;32m%-6s\e[m\n" "Update User Privileges on Database ..."
     mysql --host="${INIT_MYSQL_HOST}" --user="${INIT_MYSQL_SUPER_USER}" --execute="GRANT ALL PRIVILEGES ON ${dbname}.* TO '${INIT_MYSQL_USER}'@'%'; FLUSH PRIVILEGES;"
+done
+
+for sql_file in /docker-entrypoint-initdb.d/*.sql; do
+    echo "Executing $sql_file"
+    mysql -h ${INIT_MYSQL_HOST} -u ${INIT_MYSQL_USER} -p${INIT_MYSQL_PASS} ${INIT_MYSQL_DBNAME} < $sql_file
 done
