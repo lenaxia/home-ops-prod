@@ -25,7 +25,7 @@ spec:
           main:
             image:
               repository: docker.io/onlyoffice/documentserver
-              tag: 7.4.1
+              tag: 7.5.1
 
 #    podAnnotations:
 #      secret.reloader.stakater.com/reload: *appname
