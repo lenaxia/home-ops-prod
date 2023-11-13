@@ -8,17 +8,24 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 1.5.1
+      version: 2.0.2
       sourceRef:
         kind: HelmRepository
         name: bjw-s-charts
         namespace: flux-system
   interval: 5m
   values:
-    image:
-      repository: nodered/node-red
-      tag: 3.1.0
-      pullPolicy: Always
+    defaultPodOptions:
+      nodeSelector:
+        node-role.kubernetes.io/worker: 'true'
+    controllers:
+      main:
+        containers:
+          main:
+            image:
+              repository: nodered/node-red
+              tag: 3.1.0
+              pullPolicy: Always
         #    lifecycle:
         #      postStart:
         #        exec:
@@ -30,27 +37,26 @@ spec:
         #              cp /settings.js /data &&
         #              cd /data &&
         #              npm install
-    
     # -- environment variables.
     # @default -- See below
-    env:
+            env:
       # -- Set the container timezone
-      TZ: "${TIMEZONE}"
+              TZ: ${TIMEZONE}
       # -- Node.js runtime arguments
-      NODE_OPTIONS:
+              NODE_OPTIONS:
       # -- Setting to `true` starts Node-RED with the projects feature enabled
-      NODE_RED_ENABLE_PROJECTS:
+              NODE_RED_ENABLE_PROJECTS:
       # -- Setting to `true` starts Node-RED in safe (not running) mode
-      NODE_RED_ENABLE_SAFE_MODE:
+              NODE_RED_ENABLE_SAFE_MODE:
       # -- Location of the flows configuration file.
       # If you set `FLOWS: ""` then the flow file can be set via the `flowFile` property in the `settings.js` file.
-      FLOWS: flows.json
-      NODE_RED_CREDENTIAL_SECRET:
-        valueFrom:
-          secretKeyRef:
-            name: *appname
-            key: credential-secret
-    
+              FLOWS: flows.json
+              NODE_RED_CREDENTIAL_SECRET:
+                valueFrom:
+                  secretKeyRef:
+                    name: *appname
+                    key: credential-secret
+
     # -- Configures service settings for the chart.
     # @default -- See values.yaml
     service:
@@ -59,54 +65,58 @@ spec:
           http:
             port: 1880
         type: ClusterIP
-    
-    persistence:
-      data:
-        enabled: true
-        existingClaim: "nodered-config-volume"
-      packagejson:
-        enabled: true
-        type: configMap
-        name: packagejson
-        subPath: package.json
-        mountPath: /package.json
-        defaultMode: 0644
-      settingsjs:
-        enabled: true
-        type: configMap
-        name: settingsjs
-        subPath: settings.js
-        mountPath: /settings.js
-        defaultMode: 0644
-      flowscredjson:
-        enabled: false
-        type: secret
-        name: flowscredjson
-        subPath: flows_cred.json
-        mountPath: /flows_cred.json
-        defaultMode: 0644
 
     ingress:
       main:
         enabled: true
-        ingressClassName: "traefik"
-        name: "Node-RED"
+        name: Node-RED
         annotations:
-          hajimari.io/enable: "true"
-          hajimari.io/icon: "resistor-nodes"
-          hajimari.io/appName: "Node-RED"
-          hajimari.io/group: "Home"
-          cert-manager.io/cluster-issuer: "letsencrypt-production"
-          traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
+          hajimari.io/enable: 'true'
+          hajimari.io/icon: resistor-nodes
+          hajimari.io/appName: Node-RED
+          hajimari.io/group: Home
+          cert-manager.io/cluster-issuer: letsencrypt-production
+          traefik.ingress.kubernetes.io/router.entrypoints: websecure
           traefik.ingress.kubernetes.io/router.middlewares: networking-chain-authelia@kubernetescrd
         hosts:
-          - host: &uri "nodered.${SECRET_DEV_DOMAIN}"
+          - host: &uri nodered.${SECRET_DEV_DOMAIN}
             paths:
               - path: /
                 pathType: Prefix
+                service:
+                  name: main
+                  port: http
         tls:
           - hosts:
-            - *uri
+              - *uri
             secretName: *uri
-    nodeSelector:
-      node-role.kubernetes.io/worker: "true"
+        className: traefik
+    persistence:
+      data:
+        enabled: true
+        existingClaim: nodered-config-volume
+      packagejson:
+        enabled: true
+        type: configMap
+        name: packagejson
+        defaultMode: 0644
+        globalMounts:
+          - path: /package.json
+            subPath: package.json
+      settingsjs:
+        enabled: true
+        type: configMap
+        name: settingsjs
+        defaultMode: 0644
+        globalMounts:
+          - path: /settings.js
+            subPath: settings.js
+      flowscredjson:
+        enabled: false
+        type: secret
+        name: flowscredjson
+        defaultMode: 0644
+
+        globalMounts:
+          - path: /flows_cred.json
+            subPath: flows_cred.json
