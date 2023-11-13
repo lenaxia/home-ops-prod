@@ -80,11 +80,13 @@ spec:
               - path: /notifications/hub/negotiate
                 pathType: Prefix
                 service:
-                  port: 80
+                  port: http
+                  name: main
               - path: /notifications/hub
                 pathType: Prefix
                 service:
-                  port: 3012
+                  port: websocket
+                  name: main
         tls:
           - hosts:
               - *uri
