@@ -6,9 +6,11 @@ from ruamel.yaml import YAML
 
 LOG = logging.getLogger('app-template-upgrade')
 
+
 class MyDumper(YAML):
     def increase_indent(self, flow=False, indentless=False):
         return super(MyDumper, self).increase_indent(flow, False)
+
 
 def setup_logging():
     LOG.setLevel(logging.DEBUG)
@@ -16,10 +18,12 @@ def setup_logging():
     ch.setLevel(logging.DEBUG)
     LOG.addHandler(ch)
 
+
 def load_yaml_file(filepath):
     yaml = YAML()
     with open(filepath, 'r') as file:
         return yaml.load(file)
+
 
 def save_yaml_file(filepath, data):
     yaml = YAML()
@@ -27,11 +31,13 @@ def save_yaml_file(filepath, data):
     with open(filepath, 'w') as file:
         yaml.dump(data, file)
 
+
 def load_key(data, path):
     value = data
     for key in path.split('.'):
         value = value.get(key, {})
     return value
+
 
 def set_key(data, path, value):
     node = data
@@ -43,13 +49,16 @@ def set_key(data, path, value):
             node[key] = {}
         node = node[key]
         index += 1
+
     node[split_path[index]] = value
+
 
 def should_process_template(args, filepath, data):
     if args.skip_version_check and load_key(data, 'spec.values.controllers'):
         LOG.info(f'Probably already upgraded as "controllers" key exists, skipping {filepath}')
         return False
     return load_key(data, 'spec.chart.spec.chart') == 'app-template' and load_key(data, 'spec.chart.spec.version') < '2.0.2'
+
 
 def main():
     parser = argparse.ArgumentParser('app-template-upgrade')
@@ -81,7 +90,7 @@ def main():
                 if not args.yeet:
                     return
 
-# ... [Include all other functions here, unchanged, such as process(), process_controllers(), etc.] ...
+
 def process(filepath, data):
     new = deepcopy(data)
     new['spec']['chart']['spec']['version'] = '2.0.2'
@@ -133,7 +142,7 @@ def process(filepath, data):
 
     if values := new_helm_values.pop('additionalContainers', None):
         for container in values:
-          set_key(new_helm_values, f'controllers.main.containers.{container}', process_init_container(values[container]))
+            set_key(new_helm_values, f'controllers.main.containers.{container}', process_additional_container(values[container]))
 
     if values := new_helm_values.pop('affinity', None):
         set_key(new_helm_values, 'defaultPodOptions.affinity', values)
@@ -151,9 +160,7 @@ def process(filepath, data):
 
     new['spec']['values'] = set_key_order(new_helm_values)
     LOG.info(f"Replacing Original file: {filepath}")
-    with open(filepath, 'w+') as f:
-      f.write('---\n')
-      f.write(yaml.dump(new, Dumper=MyDumper, sort_keys=False))
+    save_yaml_file(filepath, new)
 
 
 def process_controllers(data):
@@ -198,6 +205,10 @@ def process_init_container(data):
     return data
 
 
+def process_additional_container(data):
+    return process_init_container(data)  # Assuming same logic as init containers
+
+
 def set_key_order(data):
     order = ['defaultPodOptions', 'controllers', 'service', 'ingress', 'persistence']
     new_data = {}
@@ -206,6 +217,7 @@ def set_key_order(data):
             new_data[key] = data.pop(key)
     new_data.update(data)
     return new_data
+
 
 if __name__ == "__main__":
     setup_logging()
