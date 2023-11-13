@@ -28,12 +28,12 @@ spec:
               - |
                 apt-get update && apt-get install -y curl &&
                 curl https://s3.thekao.cloud/public/ragnarok/ro-herc-classic-sql.tar.gz -o sql-files.tar.gz &&
-                tar -xzf sql-files.tar.gz -C /db-scripts/ &&
+                tar -xzf sql-files.tar.gz -C /docker-entrypoint-initdb.d/ &&
                 rm sql-files.tar.gz
-                ls -la /db-scripts
+                ls -la /docker-entrypoint-initdb.d
             volumeMounts:
               - name: db-scripts
-                mountPath: /db-scripts
+                mountPath: /docker-entrypoint-initdb.d
             image:            # use an image with curl
               repository: ubuntu
               tag: latest
@@ -123,6 +123,8 @@ spec:
       db-scripts:
         enabled: true
         type: emptyDir
+        globalMounts:
+          - path: /docker-entrypoint-initdb.d
       entrypoint-sh:
         enabled: true
         type: configMap
