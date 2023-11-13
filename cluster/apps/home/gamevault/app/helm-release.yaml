@@ -8,7 +8,7 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 1.5.1
+      version: 2.0.2
       interval: 16m
       sourceRef:
         kind: HelmRepository
@@ -16,27 +16,21 @@ spec:
         namespace: flux-system
   # See https://github.com/bjw-s/helm-charts/blob/main/charts/library/common/values.yaml
   values:
-    image:
-      repository: phalcode/gamevault-backend
-      tag: 5.0.2
+    defaultPodOptions:
+      nodeSelector:
+        node-role.kubernetes.io/worker: 'true'
+    controllers:
+      main:
+        containers:
+          main:
+            image:
+              repository: phalcode/gamevault-backend
+              tag: 5.0.2
 
-    podAnnotations:
-      secret.reloader.stakater.com/reload: *appname
+            envFrom:
+              - secretRef:
+                  name: &appname gamevault
 
-    envFrom:
-      - secretRef:
-          name: *appname 
-
-    persistence:
-      files:
-        enabled: true
-        existingClaim: gamevault-files-nfs
-      images:
-        enabled: true
-        existingClaim: gamevault-images-nfs
-
-    # -- Configures service settings for the chart.
-    # @default -- See values.yaml
     service:
       main:
         ports:
@@ -47,21 +41,34 @@ spec:
       main:
         enabled: true
         annotations:
-          hajimari.io/enable: "true"
+          hajimari.io/enable: 'true'
           hajimari.io/icon: baby-bottle-outline
           hajimari.io/info: *appname
-          hajimari.io/group: *ns
-          cert-manager.io/cluster-issuer: "letsencrypt-production"
-          traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
+          hajimari.io/group: &ns home
+          cert-manager.io/cluster-issuer: letsencrypt-production
+          traefik.ingress.kubernetes.io/router.entrypoints: websecure
           traefik.ingress.kubernetes.io/router.middlewares: networking-chain-authelia@kubernetescrd
         hosts:
-        - host: &uri games.${SECRET_DEV_DOMAIN}
-          paths:
-          - path: /
-            pathType: Prefix
+          - host: &uri games.${SECRET_DEV_DOMAIN}
+            paths:
+              - path: /
+                pathType: Prefix
+                service:
+                  name: main
+                  port: http
         tls:
-        - hosts:
-            - *uri
-          secretName: *uri
-    nodeSelector:
-      node-role.kubernetes.io/worker: "true"
+          - hosts:
+              - *uri
+            secretName: *uri
+    persistence:
+      files:
+        enabled: true
+        existingClaim: gamevault-files-nfs
+      images:
+        enabled: true
+        existingClaim: gamevault-images-nfs
+
+    # -- Configures service settings for the chart.
+    # @default -- See values.yaml
+    podAnnotations:
+      secret.reloader.stakater.com/reload: *appname
