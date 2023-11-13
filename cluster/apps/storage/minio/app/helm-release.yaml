@@ -39,7 +39,7 @@ spec:
               pullPolicy: Always
             envFrom:
               - secretRef:
-                  name: &app minio
+                  name: *app 
             env:
               TZ: America/Los_Angeles
               MINIO_UPDATE: off
@@ -53,7 +53,7 @@ spec:
                 cpu: 100m
               limits:
                 memory: 750Mi
-            args: [server, /data, --console-address, :9001]
+            args: ['server', '/data', '--console-address', ':9001']
     service:
       main:
         enabled: true
