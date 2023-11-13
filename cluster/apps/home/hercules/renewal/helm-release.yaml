@@ -8,7 +8,7 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 1.5.1
+      version: 2.0.2
       interval: 16m
       sourceRef:
         kind: HelmRepository
@@ -16,108 +16,98 @@ spec:
         namespace: flux-system
   # See https://github.com/bjw-s/helm-charts/blob/main/charts/library/common/values.yaml
   values:
-    image:
-      repository: ghcr.io/lenaxia/hercules
-      tag: renewal-20190605
+    defaultPodOptions:
+      nodeSelector:
+        node-role.kubernetes.io/worker: 'true'
+    controllers:
+      main:
+        initContainers:
+          prep-db:
+            command: [/bin/sh, -c]
+            args:
+              - |
+                apt-get update && apt-get install -y curl &&
+                curl https://s3.thekao.cloud/public/ragnarok/ro-herc-renewal-sql.tar.gz -o sql-files.tar.gz &&
+                tar -xzf sql-files.tar.gz -C /docker-entrypoint-initdb.d/ &&
+                rm sql-files.tar.gz 
+            volumeMounts:
+              - name: db-scripts
+                mountPath: /docker-entrypoint-initdb.d
+            image:            # use an image with curl
+              repository: ubuntu
+              tag: latest
+          init-db:
+            command: [sh, -c]
+            args:
+              - |
+                apt-get update && apt-get install -y mysql-client &&
+                /entrypoint.sh
+            env:
+              - name: INIT_MYSQL_HOST
+                valueFrom:
+                  secretKeyRef:
+                    name: mariadb-secret
+                    key: host
+              - name: INIT_MYSQL_SUPER_PASS
+                valueFrom:
+                  secretKeyRef:
+                    name: mariadb-secret
+                    key: mariadb-root-password
+              - name: INIT_MYSQL_USER
+                valueFrom:
+                  secretKeyRef:
+                    name: hercules-renewal
+                    key: MYSQL_USERNAME
+              - name: INIT_MYSQL_PASS
+                valueFrom:
+                  secretKeyRef:
+                    name: hercules-renewal
+                    key: MYSQL_PASSWORD
+              - name: INIT_MYSQL_DBNAME
+                valueFrom:
+                  secretKeyRef:
+                    name: hercules-renewal
+                    key: MYSQL_DATABASE
+            volumeMounts:
+              - name: db-scripts
+                mountPath: /docker-entrypoint-initdb.d
+              - name: entrypoint-sh
+                mountPath: /entrypoint.sh
+                subPath: entrypoint.sh
+# ...
 
-    podAnnotations:
-      secret.reloader.stakater.com/reload: *appname
 
-    env:
-      - name: MYSQL_HOST
-        valueFrom:
-          secretKeyRef:
-            name: mariadb-secret
-            key: ip
-      - name: MYSQL_PORT
-        valueFrom:
-          secretKeyRef:
-            name: mariadb-secret
-            key: port
+            image:
+              repository: ubuntu
+              tag: latest
+        containers:
+          main:
+            image:
+              repository: ghcr.io/lenaxia/hercules
+              tag: renewal-20190605
+
+            envFrom:
+              - secretRef:
+                  name: &appname hercules-renewal
+
+# ...
+            env:
+              - name: MYSQL_HOST
+                valueFrom:
+                  secretKeyRef:
+                    name: mariadb-secret
+                    key: ip
+              - name: MYSQL_PORT
+                valueFrom:
+                  secretKeyRef:
+                    name: mariadb-secret
+                    key: port
 
       # -- Set the application database type
-    envFrom:
-      - secretRef:
-          name: *appname 
-
-# ...
-    initContainers:
-      prep-db:
-        image: ubuntu:latest  # use an image with curl
-        command: ["/bin/sh", "-c"]
-        args:
-          - |
-            apt-get update && apt-get install -y curl &&
-            curl https://s3.thekao.cloud/public/ragnarok/ro-herc-renewal-sql.tar.gz -o sql-files.tar.gz &&
-            tar -xzf sql-files.tar.gz -C /docker-entrypoint-initdb.d/ &&
-            rm sql-files.tar.gz 
-        volumeMounts:
-          - name: db-scripts
-            mountPath: /docker-entrypoint-initdb.d
-      init-db:
-        image: ubuntu:latest
-        command: ["sh", "-c"]
-        args:
-          - |
-            apt-get update && apt-get install -y mysql-client &&
-            /entrypoint.sh
-        env:
-          - name: INIT_MYSQL_HOST
-            valueFrom:
-              secretKeyRef:
-                name: mariadb-secret
-                key: host
-          - name: INIT_MYSQL_SUPER_PASS
-            valueFrom:
-              secretKeyRef:
-                name: mariadb-secret
-                key: mariadb-root-password
-          - name: INIT_MYSQL_USER
-            valueFrom:
-              secretKeyRef:
-                name: hercules-renewal
-                key: MYSQL_USERNAME
-          - name: INIT_MYSQL_PASS
-            valueFrom:
-              secretKeyRef:
-                name: hercules-renewal
-                key: MYSQL_PASSWORD
-          - name: INIT_MYSQL_DBNAME
-            valueFrom:
-              secretKeyRef:
-                name: hercules-renewal
-                key: MYSQL_DATABASE
-        volumeMounts:
-          - name: db-scripts
-            mountPath: /docker-entrypoint-initdb.d
-          - name: entrypoint-sh
-            mountPath: /entrypoint.sh
-            subPath: entrypoint.sh
-# ...
-
-
-    persistence:
-      config:
-        enabled: true
-        accessMode: ReadWriteOnce
-        existingClaim: hercules-renewal-volume
-      db-scripts:
-        enabled: true
-        type: emptyDir
-      entrypoint-sh:
-        enabled: true
-        type: configMap
-        name: entrypoint-sh
-        subPath: entrypoint.sh
-        mountPath: /entrypoint.sh
-        defaultMode: 0777
-
-    # -- Configures service settings for the chart.
-    # @default -- See values.yaml
     service:
       main:
         type: LoadBalancer
-        loadBalancerIP: "${SVC_HERCULES_RENEWAL_ADDR}"
+        loadBalancerIP: ${SVC_HERCULES_RENEWAL_ADDR}
         externalTrafficPolicy: Local
         ports:
           http:
@@ -164,5 +154,24 @@ spec:
         #- hosts:
         #    - *uri
         #  secretName: *uri
-    nodeSelector:
-      node-role.kubernetes.io/worker: "true"
+    persistence:
+      config:
+        enabled: true
+        accessMode: ReadWriteOnce
+        existingClaim: hercules-renewal-volume
+      db-scripts:
+        enabled: true
+        type: emptyDir
+      entrypoint-sh:
+        enabled: true
+        type: configMap
+        name: entrypoint-sh
+        defaultMode: 0777
+
+    # -- Configures service settings for the chart.
+    # @default -- See values.yaml
+        globalMounts:
+          - path: /entrypoint.sh
+            subPath: entrypoint.sh
+    podAnnotations:
+      secret.reloader.stakater.com/reload: *appname
