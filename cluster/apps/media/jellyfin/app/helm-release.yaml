@@ -1,4 +1,3 @@
----
 # yaml-language-server: $schema=https://kubernetes-schemas.devbu.io/helmrelease_v2beta1.json
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
@@ -10,7 +9,7 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 1.5.1
+      version: 2.0.2
       sourceRef:
         kind: HelmRepository
         name: bjw-s-charts
@@ -27,17 +26,48 @@ spec:
   uninstall:
     keepHistory: false
   values:
-    controller:
-      type: statefulset
-    image:
-      repository: ghcr.io/onedr0p/jellyfin
-      tag: 10.8.10@sha256:1ef614db6a4c589777eb48bc9004d573b9c09f0d6d573a509041c6060f3a956b
-    env:
-      TZ: America/New_York
+    defaultPodOptions:
+      securityContext:
+        runAsUser: 568
+        runAsGroup: 568
+        fsGroup: 568
+        fsGroupChangePolicy: OnRootMismatch
+        supplementalGroups: [44, 109, 10000]
+      nodeSelector:
+        node-role.kubernetes.io/worker: 'true'
+        intel.feature.node.kubernetes.io/gpu: 'true'
+    controllers:
+      main:
+        type: statefulset
+        containers:
+          main:
+            image:
+              repository: ghcr.io/onedr0p/jellyfin
+              tag: 10.8.10@sha256:1ef614db6a4c589777eb48bc9004d573b9c09f0d6d573a509041c6060f3a956b
+            env:
+              TZ: America/New_York
+            resources:
+              requests:
+                gpu.intel.com/i915: 1
+                cpu: 100m
+                memory: 1000Mi
+              limits:
+                gpu.intel.com/i915: 1
+                memory: 6000Mi
+        statefulset:
+          volumeClaimTemplates:
+            - name: config
+              accessMode: ReadWriteOnce
+              size: 10Gi
+              storageClass: longhorn
+              labels:
+                snapshot.home.arpa/enabled: 'true'
+              globalMounts:
+                - path: /config
     service:
       main:
         type: LoadBalancer
-        externalIPs: ["${SVC_JELLYFIN_ADDR}"]
+        externalIPs: ['${SVC_JELLYFIN_ADDR}']
         externalTrafficPolicy: Local
         ports:
           http:
@@ -45,37 +75,26 @@ spec:
     ingress:
       main:
         enabled: true
-        ingressClassName: "traefik"
         annotations:
-          hajimari.io/enable: "true"
-          hajimari.io/icon: "television-box"
-          hajimari.io/group: "Media"
-          cert-manager.io/cluster-issuer: "letsencrypt-production"
-          traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
+          hajimari.io/enable: 'true'
+          hajimari.io/icon: television-box
+          hajimari.io/group: Media
+          cert-manager.io/cluster-issuer: letsencrypt-production
+          traefik.ingress.kubernetes.io/router.entrypoints: websecure
           traefik.ingress.kubernetes.io/router.middlewares: networking-chain-authelia@kubernetescrd
         hosts:
-          - host: &uri "jelly.${SECRET_DEV_DOMAIN}"
+          - host: &uri jelly.${SECRET_DEV_DOMAIN}
             paths:
               - path: /
                 pathType: Prefix
+                service:
+                  name: main
+                  port: http
         tls:
           - hosts:
               - *uri
             secretName: *uri
-    podSecurityContext:
-      runAsUser: 568
-      runAsGroup: 568
-      fsGroup: 568
-      fsGroupChangePolicy: "OnRootMismatch"
-      supplementalGroups: [44, 109, 10000]
-    volumeClaimTemplates:
-      - name: config
-        mountPath: /config
-        accessMode: ReadWriteOnce
-        size: 10Gi
-        storageClass: longhorn
-        labels:
-          snapshot.home.arpa/enabled: "true"
+        className: traefik
     persistence:
       omoikane:
         enabled: true
@@ -84,7 +103,8 @@ spec:
           nfs:
             server: ${NAS_ADDR}
             path: /volume1/omoikane
-        mountPath: /omoikane
+        globalMounts:
+          - path: /omoikane
       downloads:
         enabled: true
         type: custom
@@ -92,18 +112,8 @@ spec:
           nfs:
             server: ${NAS_ADDR}
             path: /volume2/downloads
-        mountPath: /downloads
+        globalMounts:
+          - path: /downloads
       transcode:
         enabled: true
         type: emptyDir
-    nodeSelector:
-      node-role.kubernetes.io/worker: "true"
-      intel.feature.node.kubernetes.io/gpu: "true"
-    resources:
-      requests:
-        gpu.intel.com/i915: 1
-        cpu: 100m
-        memory: 1000Mi
-      limits:
-        gpu.intel.com/i915: 1
-        memory: 6000Mi
