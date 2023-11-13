@@ -61,7 +61,7 @@ def main() :
 
     for root, _, files in os.walk(args.d):
         for file in files:
-            if file != 'helmrelease.yaml':
+            if file != 'helm-release.yaml':
                 continue
             filepath = os.path.join(root, file)
             with open(filepath) as f:
