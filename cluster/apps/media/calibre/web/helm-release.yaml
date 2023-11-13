@@ -1,4 +1,3 @@
----
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
@@ -8,7 +7,7 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 1.5.1
+      version: 2.0.2
       interval: 15m
       sourceRef:
         kind: HelmRepository
@@ -23,23 +22,38 @@ spec:
     remediation:
       retries: 5
   values:
-    initContainers:
-      update-volume-permission:
-        image: busybox@sha256:3fbc632167424a6d997e74f52b878d7cc478225cffac6bc977eedfe51c7f4e79
-        command: ["sh", "-c", "chown -R 1000:1000 /config"]
-        volumeMounts:
-          - name: config
-            mountPath: /config
-        securityContext:
-          runAsUser: 0
-    image:
-      repository: ghcr.io/linuxserver/calibre-web
-      tag: version-0.6.19
-      pullPolicy: Always
-    env:
-      DOCKER_MODS: ghcr.io/linuxserver/mods:universal-calibre
-      PGID: "65539"
-      PUID: "1000"
+    defaultPodOptions:
+      nodeSelector:
+        node-role.kubernetes.io/worker: 'true'
+    controllers:
+      main:
+        initContainers:
+          update-volume-permission:
+            command: [sh, -c, chown -R 1000:1000 /config]
+            volumeMounts:
+              - name: config
+                mountPath: /config
+            securityContext:
+              runAsUser: 0
+            image:
+              repository: busybox@sha256
+              tag: 3fbc632167424a6d997e74f52b878d7cc478225cffac6bc977eedfe51c7f4e79
+        containers:
+          main:
+            image:
+              repository: ghcr.io/linuxserver/calibre-web
+              tag: version-0.6.19
+              pullPolicy: Always
+            env:
+              DOCKER_MODS: ghcr.io/linuxserver/mods:universal-calibre
+              PGID: '65539'
+              PUID: '1000'
+            resources:
+              requests:
+                cpu: 15m
+                memory: 249M
+              limits:
+                memory: 299M
     service:
       main:
         ports:
@@ -48,24 +62,27 @@ spec:
     ingress:
       main:
         enabled: true
-        ingressClassName: "traefik"
         annotations:
-          hajimari.io/enable: "true"
-          hajimari.io/icon: "bookshelf"
-          hajimari.io/appName: "The Library"
-          hajimari.io/group: "Media"
-          cert-manager.io/cluster-issuer: "letsencrypt-production"
-          traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
+          hajimari.io/enable: 'true'
+          hajimari.io/icon: bookshelf
+          hajimari.io/appName: The Library
+          hajimari.io/group: Media
+          cert-manager.io/cluster-issuer: letsencrypt-production
+          traefik.ingress.kubernetes.io/router.entrypoints: websecure
           traefik.ingress.kubernetes.io/router.middlewares: networking-chain-authelia@kubernetescrd
         hosts:
-          - host: &uri "library.${SECRET_DEV_DOMAIN}"
+          - host: &uri library.${SECRET_DEV_DOMAIN}
             paths:
               - path: /
                 pathType: Prefix
+                service:
+                  name: main
+                  port: http
         tls:
           - hosts:
               - *uri
             secretName: *uri
+        className: traefik
     persistence:
       config:
         enabled: true
@@ -74,20 +91,5 @@ spec:
         enabled: true
         existingClaim: calibre-media-volume
         namespace: media
-        mountPath: /library
-#      omoikane:
-#        enabled: true
-#        type: custom
-#        volumeSpec:
-#          nfs:
-#            server: ${NAS_ADDR}
-#            path: "/volume1/omoikane/[Books]"
-#        mountPath: /library
-    nodeSelector:
-      node-role.kubernetes.io/worker: "true"
-    resources:
-      requests:
-        cpu: 15m
-        memory: 249M
-      limits:
-        memory: 299M
+        globalMounts:
+          - path: /library

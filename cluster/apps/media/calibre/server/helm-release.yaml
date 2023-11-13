@@ -1,4 +1,3 @@
----
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
@@ -8,7 +7,7 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 1.5.1
+      version: 2.0.2
       interval: 15m
       sourceRef:
         kind: HelmRepository
@@ -16,23 +15,38 @@ spec:
         namespace: flux-system
   interval: 15m
   values:
-    initContainers:
-      update-volume-permission:
-        image: busybox@sha256:3fbc632167424a6d997e74f52b878d7cc478225cffac6bc977eedfe51c7f4e79
-        command: ["sh", "-c", "chown -R 1000:1000 /config"]
-        volumeMounts:
-          - name: config
-            mountPath: /config
-        securityContext:
-          runAsUser: 0
-    image:
-      repository: ghcr.io/linuxserver/calibre
-      tag: version-v6.3.0
-      pullPolicy: Always
-    env:
-      PGID: "65539"
-      PUID: "1000"
-      UMASK_SET: "022"
+    defaultPodOptions:
+      nodeSelector:
+        node-role.kubernetes.io/worker: 'true'
+    controllers:
+      main:
+        initContainers:
+          update-volume-permission:
+            command: [sh, -c, chown -R 1000:1000 /config]
+            volumeMounts:
+              - name: config
+                mountPath: /config
+            securityContext:
+              runAsUser: 0
+            image:
+              repository: busybox@sha256
+              tag: 3fbc632167424a6d997e74f52b878d7cc478225cffac6bc977eedfe51c7f4e79
+        containers:
+          main:
+            image:
+              repository: ghcr.io/linuxserver/calibre
+              tag: version-v6.3.0
+              pullPolicy: Always
+            env:
+              PGID: '65539'
+              PUID: '1000'
+              UMASK_SET: '022'
+            resources:
+              requests:
+                cpu: 15m
+                memory: 298M
+              limits:
+                memory: 357M
     service:
       main:
         ports:
@@ -50,31 +64,35 @@ spec:
     ingress:
       main:
         enabled: true
-        ingressClassName: "traefik"
         annotations:
-          hajimari.io/enable: "true"
-          hajimari.io/icon: "bookshelf"
-          hajimari.io/group: "Media"
-          cert-manager.io/cluster-issuer: "letsencrypt-production"
-          traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
+          hajimari.io/enable: 'true'
+          hajimari.io/icon: bookshelf
+          hajimari.io/group: Media
+          cert-manager.io/cluster-issuer: letsencrypt-production
+          traefik.ingress.kubernetes.io/router.entrypoints: websecure
           traefik.ingress.kubernetes.io/router.middlewares: networking-chain-authelia@kubernetescrd
         hosts:
-          - host: &uri "calibre.${SECRET_DEV_DOMAIN}"
+          - host: &uri calibre.${SECRET_DEV_DOMAIN}
             paths:
               - path: /
                 pathType: Prefix
+                service:
+                  name: main
+                  port: http
         tls:
           - hosts:
               - *uri
             secretName: *uri
+        className: traefik
     persistence:
       config:
         enabled: true
         existingClaim: calibre-config-volume
       media:
         enabled: true
-        existingClaim: calibre-media-volume 
-        mountPath: /library
+        existingClaim: calibre-media-volume
+        globalMounts:
+          - path: /library
       omoikane:
         enabled: true
         type: custom
@@ -82,7 +100,8 @@ spec:
           nfs:
             server: ${NAS_ADDR}
             path: /volume1/omoikane
-        mountPath: /omoikane
+        globalMounts:
+          - path: /omoikane
       downloads:
         enabled: true
         type: custom
@@ -90,12 +109,5 @@ spec:
           nfs:
             server: ${NAS_ADDR}
             path: /volume2/downloads
-        mountPath: /downloads
-    nodeSelector:
-      node-role.kubernetes.io/worker: "true"
-    resources:
-      requests:
-        cpu: 15m
-        memory: 298M
-      limits:
-        memory: 357M
+        globalMounts:
+          - path: /downloads
