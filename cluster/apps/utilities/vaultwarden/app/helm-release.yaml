@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 1.5.1
+      version: 2.0.2
       sourceRef:
         kind: HelmRepository
         name: bjw-s-charts
@@ -24,9 +24,27 @@ spec:
     remediation:
       retries: 5
   values:
-   
-    # -- Configures service settings for the chart.
-    # @default -- See values.yaml
+    defaultPodOptions:
+      nodeSelector:
+        node-role.kubernetes.io/worker: 'true'
+    controllers:
+      main:
+        containers:
+          main:
+            image:
+              repository: vaultwarden/server
+              tag: 1.29.2
+
+    # -- environment variables.
+            envFrom:
+              - secretRef:
+                  name: &app vaultwarden
+            env:
+              DATA_FOLDER: config
+              TZ: ${TIMEZONE}
+              SIGNUPS_ALLOWED: false
+              WEBSOCKET_ENABLED: true
+
     service:
       main:
         primary: true
@@ -41,55 +59,24 @@ spec:
         type: LoadBalancer
         externalTrafficPolicy: Local
 
-    strategy:
-      type: Recreate
-    
-    image:
-      repository: vaultwarden/server
-      tag: 1.29.2
-    
-    # -- environment variables.
-    env:
-      DATA_FOLDER: "config"
-      TZ: ${TIMEZONE}
-      SIGNUPS_ALLOWED : false
-      WEBSOCKET_ENABLED : true
-
-    envFrom:
-      - secretRef:
-          name: *app
-    
-    # -- Configure persistence settings for the chart under this key.
-    # @default -- See values.yaml
-    persistence:
-      config:
-        enabled: true
-        existingClaim: "vaultwarden-config-volume"
-    
-    mariadb:
-      enabled: false
-
-    postgresql:
-      enabled: false
-
     ingress:
       main:
         enabled: true
-        ingressClassName: "traefik"
         annotations:
-          hajimari.io/enable: "true"
-          hajimari.io/icon: "shield-key"
-          hajimari.io/group: "Utilities"
-          cert-manager.io/cluster-issuer: "letsencrypt-production"
-          traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
+          hajimari.io/enable: 'true'
+          hajimari.io/icon: shield-key
+          hajimari.io/group: Utilities
+          cert-manager.io/cluster-issuer: letsencrypt-production
+          traefik.ingress.kubernetes.io/router.entrypoints: websecure
           traefik.ingress.kubernetes.io/router.middlewares: networking-chain-authelia@kubernetescrd
         hosts:
-          - host: &uri "vault.${SECRET_DEV_DOMAIN}"
+          - host: &uri vault.${SECRET_DEV_DOMAIN}
             paths:
               - path: /
                 pathType: Prefix
                 service:
-                  port: 80
+                  name: main
+                  port: http
               - path: /notifications/hub/negotiate
                 pathType: Prefix
                 service:
@@ -100,17 +87,18 @@ spec:
                   port: 3012
         tls:
           - hosts:
-            - *uri
+              - *uri
             secretName: *uri
+        className: traefik
       secondary:
         enabled: true
-        ingressClassName: "traefik"
+        ingressClassName: traefik
         annotations:
-          cert-manager.io/cluster-issuer: "letsencrypt-production"
-          traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
+          cert-manager.io/cluster-issuer: letsencrypt-production
+          traefik.ingress.kubernetes.io/router.entrypoints: websecure
           traefik.ingress.kubernetes.io/router.middlewares: networking-chain-no-auth@kubernetescrd
         hosts:
-          - host: &uri2 "vault.${SECRET_PROD_DOMAIN_MGO}"
+          - host: &uri2 vault.${SECRET_PROD_DOMAIN_MGO}
             paths:
               - path: /
                 pathType: Prefix
@@ -130,8 +118,19 @@ spec:
                   port: 1000
         tls:
           - hosts:
-            - *uri2
+              - *uri2
             secretName: *uri2
 
-    nodeSelector:
-      node-role.kubernetes.io/worker: "true"
+    persistence:
+      config:
+        enabled: true
+        existingClaim: vaultwarden-config-volume
+    strategy:
+      type: Recreate
+
+    mariadb:
+      enabled: false
+
+    postgresql:
+      enabled: false
+
