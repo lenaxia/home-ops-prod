@@ -1,4 +1,3 @@
----
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
@@ -9,7 +8,7 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 1.5.1
+      version: 2.0.2
       sourceRef:
         kind: HelmRepository
         name: bjw-s-charts
@@ -22,68 +21,67 @@ spec:
     remediation:
       retries: 5
   values:
-    image:
-      repository: docker.io/ltbproject/self-service-password
-      tag: latest
-      pullPolicy: Always
-    env:
-      TZ: "${TIMEZONE}"
-    envFrom:
-      - secretRef:
-          name: ltb-secret
-    lifecycle: 
-      postStart:
-        exec:
-          command:
-            - /bin/bash
-            - -c
-            - /postStart.sh
-    podAnnotations:
-      configmap.reloader.stakater.com/reload: "poststart-sh,ltb-config,custom-css,ltb-secret"
-    nodeSelector:
-      node-role.kubernetes.io/worker: "true"
+    defaultPodOptions:
+      nodeSelector:
+        node-role.kubernetes.io/worker: 'true'
+    controllers:
+      main:
+        containers:
+          main:
+            image:
+              repository: docker.io/ltbproject/self-service-password
+              tag: latest
+              pullPolicy: Always
+            envFrom:
+              - secretRef:
+                  name: ltb-secret
+            env:
+              TZ: ${TIMEZONE}
+            probes:
+              liveness: &probes
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /
+                    port: &port 80
+                  initialDelaySeconds: 10
+                  periodSeconds: 10
+                  timeoutSeconds: 1
+                  failureThreshold: 3
+              readiness: *probes
+              startup:
+                enabled: false
     service:
       main:
         ports:
           http:
-            port: &port 80
+            port: *port
     ingress:
       main:
         enabled: true
-        ingressClassName: "traefik"
         annotations:
-          hajimari.io/enable: "true"
-          hajimari.io/icon: "lock-reset"
-          hajimari.io/appName: "Password Reset"
-          hajimari.io/group: "utilities"
-          cert-manager.io/cluster-issuer: "letsencrypt-production"
+          hajimari.io/enable: 'true'
+          hajimari.io/icon: lock-reset
+          hajimari.io/appName: Password Reset
+          hajimari.io/group: utilities
+          cert-manager.io/cluster-issuer: letsencrypt-production
             ##cert-manager.io/cluster-issuer: "ca-issuer"
-          traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
+          traefik.ingress.kubernetes.io/router.entrypoints: websecure
           traefik.ingress.kubernetes.io/router.middlewares: networking-chain-authelia@kubernetescrd
         hosts:
-          - host: &uri "password.${SECRET_DEV_DOMAIN}"
+          - host: &uri password.${SECRET_DEV_DOMAIN}
             paths:
               - path: /
                 pathType: Prefix
+                service:
+                  name: main
+                  port: http
         tls:
           - hosts:
               - *uri
             secretName: *uri
-    probes:
-      liveness: &probes
-        enabled: true
-        custom: true
-        spec:
-          httpGet:
-            path: /
-            port: *port
-          initialDelaySeconds: 10
-          periodSeconds: 10
-          timeoutSeconds: 1
-          failureThreshold: 3
-      readiness: *probes
-      startup:
-        enabled: false
+        className: traefik
     persistence:
       #config:
       #  enabled: true
@@ -92,25 +90,30 @@ spec:
         enabled: true
         type: configMap
         name: poststart-sh
-        subPath: postStart.sh
-        mountPath: /postStart.sh
         defaultMode: 0777
+        globalMounts:
+          - path: /postStart.sh
+            subPath: postStart.sh
       ltb-config:
         enabled: true
-        type: configMap 
+        type: configMap
         name: ltb-config
-        subPath: config.inc.local.php
-        mountPath: /var/www/conf/config.inc.local.php
+        globalMounts:
+          - path: /var/www/conf/config.inc.local.php
+            subPath: config.inc.local.php
       custom-css:
         enabled: true
         type: configMap
-        name: custom-css 
-        subPath: custom.css
-        mountPath: /var/www/html/css/custom.css
-#        defaultMode: 0777
-#    resources:
-#      requests:
-#        cpu: 10m
-#        memory: 50Mi
-#      limits:
-#        memory: 500Mi
+        name: custom-css
+        globalMounts:
+          - path: /var/www/html/css/custom.css
+            subPath: custom.css
+    lifecycle:
+      postStart:
+        exec:
+          command:
+            - /bin/bash
+            - -c
+            - /postStart.sh
+    podAnnotations:
+      configmap.reloader.stakater.com/reload: poststart-sh,ltb-config,custom-css,ltb-secret
