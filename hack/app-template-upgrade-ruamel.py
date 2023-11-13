@@ -76,6 +76,7 @@ def main():
                 data = load_yaml_file(filepath)
             except Exception as exc:
                 LOG.error(f'failed to process: {filepath}, script is not good enough - will need manual intervention')
+                LOG.error(f'{exc}')
                 continue
             if data['kind'] != 'HelmRelease':
                 continue
@@ -85,6 +86,7 @@ def main():
                     process(filepath, data)
                 except Exception as exc:
                     LOG.error(f'failed to process: {filepath}, script is not good enough - will need manual intervention', exc_info=exc)
+                    LOG.error(f'{exc}')
                     continue
 
                 if not args.yeet:
