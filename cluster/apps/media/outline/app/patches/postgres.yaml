@@ -9,7 +9,7 @@ spec:
     controllers:
       main:
         initContainers:
-          - name: init-db
+          init-db:
             image: 
               repository: ghcr.io/onedr0p/postgres-initdb
               tag: 14.8
