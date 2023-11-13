@@ -10,7 +10,7 @@ spec:
     controllers:
       main:
         initContainers:
-          - name: init-geoip
+          init-geoip:
             image: 
               repository: docker.io/maxmindinc/geoipupdate
               tag: v6.0
