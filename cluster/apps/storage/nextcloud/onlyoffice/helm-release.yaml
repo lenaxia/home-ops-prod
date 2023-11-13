@@ -8,7 +8,7 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 1.5.1
+      version: 2.0.2
       interval: 15m
       sourceRef:
         kind: HelmRepository
@@ -16,45 +16,75 @@ spec:
         namespace: flux-system
   # See https://github.com/bjw-s/helm-charts/blob/main/charts/library/common/values.yaml
   values:
-    image:
-      repository: docker.io/onlyoffice/documentserver
-      tag: 7.4.1
+    defaultPodOptions:
+      nodeSelector:
+        node-role.kubernetes.io/worker: 'true'
+    controllers:
+      main:
+        containers:
+          main:
+            image:
+              repository: docker.io/onlyoffice/documentserver
+              tag: 7.4.1
 
 #    podAnnotations:
 #      secret.reloader.stakater.com/reload: *appname
 #      configmap.reloader.stakater.com/reload: onlyoffice-poststart-sh
 
-    env:
-      - name: TZ 
-        value: ${TIMEZONE}
-      - name: JWT_ENABLED
-        value: true
-      - name: JWT_SECRET
-        valueFrom:
-          secretKeyRef:
-            name: *appname
-            key: JWT_SECRET
+            env:
+              - name: TZ
+                value: ${TIMEZONE}
+              - name: JWT_ENABLED
+                value: true
+              - name: JWT_SECRET
+                valueFrom:
+                  secretKeyRef:
+                    name: &appname onlyoffice
+                    key: JWT_SECRET
         # fetch the secret using:
         # kce onlyoffice-5cc59f85-fs7wp -- /usr/bin/cat /etc/onlyoffice/documentserver/local.json
 
-    lifecycle:
-      postStart:
-        exec:
-          command:
-            - /bin/bash
-            - -c
-            - sed -i 's/isSupportEditFeature=function(){return!1}/isSupportEditFeature=function(){return 1}/g'  /var/www/onlyoffice/documentserver/web-apps/apps/*/mobile/dist/js/app.js
+    service:
+      main:
+        ports:
+          http:
+            port: 80
 
+    ingress:
+      main:
+        enabled: true
+        annotations:
+          hajimari.io/enable: 'true'
+          hajimari.io/icon: office
+          hajimari.io/info: Only Office
+          hajimari.io/group: Storage
+          cert-manager.io/cluster-issuer: letsencrypt-production
+          traefik.ingress.kubernetes.io/router.entrypoints: websecure
+          traefik.ingress.kubernetes.io/router.middlewares: networking-chain-onlyoffice-headers@kubernetescrd
+        hosts:
+          - host: &uri office.${SECRET_DEV_DOMAIN}
+            paths:
+              - path: /
+                pathType: Prefix
+                service:
+                  name: main
+                  port: http
+        tls:
+          - hosts:
+              - *uri
+            secretName: *uri
+
+        className: traefik
     persistence:
       logs:
         enabled: true
-        mountPath: /var/log/onlyoffice
         accessMode: ReadWriteOnce
         storageClass: longhorn
         size: 2Gi
+        globalMounts:
+          - path: /var/log/onlyoffice
       cert:
         enabled: true
-        mountPath: /var/www/onlyoffice/Data
         accessMode: ReadWriteOnce
         storageClass: longhorn
         size: 128Mi
@@ -67,33 +97,14 @@ spec:
 
     # -- Configures service settings for the chart.
     # @default -- See values.yaml
-    service:
-      main:
-        ports:
-          http:
-            port: 80
+        globalMounts:
+          - path: /var/www/onlyoffice/Data
+    lifecycle:
+      postStart:
+        exec:
+          command:
+            - /bin/bash
+            - -c
+            - sed -i 's/isSupportEditFeature=function(){return!1}/isSupportEditFeature=function(){return 1}/g' \
+                /var/www/onlyoffice/documentserver/web-apps/apps/*/mobile/dist/js/app.js
 
-    ingress:
-      main:
-        enabled: true
-        ingressClassName: "traefik"
-        annotations:
-          hajimari.io/enable: "true"
-          hajimari.io/icon: office
-          hajimari.io/info: Only Office
-          hajimari.io/group: Storage 
-          cert-manager.io/cluster-issuer: "letsencrypt-production"
-          traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
-          traefik.ingress.kubernetes.io/router.middlewares: networking-chain-onlyoffice-headers@kubernetescrd
-        hosts:
-        - host: &uri office.${SECRET_DEV_DOMAIN}
-          paths:
-          - path: /
-            pathType: Prefix
-        tls:
-        - hosts:
-            - *uri
-          secretName: *uri
-
-    nodeSelector:
-      node-role.kubernetes.io/worker: "true"
