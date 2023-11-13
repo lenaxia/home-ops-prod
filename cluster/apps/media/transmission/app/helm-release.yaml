@@ -69,17 +69,17 @@ spec:
         ports:
           http:
             port: *port
-        type: ClusterIP
-      utptcp:
-        enabled: true
-        type: LoadBalancer
-        externalTrafficPolicy: Local
-        ports:
+#        type: ClusterIP
+#      utptcp:
+#        ports:
           utptcp:
             enabled: true
             port: *peerport
             protocol: TCP
             targetPort: *peerport
+        enabled: true
+        type: LoadBalancer
+        externalTrafficPolicy: Local
     ingress:
       main:
         enabled: true
