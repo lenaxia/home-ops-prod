@@ -62,7 +62,6 @@ spec:
     service:
       main:
         type: ClusterIP
-        externalTrafficPolicy: Local
         ports:
           http:
             port: &port 8081
