@@ -92,36 +92,6 @@ spec:
               - *uri
             secretName: *uri
         className: traefik
-      secondary:
-        enabled: true
-        ingressClassName: traefik
-        annotations:
-          cert-manager.io/cluster-issuer: letsencrypt-production
-          traefik.ingress.kubernetes.io/router.entrypoints: websecure
-          traefik.ingress.kubernetes.io/router.middlewares: networking-chain-no-auth@kubernetescrd
-        hosts:
-          - host: &uri2 vault.${SECRET_PROD_DOMAIN_MGO}
-            paths:
-              - path: /
-                pathType: Prefix
-                service:
-                  port: 80
-              - path: /notifications/hub/negotiate
-                pathType: Prefix
-                service:
-                  port: 80
-              - path: /notifications/hub
-                pathType: Prefix
-                service:
-                  port: 3012
-              - path: /admin
-                pathType: Prefix
-                service:
-                  port: 1000
-        tls:
-          - hosts:
-              - *uri2
-            secretName: *uri2
 
     persistence:
       config:
