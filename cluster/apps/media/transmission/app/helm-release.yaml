@@ -10,48 +10,60 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 1.5.1
+      version: 2.0.2
       sourceRef:
         kind: HelmRepository
         name: bjw-s-charts
         namespace: flux-system
   interval: 6m
   values:
-    podLabels:
-      app: *appname
-    controller:
-      type: statefulset
-      annotations:
-        reloader.stakater.com/auto: "true"
-    podSecurityContext:
-      runAsUser: 568
-      runAsGroup: 568
-      fsGroup: 568
-      fsGroupChangePolicy: OnRootMismatch
+    defaultPodOptions:
+      securityContext:
+        runAsUser: 568
+        runAsGroup: 568
+        fsGroup: 568
+        fsGroupChangePolicy: OnRootMismatch
 
-    image:
-      repository: ghcr.io/onedr0p/transmission
-      tag: "4.0.3"
-      pullPolicy: Always
-    
-    env:
-      TZ: "${TIMEZONE}"
-      TRANSMISSION__BLOCKLIST_URL: "https://mirror.codebucket.de/transmission/blocklist.p2p.gz"
-      TRANSMISSION__DOWNLOAD_DIR: "/downloads/[Torrents]/Finished"
-      TRANSMISSION__INCOMPLETE_DIR_ENABLED: TRUE
-      TRANSMISSION__INCOMPLETE_DIR: "/unfinished"
-      TRANSMISSION__RPC_PORT: &port 9091
-      TRANSMISSION__PEER_PORT: &peerport 51413
-      TRANSMISSION__RATIO_LIMIT: 1
-      TRANSMISSION__RATIO_LIMIT_ENABLED: true
-      TRANSMISSION__SPEED_LIMIT_UP_ENABLED: true
-      TRANSMISSION__SPEED_LIMIT_UP: 8000
-      TRANSMISSION__UTP_ENABLED: false
-      TRANSMISSION__UMASK: 7
-      TRANSMISSION__WATCH_DIR: "/downloads/[Torrents]/Autoload"
-      TRANSMISSION__WATCH_DIR_ENABLED: true
-      TRANSMISSION__WATCH_FORCE_GENERIC: true
-    
+      nodeSelector:
+        node-role.kubernetes.io/worker: 'true'
+    controllers:
+      main:
+        type: statefulset
+        annotations:
+          reloader.stakater.com/auto: 'true'
+        containers:
+          main:
+            image:
+              repository: ghcr.io/onedr0p/transmission
+              tag: 4.0.3
+              pullPolicy: Always
+
+            env:
+              TZ: ${TIMEZONE}
+              TRANSMISSION__BLOCKLIST_URL: https://mirror.codebucket.de/transmission/blocklist.p2p.gz
+              TRANSMISSION__DOWNLOAD_DIR: /downloads/[Torrents]/Finished
+              TRANSMISSION__INCOMPLETE_DIR_ENABLED: true
+              TRANSMISSION__INCOMPLETE_DIR: /unfinished
+              TRANSMISSION__RPC_PORT: &port 9091
+              TRANSMISSION__PEER_PORT: &peerport 51413
+              TRANSMISSION__RATIO_LIMIT: 1
+              TRANSMISSION__RATIO_LIMIT_ENABLED: true
+              TRANSMISSION__SPEED_LIMIT_UP_ENABLED: true
+              TRANSMISSION__SPEED_LIMIT_UP: 8000
+              TRANSMISSION__UTP_ENABLED: false
+              TRANSMISSION__UMASK: 7
+              TRANSMISSION__WATCH_DIR: /downloads/[Torrents]/Autoload
+              TRANSMISSION__WATCH_DIR_ENABLED: true
+              TRANSMISSION__WATCH_FORCE_GENERIC: true
+
+        statefulset:
+          volumeClaimTemplates:
+            - name: config
+              accessMode: ReadWriteOnce
+              size: 1Gi
+              storageClass: longhorn
+              globalMounts:
+                - path: /config
     service:
       main:
         ports:
@@ -68,13 +80,29 @@ spec:
             port: *peerport
             protocol: TCP
             targetPort: *peerport
-
-    volumeClaimTemplates:
-      - name: config
-        mountPath: /config
-        accessMode: ReadWriteOnce
-        size: 1Gi
-        storageClass: longhorn
+    ingress:
+      main:
+        enabled: true
+        annotations:
+          hajimari.io/enable: 'true'
+          hajimari.io/icon: mdi:cloud-download
+          hajimari.io/group: Media
+          cert-manager.io/cluster-issuer: letsencrypt-production
+          traefik.ingress.kubernetes.io/router.entrypoints: websecure
+          traefik.ingress.kubernetes.io/router.middlewares: networking-chain-authelia@kubernetescrd
+        hosts:
+          - host: &uri transmission.${SECRET_DEV_DOMAIN}
+            paths:
+              - path: /
+                pathType: Prefix
+                service:
+                  name: main
+                  port: http
+        tls:
+          - hosts:
+              - *uri
+            secretName: *uri
+        className: traefik
     persistence:
       unfinished:
         enabled: true
@@ -87,7 +115,8 @@ spec:
           nfs:
             server: ${NAS_ADDR}
             path: /volume1/omoikane
-        mountPath: /omoikane
+        globalMounts:
+          - path: /omoikane
       downloads:
         enabled: true
         type: custom
@@ -95,27 +124,7 @@ spec:
           nfs:
             server: ${NAS_ADDR}
             path: /volume2/downloads
-        mountPath: /downloads
-
-    ingress:
-      main:
-        enabled: true
-        ingressClassName: "traefik"
-        annotations:
-          hajimari.io/enable: "true"
-          hajimari.io/icon: "mdi:cloud-download"
-          hajimari.io/group: "Media"
-          cert-manager.io/cluster-issuer: "letsencrypt-production"
-          traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
-          traefik.ingress.kubernetes.io/router.middlewares: networking-chain-authelia@kubernetescrd
-        hosts:
-          - host: &uri "transmission.${SECRET_DEV_DOMAIN}"
-            paths:
-              - path: /
-                pathType: Prefix
-        tls:
-          - hosts:
-            - *uri
-            secretName: *uri
-    nodeSelector:
-      node-role.kubernetes.io/worker: "true"
+        globalMounts:
+          - path: /downloads
+    podLabels:
+      app: &appname transmission
