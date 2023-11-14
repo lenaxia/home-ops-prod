@@ -99,6 +99,7 @@ spec:
                 pathType: Prefix
                 service:
                   port: *port-api
+                  name: main
         tls:
           - hosts:
               - *host-console
