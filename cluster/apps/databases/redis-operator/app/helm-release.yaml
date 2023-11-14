@@ -18,11 +18,13 @@ spec:
     createNamespace: true
     remediation:
       retries: 7
-    crds: Create
+    crds: 
+      install: false
   upgrade:
     remediation:
       retries: 5
-    crds: CreateReplace
+    crds:
+      install: false
   values:
     image:
       tag: v1.2.3
