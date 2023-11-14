@@ -34,3 +34,7 @@ spec:
       #  app.kubernetes.io/component: controller
       prometheus:
         name: prometheus
+    crds:
+      annotations:
+        argocd.argoproj.io/sync-options: Replace=true
+        strategy.spinnaker.io/replace: 'true'
