@@ -78,4 +78,4 @@ spec:
         type: configMap
         name: recyclarr-configmap
         globalMounts:
-          - path: '-'
+          - path: '/tmp/config'
