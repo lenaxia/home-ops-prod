@@ -18,13 +18,9 @@ spec:
     createNamespace: true
     remediation:
       retries: 7
-    crds: 
-      install: false
   upgrade:
     remediation:
       retries: 5
-    crds:
-      install: false
   values:
     image:
       tag: v1.2.3
@@ -37,6 +33,4 @@ spec:
       prometheus:
         name: prometheus
     crds:
-      annotations:
-        argocd.argoproj.io/sync-options: Replace=true
-        strategy.spinnaker.io/replace: 'true'
+      enabled: false
