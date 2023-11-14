@@ -8,56 +8,77 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 1.5.1
+      version: 2.0.2
       sourceRef:
         kind: HelmRepository
         name: bjw-s-charts
         namespace: flux-system
   interval: 6m
   values:
-    podLabels:
-      app: *appname
-    controller:
-      type: statefulset
-      annotations:
-        reloader.stakater.com/auto: "true"
-    podSecurityContext:
-      runAsUser: 568
-      runAsGroup: 568
-      fsGroup: 568
-      fsGroupChangePolicy: OnRootMismatch
+    defaultPodOptions:
+      securityContext:
+        runAsUser: 568
+        runAsGroup: 568
+        fsGroup: 568
+        fsGroupChangePolicy: OnRootMismatch
 
-    image:
-      repository: ghcr.io/onedr0p/sonarr-develop
-      tag: 4.0.0.671@sha256:2a3eae5853ea3119da098c314111e6d2cff700cd3e517150a76377c34cbf4f70
-      pullPolicy: Always
-    
-    # -- environment variables.
-    # @default -- See below
-    env:
-      # -- Set the container timezone
-      TZ: "${TIMEZONE}"
-    
-    # -- Configures service settings for the chart.
-    # @default -- See values.yaml
+      nodeSelector:
+        node-role.kubernetes.io/worker: 'true'
+    controllers:
+      main:
+        type: statefulset
+        annotations:
+          reloader.stakater.com/auto: 'true'
+        containers:
+          main:
+            image:
+              repository: ghcr.io/onedr0p/sonarr-develop
+              tag: 
+                4.0.0.671@sha256:2a3eae5853ea3119da098c314111e6d2cff700cd3e517150a76377c34cbf4f70
+              pullPolicy: Always
+            env:
+              TZ: ${TIMEZONE}
+
     service:
       main:
         ports:
           http:
             port: 8989
         type: ClusterIP
-    
+
 #    volumeClaimTemplates:
 #      - name: config
 #        mountPath: /config
 #        accessMode: ReadWriteOnce
 #        size: 3Gi
 #        storageClass: longhorn
+    ingress:
+      main:
+        enabled: true
+        annotations:
+          hajimari.io/enable: 'true'
+          hajimari.io/icon: television-box
+          hajimari.io/group: Media
+          cert-manager.io/cluster-issuer: letsencrypt-production
+          traefik.ingress.kubernetes.io/router.entrypoints: websecure
+          traefik.ingress.kubernetes.io/router.middlewares: networking-chain-authelia@kubernetescrd
+        hosts:
+          - host: &uri sonarr.${SECRET_DEV_DOMAIN}
+            paths:
+              - path: /
+                pathType: Prefix
+                service:
+                  name: main
+                  port: http
+        tls:
+          - hosts:
+              - *uri
+            secretName: *uri
+        className: traefik
     persistence:
       config:
         enabled: true
-        existingClaim: "sonarr-config-volume"
-    
+        existingClaim: sonarr-config-volume
       omoikane:
         enabled: true
         type: custom
@@ -65,7 +86,8 @@ spec:
           nfs:
             server: ${NAS_ADDR}
             path: /volume1/omoikane
-        mountPath: /omoikane
+        globalMounts:
+          - path: /omoikane
       backups:
         enabled: true
         type: custom
@@ -73,7 +95,8 @@ spec:
           nfs:
             server: ${NAS_ADDR}
             path: /volume1/backups/arr
-        mountPath: /config/Backups
+        globalMounts:
+          - path: /config/Backups
       downloads:
         enabled: true
         type: custom
@@ -81,28 +104,7 @@ spec:
           nfs:
             server: ${NAS_ADDR}
             path: /volume2/downloads
-        mountPath: /downloads
-
-    ingress:
-      main:
-        enabled: true
-        ingressClassName: "traefik"
-        annotations:
-          hajimari.io/enable: "true"
-          hajimari.io/icon: "television-box"
-          hajimari.io/group: "Media"
-          cert-manager.io/cluster-issuer: "letsencrypt-production"
-          traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
-          traefik.ingress.kubernetes.io/router.middlewares: networking-chain-authelia@kubernetescrd
-        hosts:
-          - host: &uri "sonarr.${SECRET_DEV_DOMAIN}"
-            paths:
-              - path: /
-                pathType: Prefix
-        tls:
-          - hosts:
-              - *uri
-            secretName: *uri
-    nodeSelector:
-      node-role.kubernetes.io/worker: "true"
----
+        globalMounts:
+          - path: /downloads
+    podLabels:
+      app: *appname 
