@@ -13,3 +13,8 @@ generatorOptions:
     kustomize.toolkit.fluxcd.io/substitute: disabled
   labels:
     grafana_dashboard: "true"
+patches:
+  - path: remove-annotations-patch.yaml
+    target:
+      kind: CustomResourceDefinition
+      name: redisfailovers.databases.spotahome.com
