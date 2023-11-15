@@ -9,7 +9,7 @@ spec:
       main:
         initContainers:
           init-db:
-            image: 
+            image:
               repository: ghcr.io/onedr0p/postgres-initdb
               tag: 14.8
             env:

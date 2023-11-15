@@ -5,36 +5,34 @@ metadata:
   namespace: storage
 spec:
   values:
-    controllers:
-      main:
-        initContainers:
-          init-db:
-            image: 
-              repository: ghcr.io/onedr0p/postgres-initdb
-              tag: 14.8
-            env:
-              - name: POSTGRES_HOST
-                valueFrom:
-                  secretKeyRef:
-                    name: *appname
-                    key: DB_HOST
-              - name: POSTGRES_DB
-                valueFrom:
-                  secretKeyRef:
-                    name: *appname
-                    key: DB_NAME
-              - name: POSTGRES_SUPER_PASS
-                valueFrom:
-                  secretKeyRef:
-                    name: postgres-superuser
-                    key: password
-              - name: POSTGRES_USER
-                valueFrom:
-                  secretKeyRef:
-                    name: *appname
-                    key: DB_NAME
-              - name: POSTGRES_PASS
-                valueFrom:
-                  secretKeyRef:
-                    name: *appname
-                    key: DB_PASSWORD
+    initContainers:
+      init-db:
+        image: 
+          repository: ghcr.io/onedr0p/postgres-initdb
+          tag: 14.8
+        env:
+          - name: POSTGRES_HOST
+            valueFrom:
+              secretKeyRef:
+                name: *appname
+                key: DB_HOST
+          - name: POSTGRES_DB
+            valueFrom:
+              secretKeyRef:
+                name: *appname
+                key: DB_NAME
+          - name: POSTGRES_SUPER_PASS
+            valueFrom:
+              secretKeyRef:
+                name: postgres-superuser
+                key: password
+          - name: POSTGRES_USER
+            valueFrom:
+              secretKeyRef:
+                name: *appname
+                key: DB_NAME
+          - name: POSTGRES_PASS
+            valueFrom:
+              secretKeyRef:
+                name: *appname
+                key: DB_PASSWORD

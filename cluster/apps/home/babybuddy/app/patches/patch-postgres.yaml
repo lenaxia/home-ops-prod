@@ -9,14 +9,14 @@ spec:
       main:
         initContainers:
           init-db:
-            image: 
+            image:
               repository: ghcr.io/onedr0p/postgres-initdb
               tag: 14.8
             env:
               - name: POSTGRES_HOST
                 valueFrom:
                   secretKeyRef:
-                    name: *appname
+                    name: &appname babybuddy
                     key: DB_HOST
               - name: POSTGRES_DB
                 valueFrom:

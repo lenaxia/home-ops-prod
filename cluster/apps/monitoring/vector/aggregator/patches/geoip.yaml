@@ -1,4 +1,3 @@
----
 # yaml-language-server: $schema=https://kubernetes-schemas.devbu.io/helmrelease_v2beta1.json
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
@@ -11,16 +10,16 @@ spec:
       main:
         initContainers:
           init-geoip:
-            image: 
+            image:
               repository: docker.io/maxmindinc/geoipupdate
               tag: v6.0
             env:
               - name: GEOIPUPDATE_EDITION_IDS
                 value: GeoLite2-City
               - name: GEOIPUPDATE_FREQUENCY
-                value: "0"
+                value: '0'
               - name: GEOIPUPDATE_VERBOSE
-                value: "true"
+                value: 'true'
             envFrom:
               - secretRef:
                   name: vector-aggregator-secret

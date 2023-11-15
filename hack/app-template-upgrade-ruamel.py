@@ -6,6 +6,8 @@ from ruamel.yaml import YAML
 
 LOG = logging.getLogger('app-template-upgrade')
 
+helmReleaseNames = ["helmrelease.yaml", "helm-release.yaml"]
+
 
 class MyDumper(YAML):
     def increase_indent(self, flow=False, indentless=False):
@@ -59,6 +61,12 @@ def should_process_template(args, filepath, data):
         return False
     return load_key(data, 'spec.chart.spec.chart') == 'app-template' and load_key(data, 'spec.chart.spec.version') < '2.0.2'
 
+def should_process_patch(args, filepath, data):
+    if args.skip_version_check and load_key(data, 'spec.values.controllers'):
+        LOG.info(f'Probably already upgraded as "controllers" key exists, skipping {filepath}')
+        print(f'Probably already upgraded as "controllers" key exists, skipping {filepath}')
+        return False
+    return 'patches' in filepath.split(os.sep) and data['kind'] == 'HelmRelease' and not load_key(data, 'spec.values.controllers')
 
 def main():
     parser = argparse.ArgumentParser('app-template-upgrade')
@@ -69,7 +77,7 @@ def main():
 
     for root, _, files in os.walk(args.d):
         for file in files:
-            if file != 'helm-release.yaml':
+            if file not in helmReleaseNames and 'patches' not in root.split(os.sep):
                 continue
             filepath = os.path.join(root, file)
             try:
@@ -81,21 +89,24 @@ def main():
             if data['kind'] != 'HelmRelease':
                 continue
 
-            if should_process_template(args, filepath, data):
+            if should_process_template(args, filepath, data) or should_process_patch(args, filepath, data):
+                print(f"{should_process_template(args, filepath, data)} or {should_process_patch(args, filepath, data)}")
                 try:
+                    if 'patches' not in root.split(os.sep) and file in helmReleaseNames:
+                        # then we are not operating on a patch and we should upgrade the chart version
+                        data['spec']['chart']['spec']['version'] = '2.0.2'
                     process(filepath, data)
                 except Exception as exc:
                     LOG.error(f'failed to process: {filepath}, script is not good enough - will need manual intervention', exc_info=exc)
                     LOG.error(f'{exc}')
                     continue
-
                 if not args.yeet:
                     return
 
 
 def process(filepath, data):
     new = deepcopy(data)
-    new['spec']['chart']['spec']['version'] = '2.0.2'
+    #new['spec']['chart']['spec']['version'] = '2.0.2'
     helm_values = new['spec'].pop('values')
     new_helm_values = deepcopy(helm_values)
 
@@ -198,12 +209,25 @@ def process_persistence(data):
 
 
 def process_init_container(data):
-    if image := data.pop('image', None):
+    image = data.get('image')
+
+    # Check if image is a string and needs processing
+    if isinstance(image, str):
         image_split = image.split(':', 1)
-        data['image'] = {
-            'repository': image_split[0],
-            'tag': image_split[1],
-        }
+        if len(image_split) == 2:
+            data['image'] = {
+                'repository': image_split[0],
+                'tag': image_split[1],
+            }
+        else:
+            LOG.error(f'Image format incorrect, expected "repository:tag", got: {image}')
+    # Check if image is a map with 'repository' and 'tag'
+    elif isinstance(image, dict):
+        if 'repository' not in image or 'tag' not in image:
+            LOG.error('Image is incorrectly formatted. Expected keys "repository" and "tag"')
+    else:
+        LOG.error(f'Unexpected image data type: {type(image).__name__}')
+
     return data
 
 

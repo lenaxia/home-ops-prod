@@ -1,4 +1,3 @@
----
 # yaml-language-server: $schema=https://kubernetes-schemas.devbu.io/helmrelease_v2beta1.json
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
@@ -18,27 +17,27 @@ spec:
         workingDir: /config
         args:
           - --auth
-          - "none"
+          - none
           - --user-data-dir
-          - "/config/.vscode"
+          - /config/.vscode
           - --extensions-dir
-          - "/config/.vscode"
+          - /config/.vscode
         ingress:
           enabled: true
-          ingressClassName: "traefik"
+          ingressClassName: traefik
           annotations:
             cert-manager.io/cluster-issuer: letsencrypt-production
-            hajimari.io/appName: "Hass Config"
+            hajimari.io/appName: Hass Config
             hajimari.io/icon: cib:visual-studio-code
-            hajimari.io/group: *namespace
+            hajimari.io/group: &namespace home
           hosts:
-            - host: &host "hass-code.${SECRET_DEV_DOMAIN}"
+            - host: &host hass-code.${SECRET_DEV_DOMAIN}
               paths:
                 - path: /
                   pathType: Prefix
           tls:
             - hosts:
-              - *host
+                - *host
               secretName: *host
         volumeMounts:
           - name: config
