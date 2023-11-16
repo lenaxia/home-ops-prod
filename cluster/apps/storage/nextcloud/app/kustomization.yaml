@@ -12,4 +12,4 @@ resources:
   - middlewares.yaml
   - servicemonitor.yaml
   - config/vector.yaml
-  - redis
+    #- redis
