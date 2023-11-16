@@ -19,7 +19,7 @@ resources:
   #- ./kube-system/metrics-server  # k3s already comes with a metrics server
 
   # Storage
-  - ./storage/nextcloud/ks.yaml
+  #- ./storage/nextcloud/ks.yaml
   - ./storage/kopia-web/ks.yaml
   - ./storage/longhorn/ks.yaml
   - ./storage/minio/ks.yaml
@@ -47,7 +47,7 @@ resources:
   - ./home/frigate/ks.yaml
   - ./home/zwavejs/ks.yaml
   - ./home/mosquitto/ks.yaml
-  - ./home/hercules/ks.yaml
+    #- ./home/hercules/ks.yaml
   #- ./home/fasten/ks.yaml
 
   # Monitoring Namespace
