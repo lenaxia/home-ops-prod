@@ -386,22 +386,22 @@ spec:
       failureThreshold: 30
       successThreshold: 1
 
-    affinity:
-      podAffinity:
-        requiredDuringSchedulingIgnoredDuringExecution:
-          - labelSelector:
-              matchExpressions:
-                - key: app.kubernetes.io/instance
-                  operator: In
-                  values:
-                    - nextcloud
-                - key: app.kubernetes.io/component
-                  operator: In
-                  values:
-                    - redis
-            topologyKey: kubernetes.io/hostname
-            namespaces:
-              - storage
+        #    affinity:
+        #      podAffinity:
+        #        requiredDuringSchedulingIgnoredDuringExecution:
+        #          - labelSelector:
+        #              matchExpressions:
+        #                - key: app.kubernetes.io/instance
+        #                  operator: In
+        #                  values:
+        #                    - nextcloud
+        #                - key: app.kubernetes.io/component
+        #                  operator: In
+        #                  values:
+        #                    - redis
+        #            topologyKey: kubernetes.io/hostname
+        #            namespaces:
+        #              - storage
 
     ## Prometheus Exporter / Metrics
     ##
