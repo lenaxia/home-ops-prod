@@ -8,8 +8,6 @@ metadata:
   labels:
     substitution.flux.home.arpa/enabled: "true"
 spec:
-  dependsOn:
-    - name: cluster-media-sonarr
   path: ./cluster/apps/media/jellyfin/app
   prune: true
   sourceRef:
