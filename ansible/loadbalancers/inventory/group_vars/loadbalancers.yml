@@ -8,7 +8,7 @@ loadbalancers:
       traffic_mode: tcp
       frontend_port: 6443   # health check will be created on port +1
       backend_port: 6443
-      balance: roundrobin
+      balance: leastconn
       monitor_uri: /healthz
   - name: kube_cp_dev
     group: controlplane_dev
