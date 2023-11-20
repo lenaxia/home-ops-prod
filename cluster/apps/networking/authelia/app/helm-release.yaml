@@ -292,6 +292,8 @@ spec:
         - domain: 
             # Games
             - "hercules-renewal.${SECRET_DEV_DOMAIN}"
+            - "hercules-classic.${SECRET_DEV_DOMAIN}"
+            - "games.${SECRET_DEV_DOMAIN}"
             #media
             - "w.${SECRET_DEV_DOMAIN}"
             - "office.${SECRET_DEV_DOMAIN}"
