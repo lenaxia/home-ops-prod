@@ -4,6 +4,8 @@ kind: PersistentVolumeClaim
 metadata:
   name: mariadb-data-volume
   namespace: databases
+  labels:
+    snapshot.home.arpa/enabled: "true"
 spec:
   accessModes:
     - ReadWriteOnce
