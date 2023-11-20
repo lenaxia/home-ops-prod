@@ -53,6 +53,6 @@ done
 
 for sql_file in /docker-entrypoint-initdb.d/*.sql; do
     echo "Executing $sql_file"
-    echo "mysql -h ${INIT_MYSQL_HOST} -u ${INIT_MYSQL_USER} -p${INIT_MYSQL_PASS} ${INIT_MYSQL_DBNAME} < $sql_file"
-    mysql -h ${INIT_MYSQL_HOST} -u ${INIT_MYSQL_USER} -p${INIT_MYSQL_PASS} ${INIT_MYSQL_DBNAME} < $sql_file
+    echo "mysql -h ${INIT_MYSQL_HOST} -u ${INIT_MYSQL_USER} -p ${INIT_MYSQL_PASS} ${INIT_MYSQL_DBNAME} < $sql_file"
+    mysql -h ${INIT_MYSQL_HOST} -u ${INIT_MYSQL_USER} -p ${INIT_MYSQL_PASS} ${INIT_MYSQL_DBNAME} < $sql_file
 done
