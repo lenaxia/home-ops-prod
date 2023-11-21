@@ -88,7 +88,7 @@ resources:
   - ./utilities/librespeed/ks.yaml
   - ./utilities/guacamole/ks.yaml
   - ./utilities/ltb-project/ks.yaml
-  - ./utilities/pgadmin/ks.yaml
+    #- ./utilities/pgadmin/ks.yaml
   - ./utilities/podinfo/ks.yaml
   - ./utilities/echo-server/ks.yaml
   - ./utilities/brother-ql-web/ks.yaml
