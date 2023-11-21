@@ -103,7 +103,7 @@ spec:
       config-local-py:
         enabled: true
         type: configMap
-        name: config_local-py
+        name: config-local-py
         globalMounts:
           - path: /pgadmin4/config_local.py
             subPath: config_local.py
