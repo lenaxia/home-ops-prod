@@ -24,7 +24,7 @@ OAUTH2_CONFIG = [
         # Ex: https://github.com/login/oauth/authorize
         'OAUTH2_AUTHORIZATION_URL': "https://authelia.${SECRET_DEV_DOMAIN}/api/oidc/authorization",
         # server metadata url might optional for your provider
-        'OAUTH2_SERVER_METADATA_URL': None,
+        'OAUTH2_SERVER_METADATA_URL': 'https://authelia.${SECRET_DEV_DOMAIN}/.well-known/openid-configuration',
         # Oauth base url, ex: https://api.github.com/
         'OAUTH2_API_BASE_URL': "https://authelia.${SECRET_DEV_DOMAIN}/",
         # Name of the Endpoint, ex: user
