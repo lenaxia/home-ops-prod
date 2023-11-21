@@ -537,6 +537,24 @@ spec:
             scopes: ["openid", "profile", "email"]
             redirect_uris: ["https://login.tailscale.com/a/oauth_response"]
             userinfo_signing_algorithm: none
+          - id: minio
+            description: MinIO
+            secret: ${SECRET_MINIO_OAUTH_CLIENT_SECRET}
+            public: false
+            authorization_policy: one_factor
+            consent_mode: implicit
+            pre_configured_consent_duration: 1y
+            scopes: ["openid", "profile", "email"]
+            redirect_uris: ["https://minio.${SECRET_DEV_DOMAIN}"]
+          - id: pgadmin
+            description: PGAdmin
+            secret: ${SECRET_PGADMIN_OAUTH_CLIENT_SECRET}
+            public: false
+            authorization_policy: one_factor
+            consent_mode: implicit
+            pre_configured_consent_duration: 1y
+            scopes: ["openid", "profile", "email"]
+            redirect_uris: ["https://pgadmin.${SECRET_DEV_DOMAIN}/oauth2/authorize"]
           - id: grafana
             description: Grafana
             secret: ${SECRET_GRAFANA_OAUTH_CLIENT_SECRET}
