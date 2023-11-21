@@ -39,7 +39,7 @@ spec:
               pullPolicy: Always
             envFrom:
               - configMapRef:
-                  name: *app 
+                  name: pgadmin
             env:
               TZ: ${TIMEZONE}
             probes:
