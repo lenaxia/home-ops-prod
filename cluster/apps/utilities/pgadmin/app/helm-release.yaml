@@ -88,11 +88,11 @@ spec:
             secretName: *uri
         className: traefik
     persistence:
-      config:
-        enabled: true
-        existingClaim: pgadmin-config
-        globalMounts:
-          - path: /var/lib/pgadmin
+      #      config:
+      #        enabled: true
+      #        existingClaim: pgadmin-config
+      #        globalMounts:
+      #          - path: /var/lib/pgadmin
       server-json:
         enabled: true
         type: configMap
