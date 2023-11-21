@@ -12,7 +12,7 @@ OAUTH2_CONFIG = [
         # The display name, ex: Google
         'OAUTH2_DISPLAY_NAME': '${SECRET_CLOUD_NAME}',
         # Oauth client id
-        'OAUTH2_CLIENT_ID': pgadmin,
+        'OAUTH2_CLIENT_ID': 'pgadmin',
         # Oauth secret
         'OAUTH2_CLIENT_SECRET': '${SECRET_PGADMIN_OAUTH_CLIENT_SECRET}',
         # URL to generate a token,
