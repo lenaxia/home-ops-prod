@@ -100,12 +100,12 @@ spec:
         globalMounts:
           - path: /pgadmin4/servers.json
             subPath: servers.json
-      config_local-py:
-        enabled: true
-        type: configMap
-        name: config_local-py
-        globalMounts:
-          - path: /pgadmin4/config_local.py
-            subPath: config_local.py
+              #      config_local-py:
+              #        enabled: true
+              #        type: configMap
+              #        name: config_local-py
+              #        globalMounts:
+              #          - path: /pgadmin4/config_local.py
+              #            subPath: config_local.py
     podAnnotations:
       configmap.reloader.stakater.com/reload: *app

@@ -7,8 +7,6 @@ commonLabels:
 resources:
   - helm-release.yaml
   - secret.sops.yaml
-  - config
-    #  - config-pvc.yaml
 configMapGenerator:
   - name: servers-json
     files:
