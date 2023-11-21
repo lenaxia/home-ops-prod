@@ -11,7 +11,7 @@ configMapGenerator:
   - name: servers-json
     files:
       - ./config/servers.json
-  - name: config_local-py
+  - name: config-local-py
     files:
       - ./config/config_local.py
 generatorOptions:
