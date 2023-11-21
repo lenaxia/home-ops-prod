@@ -35,7 +35,7 @@ OAUTH2_CONFIG = [
         # The claim which is used for the username. If the value is empty the
         # email is used as username, but if a value is provided,
         # the claim has to exist.
-        'OAUTH2_USERNAME_CLAIM': 'preferred_username',
+        'OAUTH2_USERNAME_CLAIM': 'email',
         # Font-awesome icon, ex: fa-github
         'OAUTH2_ICON': 'keycdn',
         # UI button colour, ex: #0000ff
