@@ -1,4 +1,4 @@
-AUTHENTICATION_SOURCES = ['oauth2','internal']
+AUTHENTICATION_SOURCES = ['oauth2']
 
 ##########################################################################
 # OAuth2 Configuration
