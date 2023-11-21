@@ -38,7 +38,7 @@ spec:
               tag: latest
               pullPolicy: Always
             envFrom:
-              - secretRef:
+              - configMapRef:
                   name: *app 
             env:
               TZ: ${TIMEZONE}
