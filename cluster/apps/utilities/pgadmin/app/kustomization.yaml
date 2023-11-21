@@ -9,12 +9,12 @@ resources:
   - secret.sops.yaml
   - config
   - config-pvc.yaml
-configMapGenerator:
-  - name: servers-json
-    files:
-      - ./config/servers.json
-  - name: config_local-py
-    files:
-      - ./config/config_local.py
-generatorOptions:
-  disableNameSuffixHash: true
+    #configMapGenerator:
+    #  - name: servers-json
+    #    files:
+    #      - ./config/servers.json
+    #  - name: config_local-py
+    #    files:
+    #      - ./config/config_local.py
+    #generatorOptions:
+    #  disableNameSuffixHash: true
