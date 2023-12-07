@@ -7,7 +7,7 @@ global
     user haproxy
     group haproxy
     daemon
-    maxconn 256
+    maxconn 1000
 
 defaults
     mode tcp
@@ -49,7 +49,7 @@ backend {{ lb.name }}_backend
     balance {{ lb.config.balance | default('roundrobin') }}
     timeout server  10800s
 {% for host in groups[lb.group] %}
-    server {{ lb.name }}_{{ loop.index0 }} {{ host }}:{{ lb.config.backend_port | default(lb.config.frontend_port) }} check inter 1s
+    server {{ lb.name }}_{{ loop.index0 }} {{ host }}:{{ lb.config.backend_port | default(lb.config.frontend_port) }} check inter 10s
 {% endfor %}
 
 
