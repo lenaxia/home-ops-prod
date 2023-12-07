@@ -10,7 +10,6 @@ metadata:
 spec:
   dependsOn:
     - name: cluster-storage-longhorn
-    - name: cluster-databases-postgres-clusters
   path: ./cluster/apps/home/langserver/app
   prune: true
   sourceRef:

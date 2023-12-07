@@ -33,8 +33,8 @@ spec:
               TZ: ${TIMEZONE}
               PGID: 1000
               PUID: 1000
-              ADMIN_TOKEN: "test123" \
-              LOGLEVEL: "DEBUG" \
+              ADMIN_TOKEN: "test123" 
+              LOGLEVEL: "DEBUG"
               DEFAULT_RATE_LIMIT: 10
 
       # -- Set the application database type
