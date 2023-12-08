@@ -271,6 +271,13 @@ spec:
           resources:
             - "^/api/.*$"
             - "^/api"
+        # LangServer API
+        - domain_regex:
+            - 'lang.*\.${SECRET_DEV_DOMAIN}$'
+          policy: bypass
+          resources:
+            - "^/generate-speech/.*$"
+            - "^/generate-speech"
         # Grocy API
         - domain_regex:
             - 'grocy.*\.${SECRET_DEV_DOMAIN}$'
@@ -285,7 +292,6 @@ spec:
             - "minio.${SECRET_DEV_DOMAIN}"
             - "hass.${SECRET_DEV_DOMAIN}"
             - "ai.${SECRET_DEV_DOMAIN}"
-            - "lang.${SECRET_DEV_DOMAIN}"
           policy: bypass
           networks:
             - private
@@ -322,6 +328,7 @@ spec:
         - domain:
             - "traefik.${SECRET_DEV_DOMAIN}"
             - "code.${SECRET_DEV_DOMAIN}"
+            - "lang.${SECRET_DEV_DOMAIN}"
             #media
             - "tv.${SECRET_DEV_DOMAIN}"
             - "tautulli.${SECRET_DEV_DOMAIN}"
