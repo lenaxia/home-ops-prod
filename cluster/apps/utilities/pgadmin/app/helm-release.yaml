@@ -37,9 +37,9 @@ spec:
               repository: docker.io/dpage/pgadmin4
               tag: latest
               pullPolicy: Always
-            #envFrom:
-            #  - secretRef:
-            #      name: pgadmin
+            envFrom:
+              - secretRef:
+                  name: pgadmin
             env:
               TZ: ${TIMEZONE}
               PGADMIN_SERVER_JSON_FILE: /pgadmin4/servers.json
