@@ -63,9 +63,9 @@ spec:
           - hosts:
               - *uri
             secretName: *uri
-    persistence:
-      config:
-        enabled: true
+              #    persistence:
+              #      config:
+              #        enabled: true
 
     # -- Configures service settings for the chart.
     # @default -- See values.yaml
