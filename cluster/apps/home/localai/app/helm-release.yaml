@@ -77,12 +77,12 @@ spec:
           enabled: false
           size: 6Gi
           accessModes:
-            - ReadWriteOnce
+            - ReadWriteMany
     
           annotations: {}
     
           # Optional
-          storageClass: ~
+          storageClass: longhorn
     
         hostPath:
           enabled: false
