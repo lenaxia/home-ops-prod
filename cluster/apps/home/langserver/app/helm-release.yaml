@@ -26,6 +26,7 @@ spec:
             image:
               repository: ghcr.io/lenaxia/langserver
               tag: main
+              pullPolicy: Always
             envFrom:
               - secretRef:
                   name: *appname 
