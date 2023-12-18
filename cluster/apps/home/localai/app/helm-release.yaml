@@ -16,7 +16,7 @@ spec:
         namespace: flux-system
   # See https://github.com/bjw-s/helm-charts/blob/main/charts/library/common/values.yaml
   values:
-    replicaCount: 1
+    replicaCount: 4
     
     deployment:
       image: quay.io/go-skynet/local-ai:latest
