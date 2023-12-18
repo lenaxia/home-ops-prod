@@ -50,12 +50,11 @@ spec:
     # Prompt templates to include
     # Note: the keys of this map will be the names of the prompt template files
     promptTemplates:
-      {}
-      # ggml-gpt4all-j.tmpl: |
-      #   The prompt below is a question to answer, a task to complete, or a conversation to respond to; decide which and write an appropriate response.
-      #   ### Prompt:
-      #   {{.Input}}
-      #   ### Response:
+       ggml-gpt4all-j.tmpl: |
+         The prompt below is a question to answer, a task to complete, or a conversation to respond to; decide which and write an appropriate response.
+         ### Prompt:
+         {{.Input}}
+         ### Response:
     
     # Models to download at runtime
     models:
@@ -65,7 +64,7 @@ spec:
       # The list of URLs to download models from
       # Note: the name of the file will be the name of the loaded model
       list:
-      #  - url: "https://gpt4all.io/models/ggml-gpt4all-j.bin"
+        - url: "https://gpt4all.io/models/ggml-gpt4all-j.bin"
           # basicAuth: base64EncodedCredentials
     
       # Persistent storage for models and prompt templates.
@@ -74,18 +73,20 @@ spec:
       # storage is used.
       persistence:
         pvc:
-          enabled: false
-          size: 6Gi
+          enabled: true
+          size: 20Gi
           accessModes:
             - ReadWriteMany
     
           annotations: {}
+          labels:
+            snapshot.home.arpa/enabled: "true"
     
           # Optional
           storageClass: longhorn
     
         hostPath:
-          enabled: false
+          enabled: true
           path: "/models"
     
     service:
@@ -98,27 +99,33 @@ spec:
       # service.beta.kubernetes.io/aws-load-balancer-connection-idle-timeout: "1200"
     
     ingress:
-      enabled: false
-      className: ""
+      enabled: true
+      name: localai
       annotations:
-        {}
-        # kubernetes.io/ingress.class: nginx
-        # kubernetes.io/tls-acme: "true"
+        hajimari.io/enable: 'true'
+        hajimari.io/icon: resistor-nodes
+        hajimari.io/appName: LocalAI
+        hajimari.io/group: Home
+        cert-manager.io/cluster-issuer: letsencrypt-production
+        traefik.ingress.kubernetes.io/router.entrypoints: websecure
+        traefik.ingress.kubernetes.io/router.middlewares: networking-chain-authelia@kubernetescrd
       hosts:
-        - host: chart-example.local
+        - host: &uri ai.${SECRET_DEV_DOMAIN}
           paths:
             - path: /
-              pathType: ImplementationSpecific
-      tls: []
-      #  - secretName: chart-example-tls
-      #    hosts:
-      #      - chart-example.local
+              pathType: Prefix
+      tls:
+        - hosts:
+            - *uri
+          secretName: *uri
+      className: traefik
     
-    nodeSelector: {}
+    nodeSelector: 
+      node-role.kubernetes.io/worker: 'true'
     
     tolerations: []
     
     affinity: {}
     
     image:
-      pullPolicy: IfNotPresent
+      pullPolicy: always
