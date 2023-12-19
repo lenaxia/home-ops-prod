@@ -41,7 +41,7 @@ resources:
   - ./home/langserver/ks.yaml
   - ./home/gamevault/ks.yaml
   - ./home/node-red/ks.yaml
-    #- ./home/vscode/ks.yaml
+  - ./home/vscode/ks.yaml
   - ./home/roskills/ks.yaml
   - ./home/localai/ks.yaml
   - ./home/home-assistant/ks.yaml
