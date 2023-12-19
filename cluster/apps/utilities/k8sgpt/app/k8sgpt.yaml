@@ -6,13 +6,18 @@ metadata:
 spec:
   ai:
     enabled: true
-    model: gpt-3.5-turbo
-    backend: openai
-    secret:
-      name: openai-api-key
-      key: openai-api-key
-    # anonymized: false
-    # language: english
+    model: ggml-gpt4all-j
+    backend: localai
+    baseUrl: http://local-ai.home.svc.cluster.local:8080/v1
+      #  ai:
+      #    enabled: true
+      #    model: gpt-3.5-turbo
+      #    backend: openai
+      #    secret:
+      #      name: openai-api-key
+      #      key: openai-api-key
+      #    # anonymized: false
+      #    # language: english
   noCache: false
   repository: ghcr.io/k8sgpt-ai/k8sgpt
   version: v0.3.8
