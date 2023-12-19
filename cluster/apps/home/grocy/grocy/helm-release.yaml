@@ -63,6 +63,7 @@ spec:
     ingress:
       main:
         enabled: true
+        className: traefik
         annotations:
           hajimari.io/enable: 'true'
           hajimari.io/icon: baby-bottle-outline
