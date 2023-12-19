@@ -3,14 +3,14 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
 kind: Kustomization
 metadata:
-  name: cluster-databases-k8sgpt
+  name: cluster-utilities-k8sgpt
   namespace: flux-system
   labels:
     substitution.flux.home.arpa/enabled: "true"
 spec:
   dependsOn:
     - name: cluster-storage-longhorn
-  path: ./cluster/apps/databases/k8sgpt/app
+  path: ./cluster/apps/utilities/k8sgpt/app
   prune: true
   sourceRef:
     kind: GitRepository
@@ -19,7 +19,7 @@ spec:
     - apiVersion: helm.toolkit.fluxcd.io/v2beta1
       kind: HelmRelease
       name: k8sgpt
-      namespace: databases
+      namespace: utilities
   interval: 30m
   retryInterval: 1m
   timeout: 3m
