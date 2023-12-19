@@ -1,0 +1,98 @@
+# yaml-language-server: $schema=https://kubernetes-schemas.devbu.io/helm.toolkit.fluxcd.io/helmrelease_v2beta1.json
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: &appname anythingllm
+  namespace: &namespace home
+spec:
+  interval: 15m
+  chart:
+    spec:
+      chart: app-template
+      version: 2.2.0
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s-charts
+        namespace: flux-system
+  install:
+    createNamespace: true
+    remediation:
+      retries: 5
+  upgrade:
+    remediation:
+      retries: 5
+  values:
+    controllers:
+      main:
+        type: statefulset
+        annotations:
+          reloader.stakater.com/auto: 'true'
+        containers:
+          main:
+            image:
+              repository: mintplexlabs/anythingllm
+              tag: master
+            env:
+              TZ: ${TIMEZONE}
+              LLM_PROVIDER: 'localai'
+              LOCAL_AI_BASE_PATH: 'http://localai.home.svc.cluster.local/v1'
+              LOCAL_AI_MODEL_PREF: 'thebloke__wizardlm-7b-v1-0-uncensored-superhot-8k-ggml__wizardlm-7b-v1.0-superhot-8k.ggmlv3.q3_k_m.bin'
+              LOCAL_AI_MODEL_TOKEN_LIMIT: 4096
+              #LOCAL_AI_API_KEY: "sk-123abc"
+              EMBEDDING_ENGINE: 'localai'
+              EMBEDDING_BASE_PATH: 'http://localai.home.svc.cluster.local/v1'
+              EMBEDDING_MODEL_PREF: 'text-embedding-ada-002'
+              EMBEDDING_MODEL_MAX_CHUNK_LENGTH: 1000 # The max chunk size in chars a string to embed can be
+              STORAGE_DIR: "/app/server/storage"
+              UID: '1000'
+              GID: '1000'
+
+            resources:
+              requests:
+                cpu: 15m
+                memory: 94M
+        statefulset:
+          volumeClaimTemplates:
+            - name: storage
+              accessMode: ReadWriteMany
+              size: 5Gi
+              storageClass: longhorn
+              labels:
+                snapshot.home.arpa/enabled: 'true'
+              globalMounts:
+                - path: /app/server/storage
+    service:
+      main:
+        ports:
+          http:
+            port: 3001
+
+    ingress:
+      main:
+        enabled: true
+        className: traefik
+        annotations:
+          hajimari.io/enable: 'true'
+          hajimari.io/icon: baby-bottle-outline
+          hajimari.io/info: ChatGPT
+          hajimari.io/group: &namespace home
+          cert-manager.io/cluster-issuer: letsencrypt-production
+          traefik.ingress.kubernetes.io/router.entrypoints: websecure
+          traefik.ingress.kubernetes.io/router.middlewares: networking-chain-authelia@kubernetescrd
+        hosts:
+          - host: &uri chat.${SECRET_DEV_DOMAIN}
+            paths:
+              - path: /
+                pathType: Prefix
+                service:
+                  name: main
+                  port: http
+        tls:
+          - hosts:
+              - *uri
+            secretName: *uri
+    # podSecurityContext:
+    #   runAsUser: 1000
+    #   runAsGroup: 1000
+    #   fsGroup: 1000
+    #   fsGroupChangePolicy: "OnRootMismatch"
