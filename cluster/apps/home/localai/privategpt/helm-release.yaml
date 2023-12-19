@@ -46,7 +46,7 @@ spec:
                 memory: 94M
         statefulset:
           volumeClaimTemplates:
-            - name: local_data 
+            - name: local-data 
               accessMode: ReadWriteMany
               size: 5Gi
               storageClass: longhorn
