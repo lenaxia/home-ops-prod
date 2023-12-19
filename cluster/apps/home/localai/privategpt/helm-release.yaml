@@ -31,7 +31,7 @@ spec:
           main:
             image:
               repository: ghcr.io/imartinez/privategpt
-              tag: main
+              tag: sha-6583dc8
             env:
               TZ: ${TIMEZONE}
               PERSIST_DIRECTORY: db
