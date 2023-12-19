@@ -81,7 +81,7 @@ spec:
       persistence:
         pvc:
           enabled: true
-          size: 20Gi
+          size: 100Gi
           accessModes:
             - ReadWriteMany
     
