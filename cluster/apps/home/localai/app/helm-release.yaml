@@ -134,6 +134,15 @@ spec:
     tolerations: []
     
     affinity: {}
+      podAntiAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          - labelSelector:
+              matchExpressions:
+                - key: "app.kubernetes.io/name"
+                  operator: In
+                  values:
+                    - *appname
+            topologyKey: "kubernetes.io/hostname"
     
     image:
       pullPolicy: IfNotPresent 
