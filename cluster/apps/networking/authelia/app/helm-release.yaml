@@ -292,6 +292,7 @@ spec:
             - "minio.${SECRET_DEV_DOMAIN}"
             - "hass.${SECRET_DEV_DOMAIN}"
             - "ai.${SECRET_DEV_DOMAIN}"
+            - "chat.${SECRET_DEV_DOMAIN}"
           policy: bypass
           networks:
             - private
