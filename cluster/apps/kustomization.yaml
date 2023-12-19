@@ -93,3 +93,4 @@ resources:
   - ./utilities/podinfo/ks.yaml
   - ./utilities/echo-server/ks.yaml
   - ./utilities/brother-ql-web/ks.yaml
+  - ./utilities/k8sgpt/ks.yaml
