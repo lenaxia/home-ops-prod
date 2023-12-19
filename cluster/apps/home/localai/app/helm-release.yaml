@@ -4,6 +4,7 @@ metadata:
   name: &appname localai
   namespace: home
 spec:
+  releaseName: *appname
   interval: 5m
   chart:
     spec:
