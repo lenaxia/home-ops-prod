@@ -8,7 +8,7 @@ spec:
     enabled: true
     model: ggml-gpt4all-j
     backend: localai
-    baseUrl: http://local-ai.home.svc.cluster.local:8080/v1
+    baseUrl: http://localai.home.svc.cluster.local:80/v1
       #  ai:
       #    enabled: true
       #    model: gpt-3.5-turbo
