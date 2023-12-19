@@ -134,4 +134,4 @@ spec:
     affinity: {}
     
     image:
-      pullPolicy: always
+      pullPolicy: IfNotPresent 
