@@ -36,3 +36,4 @@ resources:
   - go-skynet-charts.yaml
   - piraeus.yaml
   - backube.yaml
+  - k8sgpt-charts.yaml
