@@ -1,18 +1,15 @@
-apiVersion: apps/v1
-kind: Deployment
+apiVersion: v1
+kind: PersistentVolumeClaim
 metadata:
-  name: localai
-  namespace: home
+    name: generated-images-volume
+    namespace: home
+    labels:
+      app: localai
+      snapshot.home.arpa/enabled: "true"
 spec:
-  template:
-    spec:
-      containers:
-      - name: localai
-        volumeMounts:
-        - mountPath: /tmp/generated/images
-          name: generated-images-volume-mount
-      volumes:
-      - name: generated-images-volume-mount
-        persistentVolumeClaim:
-          claimName: generated-images-volume
-
+    accessModes:
+        - ReadWriteMany
+    storageClassName: longhorn
+    resources:
+        requests:
+            storage: 5Gi
