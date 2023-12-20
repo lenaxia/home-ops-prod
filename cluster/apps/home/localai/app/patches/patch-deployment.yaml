@@ -6,16 +6,13 @@ metadata:
 spec:
   template:
     spec:
-      selector:
-        matchLabels:
-          app.kubernetes.io/instance: localai
-          app.kubernetes.io/name: local-ai
       containers:
       - name: localai
         volumeMounts:
         - mountPath: /tmp/generated/images
-          name: generate-emptydir
+          name: generated-images-volume-mount
       volumes:
-      - name: generate-emptydir
-        emptyDir: {}
+      - name: generated-images-volume-mount
+        persistentVolumeClaim:
+          claimName: generated-images-volume
 
