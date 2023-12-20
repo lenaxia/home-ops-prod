@@ -6,6 +6,7 @@ commonLabels:
   app.kubernetes.io/instance: *app
 resources:
   - helm-release.yaml
+  - images-pvc.yaml
 patches:
   - path: patches/patch-deployment.yaml
     target:

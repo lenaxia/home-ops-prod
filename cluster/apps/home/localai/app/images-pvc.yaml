@@ -1,0 +1,18 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: localai
+  namespace: home
+spec:
+  template:
+    spec:
+      containers:
+      - name: localai
+        volumeMounts:
+        - mountPath: /tmp/generated/images
+          name: generated-images-volume-mount
+      volumes:
+      - name: generated-images-volume-mount
+        persistentVolumeClaim:
+          claimName: generated-images-volume
+
