@@ -7,7 +7,7 @@ commonLabels:
 resources:
   - helm-release.yaml
   - images-pvc.yaml
-patches:
+patchesStrategicMerge:
   - path: patches/patch-deployment.yaml
     target:
       kind: Deployment
