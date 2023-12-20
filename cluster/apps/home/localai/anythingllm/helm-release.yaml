@@ -41,8 +41,8 @@ spec:
               #LOCAL_AI_API_KEY: "sk-123abc"
               EMBEDDING_ENGINE: 'localai'
               EMBEDDING_BASE_PATH: 'http://localai.home.svc.cluster.local/v1'
-              EMBEDDING_MODEL_PREF: 'text-embedding-ada-002'
-              EMBEDDING_MODEL_MAX_CHUNK_LENGTH: 1000 # The max chunk size in chars a string to embed can be
+              EMBEDDING_MODEL_PREF: 'bert-embeddings'
+              EMBEDDING_MODEL_MAX_CHUNK_LENGTH: 500 # The max chunk size in chars a string to embed can be
               STORAGE_DIR: "/app/server/storage"
               UID: '1000'
               GID: '1000'
