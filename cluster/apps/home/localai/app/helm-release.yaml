@@ -19,6 +19,10 @@ spec:
   values:
     fullnameOverride: localai
     replicaCount: 3
+
+    postRenderers:
+    - kustomize:
+        path: ./patches
     
     deployment:
       image: quay.io/go-skynet/local-ai:latest

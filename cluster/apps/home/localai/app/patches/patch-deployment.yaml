@@ -8,7 +8,6 @@ spec:
     spec:
       containers:
       - name: localai
-        image: quay.io/go-skynet/local-ai:latest
         volumeMounts:
         - mountPath: /tmp/generated/images
           name: generated-images-volume-mount
