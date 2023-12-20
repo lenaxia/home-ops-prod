@@ -6,5 +6,8 @@ commonLabels:
   app.kubernetes.io/instance: *app
 resources:
   - helm-release.yaml
-patchesStrategicMerge:
-  - patches/tmpvol.yaml
+patches:
+  - path: patches/patch-deployment.yaml
+    target:
+      kind: Deployment
+      name: ".*"
