@@ -8,7 +8,4 @@ resources:
   - helm-release.yaml
   - images-pvc.yaml
 patchesStrategicMerge:
-  - path: patches/patch-deployment.yaml
-    target:
-      kind: Deployment
-      name: ".*"
+  - patches/patch-deployment.yaml
