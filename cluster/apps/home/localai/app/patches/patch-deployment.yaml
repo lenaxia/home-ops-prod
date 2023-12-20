@@ -6,6 +6,10 @@ metadata:
 spec:
   template:
     spec:
+      selector:
+        matchLabels:
+          app.kubernetes.io/instance: localai
+          app.kubernetes.io/name: local-ai
       containers:
       - name: localai
         volumeMounts:
