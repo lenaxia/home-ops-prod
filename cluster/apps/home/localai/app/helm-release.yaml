@@ -95,7 +95,7 @@ spec:
           storageClass: longhorn
     
         hostPath:
-          enabled: true
+          enabled: false
           path: "/models"
     
     service:

@@ -1,0 +1,15 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: localai
+  namespace: home
+spec:
+  values:
+    deployment:
+      volumes:
+        - name: new-emptydir-volume
+          emptyDir: {}
+      volumeMounts:
+        - name: new-emptydir-volume
+          mountPath: /tmp/generated/images
+
