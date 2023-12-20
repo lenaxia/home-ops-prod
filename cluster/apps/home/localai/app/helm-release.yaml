@@ -42,6 +42,18 @@ spec:
       imagePullSecrets: []
         # - name: secret-names
     
+
+    initContainers:
+      0-prep-db:
+        command: [/bin/sh, -c]
+        args:
+          - |
+            mkdir -p /tmp/generated/images
+            mkdir -p /tmp/generated/audio
+        image:            # use an image with curl
+          repository: ubuntu
+          tag: latest
+
     resources:
       {}
       # We usually recommend not to specify default resources and to leave this as a conscious
