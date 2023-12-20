@@ -10,10 +10,10 @@ spec:
       - name: localai
         image: quay.io/go-skynet/local-ai:latest
         volumeMounts:
-        - mountPath: /tmp/generated/images
-          name: generated-images-volume-mount
+        - mountPath: /tmp/generated
+          name: generated-volume-mount
       volumes:
-      - name: generated-images-volume-mount
+      - name: generated-volume-mount
         persistentVolumeClaim:
-          claimName: generated-images-volume
+          claimName: generated-volume
 
