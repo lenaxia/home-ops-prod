@@ -35,8 +35,8 @@ spec:
             env:
               TZ: ${TIMEZONE}
               BASE_URL: "http://localai.home.svc.cluster.local"
-              OPENAI_API_KEY: "DoesNotMatter"
               HIDE_USER_API_KEY: 1
+              CUSTOM_MODELS: "+thebloke__wizardlm-7b-v1-0-uncensored-superhot-8k-ggml__wizardlm-7b-v1.0-superhot-8k.ggmlv3.q3_k_m.bin=WizardLM-7b"
             #envFrom:
             #  - secretRef:
             #      name: *appname
