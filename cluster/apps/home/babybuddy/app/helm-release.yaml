@@ -29,7 +29,7 @@ spec:
 
             envFrom:
               - secretRef:
-                  name: &appname babybuddy
+                  name: *appname 
 
             env:
               TZ: ${TIMEZONE}
