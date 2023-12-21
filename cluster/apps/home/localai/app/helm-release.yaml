@@ -29,6 +29,7 @@ spec:
       env:
         DEBUG: true
         PRELOAD_MODELS: '[{"id": "huggingface@thebloke__wizardlm-7b-v1-0-uncensored-superhot-8k-ggml__wizardlm-7b-v1.0-superhot-8k.ggmlv3.q3_k_m.bin"}, {"id": "model-gallery@bert-embeddings"}, {"url": "github:go-skynet/model-gallery/stablediffusion.yaml"}]'
+        COMPEL: 0
         threads: 4
         context_size: 512
       modelsPath: "/models"
@@ -42,18 +43,6 @@ spec:
       imagePullSecrets: []
         # - name: secret-names
     
-
-    initContainers:
-      0-prep-db:
-        command: [/bin/sh, -c]
-        args:
-          - |
-            mkdir -p /tmp/generated/images
-            mkdir -p /tmp/generated/audio
-        image:            # use an image with curl
-          repository: ubuntu
-          tag: latest
-
     resources:
       {}
       # We usually recommend not to specify default resources and to leave this as a conscious
