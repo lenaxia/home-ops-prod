@@ -34,7 +34,7 @@ spec:
               tag: v2.9.13
             env:
               TZ: ${TIMEZONE}
-              BASE_URL: "http://localai.home.svc.cluster.local/v1"
+              BASE_URL: "http://localai.home.svc.cluster.local"
               OPENAI_API_KEY: "DoesNotMatter"
               HIDE_USER_API_KEY: 1
             #envFrom:
