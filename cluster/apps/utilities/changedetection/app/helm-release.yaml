@@ -32,7 +32,7 @@ spec:
           main:
             image:
               repository: ghcr.io/dgtlmoon/changedetection.io
-              tag: 0.45.7.3
+              tag: 0.45.9
               pullPolicy: Always
 
             env:
