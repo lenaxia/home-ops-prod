@@ -40,7 +40,7 @@ spec:
       wal:
         compression: bzip2
         maxParallel: 8
-      destinationPath: s3://cnpg-5wxuej/
+      destinationPath: "s3://${S3_CNPG}/"
       endpointURL: http://minio.storage.svc.cluster.local:9000
       serverName: defaultpg-backup-v15
       s3Credentials:
@@ -74,7 +74,7 @@ spec:
         wal:
           compression: bzip2
           maxParallel: 8
-        destinationPath: s3://cnpg-5wxuej/
+        destinationPath: "s3://${S3_CNPG}/"
         endpointURL: http://minio.storage.svc.cluster.local:9000
         serverName: defaultpg-backup-v14
         s3Credentials:

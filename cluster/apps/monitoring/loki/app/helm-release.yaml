@@ -66,7 +66,7 @@ spec:
               s3: null
               endpoint: http://minio.storage.svc.cluster.local:9000
               region: local
-              bucketnames: loki-9fy7zg
+              bucketnames: "${S3_LOKI}"
               insecure: true
               s3forcepathstyle: true
           ring:

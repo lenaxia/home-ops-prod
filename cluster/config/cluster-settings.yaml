@@ -40,3 +40,9 @@ data:
   SVC_HERCULES_RENEWAL_ADDR: "192.168.5.201"
   SVC_RATHENA_CLASSIC_ADDR: "192.168.5.210"
   SVC_RATHENA_RENEWAL_ADDR: "192.168.5.211"
+  
+  S3_CNPG: "cnpg-5wxuej"
+  S3_NEXTCLOUD: "nextcloud-oh7iqq"
+  S3_OUTLINE: "outline-3eyxnvg6"
+  S3_LOKI: "loki-9fy7zg"
+
