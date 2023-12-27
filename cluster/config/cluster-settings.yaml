@@ -60,3 +60,4 @@ data:
   NFS_TAUTULLI: "/volume1/backups/tautulli"
   NFS_BAZARR: "/volume1/backups/bazarr"
   NFS_ARR: "/volume1/backups/arr"
+  NFS_METUBE: "/volume2/downloads/[Plex Temp Library]/YouTube"
