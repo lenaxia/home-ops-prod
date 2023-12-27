@@ -93,8 +93,7 @@ spec:
     pilot:
       enabled: false
     experimental:
-      plugins:
-        enabled: false
+      plugins: {}
     metrics:
       prometheus:
         entryPoint: metrics
