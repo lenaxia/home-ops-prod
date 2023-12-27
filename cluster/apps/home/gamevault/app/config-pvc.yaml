@@ -13,7 +13,7 @@ spec:
   persistentVolumeReclaimPolicy: Retain
   nfs:
     server: ${NAS_ADDR}
-    path: /volume3/k8s-nfs/gamevault-images
+    path: ${NFS_GAMEVAULT_IMAGES}
   mountOptions:
     - nfsvers=3
     - nconnect=8
@@ -47,7 +47,7 @@ spec:
   persistentVolumeReclaimPolicy: Retain
   nfs:
     server: ${NAS_ADDR}
-    path: /volume3/k8s-nfs/gamevault-files
+    path: ${NFS_GAMEVAULT_FILES}
   mountOptions:
     - nfsvers=3
     - nconnect=8

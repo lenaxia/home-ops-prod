@@ -13,7 +13,7 @@ spec:
   persistentVolumeReclaimPolicy: Retain
   nfs:
     server: ${NAS_ADDR}
-    path: /volume3/k8s-nfs/vscode
+    path: ${NFS_VSCODE}
   mountOptions:
     - nfsvers=3
     - nconnect=8

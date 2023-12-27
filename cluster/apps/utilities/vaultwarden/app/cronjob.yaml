@@ -47,7 +47,7 @@ spec:
             - name: backups
               nfs:
                 server: "${NAS_ADDR}"
-                path: /volume1/backups/vaultwarden
+                path: ${NFS_VAULTWARDEN}
 
           securityContext:
             runAsUser: 568

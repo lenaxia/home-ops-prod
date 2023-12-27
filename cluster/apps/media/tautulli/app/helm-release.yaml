@@ -102,6 +102,6 @@ spec:
         volumeSpec:
           nfs:
             server: ${NAS_ADDR}
-            path: /volume1/backups/tautulli
+            path: ${NFS_TAUTULLI}
         globalMounts:
           - path: /config/backups

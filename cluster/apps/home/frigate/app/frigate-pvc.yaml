@@ -18,8 +18,8 @@ spec:
   accessModes: ["ReadWriteMany"]
   persistentVolumeReclaimPolicy: Retain
   nfs:
-    server: "192.168.0.120"
-    path: /volume3/k8s-nfs/frigate
+    server: ${NAS_ADDR}
+    path: ${NFS_FRIGATE}
   mountOptions:
     - nfsvers=3
     - nconnect=8

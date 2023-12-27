@@ -108,7 +108,7 @@ spec:
         volumeSpec:
           nfs:
             server: ${NAS_ADDR}
-            path: /volume1/backups/nzbhydra2
+            path: ${NFS_NZBHYDRA}
         globalMounts:
           - path: /config/backup
     podLabels:
