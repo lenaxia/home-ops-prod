@@ -1,7 +1,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
-  name: &app overseerr
+  name: &app overseerr-oidc
   namespace: media
 spec:
   interval: 15m
@@ -38,8 +38,8 @@ spec:
         containers:
           main:
             image:
-              repository: ghcr.io/linuxserver/overseerr
-              tag: latest
+              repository: ghcr.io/lenaxia/overseerr-oidc
+              tag: oidc-support
               pullPolicy: Always
             env:
               TZ: ${TIMEZONE}
@@ -82,7 +82,7 @@ spec:
           traefik.ingress.kubernetes.io/router.entrypoints: websecure
           traefik.ingress.kubernetes.io/router.middlewares: networking-chain-authelia@kubernetescrd
         hosts:
-          - host: &uri request.${SECRET_DEV_DOMAIN}
+          - host: &uri request2.${SECRET_DEV_DOMAIN}
             paths:
               - path: /
                 pathType: Prefix
@@ -97,6 +97,6 @@ spec:
     persistence:
       config:
         enabled: true
-        existingClaim: overseerr-config-volume
+        existingClaim: overseerr-oidc-config-volume
     podLabels:
-      app: &app overseerr
+      app: &app overseerr-oidc
