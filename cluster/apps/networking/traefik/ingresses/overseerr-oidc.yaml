@@ -45,6 +45,6 @@ metadata:
   namespace: networking
 subsets:
   - addresses:
-      - ip: "192.168.3.120"
+      - ip: "192.168.2.102"
     ports:
       - port: 5055
