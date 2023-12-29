@@ -61,12 +61,12 @@ spec:
               readiness: *probes
               startup:
                 enabled: false
-#    volumeClaimTemplates:
-#      - name: config
-#        mountPath: /config
-#        accessMode: ReadWriteOnce
-#        size: 3Gi
-#        storageClass: longhorn
+    volumeClaimTemplates:
+      - name: config
+        mountPath: /config
+        accessMode: ReadWriteOnce
+        size: 3Gi
+        storageClass: longhorn
     service:
       main:
         ports:
@@ -95,9 +95,5 @@ spec:
               - *uri
             secretName: *uri
         className: traefik
-    persistence:
-      config:
-        enabled: true
-        existingClaim: overseerr-oidc-config-volume
     podLabels:
       app: &app overseerr-oidc
