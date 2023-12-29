@@ -63,7 +63,7 @@ spec:
                 enabled: false
     volumeClaimTemplates:
       - name: config
-        mountPath: /config
+        mountPath: /app/config
         accessMode: ReadWriteOnce
         size: 3Gi
         storageClass: longhorn
