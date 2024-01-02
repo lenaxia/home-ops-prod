@@ -14,3 +14,4 @@ resources:
     #- plex.yaml
   - omoikane-ldap.yaml
   - overseerr-oidc.yaml
+  - overseerr-oidc2.yaml
