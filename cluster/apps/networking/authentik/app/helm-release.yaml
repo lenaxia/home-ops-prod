@@ -41,9 +41,9 @@ spec:
       secret_key: "EAYEESah3DWkS8eGngfS2C6ny3M2afMQdyTtbuDTbmJ3dXDCUJ"
       error_reporting:
           enabled: true
-      redis:
-        host: "${SVC_REDIS}"
-        password: "${SECRET_REDIS_PASSWORD}"
+      #redis:
+      #  host: "${SVC_REDIS}"
+      #  password: "${SECRET_REDIS_PASSWORD}"
       postgresql:
         enabled: true
         host: "${SVC_POSTGRES}"
@@ -60,4 +60,4 @@ spec:
       enabled: false
 
     redis:
-      enabled: false
+      enabled: true
