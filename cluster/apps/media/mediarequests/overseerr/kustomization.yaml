@@ -4,5 +4,5 @@ commonLabels:
   app.kubernetes.io/name: &app overseerr
   app.kubernetes.io/instance: *app
 resources:
-  #- helm-release.yaml
+  - helm-release.yaml
   - config-pvc.yaml
