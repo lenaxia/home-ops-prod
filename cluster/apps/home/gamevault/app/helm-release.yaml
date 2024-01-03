@@ -25,7 +25,7 @@ spec:
           main:
             image:
               repository: phalcode/gamevault-backend
-              tag: 9.0.4
+              tag: 10.0.2
 
             envFrom:
               - secretRef:
