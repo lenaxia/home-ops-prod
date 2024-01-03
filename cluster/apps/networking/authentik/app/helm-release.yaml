@@ -56,6 +56,23 @@ spec:
         #  bucket: authentik-i5rgd92
         #  insecure_skip_verify: true
 
+    ingress:
+      enabled: true
+      ingressClassName: "traefik"
+      annotations: {}
+        cert-manager.io/cluster-issuer: ca-issuer
+        traefik.ingress.kubernetes.io/router.entrypoints: websecure
+      labels: {}
+      hosts:
+        - host: &uri "authentik.${SECRET_DEV_DOMAIN}"
+          paths:
+            - path: "/"
+              pathType: Prefix
+      tls:
+        - hosts:
+            - *uri
+          secretName: *uri
+
     postgresql:
       enabled: false
 
