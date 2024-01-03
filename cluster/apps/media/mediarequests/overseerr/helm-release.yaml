@@ -61,12 +61,15 @@ spec:
               readiness: *probes
               startup:
                 enabled: false
-    volumeClaimTemplates:
-      - name: config
-        mountPath: /app/config
-        accessMode: ReadWriteOnce
-        size: 1Gi
-        storageClass: longhorn
+        statefulset:
+          volumeClaimTemplates:
+            - name: config
+              accessMode: ReadWriteOnce
+              size: 1Gi
+              storageClass: longhorn
+              globalMounts: 
+                - path: /app/config
+
     service:
       main:
         ports:
