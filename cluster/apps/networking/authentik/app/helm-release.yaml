@@ -42,20 +42,19 @@ spec:
       error_reporting:
           enabled: true
       redis:
-        host: "${SVC_REDIS_ADDR}"
+        host: "${SVC_REDIS}"
         password: ""
       postgresql:
-        enabled: false
-        host: "${RURI_ADDR}"
+        enabled: true
+        host: "${SVC_POSTGRES}"
         user: authentik
-        password: FgAyH6m8ga
+        password: hoUJZNRhuZzWUSW8zqEp
         port: 5432
-        s3_backup:
-          host: "http://${NAS_ADDR}:9000"
-          access_key: authentik-sfZkjR9
-          secret_key: mMHKwbdG3XpbsBu
-          bucket: authentik-i5rgd92
-          insecure_skip_verify: true
+        #s3_backup:
+        #  access_key: authentik-sfZkjR9
+        #  secret_key: mMHKwbdG3XpbsBu
+        #  bucket: authentik-i5rgd92
+        #  insecure_skip_verify: true
 
     postgresql:
       enabled: false
