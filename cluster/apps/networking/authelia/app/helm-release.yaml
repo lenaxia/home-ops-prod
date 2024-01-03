@@ -303,6 +303,7 @@ spec:
             - "games.${SECRET_DEV_DOMAIN}"
             #media
             - "w.${SECRET_DEV_DOMAIN}"
+            - "request.${SECRET_DEV_DOMAIN}"
             - "office.${SECRET_DEV_DOMAIN}"
             - "hub.${SECRET_DEV_DOMAIN}"
             #synology
@@ -377,7 +378,6 @@ spec:
             - "library.${SECRET_DEV_DOMAIN}"
             - "plex.${SECRET_DEV_DOMAIN}"
             - "jelly.${SECRET_DEV_DOMAIN}"
-            - "request.${SECRET_DEV_DOMAIN}"
             #storage
             - "paperless.${SECRET_DEV_DOMAIN}"
             #utilities
