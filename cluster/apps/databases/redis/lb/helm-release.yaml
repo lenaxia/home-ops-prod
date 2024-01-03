@@ -41,6 +41,13 @@ spec:
             image:
               repository: public.ecr.aws/docker/library/haproxy
               tag: 2.9.1-alpine
+            resources:
+              requests:
+                cpu: 10m
+                memory: 128Mi
+              limits:
+                cpu: 30m
+                memory: 256Mi
     service:
       main:
         type: LoadBalancer
