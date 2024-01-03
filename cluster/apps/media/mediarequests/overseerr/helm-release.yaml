@@ -38,7 +38,8 @@ spec:
         containers:
           main:
             image:
-              repository: ghcr.io/linuxserver/overseerr
+              #repository: ghcr.io/linuxserver/overseerr
+              repository: ghcr.io/lenaxia/overseerr-oidc
               tag: latest
               pullPolicy: Always
             env:
