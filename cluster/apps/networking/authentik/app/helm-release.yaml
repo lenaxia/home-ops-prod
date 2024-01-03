@@ -43,7 +43,7 @@ spec:
           enabled: true
       redis:
         host: "${SVC_REDIS}"
-        password: ""
+        password: "${SECRET_REDIS_PASSWORD}"
       postgresql:
         enabled: true
         host: "${SVC_POSTGRES}"

@@ -29,7 +29,7 @@ data:
   SVC_MARIADB_PRIMARY_ADDR: "192.168.5.15"
   SVC_MARIADB_SECONDARY_ADDR: "192.168.5.16"
   SVC_REDIS_ADDR: "192.168.5.17"
-  SVC_REDIS: "redis-master.databases.svc.cluster.local"
+  SVC_REDIS: "redis-lb.databases.svc.cluster.local"
   SVC_POSTGRES: "defaultpg-rw.databases.svc.cluster.local"
   SVC_POSTGRES_VER: "14.5"
 
