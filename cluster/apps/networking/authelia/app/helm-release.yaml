@@ -508,11 +508,11 @@ spec:
         smtp:
           enabled: true
           enabledSecret: true
-          host: ${SECRET_SMTP_HOST}
-          port: ${SECRET_SMTP_PORT}
+          host: ${SECRET_AWS_SMTP_HOST}
+          port: ${SECRET_AWS_SMTP_PORT}
           timeout: 5s
-          username: ${SECRET_SMTP_USERNAME}
-          sender: ${SECRET_SMTP_FROM_ADDR}
+          username: ${SECRET_AWS_SMTP_USERNAME}
+          sender: ${SECRET_AWS_SMTP_FROM_ADDR}
           identifier: localhost
           subject: "[TheKaoCloud] {title}"
     
