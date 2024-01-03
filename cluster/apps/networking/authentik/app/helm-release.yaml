@@ -45,7 +45,7 @@ spec:
         host: "${SVC_REDIS_ADDR}"
         password: ""
       postgresql:
-        enabled: true
+        enabled: false
         host: "${RURI_ADDR}"
         user: authentik
         password: FgAyH6m8ga
