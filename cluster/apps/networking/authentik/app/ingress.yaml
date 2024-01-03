@@ -6,7 +6,6 @@ metadata:
     hajimari.io/enable: "true"
     hajimari.io/icon: "alpha-a-circle"
     cert-manager.io/cluster-issuer: ca-issuer
-      #cert-manager.io/cluster-issuer: letsencrypt-staging
     traefik.ingress.kubernetes.io/router.entrypoints: websecure
       #    traefik.ingress.kubernetes.io/router.middlewares: networking-chain-authentik@kubernetescrd
   name: &appname authentik
