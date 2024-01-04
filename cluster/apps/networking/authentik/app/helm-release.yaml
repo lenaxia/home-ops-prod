@@ -39,6 +39,7 @@ spec:
         metallb.universe.tf/address-pool: dev-infra
     authentik:
       secret_key: "EAYEESah3DWkS8eGngfS2C6ny3M2afMQdyTtbuDTbmJ3dXDCUJ"
+      log_level: trace
       error_reporting:
           enabled: true
       #redis:
