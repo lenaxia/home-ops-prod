@@ -26,7 +26,7 @@ resources:
   - ./storage/paperless/ks.yaml
 
   # Networking
-  - ./networking/authentik/ks.yaml
+  #- ./networking/authentik/ks.yaml
   - ./networking/traefik/ks.yaml
   - ./networking/authelia/ks.yaml
   - ./networking/webfinger/ks.yaml
@@ -89,7 +89,7 @@ resources:
   #- ./utilities/changedetection/ks.yaml
   - ./utilities/librespeed/ks.yaml
   - ./utilities/guacamole/ks.yaml
-    #- ./utilities/ltb-project/ks.yaml
+  #- ./utilities/ltb-project/ks.yaml
   - ./utilities/pgadmin/ks.yaml
   - ./utilities/podinfo/ks.yaml
   - ./utilities/echo-server/ks.yaml

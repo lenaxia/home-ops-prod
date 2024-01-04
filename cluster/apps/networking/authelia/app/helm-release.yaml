@@ -292,7 +292,7 @@ spec:
             - "minio.${SECRET_DEV_DOMAIN}"
             - "hass.${SECRET_DEV_DOMAIN}"
             - "ai.${SECRET_DEV_DOMAIN}"
-            - "authentik.${SECRET_DEV_DOMAIN}"
+              #- "authentik.${SECRET_DEV_DOMAIN}"
             - "overseerr.${SECRET_DEV_DOMAIN}"
           policy: bypass
           networks:
@@ -317,7 +317,7 @@ spec:
             - "status.${SECRET_DEV_DOMAIN}"
             - "vault.${SECRET_DEV_DOMAIN}"
             - "speed.${SECRET_DEV_DOMAIN}"
-            - "password.${SECRET_DEV_DOMAIN}"
+              #- "password.${SECRET_DEV_DOMAIN}"
             #storage
             - "s3.${SECRET_DEV_DOMAIN}"
           policy: bypass
