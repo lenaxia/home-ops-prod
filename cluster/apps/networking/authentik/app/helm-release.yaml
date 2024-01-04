@@ -44,7 +44,8 @@ spec:
       #redis:
       #  host: "${SVC_REDIS}"
       #  password: "${SECRET_REDIS_PASSWORD}"
-      #postgresql:
+      postgresql:
+        password: "authentik"
       #  enabled: true
       #  host: "${SVC_POSTGRES}"
       #  user: authentik
@@ -75,6 +76,7 @@ spec:
 
     postgresql:
       enabled: true 
+      postgresqlPassword: "authentik"
 
     redis:
       enabled: true
