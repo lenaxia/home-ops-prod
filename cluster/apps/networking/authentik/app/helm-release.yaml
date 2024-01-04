@@ -77,4 +77,4 @@ spec:
       enabled: true 
 
     redis:
-      enabled true
+      enabled: true
