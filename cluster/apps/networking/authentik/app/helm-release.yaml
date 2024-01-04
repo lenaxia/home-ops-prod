@@ -44,12 +44,12 @@ spec:
       #redis:
       #  host: "${SVC_REDIS}"
       #  password: "${SECRET_REDIS_PASSWORD}"
-      postgresql:
-        enabled: true
-        host: "${SVC_POSTGRES}"
-        user: authentik
-        password: hoUJZNRhuZzWUSW8zqEp
-        port: 5432
+      #postgresql:
+      #  enabled: true
+      #  host: "${SVC_POSTGRES}"
+      #  user: authentik
+      #  password: hoUJZNRhuZzWUSW8zqEp
+      #  port: 5432
         #s3_backup:
         #  access_key: authentik-sfZkjR9
         #  secret_key: mMHKwbdG3XpbsBu
@@ -74,7 +74,7 @@ spec:
           secretName: *uri
 
     postgresql:
-      enabled: false
+      enabled: true 
 
     redis:
-      enabled: true
+      enabled true
