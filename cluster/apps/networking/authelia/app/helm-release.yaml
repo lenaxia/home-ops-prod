@@ -1,4 +1,4 @@
----
+--
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
@@ -515,7 +515,7 @@ spec:
           timeout: 5s
           username: ${SECRET_AWS_SMTP_USERNAME}
           sender: ${SECRET_AWS_SMTP_FROM_ADDR}
-          identifier: localhost
+          identifier: thekao.cloud
           subject: "[TheKaoCloud] {title}"
     
       identity_providers:
