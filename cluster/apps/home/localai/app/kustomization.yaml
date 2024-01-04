@@ -6,4 +6,3 @@ commonLabels:
   app.kubernetes.io/instance: *app
 resources:
   - helm-release.yaml
-  - generated-pvc.yaml

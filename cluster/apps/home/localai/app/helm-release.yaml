@@ -25,7 +25,8 @@ spec:
         path: ./patches
     
     deployment:
-      image: quay.io/go-skynet/local-ai:latest
+      image: quay.io/go-skynet/local-ai
+      tag: latest
       env:
         DEBUG: true
         PRELOAD_MODELS: '[{"id": "huggingface@thebloke__wizardlm-7b-v1-0-uncensored-superhot-8k-ggml__wizardlm-7b-v1.0-superhot-8k.ggmlv3.q3_k_m.bin"}, {"id": "model-gallery@bert-embeddings"}, {"url": "github:go-skynet/model-gallery/stablediffusion.yaml"}]'
@@ -39,7 +40,7 @@ spec:
       prompt_templates:
         # To use cloud provided (eg AWS) image, provide it like: 1234356789.dkr.ecr.us-REGION-X.amazonaws.com/busybox
         image: busybox
-      pullPolicy: IfNotPresent
+      pullPolicy: always
       imagePullSecrets: []
         # - name: secret-names
     
@@ -81,27 +82,44 @@ spec:
         - url: "https://gpt4all.io/models/ggml-gpt4all-j.bin"
           # basicAuth: base64EncodedCredentials
     
-      # Persistent storage for models and prompt templates.
-      # PVC and HostPath are mutually exclusive. If both are enabled,
-      # PVC configuration takes precedence. If neither are enabled, ephemeral
-      # storage is used.
-      persistence:
-        pvc:
-          enabled: true
-          size: 100Gi
-          accessModes:
-            - ReadWriteMany
+
+    initContainers: []
+    # Example:
+    # - name: my-init-container
+    #   image: my-init-image
+    #   imagePullPolicy: IfNotPresent
+    #   command: ["/bin/sh", "-c", "echo init"]
+    #   volumeMounts:
+    #     - name: my-volume
+    #       mountPath: /path/to/mount
     
-          annotations: {}
-          labels:
-            snapshot.home.arpa/enabled: "true"
+    sidecarContainers: []
+    # Example:
+    # - name: my-sidecar-container
+    #   image: my-sidecar-image
+    #   imagePullPolicy: IfNotPresent
+    #   ports:
+    #     - containerPort: 1234
     
-          # Optional
-          storageClass: longhorn
-    
-        hostPath:
-          enabled: false
-          path: "/models"
+    # Persistent storage for models and prompt templates.
+    # PVC and HostPath are mutually exclusive. If both are enabled,
+    # PVC configuration takes precedence. If neither are enabled, ephemeral
+    # storage is used.
+    persistence:
+      models: 
+        enabled: true
+        annotations: {}
+        storageClass: longhorn
+        accessModes: ReadWriteMany
+        size: 60Gi
+        globalMount: /models
+      output:
+        enabled: true
+        annotations: {}
+        storageClass: longhorn
+        accessModes: ReadWriteMany
+        size: 5Gi
+        globalMount: /tmp/generated
     
     service:
       type: ClusterIP
@@ -151,5 +169,3 @@ spec:
             topologyKey: "kubernetes.io/hostname"
 
     
-    image:
-      pullPolicy: IfNotPresent 
