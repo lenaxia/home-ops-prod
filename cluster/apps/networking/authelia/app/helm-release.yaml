@@ -293,6 +293,7 @@ spec:
             - "hass.${SECRET_DEV_DOMAIN}"
             - "ai.${SECRET_DEV_DOMAIN}"
             - "authentik.${SECRET_DEV_DOMAIN}"
+            - "overseerr.${SECRET_DEV_DOMAIN}"
           policy: bypass
           networks:
             - private
