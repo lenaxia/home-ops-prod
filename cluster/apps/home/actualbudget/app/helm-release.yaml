@@ -53,7 +53,7 @@ spec:
       main:
         ports:
           http:
-            port: 80
+            port: 5006
 
     ingress:
       main:
