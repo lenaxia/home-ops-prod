@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta1
+epiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
   name: &appname calibre-web
@@ -52,8 +52,6 @@ spec:
               requests:
                 cpu: 15m
                 memory: 249M
-              limits:
-                memory: 299M
     service:
       main:
         ports:
