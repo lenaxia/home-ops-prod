@@ -52,8 +52,6 @@ spec:
               requests:
                 cpu: 15m
                 memory: 249M
-              limits:
-                memory: 2G
     service:
       main:
         ports:
