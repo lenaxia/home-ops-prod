@@ -50,7 +50,7 @@ spec:
               PUID: '1000'
             resources:
               requests:
-                cpu: 15m
+                cpu: 50m
                 memory: 249M
     service:
       main:
