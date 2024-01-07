@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: temp-pod2
+  namespace: databases
+spec:
+  containers:
+  - name: alpine
+    image: alpine
+    command: ["/bin/sh"]
+    args: ["-c", "sleep infinity"]
+    volumeMounts:
+    - mountPath: "/var/lib/postgresql/data"
+      name: pgdata-volume
+  volumes:
+  - name: pgdata-volume
+    persistentVolumeClaim:
+      claimName: defaultpg-3
+  restartPolicy: Never
+

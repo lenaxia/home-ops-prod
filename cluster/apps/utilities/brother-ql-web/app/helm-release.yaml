@@ -66,9 +66,17 @@ spec:
                 service:
                   name: main
                   port: http
+          - host: &uri2 label.${SECRET_DEV_DOMAIN}
+            paths:
+              - path: /
+                pathType: Prefix
+                service:
+                  name: main
+                  port: http
         tls:
           - hosts:
               - *uri
+              - *uri2
             secretName: *uri
     # podSecurityContext:
     #   runAsUser: 1000
