@@ -24,8 +24,8 @@ spec:
         containers:
           main:
             image:
-              repository: lscr.io/linuxserver/invidious
-              tag: 1.1.1
+              repository: quay.io/invidious/invidious
+              tag: 2024.01.10-1c0b420
 
             envFrom:
               - secretRef:
