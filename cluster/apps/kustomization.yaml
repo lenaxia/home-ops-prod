@@ -77,7 +77,7 @@ resources:
   - ./media/nzbget/ks.yaml
   - ./media/nzbhydra2/ks.yaml
   - ./media/metube/ks.yaml
-  - ./media/invidious/ks.yaml
+    #- ./media/invidious/ks.yaml
   - ./media/mediarequests/ks.yaml
   - ./media/calibre/ks.yaml
   - ./media/outline/ks.yaml
