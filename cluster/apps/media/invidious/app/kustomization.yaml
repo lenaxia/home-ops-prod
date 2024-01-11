@@ -17,18 +17,18 @@ generatorOptions:
   disableNameSuffixHash: true
   annotations:
     kustomize.toolkit.fluxcd.io/substitute: disabled
-vars:
-  - name: POSTGRES_USER
-    objref:
-      kind: Secret
-      name: invidious
-      apiVersion: v1
-    fieldref:
-      fieldpath: data.POSTGRES_USER
-  - name: POSTGRES_PASS
-    objref:
-      kind: Secret
-      name: invidious
-      apiVersion: v1
-    fieldref:
-      fieldpath: data.POSTGRES_PASS
+      #vars:
+      #  - name: POSTGRES_USER
+      #    objref:
+      #      kind: Secret
+      #      name: invidious
+      #      apiVersion: v1
+      #    fieldref:
+      #      fieldpath: data.POSTGRES_USER
+      #  - name: POSTGRES_PASS
+      #    objref:
+      #      kind: Secret
+      #      name: invidious
+      #      apiVersion: v1
+      #    fieldref:
+      #      fieldpath: data.POSTGRES_PASS

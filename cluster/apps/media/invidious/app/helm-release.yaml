@@ -34,6 +34,16 @@ spec:
             env:
               TZ: ${TIMEZONE}
 
+    persistence:
+      config-file:
+        enabled: true
+        type: configMap
+        name: invidious-configmap
+        readOnly: true
+        globalMounts:
+          - path: /config/config.yml
+            subPath: config.yml
+
       # -- Set the application database type
     service:
       main:
