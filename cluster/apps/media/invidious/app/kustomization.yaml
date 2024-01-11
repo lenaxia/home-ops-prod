@@ -1,0 +1,34 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: media
+commonLabels:
+  app.kubernetes.io/name: &app invidious
+  app.kubernetes.io/instance: *app
+resources:
+  - helm-release.yaml
+  - secret.sops.yaml
+patchesStrategicMerge:
+  - patches/postgres.yaml
+configMapGenerator:
+  - name: invidious-configmap
+    files:
+      - config.yml=./config/config.yaml
+generatorOptions:
+  disableNameSuffixHash: true
+  annotations:
+    kustomize.toolkit.fluxcd.io/substitute: disabled
+vars:
+  - name: POSTGRES_USER
+    objref:
+      kind: Secret
+      name: invidious
+      apiVersion: v1
+    fieldref:
+      fieldpath: data.POSTGRES_USER
+  - name: POSTGRES_PASS
+    objref:
+      kind: Secret
+      name: invidious
+      apiVersion: v1
+    fieldref:
+      fieldpath: data.POSTGRES_PASS
