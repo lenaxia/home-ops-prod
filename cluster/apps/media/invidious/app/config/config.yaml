@@ -11,7 +11,7 @@
 db:
   user: invidious
   password: e956G3YMvvd269VeeMJhXFiU2
-  host: $(SVC_POSTGRES)
+  host: defaultpg-rw.databases.svc.cluster.local
   port: 5432
   dbname: invidious
 
