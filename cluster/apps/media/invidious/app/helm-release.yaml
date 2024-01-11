@@ -41,7 +41,7 @@ spec:
         name: invidious-configmap
         readOnly: true
         globalMounts:
-          - path: /config/config.yml
+          - path: /invidious/config/config.yml
             subPath: config.yml
 
       # -- Set the application database type
