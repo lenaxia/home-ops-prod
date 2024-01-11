@@ -9,9 +9,9 @@
 ## This setting is MANDATORY, unless 'database_url' is used.
 ##
 db:
-  user: $(POSTGRES_USER)
-  password: $(POSTGRES_PASS)
-  host: ${SVC_POSTGRES}
+  user: invidious
+  password: e956G3YMvvd269VeeMJhXFiU2
+  host: $(SVC_POSTGRES)
   port: 5432
   dbname: invidious
 
