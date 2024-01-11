@@ -37,4 +37,3 @@ resources:
   - piraeus.yaml
   - backube.yaml
   - k8sgpt-charts.yaml
-  - invidious-charts.yaml
