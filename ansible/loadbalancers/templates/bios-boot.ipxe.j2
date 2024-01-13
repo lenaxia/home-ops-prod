@@ -1,0 +1,24 @@
+#!ipxe
+# Custom iPXE script for BIOS
+echo Booting BIOS system...
+# Detect ARM architecture (Raspberry Pi) and boot Raspbian OS
+cpuid --ext 29 && chain tftp://192.168.0.120/{{ images.raspbian_image }} || goto not_arm
+
+:not_arm
+# Check for IP address-specific setting
+isset ${ip} && goto check_ip || goto check_mac
+:check_ip
+{% for mapping in ip_address_mappings %}
+${ip} == {{ mapping.ip }} && chain {{ mapping.image }} || 
+{% endfor %}
+goto check_mac
+:check_mac
+# Check for MAC address-specific setting
+{% for mapping in mac_address_mappings %}
+${net0/mac} == {{ mapping.mac }} && chain {{ mapping.image }} || 
+{% endfor %}
+goto default_arch
+:default_arch
+# Default image based on architecture
+chain {{ images.bios_default }}
+

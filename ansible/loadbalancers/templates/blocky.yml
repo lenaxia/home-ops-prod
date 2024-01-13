@@ -1,13 +1,24 @@
 upstream:
   default:
+    - 1.1.1.1
     - 46.182.19.48
     - 80.241.218.68
     - tcp-tls:fdns1.dismail.de:853
+    - tpc-tls://unfiltered.adguard-dns.com
     - https://dns.digitale-gesellschaft.ch/dns-query
+    - https://security.cloudflare-dns.com/dns-query
+    - https://dns10.quad9.net/dns-query
+    - https://dns.cloudflare.com/dns-query
 blocking:
   blackLists:
     ads:
       - https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts
+    default:
+      - |
+        *.thehill.com
+        *.thebulwark.com
+        *.theatlantic.com
+        *.telegram.com
   clientGroupsBlock:
     default:
       - ads
@@ -16,20 +27,33 @@ httpPort: 4000
 customDNS:
   customTTL: 1h
   filterUnmappedTypes: true
-  rewrite:
-    kao.haus: 192.168.12.10
   mapping:
-    adguard.lan: 192.168.0.5
-    mikegoes.online: 192.168.0.125
-  #    kao.haus: 192.168.12.10
-  #    mail.kao.haus: redbull.mxrouting.net
-  #    webmail.kao.haus: redbull.mxrouting.net
-    lumiere.mikegoes.online: 192.168.3.7
-  #
-  #
-  #    mqtt.lan: 192.168.5.6
-  #    sonoff.lan: 192.168.0.9
-  #    # for reverse DNS lookups of local devices
-  #    178.168.192.in-addr.arpa: 192.168.178.1
-  #    # for all unqualified hostnames
-  #    .: 192.168.0.5, 192.168.0.6
+    # for all unqualified hostnames
+    .: 192.168.0.5, 192.168.0.6, 192.168.0.7
+
+    # DNS Loadbalancers
+    dnslb00.local: 192.168.0.5
+    dnslb01.local: 192.168.0.6
+    dnslb02.local: 192.168.0.7
+
+    # Kubernetes Load Balancers
+    k3s-lb-00.local: 192.168.4.10
+    k3s-lb-01.local: 192.168.4.11
+
+    # Kubernetes - Prod
+    k3s-cp-00.local: 192.168.3.10
+    k3s-cp-01.local: 192.168.3.11
+    k3s-cp-02.local: 192.168.3.12
+    k3s-worker-00.local: 192.168.3.20
+    k3s-worker-01.local: 192.168.3.21
+    k3s-worker-02.local: 192.168.3.22
+    k3s-worker-03.local: 192.168.3.23
+
+    # Kubernetes - Dev
+    k3s-cp-dev-00.local: 192.168.3.30
+    k3s-cp-dev-01.local: 192.168.3.31
+    k3s-cp-dev-02.local: 192.168.3.32
+
+    # Admin
+    lumiere.local: 192.168.3.7
+    omoikane.local: 192.168.0.120

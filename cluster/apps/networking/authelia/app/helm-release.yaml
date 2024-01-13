@@ -556,7 +556,7 @@ spec:
             consent_mode: implicit
             pre_configured_consent_duration: 1y
             scopes: ["openid", "profile", "email"]
-            redirect_uris: ["https://minio.${SECRET_DEV_DOMAIN}"]
+            redirect_uris: ["https://minio.${SECRET_DEV_DOMAIN}/oauth_callback"]
           - id: pgadmin
             description: PGAdmin
             secret: ${SECRET_PGADMIN_OAUTH_CLIENT_SECRET}
