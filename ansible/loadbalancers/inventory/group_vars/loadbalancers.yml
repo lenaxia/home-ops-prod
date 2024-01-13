@@ -44,6 +44,24 @@ healthchecks:
     weight: 2
     interval: 1
 
-
-
-
+dnsmasq:
+  tftp_root: /var/lib/tftpboot
+  ipxe_bios_url: "http://boot.ipxe.org/undionly.kpxe"
+  ipxe_uefi_url: "http://boot.ipxe.org/ipxe.efi"
+  s3_bucket: tftp
+  s3_endpoint: https://s3.thekao.cloud
+  s3_region: local
+  images:
+    bios_default: "http://your.server/default_bios_image"
+    uefi_default: "http://your.server/default_uefi_image"
+    raspbian_image: "http://downloads.raspberrypi.org/raspios_arm64/images"  # Raspbian OS 64-bit image
+  ip_address_mappings:
+    - ip: "192.168.1.100"
+      image: "dnsmasq.images.bios_default"
+    - ip: "192.168.1.101"
+      image: "dnsmasq.images.uefi_default"
+  mac_address_mappings:
+    - mac: "11:22:33:44:55:66"
+      image: "dnsmasq.images.raspbian_image"
+    - mac: "22:33:44:55:66:77"
+      image: "dnsmasq.images.uefi_default"

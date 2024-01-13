@@ -1,0 +1,41 @@
+- name: Install sops on localhost
+  ansible.builtin.include_role:
+    name: community.sops.install
+  vars:
+    sops_install_on_localhost: true
+
+- name: Include SOPS encrypted vars
+  include_vars:
+    file: secret.sops.yaml
+    name: sops_secrets
+
+- name: Debug decrypted endpoint URL
+  debug:
+    msg: "{{ sops_secrets.stringData.minio_s3_credentials.endpoint_url }}"
+
+- name: Output secrets to screen (BAD IDEA!)
+  ansible.builtin.debug:
+     msg: "Content: {{ lookup('community.sops.sops', 'secret.sops.yaml') }}"
+
+- name: Generate custom iPXE script for BIOS
+  template:
+    src: templates/bios-boot.ipxe.j2
+    dest: "/tmp/bios-boot.ipxe"
+
+- name: Generate custom iPXE script for UEFI
+  template:
+    src: templates/uefi-boot.ipxe.j2
+    dest: "/tmp/uefi-boot.ipxe"
+
+- name: Sync files to MinIO S3 bucket
+  community.aws.s3_sync:
+    bucket: "tftp"
+    file_root: "./test.txt"
+    endpoint_url: "{{ sops_secrets.stringData.minio_s3_credentials.endpoint_url }}"
+    aws_access_key: "{{ sops_secrets.stringData.minio_s3_credentials.access_key }}"
+    aws_secret_key: "{{ sops_secrets.stringData.minio_s3_credentials.secret_key }}"
+    region: "local"  # Specify your MinIO region if applicable
+    delete: false  # Set to true if you want to delete files in the bucket that are not present in file_root
+    file_change_strategy: "date_size"  # or use "force" or "checksum"
+    permission: "bucket-owner-full-control"  # Choose the appropriate permission
+

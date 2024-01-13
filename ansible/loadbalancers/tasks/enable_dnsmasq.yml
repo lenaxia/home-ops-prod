@@ -1,71 +1,66 @@
----
-- name: Set up dnsmasq with iPXE on Raspberry Pi for PXE Boot
-  hosts: raspberry_pi
-  become: yes
+- name: Install dnsmasq
+  apt:
+    name: dnsmasq
+    state: present
 
-  vars:
-    tftp_root: /var/lib/tftpboot
-    ipxe_bios_url: "http://boot.ipxe.org/undionly.kpxe"
-    ipxe_uefi_url: "http://boot.ipxe.org/ipxe.efi"
-    images:
-      bios_default: "http://your.server/default_bios_image"
-      uefi_default: "http://your.server/default_uefi_image"
-      raspbian_image: "http://downloads.raspberrypi.org/raspios_arm64/images"  # Raspbian OS 64-bit image
-    ip_address_mappings:
-      - { ip: "192.168.1.100", image: "{{ images.image1 }}" }
-      - { ip: "192.168.1.101", image: "{{ images.image2 }}" }
-    mac_address_mappings:
-      - { mac: "11:22:33:44:55:66", image: "{{ images.image3 }}" }
-      - { mac: "22:33:44:55:66:77", image: "{{ images.image4 }}" }
+- name: Create TFTP root directory
+  file:
+    path: "{{ dnsmasq.tftp_root }}"
+    state: directory
 
-  tasks:
-    - name: Install dnsmasq
-      apt:
-        name: dnsmasq
-        state: present
+- name: Download iPXE boot files
+  get_url:
+    url: "{{ item.url }}"
+    dest: "{{ dnsmasq.tftp_root }}/{{ item.dest }}"
+  loop:
+    - { url: "{{ dnsmasq.ipxe_bios_url }}", dest: "undionly.kpxe" }
+    - { url: "{{ dnsmasq.ipxe_uefi_url }}", dest: "ipxe.efi" }
 
-    - name: Create TFTP root directory
-      file:
-        path: "{{ tftp_root }}"
-        state: directory
+- name: Include SOPS encrypted vars
+  include_vars:
+    file: secret.sops.yaml
+    name: sops_secrets
 
-    - name: Download iPXE boot files
-      get_url:
-        url: "{{ item.url }}"
-        dest: "{{ tftp_root }}/{{ item.dest }}"
-      loop:
-        - { url: "{{ ipxe_bios_url }}", dest: "undionly.kpxe" }
-        - { url: "{{ ipxe_uefi_url }}", dest: "ipxe.efi" }
+- name: Generate custom iPXE script for BIOS
+  template:
+    src: templates/bios-boot.ipxe.j2
+    dest: "/tmp/bios-boot.ipxe"
 
-    - name: Create custom iPXE script for BIOS using template
-      template:
-        src: bios-boot.ipxe.j2
-        dest: "{{ tftp_root }}/bios-boot.ipxe"
+- name: Generate custom iPXE script for UEFI
+  template:
+    src: templates/uefi-boot.ipxe.j2
+    dest: "/tmp/uefi-boot.ipxe"
 
-    - name: Create custom iPXE script for UEFI using template
-      template:
-        src: uefi-boot.ipxe.j2
-        dest: "{{ tftp_root }}/uefi-boot.ipxe"
+- name: Upload iPXE scripts to MinIO S3
+  aws_s3:
+    bucket: "tftp"
+    object: "/{{ item }}"
+    src: "/tmp/{{ item }}"
+    mode: put
+    endpoint_url: "{{ sops_secrets.data.minio_s3_credentials.endpoint_url }}"
+    aws_access_key: "{{ sops_secrets.data.minio_s3_credentials.access_key }}"
+    aws_secret_key: "{{ sops_secrets.data.minio_s3_credentials.secret_key }}"
+  loop:
+    - "bios-boot.ipxe"
+    - "uefi-boot.ipxe"
 
-    - name: Configure dnsmasq for iPXE Boot
-      blockinfile:
-        path: /etc/dnsmasq.conf
-        block: |
-          port=0
-          dhcp-range=192.168.1.0,proxy
-          log-dhcp
-          enable-tftp
-          tftp-root={{ tftp_root }}
-          tftp-server=192.168.0.120  # Specify TFTP server IP
-          dhcp-boot=undionly.kpxe
-          dhcp-userclass=set:ipxe,iPXE
-          dhcp-boot=tag:ipxe,bios-boot.ipxe,x86PC
-          dhcp-boot=tag:ipxe,uefi-boot.ipxe,X86-64_EFI
-        backup: yes
+- name: Configure dnsmasq for iPXE Boot
+  blockinfile:
+    path: /etc/dnsmasq.conf
+    block: |
+      port=0
+      dhcp-range=192.168.1.0,proxy
+      log-dhcp
+      enable-tftp
+      tftp-root={{ dnsmasq.tftp_root }}
+      dhcp-boot=undionly.kpxe
+      dhcp-userclass=set:ipxe,iPXE
+      dhcp-boot=tag:ipxe,bios-boot.ipxe,x86PC
+      dhcp-boot=tag:ipxe,uefi-boot.ipxe,X86-64_EFI
+    backup: yes
 
-    - name: Restart dnsmasq service
-      systemd:
-        name: dnsmasq
-        state: restarted
-        enabled: yes
+- name: Restart dnsmasq service
+  systemd:
+    name: dnsmasq
+   
 
