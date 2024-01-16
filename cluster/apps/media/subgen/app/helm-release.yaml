@@ -43,7 +43,7 @@ spec:
               WHISPER_THREADS: "4"
               PROCADDEDMEDIA: true # will gen subtitles for all media added regardless of existing external/embedded subtitles (based off of SKIPIFINTERNALSUBLANG)
               PROCMEDIAONPLAY: true # will gen subtitles for all played media regardless of existing external/embedded subtitles (based off of SKIPIFINTERNALSUBLANG)
-              NAMESUBLANG: "AUTO" # allows you to pick what it will name the subtitle. Instead of using EN, I'm using AA, so it doesn't mix with exiting external EN subs, and AA will populate higher on the list in Plex.
+              NAMESUBLANG: "AUTO-EN" # allows you to pick what it will name the subtitle. Instead of using EN, I'm using AA, so it doesn't mix with exiting external EN subs, and AA will populate higher on the list in Plex.
               SKIPIFINTERNALSUBLANG: 'eng' #Will not generate a subtitle if the file has an internal sub matching the 3 letter code of this variable
               PLEXSERVER: "http://plex.media.svc.cluster.local:32400"
             envFrom:
