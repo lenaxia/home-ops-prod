@@ -46,7 +46,10 @@ spec:
               NAMESUBLANG: "AUTO" # allows you to pick what it will name the subtitle. Instead of using EN, I'm using AA, so it doesn't mix with exiting external EN subs, and AA will populate higher on the list in Plex.
               SKIPIFINTERNALSUBLANG: 'eng' #Will not generate a subtitle if the file has an internal sub matching the 3 letter code of this variable
               PLEXSERVER: "http://plex.media.svc.cluster.local:32400"
-              PLEXTOKEN: "EDwR3Ks2HvxV223HtzjF"
+            envFrom:
+              - secretRef:
+                  name: *appname
+
 
     service:
       main:
