@@ -36,7 +36,7 @@ spec:
               tag: cpu
               pullPolicy: Always
             env:
-              TZ: ${TIMEZONE}
+              DEBUG: True
               TRANSCRIBE_DEVICE: "cpu"
               WHISPER_MODEL: "medium"
               CONCURRENT_TRANSCRIPTIONS: "2"
