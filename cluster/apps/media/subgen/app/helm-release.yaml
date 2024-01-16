@@ -17,9 +17,9 @@ spec:
   values:
     defaultPodOptions:
       securityContext:
-        runAsUser: 568
-        runAsGroup: 568
-        fsGroup: 568
+        runAsUser: 0
+        runAsGroup: 0
+        fsGroup: 0
         fsGroupChangePolicy: OnRootMismatch
 
       nodeSelector:
@@ -57,7 +57,7 @@ spec:
 
     volumeClaimTemplates:
       - name: config
-        mountPath: /subgen
+        mountPath: /config
         accessMode: ReadWriteOnce
         size: 5Gi
         storageClass: longhorn
