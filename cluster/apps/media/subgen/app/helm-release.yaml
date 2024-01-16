@@ -49,6 +49,22 @@ spec:
             envFrom:
               - secretRef:
                   name: *appname
+            probes:
+              liveness: &probes
+                enabled: false
+                custom: true
+                spec:
+                  httpGet:
+                    path: /
+                    port: &port 8090
+
+                  initialDelaySeconds: 0
+                  periodSeconds: 10
+                  timeoutSeconds: 1
+                  failureThreshold: 3
+              readiness: *probes
+              startup:
+                enabled: false
 
 
     service:
