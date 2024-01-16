@@ -1,7 +1,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
-  name: &appname sonarr
+  name: &appname subgen 
   namespace: &namespace media
 spec:
   releaseName: *appname
@@ -72,7 +72,7 @@ spec:
           traefik.ingress.kubernetes.io/router.entrypoints: websecure
           traefik.ingress.kubernetes.io/router.middlewares: networking-chain-authelia@kubernetescrd
         hosts:
-          - host: &uri sonarr.${SECRET_DEV_DOMAIN}
+          - host: &uri subgen.${SECRET_DEV_DOMAIN}
             paths:
               - path: /
                 pathType: Prefix
