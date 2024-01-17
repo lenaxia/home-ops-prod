@@ -338,6 +338,7 @@ spec:
             - "bazarr.${SECRET_DEV_DOMAIN}"
             - "sonarr.${SECRET_DEV_DOMAIN}"
             - "radarr.${SECRET_DEV_DOMAIN}"
+            - "readarr.${SECRET_DEV_DOMAIN}"
             - "nzbget.${SECRET_DEV_DOMAIN}"
             - "transmission.${SECRET_DEV_DOMAIN}"
             - "nzbhydra.${SECRET_DEV_DOMAIN}"
