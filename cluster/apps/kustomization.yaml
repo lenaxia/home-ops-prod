@@ -33,7 +33,6 @@ resources:
   - ./networking/cert-manager/ks.yaml
   - ./networking/metallb/ks.yaml
   - ./networking/external-dns/ks.yaml
-  - ./networking/external-dns/ks.yaml
   
   # Home
   - ./home/babybuddy/ks.yaml
