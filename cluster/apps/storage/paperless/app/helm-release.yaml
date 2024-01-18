@@ -110,7 +110,7 @@ spec:
           - path: /library
     sidecars:
       gotenburg:
-        image: thecodingmachine/gotenberg:7.10.2
+        image: thecodingmachine/gotenberg:8.0.2
         imagePullPolicy: IfNotPresent
         env:
           - {name: "DISABLE_GOOGLE_CHROME", value: '1'}
