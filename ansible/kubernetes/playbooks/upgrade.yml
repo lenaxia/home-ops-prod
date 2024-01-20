@@ -20,9 +20,9 @@
       loop:
         - net-tools
 
-    - name: Unconditionally reboot the machine with all defaults
-      ansible.builtin.reboot:
-    
-    - name: Upgrade to the latest version 
-      ansible.builtin.shell: do-release-upgrade -f DistUpgradeViewNonInteractive
-      become: true
+#    - name: Unconditionally reboot the machine with all defaults
+#      ansible.builtin.reboot:
+#    
+#    - name: Upgrade to the latest version 
+#      ansible.builtin.shell: do-release-upgrade -f DistUpgradeViewNonInteractive
+#      become: true
