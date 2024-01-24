@@ -38,7 +38,7 @@ spec:
           reloader.stakater.com/auto: 'true'
         initContainers:
         - name: install-modules
-          image: busybox
+          image: busybox:latest
           command: ["sh",
             "-c",
             "/opt/magic_mirror/install_modules.sh"]
