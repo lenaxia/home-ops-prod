@@ -33,6 +33,7 @@ spec:
       nodeSelector:
         node-role.kubernetes.io/worker: 'true'
 #        aeotec.feature.node.kubernetes.io/zwave: "true"
+        zooz.feature.node.kubernetes.io/zwave: "true"
     controllers:
       main:
         containers:
@@ -106,11 +107,11 @@ spec:
         existingClaim: zwavejs-config
         globalMounts:
           - path: /usr/src/app/store
-#      usb:
-#        enabled: true
-#        type: hostPath
-#        hostPath: /dev/serial/by-id/usb-Silicon_Labs_CP2102N_USB_to_UART_Bridge_Controller_ee8903ec48e5ea11b68584d5994a5d01-if00-port0
-#        hostPathType: CharDevice
+      usb:
+        enabled: true
+        type: hostPath
+        hostPath: /dev/serial/by-id/usb-Silicon_Labs_CP2102N_USB_to_UART_Bridge_Controller_bea86dc20a3feb119bf38feff28b3f46-if00-port0
+        hostPathType: CharDevice
     global:
       nameOverride: *app
     tolerations:
