@@ -1,0 +1,18 @@
+---
+# yaml-language-server: $schema=https://json.schemastore.org/kustomization
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: home
+resources:
+  - ./helm-release.yaml
+configMapGenerator:
+  - name: magicmirror-configmap
+    files:
+      - config=./config/config
+  - name: magicmirror-install-modules
+    files:
+      - install_modules.sh=./config/install_modules.sh
+generatorOptions:
+  disableNameSuffixHash: true
+  annotations:
+    kustomize.toolkit.fluxcd.io/substitute: disabled
