@@ -65,6 +65,26 @@ spec:
           mqtt:
             enabled: true
             port: 1883
+    ingress:
+      main:
+        enabled: true
+        annotations:
+          cert-manager.io/cluster-issuer: letsencrypt-production
+          traefik.ingress.kubernetes.io/router.entrypoints: websecure
+          traefik.ingress.kubernetes.io/router.middlewares: networking-chain-authelia@kubernetescrd
+        hosts:
+          - host: &uri mqtt.${SECRET_DEV_DOMAIN}
+            paths:
+              - path: /
+                pathType: Prefix
+                service:
+                  name: main
+                  port: mqtt
+        tls:
+          - hosts:
+              - *uri
+            secretName: *uri
+
     persistence:
       config:
         enabled: true
