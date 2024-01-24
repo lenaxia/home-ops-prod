@@ -97,7 +97,7 @@ spec:
         enabled: true
         type: secret
         name: *app
-        readOnly: true
+        readOnly: false
         globalMounts:
           - path: /mosquitto/config/mqttpassword
             subPath: mqttpassword
