@@ -99,5 +99,5 @@ spec:
             allow_anonymous false
             persistence true
             persistence_location /mosquitto/data
-            password_file /mosquitto/config/mqttpassword
+            #password_file /mosquitto/config/mqttpassword
             connection_messages false
