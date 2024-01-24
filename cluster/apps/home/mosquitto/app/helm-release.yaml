@@ -71,13 +71,13 @@ spec:
             secretName: *uri
 
     persistence:
-      config:
-        enabled: true
-        type: configMap
-        name: mosquitto-config
-        globalMounts:
-          - path: /mosquitto/config/mosquitto.conf
-            subPath: mosquitto.conf
+      #  config:
+      #    enabled: true
+      #    type: configMap
+      #      name: mosquitto-config
+      #  g  lobalMounts:
+      #    - path: /mosquitto/config/mosquitto.conf
+      #      subPath: mosquitto.conf
       passwordfile:
         enabled: true
         type: secret
