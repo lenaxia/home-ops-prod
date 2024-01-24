@@ -94,10 +94,10 @@ spec:
       config:
         enabled: true
         data:
+          #password_file /mosquitto/config/mqttpassword
+          #allow_anonymous false
           mosquitto.conf: |
             listener 1883
-            #allow_anonymous false
             persistence true
             persistence_location /mosquitto/data
-            #password_file /mosquitto/config/mqttpassword
             connection_messages false
