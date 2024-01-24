@@ -26,6 +26,21 @@ spec:
         node-role.kubernetes.io/worker: 'true'
     controllers:
       main:
+        initContainers:
+          0-hash-mqtt-password:
+            command: [/bin/sh, -c]
+            args:
+              - |
+                mosquitto_passwd -U /mosquitto/config/mqttpassword &&
+                echo "Hashed passwords:" &&
+                cat /mosquitto/config/mqttpassword # Optional: For debugging purposes
+            volumeMounts:
+              - name: mqttpassword
+                mountPath: /mosquitto/config
+                readOnly: false # Needs write access to hash the password
+            image:
+              repository: eclipse-mosquitto # Use the same image as the main container
+              tag: 2.0.18
         containers:
           main:
             image:
