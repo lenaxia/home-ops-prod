@@ -2,7 +2,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
-  name: frigate
+  name: magicmirror
   namespace: home
 spec:
   interval: 30m
@@ -58,7 +58,7 @@ spec:
               TZ: ${TIMEZONE}
 #    envFrom:
 #      - secretRef:
-#                  name: frigate-secret
+#                  name: magicmirror-secret
             resources:
               requests:
                 cpu: 10m
