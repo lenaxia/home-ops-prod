@@ -31,13 +31,6 @@ spec:
             image:
               repository: eclipse-mosquitto
               tag: 2.0.18
-            probes:
-              liveness:
-                enabled: false
-              readiness:
-                enabled: false
-              startup:
-                enabled: false
             resources:
               requests:
                 cpu: 15m
@@ -78,13 +71,13 @@ spec:
             secretName: *uri
 
     persistence:
-      #  config:
-      #    enabled: true
-      #    type: configMap
-      #      name: mosquitto-config
-      #  g  lobalMounts:
-      #    - path: /mosquitto/config/mosquitto.conf
-      #      subPath: mosquitto.conf
+      config:
+        enabled: true
+        type: configMap
+          name: mosquitto-config
+        globalMounts:
+        - path: /mosquitto/config/mosquitto.conf
+          subPath: mosquitto.conf
       passwordfile:
         enabled: true
         type: secret
