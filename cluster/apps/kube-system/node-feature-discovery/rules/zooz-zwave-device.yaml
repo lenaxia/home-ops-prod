@@ -1,0 +1,18 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.devbu.io/nfd.k8s-sigs.io/nodefeaturerule_v1alpha1.json
+apiVersion: nfd.k8s-sigs.io/v1alpha1
+kind: NodeFeatureRule
+metadata:
+  name: zooz-zwave-device
+spec:
+  rules:
+    - # Zooz Z-Stick
+      name: zooz.zwave
+      labels:
+        zooz.feature.node.kubernetes.io/zwave: "true"
+      matchFeatures:
+        - feature: usb.device
+          matchExpressions:
+            class: { op: In, value: ["00"] }
+            vendor: { op: In, value: ["10c4"] }
+            device: { op: In, value: ["ea60"] }

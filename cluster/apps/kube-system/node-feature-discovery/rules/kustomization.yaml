@@ -4,4 +4,6 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
   - ./aeotec-zwave-device.yaml
+  - ./zooz-zwave-device.yaml
+  - ./nortek-zwave-device.yaml
   - ./google-coral-device.yaml
