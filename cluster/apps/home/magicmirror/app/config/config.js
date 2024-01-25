@@ -1,5 +1,6 @@
+let config = {
   language: "en",
-  //locale: "en-US",
+  locale: "en-US",
   address: "0.0.0.0",
   port: 8080,
   ipWhitelist: ["127.0.0.1", "10.43.0.0/16", "192.168.0.0/16"],
@@ -74,5 +75,5 @@
       }
     },
   ]
-
+}
 
