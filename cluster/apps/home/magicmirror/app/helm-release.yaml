@@ -67,12 +67,12 @@ spec:
                 memory: 1000Mi
               limits:
                 memory: 6000Mi
-            #probes:
-            #  liveness: &probes
-            #    enabled: false
-            #  readiness: *probes
-            #  startup:
-            #    enabled: false
+            probes:
+              liveness: &probes
+                enabled: false
+              readiness: *probes
+              startup:
+                enabled: false
         statefulset:
           volumeClaimTemplates:
             - name: modules 
