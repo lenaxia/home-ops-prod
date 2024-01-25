@@ -36,20 +36,21 @@ spec:
         type: statefulset
         annotations:
           reloader.stakater.com/auto: 'true'
-            #        initContainers:
-            #        - name: install-modules
-            #          image: 
-            #            repository: busybox
-            #            tag: latest
-            #          command: ["sh",
-            #            "-c",
-            #            "/opt/magic_mirror/install_modules.sh"]
-            #          volumeMounts:
-            #          - mountPath: /opt/magic_mirror/modules
-            #            name: modules
-            #          - mountPath: /opt/magic_mirror/install_modules.sh
-            #            name: install-modules-sh
-            #            subPath: install_modules.sh
+        initContainers:
+          install-modules:
+            command: [/bin/sh, -c]
+            args:
+              - |
+                /opt/magic_mirror/install_modules.sh
+            volumeMounts:
+              - name: modules
+                mountPath: /opt/magic_mirror/modules
+              - name: install-modules-sh
+                mountPath: /opt/magic_mirror/install_modules.sh
+                subPath: install_modules.sh
+            image:            # use an image with necessary tools for script
+              repository: busybox
+              tag: latest
 
         containers:
           main:
@@ -71,8 +72,8 @@ spec:
               requests:
                 cpu: 10m
                 memory: 1000Mi
-              #limits:
-              #  memory: 6000Mi
+              limits:
+                memory: 6000Mi
         statefulset:
           volumeClaimTemplates:
             - name: modules 
@@ -92,7 +93,7 @@ spec:
         annotations:
           hajimari.io/enable: 'true'
           hajimari.io/icon: baby-bottle-outline
-          hajimari.io/info: Baby Buddy
+          hajimari.io/info: Magic Mirror
           hajimari.io/group: Home
           cert-manager.io/cluster-issuer: letsencrypt-production
           traefik.ingress.kubernetes.io/router.entrypoints: websecure
