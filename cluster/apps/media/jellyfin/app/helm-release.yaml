@@ -58,7 +58,7 @@ spec:
           volumeClaimTemplates:
             - name: config
               accessMode: ReadWriteOnce
-              size: 10Gi
+              size: 30Gi
               storageClass: longhorn
               labels:
                 snapshot.home.arpa/enabled: 'true'
