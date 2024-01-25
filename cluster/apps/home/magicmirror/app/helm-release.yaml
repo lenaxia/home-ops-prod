@@ -116,14 +116,14 @@ spec:
               - *uri
             secretName: *uri
     persistence:
-      modules:
+      config:
         enabled: true
         type: configMap
         name: magicmirror-configmap
         readOnly: true
         globalMounts:
-          - path: /config/config.yml
-            subPath: config.yml
+          - path: /opt/magic_mirror/config/config.js
+            subPath: config.js
       install-modules-sh:
         enabled: true
         type: configMap

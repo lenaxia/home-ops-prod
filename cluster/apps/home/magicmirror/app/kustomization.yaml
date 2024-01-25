@@ -8,7 +8,7 @@ resources:
 configMapGenerator:
   - name: magicmirror-configmap
     files:
-      - config=./config/config
+      - config.js=./config/config.js
   - name: magicmirror-install-modules
     files:
       - install_modules.sh=./config/install_modules.sh
