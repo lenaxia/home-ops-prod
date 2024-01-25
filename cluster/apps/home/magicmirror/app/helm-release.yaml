@@ -36,20 +36,20 @@ spec:
         type: statefulset
         annotations:
           reloader.stakater.com/auto: 'true'
-        initContainers:
-        - name: install-modules
-          image: 
-            repository: busybox
-            tag: latest
-          command: ["sh",
-            "-c",
-            "/opt/magic_mirror/install_modules.sh"]
-          volumeMounts:
-          - mountPath: /opt/magic_mirror/modules
-            name: modules
-          - mountPath: /opt/magic_mirror/install_modules.sh
-            name: install-modules-sh
-            subPath: install_modules.sh
+            #        initContainers:
+            #        - name: install-modules
+            #          image: 
+            #            repository: busybox
+            #            tag: latest
+            #          command: ["sh",
+            #            "-c",
+            #            "/opt/magic_mirror/install_modules.sh"]
+            #          volumeMounts:
+            #          - mountPath: /opt/magic_mirror/modules
+            #            name: modules
+            #          - mountPath: /opt/magic_mirror/install_modules.sh
+            #            name: install-modules-sh
+            #            subPath: install_modules.sh
 
         containers:
           main:
