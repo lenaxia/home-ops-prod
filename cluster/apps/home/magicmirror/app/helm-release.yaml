@@ -124,7 +124,7 @@ spec:
         type: configMap
         name: magicmirror-install-modules
         readOnly: true
-        defaultMode: 0755
+        defaultMode: 0777
         globalMounts:
           - path: /opt/magic_mirror/install_modules.sh
             subPath: install_modules.sh
