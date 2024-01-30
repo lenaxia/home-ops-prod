@@ -53,7 +53,7 @@ let config = {
 			header: "US Holidays",
 			position: "top_left",
 			config: {
-                maximumEntries: 5
+                maximumEntries: 5,
 				calendars: [
 					{
 						fetchInterval: 7 * 24 * 60 * 60 * 1000,
