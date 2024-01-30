@@ -33,7 +33,7 @@ spec:
           main:
             image:
               repository: mccloud/subgen
-              tag: cpu
+              tag: latest
               pullPolicy: Always
             env:
               DEBUG: True
