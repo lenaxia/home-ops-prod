@@ -101,7 +101,19 @@ let config = {
 					{
 						title: "New York Times",
 						url: "https://rss.nytimes.com/services/xml/rss/nyt/HomePage.xml"
-					}
+					},
+					{
+						title: "NPR World News",
+						url: "https://feeds.npr.org/1004/rss.xml"
+					},
+					{
+						title: "NPR News",
+						url: "https://feeds.npr.org/1003/rss.xml"
+					},
+					{
+						title: "NPR Business",
+						url: "https://feeds.npr.org/1006/rss.xml"
+					},
 				],
 				showSourceTitle: true,
 				showPublishDate: true,
