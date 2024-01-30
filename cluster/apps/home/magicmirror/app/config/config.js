@@ -74,6 +74,9 @@ let config = {
 			config: {
 				weatherProvider: "openweathermap",
 				type: "current",
+                weatherEndpoint: "/onecall",
+                lat: "47.582240", 
+                lon: "-122.236993",
 				location: "Mercer Island",
 				locationID: "5803139", //ID from http://bulk.openweathermap.org/sample/city.list.json.gz; unzip the gz file and find your city
 				apiKey: "dff2dd0f5c3bad85890f062898aab547",
@@ -87,6 +90,9 @@ let config = {
 			config: {
 				weatherProvider: "openweathermap",
 				type: "forecast",
+                weatherEndpoint: "/onecall",
+                lat: "47.582240", 
+                lon: "-122.236993",
 				location: "Mercer Island",
 				locationID: "5803139", //ID from http://bulk.openweathermap.org/sample/city.list.json.gz; unzip the gz file and find your city
 				apiKey: "dff2dd0f5c3bad85890f062898aab547",
