@@ -54,6 +54,7 @@ let config = {
 			position: "top_left",
 			config: {
                 maximumEntries: 5,
+                maximumNumberOfDays: 3,
 				calendars: [
 					{
 						fetchInterval: 7 * 24 * 60 * 60 * 1000,
