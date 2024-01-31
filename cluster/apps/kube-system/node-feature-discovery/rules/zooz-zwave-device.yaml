@@ -11,8 +11,13 @@ spec:
       labels:
         zooz.feature.node.kubernetes.io/zwave: "true"
       matchFeatures:
-        - feature: usb.device
+        - feature: usb.device # 700 stick
           matchExpressions:
             #class: { op: In, value: ["00"] }
             vendor: { op: In, value: ["10c4"] }
             device: { op: In, value: ["ea60"] }
+        - feature: usb.device # 800 stick
+          matchExpressions:
+            #class: { op: In, value: ["00"] }
+            vendor: { op: In, value: ["1a86"] }
+            device: { op: In, value: ["55d4"] }
