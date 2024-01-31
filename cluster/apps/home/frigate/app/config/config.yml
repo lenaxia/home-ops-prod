@@ -82,5 +82,5 @@ cameras:
     detect:
       width: 640
       height: 352
-      fps: 29.97
+      fps: 7
 
