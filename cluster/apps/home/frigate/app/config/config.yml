@@ -72,4 +72,15 @@ cameras:
         person:
           mask:
             - 39,445,199,427,198,263,36,228
+  reolink_e1_pro:
+    ffmpeg:
+      inputs:
+        - path: rtsp://admin:faith6510@192.168.0.72:554/h264Preview_01_sub
+          roles:
+            - detect
+            - rtmp
+    detect:
+      width: 640
+      height: 352
+      fps: 29.97
 
