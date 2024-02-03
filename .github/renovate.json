@@ -7,7 +7,7 @@
     ":semanticCommits",
     ":enablePreCommit",
     ":automergeDigest",
-    ":automergeBranch"
+    ":automergeBranch",
     ":timezone(America/Los_Angeles)",
     "github>lenaxia/home-ops-prod//.github/renovate/allowedVersions.json5",
     "github>lenaxia/home-ops-prod//.github/renovate/autoMerge.json5",
