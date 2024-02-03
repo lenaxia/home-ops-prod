@@ -66,7 +66,7 @@ spec:
         #              key: password
       extraSidecarContainers:
         - name: nextcloud-redis
-          image: redis:7.0.7 
+          image: redis:7.2.4 
           command: 
             - "redis-server"
             - "/run/redis.conf"
