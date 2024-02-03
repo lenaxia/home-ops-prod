@@ -8,7 +8,7 @@ spec:
   chart:
     spec:
       chart: nextcloud
-      version: 4.5.0
+      version: 4.5.15
       sourceRef:
         kind: HelmRepository
         name: nextcloud-charts
@@ -25,7 +25,7 @@ spec:
     fullnameOverride: *app
     image:
       repository: nextcloud
-      tag: 28.0.1-fpm-alpine
+      tag: 28.0.2-fpm-alpine
       flavor: fpm-alpine
     ingress:
       enabled: true
@@ -66,7 +66,7 @@ spec:
         #              key: password
       extraSidecarContainers:
         - name: nextcloud-redis
-          image: redis:7.0.7 
+          image: redis:7.2.4 
           command: 
             - "redis-server"
             - "/run/redis.conf"
@@ -97,7 +97,7 @@ spec:
           - name: redis-socks
             mountPath: /run/redis
         - name: nextcloud-logger
-          image: docker.io/timberio/vector:0.34.0-debian
+          image: docker.io/timberio/vector:0.35.0-debian
           args: ["--config", "/run/vector.yaml"] 
           env:
           - name: PROCFS_ROOT
@@ -129,7 +129,7 @@ spec:
             mountPath: /vector-data-dir
       extraInitContainers:
         - name: wait-database
-          image: alpine:3.19.0
+          image: alpine:3.19.1
           imagePullPolicy: IfNotPresent
           command:
             - sh
