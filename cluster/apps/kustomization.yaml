@@ -77,7 +77,7 @@ resources:
   - ./media/bazarr/ks.yaml
   - ./media/readarr/ks.yaml
   - ./media/transmission/ks.yaml
-    #- ./media/nzbget/ks.yaml
+  - ./media/nzbget/ks.yaml
   - ./media/nzbhydra2/ks.yaml
   - ./media/metube/ks.yaml
     #- ./media/invidious/ks.yaml
@@ -89,7 +89,7 @@ resources:
   # Utilities Namespace
   - ./utilities/vaultwarden/ks.yaml
   - ./utilities/vaultwarden-ldap/ks.yaml
-    #- ./utilities/uptimekuma/ks.yaml
+  - ./utilities/uptimekuma/ks.yaml
   - ./utilities/smokeping/ks.yaml
   #- ./utilities/changedetection/ks.yaml
   - ./utilities/librespeed/ks.yaml
