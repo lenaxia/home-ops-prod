@@ -12,7 +12,7 @@ spec:
           init-geoip:
             image:
               repository: docker.io/maxmindinc/geoipupdate
-              tag: v6.0
+              tag: v6.1
             env:
               - name: GEOIPUPDATE_EDITION_IDS
                 value: GeoLite2-City
