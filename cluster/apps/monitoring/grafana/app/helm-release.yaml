@@ -62,6 +62,7 @@ spec:
               secretKeyRef:
                 name: *app
                 key: POSTGRES_PASSWORD
+    assertNoLeakedSecrets: false
     grafana.ini:
       server:
         root_url: "https://grafana.${SECRET_DEV_DOMAIN}"
@@ -98,7 +99,6 @@ spec:
         icon: signin
         client_id: grafana
         client_secret: ${SECRET_GRAFANA_OAUTH_CLIENT_SECRET}
-        assertNoLeakedSecrets: false
         scopes: openid profile email groups
         empty_scopes: false
         auth_url: https://authelia.${SECRET_DEV_DOMAIN}/api/oidc/authorization
