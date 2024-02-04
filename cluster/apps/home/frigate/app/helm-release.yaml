@@ -135,8 +135,9 @@ spec:
           - path: /config/config.yml
             subPath: config.yml
       media:
-        enabled: true
-        existingClaim: frigate
+        type: nfs
+        server: ${NAS_ADDR}
+        path: /volume2/nvr
         globalMounts:
           - path: /media
       cache:
@@ -146,8 +147,3 @@ spec:
         sizeLimit: 4Gi
         globalMounts:
           - path: /dev/shm
-      pci:
-        enabled: true
-        type: hostPath
-        hostPath: /dev/apex_0
-        hostPathType: CharDevice
