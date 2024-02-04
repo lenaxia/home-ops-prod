@@ -35,7 +35,7 @@ snapshots:
 record:
   enabled: true
   retain:
-    days: 2
+    days: 1
     mode: all
   events:
     retain:
