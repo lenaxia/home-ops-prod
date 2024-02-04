@@ -4,7 +4,7 @@ metadata:
   name: &app grafana
   namespace: monitoring
 spec:
-  interval: 15m
+  interval: 5m
   chart:
     spec:
       chart: grafana
