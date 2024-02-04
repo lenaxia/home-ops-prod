@@ -42,7 +42,7 @@ spec:
         maxParallel: 8
       destinationPath: "s3://${S3_CNPG}/"
       endpointURL: http://minio.storage.svc.cluster.local:9000
-      serverName: defaultpg-backup-v15
+      serverName: defaultpg-backup-v16
       s3Credentials:
         accessKeyId:
           name: postgres-minio
@@ -76,7 +76,7 @@ spec:
           maxParallel: 8
         destinationPath: "s3://${S3_CNPG}/"
         endpointURL: http://minio.storage.svc.cluster.local:9000
-        serverName: defaultpg-backup-v14
+        serverName: defaultpg-backup-v15
         s3Credentials:
           accessKeyId:
             name: postgres-minio

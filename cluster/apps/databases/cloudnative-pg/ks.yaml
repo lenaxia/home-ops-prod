@@ -25,23 +25,23 @@ spec:
   retryInterval: 1m
   timeout: 5m
 ---
-# yaml-language-server: $schema=https://kubernetes-schemas.devbu.io/kustomization_v1beta2.json
-apiVersion: kustomize.toolkit.fluxcd.io/v1
-kind: Kustomization
-metadata:
-  name: cluster-databases-postgres-clusters
-  namespace: flux-system
-  labels:
-    substitution.flux.home.arpa/enabled: "true"
-spec:
-  dependsOn:
-    - name: cluster-databases-postgres-operator
-  path: ./cluster/apps/databases/cloudnative-pg/clusters
-  prune: true
-  sourceRef:
-    kind: GitRepository
-    name: flux-system
-  wait: true
-  interval: 30m
-  retryInterval: 1m
-  timeout: 10m
+## yaml-language-server: $schema=https://kubernetes-schemas.devbu.io/kustomization_v1beta2.json
+#apiVersion: kustomize.toolkit.fluxcd.io/v1
+#kind: Kustomization
+#metadata:
+#  name: cluster-databases-postgres-clusters
+#  namespace: flux-system
+#  labels:
+#    substitution.flux.home.arpa/enabled: "true"
+#spec:
+#  dependsOn:
+#    - name: cluster-databases-postgres-operator
+#  path: ./cluster/apps/databases/cloudnative-pg/clusters
+#  prune: true
+#  sourceRef:
+#    kind: GitRepository
+#    name: flux-system
+#  wait: true
+#  interval: 30m
+#  retryInterval: 1m
+#  timeout: 10m
