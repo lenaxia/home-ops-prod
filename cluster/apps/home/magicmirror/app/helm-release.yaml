@@ -41,6 +41,8 @@ spec:
             command: [/bin/sh, -c]
             args:
               - |
+                apt update
+                apt install git nodejs -y
                 /opt/magic_mirror/install_modules.sh
             volumeMounts:
               - name: modules
