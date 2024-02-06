@@ -44,6 +44,8 @@ spec:
                 apt update
                 apt install git nodejs npm -y
                 /opt/magic_mirror/install_modules.sh
+                cd /opt/magic_mirror/
+                npm install request
             volumeMounts:
               - name: modules
                 mountPath: /opt/magic_mirror/modules
