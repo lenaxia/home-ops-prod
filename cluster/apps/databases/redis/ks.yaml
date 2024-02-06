@@ -9,6 +9,7 @@ metadata:
     substitution.flux.home.arpa/enabled: "true"
 spec:
   dependsOn:
+    - name: cluster-databases-redis-lb
     - name: cluster-storage-longhorn
   path: ./cluster/apps/databases/redis/app
   prune: true
@@ -33,8 +34,6 @@ metadata:
   labels:
     substitution.flux.home.arpa/enabled: "true"
 spec:
-  dependsOn:
-    - name: cluster-databases-redis
   path: ./cluster/apps/databases/redis/lb
   prune: true
   sourceRef:
