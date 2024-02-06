@@ -64,7 +64,18 @@ let config = {
 				]
 			}
 		},
+        {
+                module: 'MMM-OneBusAway',
+                position: 'top_right',
+                config: {
+                    stopId: "1_64140",    //the stop id you want to see the buses ETA
+                    buses: ["40_100240"], //the list of buses you want to filter on
+                    maxResults: 5,      //number of next bus departures to show
+                    fadeSpeed: 1000 * 60 // 1 minute
+                }
+        },
 		{
+
 			module: "compliments",
 			position: "lower_third"
 		},

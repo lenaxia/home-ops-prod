@@ -4,6 +4,7 @@
 modules_to_install=(
     "https://gitlab.com/khassel/MMM-RepoStats"
     "https://github.com/jalibu/MMM-RAIN-MAP"
+    "https://github.com/jugler/MMM-OneBusAway"
 )
 
 cd /opt/magic_mirror/modules
