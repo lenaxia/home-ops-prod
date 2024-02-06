@@ -82,7 +82,7 @@ resources:
   - ./media/metube/ks.yaml
     #- ./media/invidious/ks.yaml
   - ./media/mediarequests/ks.yaml
-  - ./media/calibre/ks.yaml
+    #- ./media/calibre/ks.yaml
   - ./media/outline/ks.yaml
   - ./media/imaginary/ks.yaml
 
