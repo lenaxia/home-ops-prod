@@ -63,7 +63,7 @@ spec:
         destinationPath: "s3://${S3_CNPG}/"
           #endpointURL: https://s3.${SECRET_DEV_DOMAIN}
         endpointURL: http://minio.storage.svc.cluster.local:9000
-        serverName: defaultpg-backup-v9
+        serverName: defaultpg-backup-manual-2024-02-06
         s3Credentials:
           accessKeyId:
             name: postgres-minio
