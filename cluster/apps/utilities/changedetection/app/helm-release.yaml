@@ -37,6 +37,7 @@ spec:
 
             env:
               TZ: ${TIMEZONE}
+              MINIMUM_SECONDS_RECHECK_TIME: 1
 
     service:
       main:
