@@ -4,6 +4,9 @@ namespace: media
 commonLabels:
   app.kubernetes.io/name: &app sonarr
   app.kubernetes.io/instance: *app
-resources:
-  - config-pvc.yaml
-    #  - helm-release.yaml
+configMapGenerator:
+  - name: sonarr-common-values
+    files:
+      - values.yaml
+generatorOptions:
+  disableNameSuffixHash: true

@@ -15,53 +15,10 @@ spec:
         namespace: flux-system
   interval: 6m
   values:
-    defaultPodOptions:
-      securityContext:
-        runAsUser: 568
-        runAsGroup: 568
-        fsGroup: 568
-        fsGroupChangePolicy: OnRootMismatch
-
-      nodeSelector:
-        node-role.kubernetes.io/worker: 'true'
-    controllers:
-      main:
-        type: statefulset
-        annotations:
-          reloader.stakater.com/auto: 'true'
-        containers:
-          main:
-            image:
-              repository: ghcr.io/onedr0p/sonarr-develop
-              tag: 
-                4.0.1.1047@sha256:69dc3cf877077dc4a8827f433e20aa2e953b87bcdb3a04437c82dabc7ef216db
-              pullPolicy: Always
-            env:
-              TZ: ${TIMEZONE}
-
-    service:
-      main:
-        ports:
-          http:
-            port: 8989
-        type: ClusterIP
-
-#    volumeClaimTemplates:
-#      - name: config
-#        mountPath: /config
-#        accessMode: ReadWriteOnce
-#        size: 3Gi
-#        storageClass: longhorn
     ingress:
       main:
-        enabled: true
         annotations:
-          hajimari.io/enable: 'true'
-          hajimari.io/icon: television-box
-          hajimari.io/group: Media
-          cert-manager.io/cluster-issuer: letsencrypt-production
-          traefik.ingress.kubernetes.io/router.entrypoints: websecure
-          traefik.ingress.kubernetes.io/router.middlewares: networking-chain-authelia@kubernetescrd
+          hajimari.io/name: Sonarr
         hosts:
           - host: &uri sonarr.${SECRET_DEV_DOMAIN}
             paths:
@@ -76,35 +33,8 @@ spec:
             secretName: *uri
         className: traefik
     persistence:
-      config:
+      configold:
         enabled: true
         existingClaim: sonarr-config-volume
-      omoikane:
-        enabled: true
-        type: custom
-        volumeSpec:
-          nfs:
-            server: ${NAS_ADDR}
-            path: /volume1/omoikane
-        globalMounts:
-          - path: /omoikane
-      backups:
-        enabled: true
-        type: custom
-        volumeSpec:
-          nfs:
-            server: ${NAS_ADDR}
-            path: ${NFS_ARR}
-        globalMounts:
-          - path: /config/Backups
-      downloads:
-        enabled: true
-        type: custom
-        volumeSpec:
-          nfs:
-            server: ${NAS_ADDR}
-            path: /volume2/downloads
-        globalMounts:
-          - path: /downloads
     podLabels:
       app: *appname 
