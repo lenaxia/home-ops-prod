@@ -35,9 +35,5 @@ spec:
           - hosts:
               - *uri
             secretName: *uri
-    persistence:
-      configold:
-        enabled: true
-        existingClaim: radarr-config-volume
     podLabels:
       app: &appname 

@@ -5,5 +5,4 @@ commonLabels:
   app.kubernetes.io/name: &app radarr
   app.kubernetes.io/instance: *app
 resources:
-  - config-pvc.yaml
   - helm-release.yaml
