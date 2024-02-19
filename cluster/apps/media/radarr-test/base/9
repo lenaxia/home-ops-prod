@@ -26,12 +26,12 @@ service:
         port: 7878
     type: ClusterIP
 
-volumeClaimTemplates:
-  - name: config
-    mountPath: /config
-    accessMode: ReadWriteOnce
-    size: 3Gi
-    storageClass: longhorn
+ volumeClaimTemplates:
+   - name: config
+     mountPath: /config
+     accessMode: ReadWriteOnce
+     size: 3Gi
+     storageClass: longhorn
 ingress:
   main:
     enabled: true
