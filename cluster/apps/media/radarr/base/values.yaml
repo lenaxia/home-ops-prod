@@ -20,6 +20,14 @@ controllers:
           pullPolicy: Always
         env:
           TZ: ${TIMEZONE}
+    statefulset:
+      volumeClaimTemplates:
+        - name: config
+          accessMode: ReadWriteOnce
+          size: 1Gi
+          storageClass: longhorn
+          globalMounts:
+            - path: /config
 service:
   main:
     ports:
@@ -27,12 +35,6 @@ service:
         port: 7878
     type: ClusterIP
 
-volumeClaimTemplates:
-  - name: config
-    mountPath: /config
-    accessMode: ReadWriteOnce
-    size: 3Gi
-    storageClass: longhorn
 ingress:
   main:
     enabled: true
