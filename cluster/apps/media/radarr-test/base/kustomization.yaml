@@ -4,7 +4,7 @@ namespace: media
 configMapGenerator:
   - name: radarr-common-values 
     files:
-      - common-values.yaml
+      - values.yaml
 generatorOptions:
   disableNameSuffixHash: true
 #  annotations:
