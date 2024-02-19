@@ -74,7 +74,7 @@ resources:
   - ./media/recyclarr/ks.yaml
   - ./media/sonarr/ks.yaml
   - ./media/radarr/ks.yaml
-    #- ./media/radarr-test/ks.yaml
+  - ./media/radarr-test/ks.yaml
   - ./media/bazarr/ks.yaml
   - ./media/readarr/ks.yaml
   - ./media/transmission/ks.yaml
