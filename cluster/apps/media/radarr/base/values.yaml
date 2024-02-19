@@ -24,7 +24,7 @@ controllers:
       volumeClaimTemplates:
         - name: config
           accessMode: ReadWriteOnce
-          size: 1Gi
+          size: 4Gi
           storageClass: longhorn
           globalMounts:
             - path: /config
