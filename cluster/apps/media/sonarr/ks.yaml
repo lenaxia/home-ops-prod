@@ -31,7 +31,7 @@ spec:
   dependsOn:
     - name: cluster-storage-longhorn
     - name: cluster-media-sonarr-base
-  path: ./cluster/apps/media/sonarr/app
+  path: ./cluster/apps/media/sonarr/app-4k
   prune: true
   sourceRef:
     kind: GitRepository
