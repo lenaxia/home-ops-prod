@@ -36,11 +36,5 @@ spec:
               - *uri
             secretName: *uri
         className: traefik
-    volumeClaimTemplates:
-      - name: config
-        mountPath: /config
-        accessMode: ReadWriteOnce
-        size: 3Gi
-        storageClass: longhorn
     podLabels:
       app: &appname 
