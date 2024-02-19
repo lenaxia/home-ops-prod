@@ -20,12 +20,14 @@ controllers:
           pullPolicy: Always
         env:
           TZ: ${TIMEZONE}
-    volumeClaimTemplates:
-      - name: config
-        mountPath: /config
-        accessMode: ReadWriteOnce
-        size: 4Gi
-        storageClass: longhorn
+    statefulset:
+      volumeClaimTemplates:
+        - name: config
+          accessMode: ReadWriteOnce
+          size: 4Gi
+          storageClass: longhorn
+          globalMounts:
+            - path: /config
 service:
   main:
     ports:
