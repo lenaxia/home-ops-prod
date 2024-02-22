@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: telegraf
-      version: 1.8.41
+      version: 1.8.42
       sourceRef:
         kind: HelmRepository
         name: influxdata-charts
