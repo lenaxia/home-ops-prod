@@ -44,7 +44,7 @@ resources:
   - ./home/gamevault/ks.yaml
   - ./home/node-red/ks.yaml
   #- ./home/vscode/ks.yaml
-  - ./home/roskills/ks.yaml
+  #- ./home/roskills/ks.yaml
   - ./home/localai/ks.yaml
   - ./home/home-assistant/ks.yaml
   - ./home/esphome/ks.yaml
@@ -83,7 +83,7 @@ resources:
     #- ./media/invidious/ks.yaml
   - ./media/mediarequests/ks.yaml
   - ./media/calibre/ks.yaml
-  - ./media/outline/ks.yaml
+    #- ./media/outline/ks.yaml
   - ./media/imaginary/ks.yaml
 
   # Utilities Namespace
