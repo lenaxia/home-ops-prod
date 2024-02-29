@@ -1,0 +1,85 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
+kind: HelmRelease
+metadata:
+  name: &appname babybuddy
+  namespace: home
+spec:
+  interval: 5m
+  chart:
+    spec:
+      chart: app-template
+      version: 2.5.0
+      interval: 16m
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s-charts
+        namespace: flux-system
+  # See https://github.com/bjw-s/helm-charts/blob/main/charts/library/common/values.yaml
+  values:
+    defaultPodOptions:
+      nodeSelector:
+        node-role.kubernetes.io/worker: 'true'
+    controllers:
+      main:
+        containers:
+          main:
+            image:
+              repository: lscr.io/linuxserver/babybuddy
+              tag: 2.2.1
+
+            envFrom:
+              - secretRef:
+                  name: *appname 
+
+            env:
+              TZ: ${TIMEZONE}
+              PGID: 1000
+              PUID: 1000
+              NAP_START_MAX: 23:00
+              NAP_START_MIN: 08:00
+              CSRF_TRUSTED_ORIGINS: http://127.0.0.1:8000,https://baby.${SECRET_DEV_DOMAIN}
+              USE_24_HOUR_TIME_FORMAT: true
+              ALLOWED_HOSTS: baby.${SECRET_DEV_DOMAIN}
+              REVERSE_PROXY_AUTH: true
+        #PROXY_HEADER: Remote-User
+
+      # -- Set the application database type
+    service:
+      main:
+        ports:
+          http:
+            port: 8000
+
+    ingress:
+      main:
+        enabled: true
+        annotations:
+          hajimari.io/enable: 'true'
+          hajimari.io/icon: baby-bottle-outline
+          hajimari.io/info: Baby Buddy
+          hajimari.io/group: Home
+          cert-manager.io/cluster-issuer: letsencrypt-production
+          traefik.ingress.kubernetes.io/router.entrypoints: websecure
+          traefik.ingress.kubernetes.io/router.middlewares: networking-chain-authelia@kubernetescrd
+        hosts:
+          - host: &uri baby.${SECRET_DEV_DOMAIN}
+            paths:
+              - path: /
+                pathType: Prefix
+                service:
+                  name: main
+                  port: http
+        tls:
+          - hosts:
+              - *uri
+            secretName: *uri
+    persistence:
+      config:
+        enabled: true
+        accessMode: ReadWriteOnce
+        existingClaim: babybuddy-volume
+
+    # -- Configures service settings for the chart.
+    # @default -- See values.yaml
+    podAnnotations:
+      secret.reloader.stakater.com/reload: *appname
