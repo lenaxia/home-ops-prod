@@ -52,7 +52,7 @@ spec:
               tag: 6.0.2
             envFrom:
               - secretRef:
-                  name: &appname recyclarr
+                  name: *appname
             env:
               TZ: ${TIMEZONE}
             resources:
