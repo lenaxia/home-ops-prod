@@ -28,6 +28,9 @@ spec:
       annotations:
         metallb.universe.tf/address-pool: dev-infra
 
+    nodeSelector:
+      node-role.kubernetes.io/worker: "true"
+
     envFromSecret: "influxdb-auth"
 
     ## Exposed telegraf configuration

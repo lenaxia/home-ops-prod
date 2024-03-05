@@ -25,15 +25,8 @@ spec:
     podLabels:
       app: chronograf 
 
-#    adminUser:
-#      organization: "kaocloud"
-#      bucket: "default"
-#      user: "admin"
-#      retention_policy: "30d"
-#      existingSecret: influxdb-auth
-
     influxdb:
-      existingSecret: chronograf-auth
+      existingSecret: influxdb-auth
 
     persistence:
       enabled: true
@@ -56,6 +49,9 @@ spec:
         # optional
         # name: "generic"
         # domains: ""
+
+    nodeSelector:
+      node-role.kubernetes.io/worker: "true"
 
     service:
       type: ClusterIP
