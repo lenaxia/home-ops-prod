@@ -115,18 +115,18 @@ spec:
             metric_separator: "_"
             allowed_pending_messages: 10000
             percentile_limit: 1000
-        - mqtt_consumer:
-            servers:
-              - "tcp://mosquitto.home.svc.cluster.local:1883"
-            topics:
-              - "telegraf/host01/cpu"
-              - "telegraf/+/mem"
-              - "sensors/#"
-              - "environmental/#" 
-            qos: 2
-            data_format: "influx"
-            username: "sensor" 
-            password: "derived-pester-arrival"
+#        - mqtt_consumer:
+#            servers:
+#              - "tcp://mosquitto.home.svc.cluster.local:1883"
+#            topics:
+#              - "telegraf/host01/cpu"
+#              - "telegraf/+/mem"
+#              - "sensors/#"
+#              - "environmental/#" 
+#            qos: 2
+#            data_format: "influx"
+#            username: "sensor" 
+#            password: "derived-pester-arrival"
         - mqtt_consumer:
             servers:
               - "tcp://mosquitto.home.svc.cluster.local:1883"
