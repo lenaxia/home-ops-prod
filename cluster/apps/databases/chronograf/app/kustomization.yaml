@@ -5,4 +5,3 @@ metadata:
 resources:
   - config-pvc.yaml
   - helm-release.yaml
-  - secret.sops.yaml
