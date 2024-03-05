@@ -61,7 +61,7 @@ spec:
         - influxdb_v2:
             urls:
               - "http://influxdb-influxdb2.databases.svc.cluster.local:8086"
-            database: "telegraf"
+            bucket: "telegraf"
             token: "$admin-token"
             precision: "s"
             namedrop:
@@ -85,13 +85,13 @@ spec:
         - influxdb_v2:
             urls:
               - "http://influxdb-influxdb2.databases.svc.cluster.local:8086"
-            database: "default"
+            bucket: "default"
             token: "$admin-token"
             precision: "s" 
         - influxdb_v2:
             urls:
               - "http://influxdb-influxdb2.databases.svc.cluster.local:8086"
-            database: "homeseer"
+            bucket: "homeseer"
             precision: "s" 
             token: "$admin-token"
             namepass: 
@@ -99,7 +99,7 @@ spec:
         - influxdb_v2:
             urls:
               - "http://influxdb-influxdb2.databases.svc.cluster.local:8086"
-            database: "synology"
+            bucket: "synology"
             token: "$admin-token"
             precision: "s" 
             namepass: 
