@@ -133,7 +133,7 @@ spec:
             topics:
               - "home/kitchen/#"
             qos: 2
-            data_format: "json"
+            data_format: "value"
             username: "sensor" 
             password: "derived-pester-arrival"
             
