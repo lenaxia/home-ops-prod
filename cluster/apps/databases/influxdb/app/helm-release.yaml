@@ -44,20 +44,18 @@ spec:
 
           # Variables for InfluxDB
           ORG_NAME="${INFLUXDB_ORG}"
+          BUCKET_NAME="telegraf"
           INFLUX_TOKEN="${INFLUXDB_ADMIN_TOKEN}"
           
-          # Define a list of buckets to create. Adjust names as needed.
-          BUCKETS=("telegraf" "sensor_data" "metrics")
+          # List existing buckets and create a new one if not present
+          EXISTING_BUCKETS=$(influx bucket list --org "${ORG_NAME}" --token "${INFLUX_TOKEN}" | grep -w "${BUCKET_NAME}")
           
-          for BUCKET_NAME in "${BUCKETS[@]}"; do
-              # Check if the bucket already exists
-              if ! influx bucket list --name "${BUCKET_NAME}" --org "${ORG_NAME}" --token "${INFLUX_TOKEN}" | grep -q "${BUCKET_NAME}"; then
-                  echo "Creating bucket: ${BUCKET_NAME}"
-                  influx bucket create --name "${BUCKET_NAME}" --org "${ORG_NAME}" --retention 0 --token "${INFLUX_TOKEN}"
-              else
-                  echo "Bucket ${BUCKET_NAME} already exists."
-              fi
-          done
+          if [ -z "${EXISTING_BUCKETS}" ]; then
+              echo "Bucket ${BUCKET_NAME} does not exist. Creating..."
+              influx bucket create --name "${BUCKET_NAME}" --org "${ORG_NAME}" --retention 0 --token "${INFLUX_TOKEN}"
+          else
+              echo "Bucket ${BUCKET_NAME} already exists."
+          fi
 
     env:
       - name: INFLUXDB_ORG
