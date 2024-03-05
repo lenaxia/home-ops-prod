@@ -57,18 +57,6 @@ spec:
               echo "Bucket ${BUCKET_NAME} already exists."
           fi
 
-          BUCKET_NAME="default"
-
-          # List existing buckets and create a new one if not present
-          EXISTING_BUCKETS=$(influx bucket list --org "${ORG_NAME}" --token "${INFLUX_TOKEN}" | grep -w "${BUCKET_NAME}")
-
-          if [ -z "${EXISTING_BUCKETS}" ]; then
-              echo "Bucket ${BUCKET_NAME} does not exist. Creating..."
-              influx bucket create --name "${BUCKET_NAME}" --org "${ORG_NAME}" --retention 0 --token "${INFLUX_TOKEN}"
-          else
-              echo "Bucket ${BUCKET_NAME} already exists."
-          fi
-
 
     env:
       - name: INFLUXDB_ORG
