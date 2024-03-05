@@ -29,7 +29,7 @@ spec:
         #  existingSecret: influxdb-auth
 
     persistence:
-      enabled: true
+      enabled: false
       useExisting: true
       name: chronograf-data-volume
 
