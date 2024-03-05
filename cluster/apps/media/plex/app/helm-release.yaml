@@ -116,3 +116,6 @@ spec:
       transcode:
         enabled: true
         type: emptyDir
+      scratch:
+        enabled: true
+        type: emptyDir
