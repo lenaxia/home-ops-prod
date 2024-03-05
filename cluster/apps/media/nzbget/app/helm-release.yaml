@@ -68,10 +68,6 @@ spec:
       config:
         enabled: true
         existingClaim: nzbget-config-volume
-      unfinished:
-        enabled: true
-        type: emptyDir
-        medium: Memory
 
       omoikane:
         enabled: true
