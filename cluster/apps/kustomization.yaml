@@ -10,7 +10,7 @@ resources:
   - ./databases/cloudnative-pg/ks.yaml
   - ./databases/mariadb/ks.yaml
   - ./databases/influxdb/ks.yaml
-    #- ./databases/telegraf/ks.yaml
+  - ./databases/telegraf/ks.yaml
 
   - ./kube-system/node-feature-discovery/ks.yaml
   - ./kube-system/intel-device-plugin/ks.yaml
