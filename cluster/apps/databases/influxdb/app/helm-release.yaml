@@ -49,12 +49,12 @@ spec:
         valueFrom:
           secretKeyRef:
             name: influxdb-auth
-            key: user-password
+            key: user_password
       - name: INFLUXDB_USER_NAME
         valueFrom:
           secretKeyRef:
             name: influxdb-auth
-            key: user-name
+            key: user_name
 
 
     persistence:
