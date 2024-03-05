@@ -9,7 +9,7 @@ resources:
     #- ./databases/redis-operator/ks.yaml
   - ./databases/cloudnative-pg/ks.yaml
   - ./databases/mariadb/ks.yaml
-  - ./databases/influxdb/ks.yaml
+    #- ./databases/influxdb/ks.yaml
   - ./databases/telegraf/ks.yaml
 
   - ./kube-system/node-feature-discovery/ks.yaml
