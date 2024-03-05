@@ -90,20 +90,20 @@ spec:
             organization: "kaocloud"
             token: "$admin_token"
             precision: "s" 
-        - influxdb_v2:
-            urls:
-              - "http://influxdb-influxdb2.databases.svc.cluster.local:8086"
-            bucket: "synology"
-            organization: "kaocloud"
-            token: "$admin_token"
-            precision: "s" 
-            namepass: 
-              - "ifTable"
-              - "diskTable"
-              - "raidTable"
-              - "laTable"
-              - "hrStorageTable"
-              - "snmp.SYNO"
+#        - influxdb_v2:
+#            urls:
+#              - "http://influxdb-influxdb2.databases.svc.cluster.local:8086"
+#            bucket: "synology"
+#            organization: "kaocloud"
+#            token: "$admin_token"
+#            precision: "s" 
+#            namepass: 
+#              - "ifTable"
+#              - "diskTable"
+#              - "raidTable"
+#              - "laTable"
+#              - "hrStorageTable"
+#              - "snmp.SYNO"
 
       inputs:
         - statsd:
