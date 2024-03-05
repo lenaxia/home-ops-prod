@@ -29,6 +29,30 @@ spec:
       retention_policy: "30d"
       existingSecret: influxdb-auth
 
+    initScripts:
+      enabled: true
+      scripts:
+        init.sh: |+
+          #!/bin/bash
+          # Wait for InfluxDB to be ready
+          while ! influx -execute "SHOW DATABASES" &> /dev/null; do
+            echo "Waiting for InfluxDB..."
+            sleep 1
+          done
+    
+          # Create User and Database
+          INFLUX_PASSWORD=$(printenv INFLUXDB_USER_PASSWORD)
+          influx -execute "CREATE USER myuser WITH PASSWORD '${INFLUX_USER_PASSWORD}' WITH ALL PRIVILEGES"
+          influx -execute "CREATE DATABASE default"
+
+    env:
+      - name: INFLUXDB_USER_PASSWORD
+        valueFrom:
+          secretKeyRef:
+            name: influxdb-auth
+            key: user-password
+
+
     persistence:
       enabled: true
       useExisting: true

@@ -28,6 +28,8 @@ spec:
       annotations:
         metallb.universe.tf/address-pool: dev-infra
 
+    envFromSecret: "influxdb-auth"
+
     ## Exposed telegraf configuration
     ## For full list of possible values see `/docs/all-config-values.yaml` and `/docs/all-config-values.toml`
     ## ref: https://docs.influxdata.com/telegraf/v1.1/administration/configuration/
@@ -56,10 +58,11 @@ spec:
                 problem: 2
                 critical: 3
       outputs:
-        - influxdb:
+        - influxdb_v2:
             urls:
               - "http://influxdb-influxdb2.databases.svc.cluster.local:8086"
             database: "telegraf"
+            token: "$admin-token"
             precision: "s"
             namedrop:
               - "hs_*"
@@ -79,22 +82,25 @@ spec:
               - "icmpMsgStatsTable"
               - "hrProcessorTable"
               - "hrDeviceTable"
-        - influxdb:
+        - influxdb_v2:
             urls:
               - "http://influxdb-influxdb2.databases.svc.cluster.local:8086"
             database: "default"
+            token: "$admin-token"
             precision: "s" 
-        - influxdb:
+        - influxdb_v2:
             urls:
               - "http://influxdb-influxdb2.databases.svc.cluster.local:8086"
             database: "homeseer"
             precision: "s" 
+            token: "$admin-token"
             namepass: 
               - "hs_*"
-        - influxdb:
+        - influxdb_v2:
             urls:
               - "http://influxdb-influxdb2.databases.svc.cluster.local:8086"
             database: "synology"
+            token: "$admin-token"
             precision: "s" 
             namepass: 
               - "ifTable"
