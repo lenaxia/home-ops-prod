@@ -61,3 +61,4 @@ data:
   NFS_BAZARR: "/volume1/backups/bazarr"
   NFS_ARR: "/volume1/backups/arr"
   NFS_METUBE: "/volume2/downloads/[Plex Temp Library]/YouTube"
+  NFS_NZBGET: "/volume3/k8s-nfs/nzbget"

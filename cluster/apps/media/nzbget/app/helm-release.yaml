@@ -68,7 +68,15 @@ spec:
       config:
         enabled: true
         existingClaim: nzbget-config-volume
-
+      nfs:
+        enabled: true
+        type: custom
+        volumeSpec:
+          nfs:
+            server: ${NAS_ADDR}
+            path: ${NFS_NZBGET}
+        globalMounts:
+          - path: /nfs
       omoikane:
         enabled: true
         type: custom
@@ -88,4 +96,4 @@ spec:
         globalMounts:
           - path: /downloads
     podLabels:
-      app: &appname nzbget
+      app: *appname
