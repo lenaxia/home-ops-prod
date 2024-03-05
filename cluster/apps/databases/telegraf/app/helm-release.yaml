@@ -82,6 +82,11 @@ spec:
         - influxdb:
             urls:
               - "http://influxdb-influxdb2.databases.svc.cluster.local:8086"
+            database: "default"
+            precision: "s" 
+        - influxdb:
+            urls:
+              - "http://influxdb-influxdb2.databases.svc.cluster.local:8086"
             database: "homeseer"
             precision: "s" 
             namepass: 
@@ -119,6 +124,15 @@ spec:
               - "environmental/#" 
             qos: 2
             data_format: "influx"
+            username: "sensor" 
+            password: "derived-pester-arrival"
+        - mqtt_consumer:
+            servers:
+              - "tcp://mosquitto.home.svc.cluster.local:1883"
+            topics:
+              - "home/kitchen/#"
+            qos: 2
+            data_format: "json"
             username: "sensor" 
             password: "derived-pester-arrival"
             
