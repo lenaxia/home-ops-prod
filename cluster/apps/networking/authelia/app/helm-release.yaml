@@ -242,6 +242,7 @@ spec:
         rules:
         - domain: authelia.${SECRET_DEV_DOMAIN}
           policy: bypass
+
         # Require 2fa in all access modes
         - domain:
             - "dsm.${SECRET_DEV_DOMAIN}"
@@ -249,6 +250,7 @@ spec:
             - "guac.${SECRET_DEV_DOMAIN}"
             - "amole.${SECRET_DEV_DOMAIN}"
           policy: two_factor
+
         # Vaultwarden admin auth
         - domain: 
             - "vault.${SECRET_DEV_DOMAIN}"
@@ -256,6 +258,7 @@ spec:
             - "^/admin/.*$"
             - "^/admin"
           policy: two_factor
+
         # Webfinger
         - domain_regex:
             - '${SECRET_DEV_DOMAIN}$'
@@ -263,6 +266,7 @@ spec:
           resources:
             - "^/.well-known/.*$"
             - "^/.well-known"
+
         # Baby API
         - domain_regex:
             - 'baby.*\.${SECRET_DEV_DOMAIN}$'
@@ -271,6 +275,7 @@ spec:
           resources:
             - "^/api/.*$"
             - "^/api"
+
         # LangServer API
         - domain_regex:
             - 'lang.*\.${SECRET_DEV_DOMAIN}$'
@@ -278,6 +283,7 @@ spec:
           resources:
             - "^/generate-speech/.*$"
             - "^/generate-speech"
+
         # Grocy API
         - domain_regex:
             - 'grocy.*\.${SECRET_DEV_DOMAIN}$'
@@ -285,6 +291,7 @@ spec:
           resources:
             - "^/api/.*$"
             - "^/api"
+
         # Local only bypass policies
         - domain: 
             - "ldap.${SECRET_DEV_DOMAIN}"
@@ -297,12 +304,13 @@ spec:
           policy: bypass
           networks:
             - private
+
         # Public bypass policies
         - domain: 
             # Games
-            - "hercules-renewal.${SECRET_DEV_DOMAIN}"
-            - "hercules-classic.${SECRET_DEV_DOMAIN}"
-            - "games.${SECRET_DEV_DOMAIN}"
+            #- "hercules-renewal.${SECRET_DEV_DOMAIN}"
+            #- "hercules-classic.${SECRET_DEV_DOMAIN}"
+            #- "games.${SECRET_DEV_DOMAIN}"
             #media
             - "w.${SECRET_DEV_DOMAIN}"
             - "request.${SECRET_DEV_DOMAIN}"
@@ -317,16 +325,18 @@ spec:
             - "status.${SECRET_DEV_DOMAIN}"
             - "vault.${SECRET_DEV_DOMAIN}"
             - "speed.${SECRET_DEV_DOMAIN}"
-              #- "password.${SECRET_DEV_DOMAIN}"
+            #- "password.${SECRET_DEV_DOMAIN}"
             #storage
             - "s3.${SECRET_DEV_DOMAIN}"
           policy: bypass
+
         # Local only policies
         - domain: 
             - "*.${SECRET_DEV_DOMAIN}"
           policy: one_factor
           networks:
             - private
+
         # Admin services - 2 Factor
         - domain:
             - "traefik.${SECRET_DEV_DOMAIN}"
@@ -337,7 +347,9 @@ spec:
             - "tautulli.${SECRET_DEV_DOMAIN}"
             - "bazarr.${SECRET_DEV_DOMAIN}"
             - "sonarr.${SECRET_DEV_DOMAIN}"
+            - "sonarr4k.${SECRET_DEV_DOMAIN}"
             - "radarr.${SECRET_DEV_DOMAIN}"
+            - "radarr4k.${SECRET_DEV_DOMAIN}"
             - "readarr.${SECRET_DEV_DOMAIN}"
             - "nzbget.${SECRET_DEV_DOMAIN}"
             - "transmission.${SECRET_DEV_DOMAIN}"
@@ -370,6 +382,7 @@ spec:
           policy: two_factor
           subject:
           - "group:administrators"
+
         # Public services - 1 Factor
         - domain:
             #home
