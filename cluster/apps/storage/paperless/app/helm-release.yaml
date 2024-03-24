@@ -109,6 +109,7 @@ spec:
         type: configMap
         name: openai-configmap
         readOnly: true
+        defaultMode: 0777
         globalMounts:
           - path: /openai.py
             subPath: openai.py
