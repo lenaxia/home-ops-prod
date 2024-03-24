@@ -18,7 +18,7 @@ logger = logging.getLogger(__name__)
 # Configuration
 PAPERLESS_HOST = 'http://paperless.storage.svc.cluster.local:80/api'
 PAPERLESS_API_KEY = os.getenv('PAPERLESS_APIKEY')
-OPENAI_API_KEY = ${SECRET_OPENAI_APIKEY}
+OPENAI_API_KEY = os.getenv('OPENAI_APIKEY')
 
 def encode_image(image_path):
     with open(image_path, "rb") as image_file:
