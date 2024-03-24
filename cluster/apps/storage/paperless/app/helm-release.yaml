@@ -104,6 +104,14 @@ spec:
             secretName: *uri
         className: traefik
     persistence:
+      openai:
+        enabled: true
+        type: configMap
+        name: openai-configmap
+        readOnly: true
+        globalMounts:
+          - path: /openai.py
+            subPath: openai.py
       library:
         enabled: true
         existingClaim: paperless-nfs

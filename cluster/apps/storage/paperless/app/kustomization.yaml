@@ -10,3 +10,11 @@ resources:
   - secret.sops.yaml
 patchesStrategicMerge:
   - patches/patch-postgres.yaml
+configMapGenerator:
+  - name: openai-configmap
+    files:
+      - openai.py=./config/openai.py
+generatorOptions:
+  disableNameSuffixHash: true
+  annotations:
+    kustomize.toolkit.fluxcd.io/substitute: disabled
