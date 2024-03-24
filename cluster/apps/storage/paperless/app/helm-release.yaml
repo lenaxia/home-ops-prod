@@ -68,6 +68,10 @@ spec:
               PAPERLESS_URL: https://paperless.${SECRET_DEV_DOMAIN}
               USERMAP_UID: 568
               USERMAP_GID: 568
+            lifecycle:
+              postStart:
+                exec:
+                  command: ["/bin/sh", "-c", "pip install python-dateutil Pillow PyMuPDF && touch /tmp/dependencies_installed"]
             resources:
               requests:
                 cpu: 100m
