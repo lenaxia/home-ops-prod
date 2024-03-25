@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 import random
 import time
 from dateutil import parser
