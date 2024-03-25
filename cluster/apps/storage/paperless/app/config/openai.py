@@ -23,6 +23,7 @@ logger = logging.getLogger(__name__)
 PAPERLESS_HOST = 'http://paperless.storage.svc.cluster.local:80/api'
 PAPERLESS_API_KEY = os.getenv('PAPERLESS_APIKEY')
 OPENAI_API_KEY = os.getenv('OPENAI_APIKEY')
+OPENAI_API_ENDPOINT = "https://api.openai.com"
 
 def encode_image(image_path):
     with open(image_path, "rb") as image_file:
@@ -146,7 +147,8 @@ def ocr_document(image_path, debug=False):
               debug_json = {'id': 'chatcmpl-95RcNLqoVk9gY6qaUZDddAZh8JdeK', 'object': 'chat.completion', 'created': 1711084831, 'model': 'gpt-4-1106-vision-preview', 'choices': [{'index': 0, 'message': {'role': 'assistant', 'content': 'Lowes\nHow doers\nget more done.\n\n00001 66868 03/19/24 11:39 AM\nSALE CASHIER BRAD\n\n678885209193 BEHR CAULK <A>\nBEHR RAPID DRY CAULK 10.1 OZ WHITE\n$11.96\n\n079340689695 LOCPROFCON <A>\nLOCTITE ULTRA LIQ SUPER GLUE .14 OZ\n$10.36\n\n730232000126 12MMBIRCH <A>\n1/2 4X8 BIRCH PLYWOOD\n$69.58\n\nSUBTOTAL $91.90\nSALES TAX $9.42\nTOTAL $101.32\nCASH $102.00\nCHANGE DUE $0.68\n\n4706 03/19/24 11:39 AM\n4706 01 66868 03/19/2024 0770\n\nRETURN POLICY DEFINITIONS\nPOLICY ID DAYS POLICY EXPIRES ON\n1 90 06/17/2024\nA\n\nDID WE NAIL IT?\n\nTake a short survey for a chance to WIN\nA $5,000 LOWES GIFT CARD'}, 'finish_reason': 'length'}], 'usage': {'prompt_tokens': 1475, 'completion_tokens': 300, 'total_tokens': 1775}, 'system_fingerprint': None}
               return debug_json
           else:
-              response = requests.post("https://api.openai.com/v1/chat/completions", headers=headers, json=payload)
+              api_endpoint = f"{OPENAI_BASE_DOMAIN}/v1/chat/completions"
+              response = requests.post(api_endpoint, headers=headers, json=payload)
               if response.status_code == 200:
                   # Successful response
                   return response.json()
@@ -225,7 +227,8 @@ def classify_document(image_path, ocr_text, tags, correspondents, document_types
           }
 
           try:
-              response = requests.post("https://api.openai.com/v1/chat/completions", headers=headers, json=payload)
+              api_endpoint = f"{OPENAI_BASE_DOMAIN}/v1/chat/completions"
+              response = requests.post(api_endpoint, headers=headers, json=payload)
               logger.info(f"Classification result: {response.json()}")
               if response.status_code == 200:
                   return response.json()
