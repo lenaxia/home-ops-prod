@@ -41,7 +41,7 @@ spec:
               - secretRef:
                   name: *appname
             env:
-              PAPERLESS_POST_CONSUME_SCRIPT: /openai.py
+              PAPERLESS_POST_CONSUME_SCRIPT: python3 /openai.py
               PAPERLESS_CONSUMER_RECURSIVE: 'true'
               PAPERLESS_CONSUMER_SUBDIRS_AS_TAGS: 'true'
               PAPERLESS_CONSUMPTION_DIR: /library/consume
