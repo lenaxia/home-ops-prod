@@ -27,7 +27,7 @@ spec:
     deployment:
       image:
         repository: quay.io/go-skynet/local-ai
-        tag: latest
+        tag: v2.8.2-sycl-f32-ffmpeg-core
       env:
         DEBUG: true
         GALLERIES: '[{"name":"model-gallery", "url":"github:go-skynet/model-gallery/index.yaml"}, {"name":"huggingface", "url": "github:go-skynet/model-gallery/huggingface.yaml"}]'
@@ -35,6 +35,7 @@ spec:
         COMPEL: 0
         threads: 4
         context_size: 512
+        GML_SYCL_DEVICE: 0
       modelsPath: "/models"
       download_model:
         # To use cloud provided (eg AWS) image, provide it like: 1234356789.dkr.ecr.us-REGION-X.amazonaws.com/busybox
@@ -47,7 +48,13 @@ spec:
         # - name: secret-names
     
     resources:
-      {}
+      requests:
+        gpu.intel.com/i915: 1
+        cpu: 200m
+        memory: 2000Mi
+      limits:
+        gpu.intel.com/i915: 1
+        memory: 20000Mi
       # We usually recommend not to specify default resources and to leave this as a conscious
       # choice for the user. This also increases chances charts run on environments with little
       # resources, such as Minikube. If you do want to specify resources, uncomment the following
