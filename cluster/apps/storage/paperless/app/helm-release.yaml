@@ -81,7 +81,7 @@ spec:
           gotenburg:
             image: 
               repository: thecodingmachine/gotenberg
-              tag: 8.1.0
+              tag: 8.3.0
             imagePullPolicy: IfNotPresent
             env:
               - {name: "DISABLE_GOOGLE_CHROME", value: '1'}
@@ -142,7 +142,7 @@ spec:
           - path: /library
     sidecars:
       gotenburg:
-        image: thecodingmachine/gotenberg:8.1.0
+        image: thecodingmachine/gotenberg:8.3.0
         imagePullPolicy: IfNotPresent
         env:
           - {name: "DISABLE_GOOGLE_CHROME", value: '1'}
