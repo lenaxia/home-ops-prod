@@ -46,7 +46,7 @@ spec:
             - ALL
         image:
           repository: gcr.io/kubebuilder/kube-rbac-proxy
-          tag: v0.15.0
+          tag: v0.16.0
         resources:
           limits:
             cpu: 500m
