@@ -175,71 +175,78 @@ def ocr_document(image_path, debug=False):
     logger.error("Max retries exceeded for OCR document request")
     return None
 
-def classify_document(image_path, ocr_text, tags, correspondents, document_types, debug=False):
+def classify_document(image_path=None, ocr_text=None, tags=None, correspondents=None, document_types=None, debug=False):
+    if not ocr_text or not tags or not correspondents or not document_types:
+        logger.error("Missing required parameters for classification")
+        return None
+
     retry_wait = 5  # Initial backoff wait time in seconds
     max_retries = 8
     for attempt in range(max_retries):
         try:
-          resized_image_path = resize_image(image_path)
-          if not resized_image_path:
-              return None
+            if image_path:
+                resized_image_path = resize_image(image_path)
+                if not resized_image_path:
+                    return None
+                base64_image = encode_image(resized_image_path)
+            else:
+                base64_image = None
 
-          base64_image = encode_image(resized_image_path)
-          tags_str = ", ".join([f"'{tag['name']}'" for tag in tags])
-          correspondents_str = ", ".join([f"'{correspondent['name']}'" for correspondent in correspondents])
-          document_types_str = ", ".join([f"'{doc_type['name']}'" for doc_type in document_types])
+            tags_str = ", ".join([f"'{tag['name']}'" for tag in tags])
+            correspondents_str = ", ".join([f"'{correspondent['name']}'" for correspondent in correspondents])
+            document_types_str = ", ".join([f"'{doc_type['name']}'" for doc_type in document_types])
 
-          base_prompt = "Based on the image content and the OCR text provided, determine the date the document was created, most appropriate correspondent, and document type. From the provided list, select all tags that apply. Only use the options provided; if nothing matches, leave it blank. Also add a short description to be used as the document title."
+            base_prompt = "Based on the image content and the OCR text provided, determine the date the document was created, most appropriate correspondent, and document type. From the provided list, select all tags that apply. Only use the options provided; if nothing matches, leave it blank. Also add a short description to be used as the document title."
 
-          prompt_text = (
-              f"{base_prompt}\n\n"
-              f"Tag options: {tags_str}\n\n"
-              f"Correspondent options: {correspondents_str}\n\n"
-              f"Document type options: {document_types_str}\n\n"
-              "Provide the results in JSON format: {'creation_date': '', 'tag': [], 'correspondent': '', 'document_type': '', 'title': ''}"
-          )
+            prompt_text = (
+                f"{base_prompt}\n\n"
+                f"Tag options: {tags_str}\n\n"
+                f"Correspondent options: {correspondents_str}\n\n"
+                f"Document type options: {document_types_str}\n\n"
+                "Provide the results in JSON format: {'creation_date': '', 'tag': [], 'correspondent': '', 'document_type': '', 'title': ''}"
+            )
 
-          headers = {
-              "Content-Type": "application/json",
-              "Authorization": f"Bearer {OPENAI_API_KEY}"
-          }
+            headers = {
+                "Content-Type": "application/json",
+                "Authorization": f"Bearer {OPENAI_API_KEY}"
+            }
 
-          payload = {
-              "model": "gpt-4-vision-preview",
-              #"model": "gpt-4-0125-preview",
-              "messages": [
-                  {
-                      "role": "user",
-                      "content": [
-                          {
-                              "type": "text",
-                              "text": ocr_text + "\n\n" + prompt_text
-                          },
-                          {
-                              "type": "image_url",
-                              "image_url": {
-                                  "url": f"data:image/jpeg;base64,{base64_image}"
-                              }
-                          }
-                      ]
-                  }
-              ],
-              "max_tokens": 4096
-          }
+            payload = {
+                "model": "gpt-4-vision-preview",
+                "messages": [
+                    {
+                        "role": "user",
+                        "content": [
+                            {
+                                "type": "text",
+                                "text": ocr_text + "\n\n" + prompt_text
+                            }
+                        ]
+                    }
+                ],
+                "max_tokens": 4096
+            }
 
-          try:
-              api_endpoint = f"{OPENAI_API_ENDPOINT}/v1/chat/completions"
-              response = requests.post(api_endpoint, headers=headers, json=payload)
-              logger.info(f"Classification result: {response.json()}")
-              if response.status_code == 200:
-                  return response.json()
-              else:
-                  logger.error(f"Classification request failed with status code {response.status_code}: {response.text}")
-                  return None
-          except requests.exceptions.RequestException as e:
-              logger.error(f"Error during classification request: {e}")
-              return None
-          pass
+            if base64_image:
+                payload["messages"][0]["content"].append({
+                    "type": "image_url",
+                    "image_url": {
+                        "url": f"data:image/jpeg;base64,{base64_image}"
+                    }
+                })
+
+            try:
+                api_endpoint = f"{OPENAI_API_ENDPOINT}/v1/chat/completions"
+                response = requests.post(api_endpoint, headers=headers, json=payload)
+                logger.info(f"Classification result: {response.json()}")
+                if response.status_code == 200:
+                    return response.json()
+                else:
+                    logger.error(f"Classification request failed with status code {response.status_code}: {response.text}")
+                    return None
+            except requests.exceptions.RequestException as e:
+                logger.error(f"Error during classification request: {e}")
+                return None
 
         except requests.exceptions.RequestException as e:
             if e.response and e.response.status_code == 429:
