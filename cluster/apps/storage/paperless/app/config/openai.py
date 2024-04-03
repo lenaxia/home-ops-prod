@@ -398,8 +398,8 @@ def main(document_id, debug=False):
         if classification_result:
             logger.info(f"Classification Result: {classification_result}")
             update_document_content(document_id, ocr_text, classification_result, tags, correspondents, document_types)
-        else
-        logger.warning("No classification result returned")
+        else:
+            logger.warning("No classification result returned")
 
     logger.info("Run complete")
 
