@@ -82,18 +82,19 @@ def fetch_metadata():
 
 
 def download_document(document_id):
-    url = f'{PAPERLESS_HOST}/documents/{document_id}/download/?original=true'
+    url = f'{PAPERLESS_HOST}/documents/{document_id}/'
     logger.info(f"Downloading document from: {url}")
     headers = {"Authorization": f"Token {PAPERLESS_API_KEY}"}
     response = requests.get(url, headers=headers)
     logger.info(f"Status code: {response.status_code}")
 
-    if response.status_code != 200:
+    if response.status_code == 200:
+        data = response.json()
+        content_type = data.get('content_type', '')
+        return content_type, data
+    else:
         logger.error(f"Failed to download document. Status code: {response.status_code}")
         return None, None
-
-    content_type = response.headers.get('Content-Type', '')
-    return response.content, content_type
 
 
 def resize_image(image_path, max_length=2048):
@@ -336,10 +337,11 @@ def main(document_id, debug=False):
     correspondents = fetch_correspondents()
     document_types = fetch_document_types()
 
-    file_content, content_type = download_document(document_id)
-    if not file_content:
+    content_type, document_metadata = download_document(document_id)
+    if not document_metadata:
         logger.error("Failed to download document.")
         return
+    file_content = document_metadata.get('content', '').encode('utf-8')
 
     with tempfile.NamedTemporaryFile(suffix='.pdf', delete=False) as tmp_file:
         tmp_file.write(file_content)
@@ -370,6 +372,7 @@ def main(document_id, debug=False):
         if aggregated_ocr_text:
             full_ocr_text = "\n".join(aggregated_ocr_text)
             if classification_result:
+                logger.info(f"Classification Result: {classification_result}")
                 update_document_content(document_id, full_ocr_text, classification_result, tags, correspondents, document_types)
 
 
@@ -384,10 +387,21 @@ def main(document_id, debug=False):
                 classification_result = classify_document(tmp_file.name, ocr_text, tags, correspondents, document_types, debug)
                 if classification_result:
                     # Process and update document content and metadata here
+                    logger.info(f"Classification Result: {classification_result}")
                     update_document_content(document_id, ocr_text, classification_result, tags, correspondents, document_types)
 
-    logger.info("Run complete")
 
+    # Handle other document types (fallback)
+    else:
+        ocr_text = document_metadata.get('content', '')
+        classification_result = classify_document(None, ocr_text, tags, correspondents, document_types, debug)
+        if classification_result:
+            logger.info(f"Classification Result: {classification_result}")
+            update_document_content(document_id, ocr_text, classification_result, tags, correspondents, document_types)
+        else
+        logger.warning("No classification result returned")
+
+    logger.info("Run complete")
 
 if __name__ == "__main__":
     # Check if document ID is provided as a command-line argument
