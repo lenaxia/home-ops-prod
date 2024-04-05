@@ -4,6 +4,7 @@ import random
 import time
 from dateutil import parser
 from datetime import datetime
+import re
 import tempfile
 import os
 import json
@@ -24,6 +25,13 @@ PAPERLESS_HOST = 'http://paperless.storage.svc.cluster.local:80/api'
 PAPERLESS_API_KEY = os.getenv('PAPERLESS_APIKEY')
 OPENAI_API_KEY = os.getenv('OPENAI_APIKEY')
 OPENAI_API_ENDPOINT = "https://api.openai.com"
+
+# OpenAI Model Configuration
+VISION_MODEL = "gpt-4-vision-preview"
+VISION_MODEL_TOKENS_MAX = 128000
+TEXT_MODEL = "gpt-4-0125-preview"
+TEXT_MODEL_TOKENS_MAX = 128000
+MAX_RETURN_TOKENS = 4096 
 
 def encode_image(image_path):
     with open(image_path, "rb") as image_file:
@@ -189,14 +197,20 @@ def classify_document(image_path=None, ocr_text=None, tags=None, correspondents=
                 if not resized_image_path:
                     return None
                 base64_image = encode_image(resized_image_path)
+                model_to_use = VISION_MODEL
+                max_context_tokens = VISION_MODEL_TOKENS_MAX
             else:
                 base64_image = None
+                model_to_use = TEXT_MODEL
+                max_context_tokens = TEXT_MODEL_TOKENS_MAX
 
             tags_str = ", ".join([f"'{tag['name']}'" for tag in tags])
             correspondents_str = ", ".join([f"'{correspondent['name']}'" for correspondent in correspondents])
             document_types_str = ", ".join([f"'{doc_type['name']}'" for doc_type in document_types])
 
-            base_prompt = "Based on the image content and the OCR text provided, determine the date the document was created, most appropriate correspondent, and document type. From the provided list, select all tags that apply. Only use the options provided; if nothing matches, leave it blank. Also add a short description to be used as the document title."
+            base_prompt = ("Based on the image content and the OCR text provided, determine the date the document was created, most appropriate correspondent, and document type. "
+                           "From the provided list, select all tags that apply. Only use the options provided; if nothing matches, leave it blank. "
+                           "Also add a short description to be used as the document title.")
 
             prompt_text = (
                 f"{base_prompt}\n\n"
@@ -206,25 +220,33 @@ def classify_document(image_path=None, ocr_text=None, tags=None, correspondents=
                 "Provide the results in JSON format: {'creation_date': '', 'tag': [], 'correspondent': '', 'document_type': '', 'title': ''}"
             )
 
+            # Ensure the total prompt does not exceed the max context tokens
+            combined_text = ocr_text + "\n\n" + prompt_text
+            if len(combined_text) > max_context_tokens:
+                truncate_length = max_context_tokens - len(prompt_text) - 10  # Extra space for safety
+                truncated_ocr_text = ocr_text[:truncate_length]
+            else:
+                truncated_ocr_text = ocr_text
+
             headers = {
                 "Content-Type": "application/json",
                 "Authorization": f"Bearer {OPENAI_API_KEY}"
             }
 
             payload = {
-                "model": "gpt-4-vision-preview",
+                "model": model_to_use,
                 "messages": [
                     {
                         "role": "user",
                         "content": [
                             {
                                 "type": "text",
-                                "text": ocr_text + "\n\n" + prompt_text
+                                "text": truncated_ocr_text + "\n\n" + prompt_text
                             }
                         ]
                     }
                 ],
-                "max_tokens": 4096
+                "max_tokens": MAX_RETURN_TOKENS
             }
 
             if base64_image:
@@ -235,45 +257,101 @@ def classify_document(image_path=None, ocr_text=None, tags=None, correspondents=
                     }
                 })
 
-            try:
-                api_endpoint = f"{OPENAI_API_ENDPOINT}/v1/chat/completions"
-                response = requests.post(api_endpoint, headers=headers, json=payload)
-                logger.info(f"Classification result: {response.json()}")
-                if response.status_code == 200:
-                    return response.json()
-                else:
-                    logger.error(f"Classification request failed with status code {response.status_code}: {response.text}")
-                    return None
-            except requests.exceptions.RequestException as e:
-                logger.error(f"Error during classification request: {e}")
+            api_endpoint = f"{OPENAI_API_ENDPOINT}/v1/chat/completions"
+            response = requests.post(api_endpoint, headers=headers, json=payload)
+            if response.status_code == 200:
+                return response.json()
+            else:
+                logger.error(f"Classification request failed with status code {response.status_code}: {response.text}")
                 return None
 
         except requests.exceptions.RequestException as e:
-            if e.response and e.response.status_code == 429:
-                # Extract the retry wait time from the error response if available
-                retry_after = int(e.response.headers.get("Retry-After", retry_wait))
-                # Use the server-provided value or exponentially increase the wait time
-                time_to_wait = max(retry_wait, retry_after)
-                print(f"Rate limit exceeded. Retrying in {time_to_wait} seconds...")
-                time.sleep(time_to_wait)
-                # Exponentially increase the wait time for the next attempt
-                retry_wait *= 2
-                # Add jitter by randomizing the wait time
-                retry_wait = max(1, retry_wait + random.uniform(-0.5, 0.5) * retry_wait)
-            else:
-                # For other types of RequestExceptions, raise the exception
-                raise
-    else:
-        # Raise an exception if all retries fail
-        raise Exception("Max retries exceeded for Classify document request")
+            logger.error(f"Error during classification request: {e}")
+            return None
 
+
+def preprocess_text_to_isolate_json(text):
+    """
+    This function trims the text to include only the content between the first '{' and the last '}'.
+    This can help in isolating JSON content from surrounding text.
+    """
+    start_index = text.find('{')
+    end_index = text.rfind('}')
+
+    if start_index != -1 and end_index != -1 and end_index > start_index:
+        return text[start_index:end_index+1]
+    return text  # Return the original text if no JSON-like structure is found
+
+def extract_json_from_text(text):
+    logger.info("Starting JSON extraction from text.")
+    cleaned_text = preprocess_text_to_isolate_json(text)
+    potential_json_strings = find_potential_json_strings(cleaned_text)
+
+    # Sorting the strings to try larger (potentially more complete) structures first
+    potential_json_strings.sort(key=len, reverse=True)
+
+    for json_str in potential_json_strings:
+        json_data = try_parse_json(json_str)
+        if json_data is not None:
+            logger.info("Valid JSON extracted successfully.")
+            return json_data
+
+    logger.error("No valid JSON found in the text.")
+    return None
+
+def find_potential_json_strings(text):
+    """
+    This function tries to find potential JSON substrings within a larger text,
+    focusing on more complex structures and allowing nested objects and arrays.
+    """
+    potential_json_strings = []
+    stack = []
+    start_index = None
+
+    for index, char in enumerate(text):
+        if char == '{' or char == '[':
+            if start_index is None:
+                start_index = index
+            stack.append(char)
+        elif char == '}' and stack and stack[-1] == '{':
+            stack.pop()
+            if not stack:
+                potential_json_strings.append(text[start_index:index+1])
+                start_index = None
+        elif char == ']' and stack and stack[-1] == '[':
+            stack.pop()
+            if not stack:
+                potential_json_strings.append(text[start_index:index+1])
+                start_index = None
+
+    return potential_json_strings
+
+
+def try_parse_json(json_str):
+    """
+    Attempt to parse a string as JSON, returning the parsed object or None on failure.
+    """
+    try:
+        return json.loads(json_str)
+    except json.JSONDecodeError:
+        return None
 
 def extract_classification_data(classification_result):
-    # Assuming classification_result is the JSON response from the classify_document function
-    # Extracting the actual JSON string from the message content
-    content = classification_result['choices'][0]['message']['content']
-    json_str = content.split('```json')[1].split('```')[0].strip()
-    return json.loads(json_str)
+    try:
+        content = classification_result['choices'][0]['message']['content']
+        json_data = extract_json_from_text(content)
+        if json_data:
+            # Ensure all required keys are present, even if they are empty
+            required_keys = ['creation_date', 'tag', 'correspondent', 'document_type', 'title']
+            for key in required_keys:
+                if key not in json_data:
+                    json_data[key] = [] if key == 'tag' else ''
+            return json_data
+        else:
+            raise ValueError("No valid JSON content found in classification result.")
+    except Exception as e:
+        logger.error(f"Error extracting classification data: {e}")
+        return {}
 
 
 def update_document_content(document_id, ocr_text, classification_result, tags, correspondents, document_types):
@@ -286,6 +364,11 @@ def update_document_content(document_id, ocr_text, classification_result, tags, 
         tag_id = next((tag['id'] for tag in tags if tag['name'] == tag_name), None)
         if tag_id:
             tag_ids.append(tag_id)
+
+    if 111 not in tag_ids:
+        tag_ids.append(111)
+    if 112 not in tag_ids:
+        tag_ids.append(112)
 
     correspondent_id = next((correspondent['id'] for correspondent in correspondents if correspondent['name'] == classification_data['correspondent']), None)
     document_type_id = next((doc_type['id'] for doc_type in document_types if doc_type['name'] == classification_data['document_type']), None)
