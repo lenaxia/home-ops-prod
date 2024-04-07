@@ -56,7 +56,7 @@ spec:
                 spec:
                   httpGet:
                     path: /
-                    port: &port 8090
+                    port: &port 9000
 
                   initialDelaySeconds: 0
                   periodSeconds: 10
@@ -71,8 +71,6 @@ spec:
       main:
         ports:
           http:
-            port: 8090
-          web:
             port: 9000
         type: ClusterIP
 
@@ -94,13 +92,6 @@ spec:
           traefik.ingress.kubernetes.io/router.middlewares: networking-chain-authelia@kubernetescrd
         hosts:
           - host: &uri subgen.${SECRET_DEV_DOMAIN}
-            paths:
-              - path: /
-                pathType: Prefix
-                service:
-                  name: main
-                  port: http
-          - host: &uri subgen-config.${SECRET_DEV_DOMAIN}
             paths:
               - path: /
                 pathType: Prefix
