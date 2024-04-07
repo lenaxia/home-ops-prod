@@ -62,6 +62,34 @@ spec:
               limits:
                 gpu.intel.com/i915: 1
                 memory: 20000Mi
+          sidecar-log-watcher:
+            image: busybox
+            name: sidecar-log-watcher
+            volumeMounts:
+              - name: plex-config-volume
+                mountPath: /config
+            env:
+              - name: POD_NAME
+                valueFrom:
+                  fieldRef:
+                    fieldPath: metadata.name
+              - name: NAMESPACE
+                valueFrom:
+                  fieldRef:
+                    fieldPath: metadata.namespace
+            command: ["/bin/sh", "-c"]
+            args:
+              - |
+                tail -F /config/Library/Application\ Support/Plex\ Media\ Server/Logs/Plex\ Media\ Server.log | \
+                while IFS= read -r line; do
+                  echo "$line" | grep "database is locked" && \
+                  wget --method=DELETE --no-check-certificate --header="Authorization: Bearer $(cat /var/run/secrets/kubernetes.io/serviceaccount/token)" \
+                  https://kubernetes.default.svc/api/v1/namespaces/$NAMESPACE/pods/$POD_NAME
+                done
+            serviceAccountName: plex-sidecar
+            securityContext:
+              readOnlyRootFilesystem: true
+              runAsNonRoot: true
     service:
       main:
         type: LoadBalancer
