@@ -21,6 +21,9 @@ spec:
     remediation:
       retries: 5
   values:
+    serviceAccount:
+      create: true
+      name: plex-sidecar
     defaultPodOptions:
       securityContext:
         runAsUser: 568
@@ -45,6 +48,7 @@ spec:
     controllers:
       main:
         type: statefulset
+        serviceAccountName: plex-sidecar
         containers:
           main:
             image:
