@@ -64,7 +64,7 @@ spec:
                 memory: 20000Mi
           sidecar-log-watcher:
             image: 
-              repository: busybox
+              repository: curlimages/curl
               tag: latest
             name: sidecar-log-watcher
             volumeMounts:
