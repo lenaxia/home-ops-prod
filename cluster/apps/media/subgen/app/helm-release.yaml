@@ -72,6 +72,8 @@ spec:
         ports:
           http:
             port: 8090
+          web:
+            port: 9000
         type: ClusterIP
 
     volumeClaimTemplates:
@@ -98,6 +100,11 @@ spec:
                 service:
                   name: main
                   port: http
+              - path: /web
+                pathType: Prefix
+                service:
+                  name: main
+                  port: web
         tls:
           - hosts:
               - *uri
