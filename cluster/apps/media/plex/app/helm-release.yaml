@@ -82,11 +82,14 @@ spec:
             command: ["/bin/sh", "-c"]
             args:
               - |
-                tail -F /config/Library/Application\ Support/Plex\ Media\ Server/Logs/Plex\ Media\ Server.log | \
-                while IFS= read -r line; do
+                echo "Starting log watcher..."
+                tail -F /config/Library/Application\ Support/Plex\ Media\ Server/Logs/Plex\ Media\ Server.log | while read line; do
+                  echo "Read line: $line"
                   echo "$line" | grep "database is locked" && \
+                  echo "Detected 'database is locked' - initiating pod deletion" && \
                   wget --method=DELETE --no-check-certificate --header="Authorization: Bearer $(cat /var/run/secrets/kubernetes.io/serviceaccount/token)" \
-                  https://kubernetes.default.svc/api/v1/namespaces/$NAMESPACE/pods/$POD_NAME
+                  https://kubernetes.default.svc/api/v1/namespaces/$NAMESPACE/pods/$POD_NAME && \
+                  echo "Pod deletion request sent" || echo "Log line does not contain target string"
                 done
             serviceAccountName: plex-sidecar
             securityContext:
