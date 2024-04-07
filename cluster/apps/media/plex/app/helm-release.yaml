@@ -63,7 +63,9 @@ spec:
                 gpu.intel.com/i915: 1
                 memory: 20000Mi
           sidecar-log-watcher:
-            image: busybox
+            image: 
+              repository: busybox
+              tag: latest
             name: sidecar-log-watcher
             volumeMounts:
               - name: plex-config-volume
