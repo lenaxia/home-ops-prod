@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 2.6.0
+      version: 3.1.0
       sourceRef:
         kind: HelmRepository
         name: bjw-s-charts
@@ -44,7 +44,7 @@ spec:
           main:
             image:
               repository: docker.io/timberio/vector
-              tag: 0.36.0-debian
+              tag: 0.37.0-debian
             args: [--config, /etc/vector/vector.yaml]
     service:
       main:

@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 2.6.0
+      version: 3.1.0
       sourceRef:
         kind: HelmRepository
         name: bjw-s-charts
@@ -24,7 +24,7 @@ spec:
   values:
     image:
       repository: meisnate12/plex-meta-manager
-      tag: v1.20.0
+      tag: v1.21.0
       pullPolicy: Always
     env:
       TZ: "${TIMEZONE}"
