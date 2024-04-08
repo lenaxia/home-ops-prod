@@ -38,6 +38,11 @@ spec:
             env:
               TZ: ${TIMEZONE}
               MINIMUM_SECONDS_RECHECK_TIME: 1
+          chrome:
+            image:
+              repository:  selenium/standalone-chrome-debug
+              tag: 3.141.59
+
 
     service:
       main:
@@ -78,6 +83,9 @@ spec:
       data:
         enabled: true
         existingClaim: changedetection-data-volume
-
         globalMounts:
           - path: /datastore
+      shm:
+        enabled: true
+        type: hostPath
+        hostPath: /dev/shm
