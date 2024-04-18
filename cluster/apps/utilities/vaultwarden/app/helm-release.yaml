@@ -37,8 +37,8 @@ spec:
 
     # -- environment variables.
             envFrom:
-            - secretRef:
-                name: &app vaultwarden
+              - secretRef:
+                  name: &app vaultwarden
             env:
               DATA_FOLDER: config
               TZ: ${TIMEZONE}
@@ -47,18 +47,19 @@ spec:
 
     service:
       main:
-        primary: true
         annotations:
           metallb.universe.tf/address-pool: dev-infra
-        ports:
-          http:
-            port: 80
-          websocket:
-            enabled: true
-            port: 3012
         type: LoadBalancer
         externalTrafficPolicy: Local
 
+        ports:
+          http:
+            port: 80
+            enabled: true
+          websocket:
+            port: 3012
+            enabled: true
+        primary: true
     ingress:
       main:
         enabled: true
@@ -70,27 +71,27 @@ spec:
           traefik.ingress.kubernetes.io/router.entrypoints: websecure
           traefik.ingress.kubernetes.io/router.middlewares: networking-chain-authelia@kubernetescrd
         hosts:
-        - host: &uri vault.${SECRET_DEV_DOMAIN}
-          paths:
-          - path: /
-            pathType: Prefix
-            service:
-              name: main
-              port: http
-          - path: /notifications/hub/negotiate
-            pathType: Prefix
-            service:
-              port: http
-              name: main
-          - path: /notifications/hub
-            pathType: Prefix
-            service:
-              port: websocket
-              name: main
+          - host: &uri vault.${SECRET_DEV_DOMAIN}
+            paths:
+              - path: /
+                pathType: Prefix
+                service:
+                  identifier: main
+                  port: http
+              - path: /notifications/hub/negotiate
+                pathType: Prefix
+                service:
+                  identifier: main
+                  port: http
+              - path: /notifications/hub
+                pathType: Prefix
+                service:
+                  identifier: main
+                  port: websocket
         tls:
-        - hosts:
-          - *uri
-          secretName: *uri
+          - hosts:
+              - *uri
+            secretName: *uri
         className: traefik
 
     persistence:
