@@ -151,7 +151,7 @@ def process_ingress(data):
                 'service': {
                     'name': ingress_main.get('serviceName', ''),
                     'port': {
-                        'number': int(port['port'])
+                        'number': int(port.get('port', 80))
                     }
                 }
             }
