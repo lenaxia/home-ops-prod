@@ -127,10 +127,9 @@ def process(filepath, data):
 
 
 def process_controllers(data):
-    # The provided values.yaml does not specify a transformation for controllers,
-    # so we assume that the existing structure is already compliant.
-    # If a transformation is needed, the logic should be implemented here.
-    return data
+    return {
+        'main': data
+    }
 
 
 def process_ingress(data):
@@ -140,19 +139,11 @@ def process_ingress(data):
 
     ingress_main['hosts'] = [{
         'paths': [{
-            'path': '/',
+            'service': {
+                'port': str(port['port']),
+            },
             'pathType': 'Prefix',
-            'backend': {
-                'service': {
-                    'name': ingress_main.get('serviceName', ''),
-                    'port': {
-                        'number': int(port.get('port', 80))
-                    }
-                }
-            }
-            }] for port in ingress_main.pop('ports', [])
-        }]
-    }]
+            'path': '/',
         }]
     } for port in ingress_main.pop('ports', [])]
 
@@ -165,10 +156,6 @@ def process_service(data):
     if service_main is None:
         return data
 
-    # Assuming the new schema requires a 'controller' key under 'service.main'
-    if 'controller' not in service_main:
-        service_main['controller'] = 'default'  # or whatever the default controller should be
-
     ports = service_main.pop('ports', [])
     service_main['ports'] = {}
     for port in ports:
@@ -177,15 +164,6 @@ def process_service(data):
             'enabled': True,
             'primary': port.get('primary', False)
         }
-
-    # Update service.main to include additional keys as per the provided values.yaml
-    service_main['type'] = service_main.get('type', 'ClusterIP')
-    service_main['externalTrafficPolicy'] = service_main.get('externalTrafficPolicy', '')
-    service_main['ipFamilyPolicy'] = service_main.get('ipFamilyPolicy', '')
-    service_main['ipFamilies'] = service_main.get('ipFamilies', [])
-    service_main['annotations'] = service_main.get('annotations', {})
-    service_main['labels'] = service_main.get('labels', {})
-    service_main['extraSelectorLabels'] = service_main.get('extraSelectorLabels', {})
 
     data['main'] = service_main
     return data
