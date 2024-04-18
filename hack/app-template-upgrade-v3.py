@@ -155,9 +155,9 @@ def process_ingress(data):
                     }
                 }
             }
-            },
-            'pathType': 'Prefix',
-            'path': '/',
+            }] for port in ingress_main.pop('ports', [])
+        }]
+    }]
         }]
     } for port in ingress_main.pop('ports', [])]
 
