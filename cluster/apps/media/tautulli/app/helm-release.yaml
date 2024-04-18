@@ -40,14 +40,19 @@ spec:
         containers:
           main:
             image:
-      #repository: ghcr.io/linuxserver/tautulli
-              repository: ghcr.io/onedr0p/tautulli
-              tag: 2.13.4@sha256:809bccf944ee56c33af99993841e797e18dc85243639788de3c9d668c291b215
+              repository: ghcr.io/linuxserver/tautulli
+              tag: v2.13.4@sha256:fb5e22c7a4d9e770703a30d145f355786fecb28dfca6df56c5073c457f3c8a8e
               pullPolicy: Always
             env:
               TZ: ${TIMEZONE}
               PUID: 1000
               PGID: 1000
+            command: ["/usr/local/bin/python", "Tautulli.py"]
+            args: [
+              "--config", "/config/config.ini",
+              "--datadir", "/config",
+              "--port", "80"
+            ]
             probes:
               liveness: &probes
                 enabled: false
@@ -63,6 +68,33 @@ spec:
               readiness: *probes
               startup:
                 enabled: false
+            securityContext: &securityContext
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities: { drop: ["ALL"] }
+          jbops:
+            image:
+              repository: registry.k8s.io/git-sync/git-sync
+              tag: v4.2.2@sha256:2dc189a0886c0df1b5b0cc816c60b5fe0799230a5bb7e123aa28ff4f74ac988a
+            env:
+              GITSYNC_REPO: https://github.com/blacktwin/JBOPS
+              GITSYNC_REF: master
+              GITSYNC_PERIOD: 24h
+              GITSYNC_ROOT: /add-ons
+            securityContext: *securityContext
+            resources:
+              requests:
+                cpu: 10m
+              limits:
+                memory: 128Mi
+    defaultPodOptions:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 568
+        runAsGroup: 568
+        fsGroup: 568
+        fsGroupChangePolicy: OnRootMismatch
+        seccompProfile: { type: RuntimeDefault }
     service:
       main:
         type: LoadBalancer
@@ -96,6 +128,8 @@ spec:
       config:
         enabled: true
         existingClaim: tautulli-config-volume
+      add-ons:
+        type: emptyDir
       backups:
         enabled: true
         type: custom
