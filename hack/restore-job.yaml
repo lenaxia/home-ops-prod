@@ -12,10 +12,22 @@ spec:
       restartPolicy: OnFailure
       containers:
         - name: restore
-          image: ghcr.io/onedr0p/kopia:0.12.1@sha256:e333295b519ce586e7c050c970b2255d87bdb2979298ff87ebdb1113e381ba3b
+          image: kopia/kopia:0.17@sha256:51784ce0961940846f4f47cab2d4f58e2e0cb467de357f9a80279b149a00c06e
           env:
             - name: KOPIA_PASSWORD
               value: "none"
+            - name: KOPIA_CONFIG_PATH
+              value: "/config/repository.config"
+            - name: KOPIA_LOG_DIR
+              value: "/config/logs"
+            - name: KOPIA_CACHE_DIRECTORY
+              value: "/config/cache"
+            - name: KOPIA_PERSIST_CREDENTIALS_ON_CONNECT
+              value: "false"
+            - name: KOPIA_CHECK_FOR_UPDATES
+              value: "false"
+            - name: RCLONE_CONFIG
+              value: "/config/rclone/rclone.conf"
           command:
             - /bin/bash
             - -c

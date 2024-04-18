@@ -43,17 +43,23 @@ spec:
               - name: snapshots
                 mountPath: /snapshots
             image:
-              repository: ghcr.io/onedr0p/kopia
-              tag: 0.13.0@sha256:ee6608635237c9ddf3ec5b456122cb60f0195c5cad84b06e945498f2338bff59
+              repository: kopia/kopia
+              tag: 0.17@sha256:51784ce0961940846f4f47cab2d4f58e2e0cb467de357f9a80279b149a00c06e
         containers:
           main:
             image:
-              repository: ghcr.io/onedr0p/kopia
-              tag: 0.13.0@sha256:ee6608635237c9ddf3ec5b456122cb60f0195c5cad84b06e945498f2338bff59
+              repository: kopia/kopia
+              tag: 0.17@sha256:51784ce0961940846f4f47cab2d4f58e2e0cb467de357f9a80279b149a00c06e
               pullPolicy: Always
             env:
               TZ: ${TIMEZONE}
               KOPIA_PASSWORD: none
+              KOPIA_CONFIG_PATH: "/config/repository.config" 
+              KOPIA_LOG_DIR: "/config/logs" 
+              KOPIA_CACHE_DIRECTORY: "/config/cache" 
+              KOPIA_PERSIST_CREDENTIALS_ON_CONNECT: "false" 
+              KOPIA_CHECK_FOR_UPDATES: "false" 
+              RCLONE_CONFIG: "/config/rclone/rclone.conf"
             resources:
               requests:
                 cpu: 10m
