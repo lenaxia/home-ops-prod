@@ -101,20 +101,24 @@ def process(filepath, data):
     new_helm_values = deepcopy(helm_values)
 
     # Update ingress
-    if ingress_values := new_helm_values.pop('ingress', None):
-        set_key(new_helm_values, 'ingress', process_ingress(ingress_values))
+    ingress_values = new_helm_values.pop('ingress', None)
+    if ingress_values is not None:
+        new_helm_values['ingress'] = process_ingress(ingress_values, data)
 
     # Update service
-    if service_values := new_helm_values.pop('service', None):
-        set_key(new_helm_values, 'service', process_service(service_values))
+    service_values = new_helm_values.pop('service', None)
+    if service_values is not None:
+        new_helm_values['service'] = process_service(service_values, data)
 
     # Update persistence
-    if persistence_values := new_helm_values.pop('persistence', None):
-        set_key(new_helm_values, 'persistence', process_persistence(persistence_values))
+    persistence_values = new_helm_values.pop('persistence', None)
+    if persistence_values is not None:
+        new_helm_values['persistence'] = process_persistence(persistence_values, data)
 
     # Update controllers
-    if controller_values := new_helm_values.pop('controller', None):
-        set_key(new_helm_values, 'controllers', process_controllers(controller_values))
+    controller_values = new_helm_values.pop('controller', None)
+    if controller_values is not None:
+        new_helm_values['controllers'] = process_controllers(controller_values, data)
 
     # Update initContainers
     if init_containers_values := new_helm_values.pop('initContainers', None):
@@ -137,15 +141,21 @@ def process_ingress(data):
     if ingress_main is None:
         return data
 
-    ingress_main['hosts'] = [{
-        'paths': [{
-            'service': {
-                'port': str(port['port']),
-            },
-            'pathType': 'Prefix',
-            'path': '/',
-        }]
-    } for port in ingress_main.pop('ports', [])]
+    ingress_main['hosts'] = [
+        {
+            'host': host_data.get('host'),
+            'paths': [
+                {
+                    'path': path_data.get('path'),
+                    'pathType': path_data.get('pathType'),
+                    'service': {
+                        'name': path_data.get('service', {}).get('name', 'main'),
+                        'port': path_data.get('service', {}).get('port', 'http')
+                    },
+                } for path_data in host_data.get('paths', [])
+            ],
+        } for host_data in ingress_main.get('hosts', [])
+    ]
 
     data['main'] = ingress_main
     return data
