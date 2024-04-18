@@ -36,25 +36,14 @@ spec:
           - 100
       nodeSelector:
         node-role.kubernetes.io/worker: 'true'
-#      affinity:
-#        nodeAffinity:
-#          requiredDuringSchedulingIgnoredDuringExecution:
-#            nodeSelectorTerms:
-#              - matchExpressions:
-#                  - key: feature.node.kubernetes.io/custom-intel-gpu
-#                    operator: In
-#                    values:
-#                      - 'true'
     controllers:
       main:
         type: statefulset
-        serviceAccountName: plex-sidecar
         containers:
           main:
             image:
               repository: ghcr.io/onedr0p/plex
-              tag: 
-                1.40.1.8227-c0dd5a73e@sha256:a60bc6352543b4453b117a8f2b89549e458f3ed8960206d2f3501756b6beb519
+              tag: 1.40.1.8227-c0dd5a73e@sha256:a60bc6352543b4453b117a8f2b89549e458f3ed8960206d2f3501756b6beb519
             env:
               TZ: ${TIMEZONE}
               PLEX_CLAIM: claim-RGPtV5WwXo9JZcoHzti2
@@ -67,22 +56,9 @@ spec:
                 gpu.intel.com/i915: 1
                 memory: 20000Mi
           sidecar-log-watcher:
-            image: 
+            image:
               repository: curlimages/curl
               tag: latest
-            name: sidecar-log-watcher
-            volumeMounts:
-              - name: plex-config-volume
-                mountPath: /config
-            env:
-              - name: POD_NAME
-                valueFrom:
-                  fieldRef:
-                    fieldPath: metadata.name
-              - name: NAMESPACE
-                valueFrom:
-                  fieldRef:
-                    fieldPath: metadata.namespace
             command: ["/bin/sh", "-c"]
             args:
               - |
@@ -98,7 +74,15 @@ spec:
                     echo "Log line does not contain target string"
                   fi
                 done
-            serviceAccountName: plex-sidecar
+            env:
+              - name: POD_NAME
+                valueFrom:
+                  fieldRef:
+                    fieldPath: metadata.name
+              - name: NAMESPACE
+                valueFrom:
+                  fieldRef:
+                    fieldPath: metadata.namespace
             securityContext:
               readOnlyRootFilesystem: true
               runAsNonRoot: true
@@ -109,7 +93,7 @@ spec:
         loadBalancerIP: ${SVC_PLEX_ADDR}
         ports:
           http:
-            port: &port 32400
+            port: 32400
     ingress:
       main:
         enabled: true
@@ -132,7 +116,6 @@ spec:
           - hosts:
               - *uri
             secretName: *uri
-        className: traefik
     persistence:
       config:
         enabled: true
@@ -142,7 +125,6 @@ spec:
         type: nfs
         server: ${NAS_ADDR}
         path: /volume1/omoikane
-        readOnly: true
         globalMounts:
           - path: /omoikane
       downloads:
@@ -150,7 +132,6 @@ spec:
         type: nfs
         server: ${NAS_ADDR}
         path: /volume2/downloads
-        readOnly: true
         globalMounts:
           - path: /downloads
       transcode:
