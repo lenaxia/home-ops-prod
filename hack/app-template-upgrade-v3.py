@@ -151,10 +151,11 @@ def process_ingress(data):
                 'service': {
                     'name': ingress_main.get('serviceName', ''),
                     'port': {
-                        'number': port['port']
+                        'number': int(port['port'])
                     }
                 }
             }
+            },
             'pathType': 'Prefix',
             'path': '/',
         }]
