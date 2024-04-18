@@ -127,9 +127,15 @@ def process(filepath, data):
 
 
 def process_controllers(data):
-    return {
-        'main': data
-    }
+    # Assuming 'data' is the old controller values that need to be transformed
+    # to match the new 'controllers' structure in app-template@3.1.0
+    new_controllers = {}
+    for controller_name, controller_values in data.items():
+        # Transform the old controller values to the new structure here
+        # This is a placeholder for the actual transformation logic
+        # You will need to map the old keys to the new keys as per the new schema
+        new_controllers[controller_name] = controller_values
+    return new_controllers
 
 
 def process_ingress(data):
