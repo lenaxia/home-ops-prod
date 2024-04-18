@@ -137,13 +137,15 @@ def process_ingress(data):
     if ingress_main is None:
         return data
 
-    for host in ingress_main.get('hosts', []):
-        for path in host.get('paths', []):
-            if 'service' in path:
-                if 'port' in path['service']:
-                    port_str = str(path['service']['port'])
-                    port_str = port_str.strip().lstrip('&').split()[0]
-                    path['service']['port'] = int(port_str)
+    ingress_main['hosts'] = [{
+        'paths': [{
+            'service': {
+                'port': str(port['port']),
+            },
+            'pathType': 'Prefix',
+            'path': '/',
+        }]
+    } for port in ingress_main.pop('ports', [])]
 
     data['main'] = ingress_main
     return data
@@ -154,16 +156,14 @@ def process_service(data):
     if service_main is None:
         return data
 
-    if 'ports' in service_main:
-        for port_name, port_data in service_main['ports'].items():
-            if 'port' in port_data:
-                port_str = str(port_data['port'])
-                port_str = port_str.strip().lstrip('&').split()[0]
-                port_data['port'] = int(port_str)
-
-    # Ensure the service has a controller specified
-    if 'controller' not in service_main:
-        service_main['controller'] = 'main'
+    ports = service_main.pop('ports', [])
+    service_main['ports'] = {}
+    for port in ports:
+        service_main['ports'][port['name']] = {
+            'port': port['port'],
+            'enabled': True,
+            'primary': port.get('primary', False)
+        }
 
     data['main'] = service_main
     return data
