@@ -141,7 +141,9 @@ def process_ingress(data):
         for path in host.get('paths', []):
             if 'service' in path:
                 if 'port' in path['service']:
-                    path['service']['port'] = int(path['service']['port'])
+                    port_str = str(path['service']['port'])
+                    port_str = port_str.strip().lstrip('&').split()[0]
+                    path['service']['port'] = int(port_str)
 
     data['main'] = ingress_main
     return data
@@ -155,7 +157,9 @@ def process_service(data):
     if 'ports' in service_main:
         for port_name, port_data in service_main['ports'].items():
             if 'port' in port_data:
-                port_data['port'] = int(port_data['port'])
+                port_str = str(port_data['port'])
+                port_str = port_str.strip().lstrip('&').split()[0]
+                port_data['port'] = int(port_str)
 
     # Ensure the service has a controller specified
     if 'controller' not in service_main:
