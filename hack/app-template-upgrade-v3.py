@@ -145,9 +145,16 @@ def process_ingress(data):
 
     ingress_main['hosts'] = [{
         'paths': [{
-            'service': {
-                'port': str(port['port']),
-            },
+            'path': '/',
+            'pathType': 'Prefix',
+            'backend': {
+                'service': {
+                    'name': ingress_main.get('serviceName', ''),
+                    'port': {
+                        'number': port['port']
+                    }
+                }
+            }
             'pathType': 'Prefix',
             'path': '/',
         }]
