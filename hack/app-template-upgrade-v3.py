@@ -170,6 +170,10 @@ def process_service(data):
     if service_main is None:
         return data
 
+    # Assuming the new schema requires a 'controller' key under 'service.main'
+    if 'controller' not in service_main:
+        service_main['controller'] = 'default'  # or whatever the default controller should be
+
     ports = service_main.pop('ports', [])
     service_main['ports'] = {}
     for port in ports:
