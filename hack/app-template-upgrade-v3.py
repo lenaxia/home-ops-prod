@@ -127,15 +127,10 @@ def process(filepath, data):
 
 
 def process_controllers(data):
-    # Assuming 'data' is the old controller values that need to be transformed
-    # to match the new 'controllers' structure in app-template@3.1.0
-    new_controllers = {}
-    for controller_name, controller_values in data.items():
-        # Transform the old controller values to the new structure here
-        # This is a placeholder for the actual transformation logic
-        # You will need to map the old keys to the new keys as per the new schema
-        new_controllers[controller_name] = controller_values
-    return new_controllers
+    # The provided values.yaml does not specify a transformation for controllers,
+    # so we assume that the existing structure is already compliant.
+    # If a transformation is needed, the logic should be implemented here.
+    return data
 
 
 def process_ingress(data):
@@ -182,6 +177,15 @@ def process_service(data):
             'enabled': True,
             'primary': port.get('primary', False)
         }
+
+    # Update service.main to include additional keys as per the provided values.yaml
+    service_main['type'] = service_main.get('type', 'ClusterIP')
+    service_main['externalTrafficPolicy'] = service_main.get('externalTrafficPolicy', '')
+    service_main['ipFamilyPolicy'] = service_main.get('ipFamilyPolicy', '')
+    service_main['ipFamilies'] = service_main.get('ipFamilies', [])
+    service_main['annotations'] = service_main.get('annotations', {})
+    service_main['labels'] = service_main.get('labels', {})
+    service_main['extraSelectorLabels'] = service_main.get('extraSelectorLabels', {})
 
     data['main'] = service_main
     return data
