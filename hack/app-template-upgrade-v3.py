@@ -179,7 +179,7 @@ def process_ingress(data, full_data):
 
 
 def process_service(data, full_data):
-    controllers = full_data.get('controllers', {})
+    controllers = full_data.get('spec', {}).get('values', {}).get('controllers', {})
     processed_data = {}
 
     primary_exists = False  # Flag to check if any service is marked as primary
@@ -190,10 +190,7 @@ def process_service(data, full_data):
         processed_ports = {}
 
         for port_name, port_settings in ports.items():
-            if 'port' in port_settings:
-                port = port_settings['port']
-            else:
-                port = None  # Or some default value
+            port = port_settings.get('port', None)  # Get port or None as default
 
             processed_port_info = {
                 'port': port,
@@ -206,6 +203,26 @@ def process_service(data, full_data):
         service_data['ports'] = processed_ports
         # Add the primary key back to the service data
         service_data['primary'] = primary
+
+        # Determine the controller for each service
+        controller = service_data.pop('controller', service_name)  # Default to service name
+        if controller not in controllers:
+            # If specified controller does not exist, default to 'main', 'app', or the first available controller
+            controller = 'main' if 'main' in controllers else 'app' if 'app' in controllers else next(iter(controllers), None)
+        service_data['controller'] = controller
+
+        # Determine the correct controller based on available controllers
+        if service_name in controllers:
+            controller = service_name
+        elif 'main' in controllers:
+            controller = 'main'
+        elif 'app' in controllers:
+            controller = 'app'
+        else:
+            controller = next(iter(controllers), None)  # Default to the first controller if none match
+        service_data['controller'] = controller
+
+
         # Add the service data to the processed data
         processed_data[service_name] = service_data
 
@@ -226,10 +243,11 @@ def process_service(data, full_data):
 
 
 
+
 def process_persistence(data, full_data):
     allowed_keys = {
         "persistentVolumeClaim": {"enabled", "type", "accessMode", "annotations", "dataSource", "dataSourceRef",
-                                  "labels", "nameOverride", "retain", "storageClass", "volumeName",
+                                  "labels", "nameOverride", "retain", "size", "storageClass", "volumeName",
                                   "existingClaim", "advancedMounts", "globalMounts"},
         "configMap": {"enabled", "type", "name", "identifier", "defaultMode", "items", "advancedMounts", "globalMounts"},
         "secret": {"enabled", "type", "name", "identifier", "defaultMode", "items", "advancedMounts", "globalMounts"},
@@ -240,7 +258,7 @@ def process_persistence(data, full_data):
     }
 
     required_keys = {
-        "persistentVolumeClaim": {"accessMode"},
+        "persistentVolumeClaim": {"accessMode", "size"},
         "configMap": set(),
         "secret": set(),
         "nfs": {"server", "path"},
@@ -249,43 +267,44 @@ def process_persistence(data, full_data):
         "custom": {"volumeSpec"}
     }
 
+    conditional_required_keys = {
+        "configMap": {"name", "identifier"},
+        "secret": {"name", "identifier"}
+    }
+
     controllers = full_data.get('spec', {}).get('values', {}).get('controllers', {})
 
-    # Iterate over the persistence configuration
     for persistence_name, persistence_values in data.items():
-        if not persistence_values.get('enabled', True):
+        if persistence_values.get('enabled', True) is False:
             continue
 
-        if 'existingClaim' in persistence_values and 'type' not in persistence_values:
-            persistence_type = "persistentVolumeClaim"
-        else:
-            persistence_type = persistence_values.get("type", "custom")
+        if 'existingClaim' in persistence_values:
+            persistence_values['type'] = 'persistentVolumeClaim'
+            required_keys["persistentVolumeClaim"] = set()
 
-        valid_keys = allowed_keys[persistence_type]
-        extra_keys = set(persistence_values) - valid_keys
-        for key in extra_keys:
+        persistence_type = persistence_values.get("type", "custom")
+
+        valid_keys = allowed_keys.get(persistence_type, set())
+        keys_to_remove = [key for key in persistence_values if key not in valid_keys]
+        for key in keys_to_remove:
             del persistence_values[key]
 
-        # Ensure required keys are present
-        for key in required_keys[persistence_type]:
-            if key == "size" and "existingClaim" in persistence_values:
-                continue
-            if key == "accessMode" and not persistence_values.get("accessMode"):
-                persistence_values["accessMode"] = "ReadWriteOnce"
-            else:
-                persistence_values.setdefault(key, None)
+        missing_keys = required_keys.get(persistence_type, set()) - set(persistence_values.keys())
+        for key in missing_keys:
+            persistence_values.setdefault(key, None)
 
-        # Prepare and adjust the advancedMounts structure
-        advanced_mounts = persistence_values.get("advancedMounts", {})  # Use get to avoid KeyError
+        if persistence_type in conditional_required_keys:
+            conditional_keys = conditional_required_keys[persistence_type]
+            if not any(key in persistence_values for key in conditional_keys):
+                persistence_values[conditional_keys.pop()] = None
+
         advanced_mounts_updated = False
         for controller_name, controller_info in controllers.items():
             for container_type in ['initContainers', 'containers']:
                 for container_name, container_details in controller_info.get(container_type, {}).items():
                     for volume_mount in container_details.get('volumeMounts', []):
                         if volume_mount['name'] == persistence_name:
-                            mount_config = {
-                                "path": volume_mount["mountPath"],
-                            }
+                            mount_config = {"path": volume_mount["mountPath"]}
                             if "readOnly" in volume_mount:
                                 mount_config["readOnly"] = volume_mount["readOnly"]
                             if "subPath" in volume_mount:
@@ -302,6 +321,7 @@ def process_persistence(data, full_data):
             del persistence_values["advancedMounts"]
 
     return data
+
 
 
 

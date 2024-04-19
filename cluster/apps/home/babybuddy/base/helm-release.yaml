@@ -50,6 +50,7 @@ spec:
           http:
             port: 8000
         primary: true
+        controller: main
     ingress:
       main:
         enabled: true
@@ -81,5 +82,6 @@ spec:
 
     # -- Configures service settings for the chart.
     # @default -- See values.yaml
+        type: persistentVolumeClaim
     podAnnotations:
       secret.reloader.stakater.com/reload: *appname
