@@ -23,6 +23,7 @@ spec:
   values:
     defaultPodOptions:
       securityContext:
+        runAsNonRoot: true
         runAsUser: 568
         runAsGroup: 568
         fsGroup: 568
@@ -40,8 +41,6 @@ spec:
               pullPolicy: Always
             env:
               TZ: ${TIMEZONE}
-              PUID: 1000
-              PGID: 1000
             command: ["/usr/local/bin/python", "Tautulli.py"]
             args: [
               "--config", "/config/config.ini",
