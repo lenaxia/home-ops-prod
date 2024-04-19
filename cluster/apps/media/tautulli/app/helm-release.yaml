@@ -42,7 +42,7 @@ spec:
               TZ: ${TIMEZONE}
               PUID: 1000
               PGID: 1000
-            command: ["/usr/local/bin/python", "Tautulli.py"]
+            command: ["/usr/local/bin/python3", "Tautulli.py"]
             args: [
               "--config", "/config/config.ini",
               "--datadir", "/config",
