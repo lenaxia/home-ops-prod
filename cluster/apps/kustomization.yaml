@@ -36,7 +36,7 @@ resources:
   - ./networking/external-dns/ks.yaml
   
   # Home
-  #- ./home/babybuddy/ks.yaml
+  - ./home/babybuddy/ks.yaml
   #- ./home/babybuddy-ava/ks.yaml
   #- ./home/babybuddy-pandaria/ks.yaml
   #- ./home/grocy/ks.yaml
