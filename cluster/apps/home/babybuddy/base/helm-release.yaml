@@ -77,7 +77,6 @@ spec:
     persistence:
       config:
         enabled: true
-        accessMode: ReadWriteOnce
         existingClaim: babybuddy-volume
 
     # -- Configures service settings for the chart.
