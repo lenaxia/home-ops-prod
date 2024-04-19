@@ -46,7 +46,7 @@ spec:
           metallb.universe.tf/address-pool: dev-infra
         ports:
           http:
-            port:
+            port: 80
             enabled: false
           mqtt:
             port: 1883
