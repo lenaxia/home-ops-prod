@@ -280,7 +280,10 @@ def process_persistence(data, full_data):
 
         if 'existingClaim' in persistence_values:
             persistence_values['type'] = 'persistentVolumeClaim'
-            required_keys["persistentVolumeClaim"] = set()
+            required_keys["persistentVolumeClaim"].discard('accessMode')
+            required_keys["persistentVolumeClaim"].discard('size')
+            persistence_values.pop('accessMode', None)
+            persistence_values.pop('size', None)
 
         persistence_type = persistence_values.get("type", "custom")
 
