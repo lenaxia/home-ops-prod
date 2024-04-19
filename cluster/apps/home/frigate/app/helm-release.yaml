@@ -100,8 +100,9 @@ spec:
           http:
             port: *port
           rtsp:
-            enabled: true
             port: 8554
+            enabled: true
+        primary: true
     ingress:
       main:
         enabled: true
@@ -119,7 +120,7 @@ spec:
               - path: /
                 pathType: Prefix
                 service:
-                  name: main
+                  identifier: main
                   port: http
         tls:
           - hosts:
@@ -130,7 +131,6 @@ spec:
         enabled: true
         type: configMap
         name: frigate-configmap
-        readOnly: true
         globalMounts:
           - path: /config/config.yml
             subPath: config.yml
