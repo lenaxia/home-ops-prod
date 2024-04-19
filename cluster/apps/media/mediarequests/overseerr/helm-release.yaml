@@ -8,7 +8,7 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 2.6.0
+      version: 3.1.0
       sourceRef:
         kind: HelmRepository
         name: bjw-s-charts
@@ -67,7 +67,7 @@ spec:
               accessMode: ReadWriteOnce
               size: 1Gi
               storageClass: longhorn
-              globalMounts: 
+              globalMounts:
                 - path: /app/config
 
     service:
@@ -75,6 +75,8 @@ spec:
         ports:
           http:
             port: *port
+        primary: true
+        controller: main
     ingress:
       main:
         enabled: true
@@ -91,7 +93,7 @@ spec:
               - path: /
                 pathType: Prefix
                 service:
-                  name: main
+                  identifier: main
                   port: http
         tls:
           - hosts:
@@ -102,5 +104,6 @@ spec:
       config:
         enabled: true
         existingClaim: overseerr-config-volume
+        type: persistentVolumeClaim
     podLabels:
       app: &app overseerr

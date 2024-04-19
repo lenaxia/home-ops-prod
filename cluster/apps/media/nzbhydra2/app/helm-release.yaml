@@ -8,7 +8,7 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 2.6.0
+      version: 3.1.0
       sourceRef:
         kind: HelmRepository
         name: bjw-s-charts
@@ -49,13 +49,8 @@ spec:
         ports:
           http:
             port: 5076
-
-#    volumeClaimTemplates:
-#      - name: config
-#        mountPath: /config
-#        accessMode: ReadWriteOnce
-#        size: 1Gi
-#        storageClass: longhorn 
+        primary: true
+        controller: main
     ingress:
       main:
         enabled: true
@@ -73,7 +68,7 @@ spec:
               - path: /
                 pathType: Prefix
                 service:
-                  name: main
+                  identifier: main
                   port: http
         tls:
           - hosts:
@@ -84,6 +79,7 @@ spec:
       config:
         enabled: true
         existingClaim: nzbhydra2-config-volume
+        type: persistentVolumeClaim
       omoikane:
         enabled: true
         type: custom

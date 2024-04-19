@@ -1,4 +1,3 @@
----
 apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
@@ -9,7 +8,7 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 2.6.0
+      version: 3.1.0
       sourceRef:
         kind: HelmRepository
         name: bjw-s-charts
@@ -22,33 +21,13 @@ spec:
     remediation:
       retries: 5
   values:
-    image:
-      repository: meisnate12/plex-meta-manager
-      tag: v1.21.0
-      pullPolicy: Always
-    env:
-      TZ: "${TIMEZONE}"
-#    podSecurityContext:
-#      runAsUser: 0
-#      runAsGroup: 0
-#      fsGroup: 1001
-#      fsGroupChangePolicy: "OnRootMismatch"
-#      supplementalGroups:
-#        - 100
-    lifecycle:
-      postStart:
-        exec:
-          command:
-            - /bin/bash
-            - -c
-            - cp /config.yml /config/config.yml
-    podAnnotations:
-      secret.reloader.stakater.com/reload: "plexmetamanager-config"
     service:
       main:
         ports:
           http:
             port: &port 6767
+        primary: true
+        controller:
     ingress:
       main:
         enabled: true
@@ -65,6 +44,9 @@ spec:
             paths:
               - path: /
                 pathType: Prefix
+                service:
+                  identifier: main
+                  port:
         tls:
           - hosts:
               - *uri
@@ -88,38 +70,34 @@ spec:
       config:
         enabled: true
         existingClaim: plexmetamanager-config-volume
-        readOnly: false
-#      omoikane:
-#        enabled: true
-#        type: custom
-#        volumeSpec:
-#          nfs:
-#            server: ${NAS_ADDR}
-#            path: /volume1/omoikane
-#        mountPath: /omoikane
-#      downloads:
-#        enabled: true
-#        type: custom
-#        volumeSpec:
-#          nfs:
-#            server: ${NAS_ADDR}
-#            path: /volume2/downloads
-#        mountPath: /downloads
-#      backups:
-#        enabled: true
-#        type: custom
-#        volumeSpec:
-#          nfs:
-#            server: ${NAS_ADDR}
-#            path: /volume1/backups/plexmetamanager
-#        mountPath: /backups
+        type: persistentVolumeClaim
       configyml:
         enabled: true
         type: secret
         name: plexmetamanager-config
-        subPath: config.yml
-        mountPath: /config.yml
         defaultMode: 0644
+    image:
+      repository: meisnate12/plex-meta-manager
+      tag: v1.21.0
+      pullPolicy: Always
+    env:
+      TZ: "${TIMEZONE}"
+#    podSecurityContext:
+#      runAsUser: 0
+#      runAsGroup: 0
+#      fsGroup: 1001
+#      fsGroupChangePolicy: "OnRootMismatch"
+#      supplementalGroups:
+#        - 100
+    lifecycle:
+      postStart:
+        exec:
+          command:
+            - /bin/bash
+            - -c
+            - cp /config.yml /config/config.yml
+    podAnnotations:
+      secret.reloader.stakater.com/reload: "plexmetamanager-config"
     nodeSelector:
       node-role.kubernetes.io/worker: "true"
 #    resources:

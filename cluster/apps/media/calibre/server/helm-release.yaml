@@ -7,7 +7,7 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 2.6.0
+      version: 3.1.0
       interval: 15m
       sourceRef:
         kind: HelmRepository
@@ -23,9 +23,6 @@ spec:
         initContainers:
           update-volume-permission:
             command: [sh, -c, chown -R 1000:1000 /config]
-            volumeMounts:
-              - name: config
-                mountPath: /config
             securityContext:
               runAsUser: 0
             image:
@@ -49,15 +46,15 @@ spec:
                 memory: 357M
     service:
       main:
+        type: ClusterIP
         ports:
           http:
             port: 8080
           webserver:
-            enabled: true
             port: 8081
-            protocol: TCP
-            targetPort: 8081
-        type: ClusterIP
+            enabled: true
+        primary: true
+        controller: main
     ingress:
       main:
         enabled: true
@@ -74,7 +71,7 @@ spec:
               - path: /
                 pathType: Prefix
                 service:
-                  name: main
+                  identifier: main
                   port: http
         tls:
           - hosts:
@@ -85,11 +82,17 @@ spec:
       config:
         enabled: true
         existingClaim: calibre-config-volume
+        type: persistentVolumeClaim
+        advancedMounts:
+          main:
+            update-volume-permission:
+              - path: /config
       media:
         enabled: true
         existingClaim: calibre-media-volume
         globalMounts:
           - path: /library
+        type: persistentVolumeClaim
       omoikane:
         enabled: true
         type: custom
