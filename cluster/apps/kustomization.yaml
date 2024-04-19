@@ -1,4 +1,4 @@
-apiversion: kustomize.config.k8s.io/v1beta1
+piversion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
   - ./kyverno/ks.yaml
@@ -71,7 +71,7 @@ resources:
   - ./media/jellyfin/ks.yaml
   - ./media/ersatztv/ks.yaml
   - ./media/tautulli/ks.yaml
-  - ./media/subgen/ks.yaml
+    #- ./media/subgen/ks.yaml
   - ./media/recyclarr/ks.yaml
   - ./media/sonarr/ks.yaml
   - ./media/radarr/ks.yaml
