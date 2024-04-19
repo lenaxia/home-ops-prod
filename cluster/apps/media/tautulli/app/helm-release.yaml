@@ -114,6 +114,8 @@ spec:
       config:
         enabled: true
         existingClaim: tautulli-config-volume
+      tmp:
+        type: emptyDir
       add-ons:
         type: emptyDir
       backups:
