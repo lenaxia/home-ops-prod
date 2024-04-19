@@ -73,19 +73,25 @@ spec:
       - "--providers.kubernetescrd.allowexternalnameservices=true"
     ports:
       traefik:
-        expose: 
-          default: true
+        expose:
+          default: true  # Assuming this port exposure is defined similarly for other services
       web:
-        redirectTo: 
+        redirectTo:
           port: websecure
+        expose:  # If expose is needed for 'web', define it similarly as a dictionary
+          default: false  # This line might not be necessary depending on your logic
       websecure:
         tls:
           enabled: true
           options: "default"
+        expose:
+          default: true  # Ensure consistent structure for 'expose'
       metrics:
         port: 8082
-        expose: true
+        expose:
+          default: true  # Changed from 'expose: true' to a dictionary form
         exposedPort: 8082
+    
     tlsOptions:
       default:
         minVersion: VersionTLS12
