@@ -36,20 +36,20 @@ resources:
   - ./networking/external-dns/ks.yaml
   
   # Home
-  - ./home/babybuddy/ks.yaml
-  - ./home/babybuddy-ava/ks.yaml
-  - ./home/babybuddy-pandaria/ks.yaml
-  - ./home/grocy/ks.yaml
-  - ./home/actualbudget/ks.yaml
-  - ./home/langserver/ks.yaml
-  - ./home/gamevault/ks.yaml
-  - ./home/node-red/ks.yaml
+  #- ./home/babybuddy/ks.yaml
+  #- ./home/babybuddy-ava/ks.yaml
+  #- ./home/babybuddy-pandaria/ks.yaml
+  #- ./home/grocy/ks.yaml
+  #- ./home/actualbudget/ks.yaml
+  #- ./home/langserver/ks.yaml
+  #- ./home/gamevault/ks.yaml
+  #- ./home/node-red/ks.yaml
   #- ./home/vscode/ks.yaml
   #- ./home/roskills/ks.yaml
   - ./home/localai/ks.yaml
   - ./home/home-assistant/ks.yaml
-  - ./home/esphome/ks.yaml
-  - ./home/magicmirror/ks.yaml
+    #- ./home/esphome/ks.yaml
+    #- ./home/magicmirror/ks.yaml
   - ./home/frigate/ks.yaml
   - ./home/zwavejs/ks.yaml
   - ./home/mosquitto/ks.yaml
