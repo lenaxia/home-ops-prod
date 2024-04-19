@@ -77,4 +77,7 @@ spec:
     persistence:
       config:
         enabled: false
+        type: persistentVolumeClaim
+        size: 512Mi
+        accessMode: ReadWriteOnce
 
