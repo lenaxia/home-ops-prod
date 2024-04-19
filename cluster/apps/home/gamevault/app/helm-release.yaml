@@ -36,7 +36,7 @@ spec:
         ports:
           http:
             port: 8080
-        primary: true
+
     ingress:
       main:
         enabled: true
@@ -54,7 +54,7 @@ spec:
               - path: /
                 pathType: Prefix
                 service:
-                  identifier: main
+                  name: main
                   port: http
         tls:
           - hosts:
@@ -64,13 +64,11 @@ spec:
       files:
         enabled: true
         existingClaim: gamevault-files-nfs
-        accessMode: ReadWriteOnce
       images:
         enabled: true
         existingClaim: gamevault-images-nfs
 
     # -- Configures service settings for the chart.
     # @default -- See values.yaml
-        accessMode: ReadWriteOnce
     podAnnotations:
       secret.reloader.stakater.com/reload: *appname

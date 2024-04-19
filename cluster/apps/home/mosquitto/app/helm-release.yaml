@@ -46,12 +46,10 @@ spec:
           metallb.universe.tf/address-pool: dev-infra
         ports:
           http:
-            port:
             enabled: false
           mqtt:
-            port: 1883
             enabled: true
-        primary: true
+            port: 1883
     ingress:
       main:
         enabled: true
@@ -65,7 +63,7 @@ spec:
               - path: /
                 pathType: Prefix
                 service:
-                  identifier: main
+                  name: main
                   port: mqtt
         tls:
           - hosts:
@@ -78,12 +76,13 @@ spec:
         type: configMap
         name: mosquitto-config
         globalMounts:
-          - path: /mosquitto/config/mosquitto.conf
-            subPath: mosquitto.conf
+        - path: /mosquitto/config/mosquitto.conf
+          subPath: mosquitto.conf
       passwordfile:
         enabled: true
         type: secret
-        name: &app mosquitto
+        name: *app
+        readOnly: false
         globalMounts:
           - path: /mosquitto/config/mqttpassword
             subPath: mqttpassword

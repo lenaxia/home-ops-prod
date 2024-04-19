@@ -46,7 +46,7 @@ spec:
                 memory: 94M
         statefulset:
           volumeClaimTemplates:
-            - name: local-data
+            - name: local-data 
               accessMode: ReadWriteMany
               size: 5Gi
               storageClass: longhorn
@@ -59,7 +59,7 @@ spec:
         ports:
           http:
             port: 8080
-        primary: true
+
     ingress:
       main:
         enabled: true
@@ -78,7 +78,7 @@ spec:
               - path: /
                 pathType: Prefix
                 service:
-                  identifier: main
+                  name: main
                   port: http
         tls:
           - hosts:

@@ -38,14 +38,15 @@ spec:
 
     service:
       main:
-        type: LoadBalancer
-
         ports:
           http:
             port: 80
+            targetPort: 8443
           ssh:
             port: 22
-        primary: true
+            targetPort: 22
+        type: LoadBalancer
+
     ingress:
       main:
         enabled: true
@@ -63,7 +64,7 @@ spec:
               - path: /
                 pathType: Prefix
                 service:
-                  identifier: main
+                  name: main
                   port: http
         tls:
           - hosts:
@@ -76,7 +77,6 @@ spec:
 
     # -- Configures service settings for the chart.
     # @default -- See values.yaml
-        accessMode: ReadWriteOnce
     podAnnotations:
       secret.reloader.stakater.com/reload: *appname
         #    lifecycle:
@@ -111,4 +111,5 @@ spec:
         #              go install -v github.com/go-delve/delve/cmd/dlv@latest &&
         #              go install -v honnef.co/go/tools/cmd/staticcheck@latest &&
         #              go install -v golang.org/x/tools/gopls@latest
+              
 

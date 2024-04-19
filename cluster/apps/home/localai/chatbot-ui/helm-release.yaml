@@ -30,14 +30,13 @@ spec:
         containers:
           main:
             image:
-              repository: ghcr.io/mckaywrigley/chatbot-ui
+              repository: ghcr.io/mckaywrigley/chatbot-ui 
               tag: main
             env:
               TZ: ${TIMEZONE}
-              OPENAI_API_HOST: http://localai.home.svc.cluster.local
-              OPENAI_API_KEY: DoesNotMatter
-              DEFAULT_MODEL: 
-                thebloke__wizardlm-7b-v1-0-uncensored-superhot-8k-ggml__wizardlm-7b-v1.0-superhot-8k.ggmlv3.q3_k_m.bin
+              OPENAI_API_HOST: "http://localai.home.svc.cluster.local"
+              OPENAI_API_KEY: "DoesNotMatter"
+              DEFAULT_MODEL: "thebloke__wizardlm-7b-v1-0-uncensored-superhot-8k-ggml__wizardlm-7b-v1.0-superhot-8k.ggmlv3.q3_k_m.bin"
 
             resources:
               requests:
@@ -58,7 +57,7 @@ spec:
         ports:
           http:
             port: 3000
-        primary: true
+
     ingress:
       main:
         enabled: true
@@ -77,7 +76,7 @@ spec:
               - path: /
                 pathType: Prefix
                 service:
-                  identifier: main
+                  name: main
                   port: http
         tls:
           - hosts:

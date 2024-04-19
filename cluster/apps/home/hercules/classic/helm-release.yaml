@@ -31,6 +31,9 @@ spec:
                 tar -xzf sql-files.tar.gz -C /docker-entrypoint-initdb.d/ &&
                 rm sql-files.tar.gz
                 ls -la /docker-entrypoint-initdb.d
+            volumeMounts:
+              - name: db-scripts
+                mountPath: /docker-entrypoint-initdb.d
             image:            # use an image with curl
               repository: ubuntu
               tag: latest
@@ -66,6 +69,12 @@ spec:
                   secretKeyRef:
                     name: *appname
                     key: MYSQL_DATABASE
+            volumeMounts:
+              - name: db-scripts
+                mountPath: /db-scripts
+              - name: entrypoint-sh
+                mountPath: /entrypoint.sh
+                subPath: entrypoint.sh
             image:
               repository: ubuntu
               tag: latest
@@ -98,11 +107,14 @@ spec:
         ports:
           http:
             port: 6900
+            targetPort: 6900
           char:
             port: 6121
+            targetPort: 6121
           map:
             port: 5121
-        primary: true
+            targetPort: 5121
+
     persistence:
       config:
         enabled: true
@@ -113,12 +125,6 @@ spec:
         type: emptyDir
         globalMounts:
           - path: /docker-entrypoint-initdb.d
-        advancedMounts:
-          main:
-            0-prep-db:
-              - path: /docker-entrypoint-initdb.d
-            1-init-db:
-              - path: /db-scripts
       entrypoint-sh:
         enabled: true
         type: configMap
@@ -128,10 +134,5 @@ spec:
           - path: /entrypoint.sh
             subPath: entrypoint.sh
 
-        advancedMounts:
-          main:
-            1-init-db:
-              - path: /entrypoint.sh
-                subPath: entrypoint.sh
     podAnnotations:
       secret.reloader.stakater.com/reload: *appname

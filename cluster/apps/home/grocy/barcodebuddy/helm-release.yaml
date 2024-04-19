@@ -58,7 +58,7 @@ spec:
         ports:
           http:
             port: 80
-        primary: true
+
     ingress:
       main:
         enabled: true
@@ -66,7 +66,7 @@ spec:
           hajimari.io/enable: 'true'
           hajimari.io/icon: baby-bottle-outline
           hajimari.io/info: Grocy Barcode Buddy
-          hajimari.io/group: &namespace home
+          hajimari.io/group: *namespace
           cert-manager.io/cluster-issuer: letsencrypt-production
           traefik.ingress.kubernetes.io/router.entrypoints: websecure
           traefik.ingress.kubernetes.io/router.middlewares: networking-chain-authelia@kubernetescrd
@@ -76,7 +76,7 @@ spec:
               - path: /
                 pathType: Prefix
                 service:
-                  identifier: main
+                  name: main
                   port: http
         tls:
           - hosts:

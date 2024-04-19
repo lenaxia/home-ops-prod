@@ -59,7 +59,7 @@ spec:
         ports:
           http:
             port: 80
-        primary: true
+
     ingress:
       main:
         enabled: true
@@ -78,7 +78,7 @@ spec:
               - path: /
                 pathType: Prefix
                 service:
-                  identifier: main
+                  name: main
                   port: http
         tls:
           - hosts:

@@ -33,7 +33,7 @@ spec:
       nodeSelector:
         node-role.kubernetes.io/worker: 'true'
 #        aeotec.feature.node.kubernetes.io/zwave: "true"
-        zooz.feature.node.kubernetes.io/zwave: 'true'
+        zooz.feature.node.kubernetes.io/zwave: "true"
     controllers:
       main:
         containers:
@@ -77,9 +77,8 @@ spec:
           http:
             port: 8091
           websocket:
-            port: 3000
             enabled: true
-        primary: true
+            port: 3000
     ingress:
       main:
         enabled: true
@@ -95,7 +94,7 @@ spec:
               - path: /
                 pathType: Prefix
                 service:
-                  identifier: main
+                  name: main
                   port: http
         tls:
           - hosts:
@@ -108,7 +107,6 @@ spec:
         existingClaim: zwavejs-config
         globalMounts:
           - path: /usr/src/app/store
-        accessMode: ReadWriteOnce
       usb:
         enabled: true
         type: hostPath

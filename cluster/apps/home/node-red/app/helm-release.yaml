@@ -54,19 +54,18 @@ spec:
               NODE_RED_CREDENTIAL_SECRET:
                 valueFrom:
                   secretKeyRef:
-                    name: &appname node-red
+                    name: *appname
                     key: credential-secret
 
     # -- Configures service settings for the chart.
     # @default -- See values.yaml
     service:
       main:
-        type: ClusterIP
-
         ports:
           http:
             port: 1880
-        primary: true
+        type: ClusterIP
+
     ingress:
       main:
         enabled: true
@@ -85,7 +84,7 @@ spec:
               - path: /
                 pathType: Prefix
                 service:
-                  identifier: main
+                  name: main
                   port: http
         tls:
           - hosts:
@@ -96,7 +95,6 @@ spec:
       data:
         enabled: true
         existingClaim: nodered-config-volume
-        accessMode: ReadWriteOnce
       packagejson:
         enabled: true
         type: configMap
