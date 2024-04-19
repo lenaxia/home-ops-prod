@@ -53,7 +53,7 @@ resources:
   - ./home/frigate/ks.yaml
   - ./home/zwavejs/ks.yaml
   - ./home/mosquitto/ks.yaml
-  - ./home/hercules/ks.yaml
+  #- ./home/hercules/ks.yaml
   #- ./home/fasten/ks.yaml
 
   # Monitoring Namespace
@@ -76,7 +76,7 @@ resources:
   - ./media/sonarr/ks.yaml
   - ./media/radarr/ks.yaml
   - ./media/bazarr/ks.yaml
-  - ./media/readarr/ks.yaml
+    #- ./media/readarr/ks.yaml
   - ./media/transmission/ks.yaml
   - ./media/nzbget/ks.yaml
   - ./media/nzbhydra2/ks.yaml
