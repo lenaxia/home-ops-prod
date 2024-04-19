@@ -67,21 +67,21 @@ spec:
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: true
               capabilities: { drop: ["ALL"] }
-          jbops:
-            image:
-              repository: registry.k8s.io/git-sync/git-sync
-              tag: v4.2.2@sha256:2dc189a0886c0df1b5b0cc816c60b5fe0799230a5bb7e123aa28ff4f74ac988a
-            env:
-              GITSYNC_REPO: https://github.com/blacktwin/JBOPS
-              GITSYNC_REF: master
-              GITSYNC_PERIOD: 24h
-              GITSYNC_ROOT: /add-ons
-            securityContext: *securityContext
-            resources:
-              requests:
-                cpu: 10m
-              limits:
-                memory: 128Mi
+                #          jbops:
+                #            image:
+                #              repository: registry.k8s.io/git-sync/git-sync
+                #              tag: v4.2.2@sha256:2dc189a0886c0df1b5b0cc816c60b5fe0799230a5bb7e123aa28ff4f74ac988a
+                #            env:
+                #              GITSYNC_REPO: https://github.com/blacktwin/JBOPS
+                #              GITSYNC_REF: master
+                #              GITSYNC_PERIOD: 24h
+                #              GITSYNC_ROOT: /add-ons
+                #            securityContext: *securityContext
+                #            resources:
+                #              requests:
+                #                cpu: 10m
+                #              limits:
+                #                memory: 128Mi
     service:
       main:
         type: LoadBalancer
