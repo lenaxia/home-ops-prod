@@ -8,7 +8,7 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 2.6.0
+      version: 3.1.0
       sourceRef:
         kind: HelmRepository
         name: bjw-s-charts
@@ -28,7 +28,7 @@ spec:
         runAsGroup: 568
         fsGroup: 568
         fsGroupChangePolicy: OnRootMismatch
-        seccompProfile: { type: RuntimeDefault }
+        seccompProfile: {type: RuntimeDefault}
       nodeSelector:
         node-role.kubernetes.io/worker: 'true'
     controllers:
@@ -42,11 +42,8 @@ spec:
             env:
               TZ: ${TIMEZONE}
             command: ["/usr/local/bin/python", "Tautulli.py"]
-            args: [
-              "--config", "/config/config.ini",
-              "--datadir", "/config",
-              "--port", "8181"
-            ]
+            args: ["--config", "/config/config.ini", "--datadir", "/config", "--port",
+              "8181"]
             probes:
               liveness: &probes
                 enabled: false
@@ -65,7 +62,7 @@ spec:
             securityContext: &securityContext
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: true
-              capabilities: { drop: ["ALL"] }
+              capabilities: {drop: ["ALL"]}
           jbops:
             image:
               repository: registry.k8s.io/git-sync/git-sync
@@ -87,6 +84,8 @@ spec:
         ports:
           http:
             port: *port
+        primary: true
+        controller: main
     ingress:
       main:
         enabled: true
@@ -103,7 +102,7 @@ spec:
               - path: /
                 pathType: Prefix
                 service:
-                  name: main
+                  identifier: main
                   port: http
         tls:
           - hosts:
@@ -114,6 +113,7 @@ spec:
       config:
         enabled: true
         existingClaim: tautulli-config-volume
+        type: persistentVolumeClaim
       tmp:
         type: emptyDir
       add-ons:

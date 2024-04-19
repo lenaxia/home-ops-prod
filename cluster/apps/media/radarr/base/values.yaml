@@ -34,6 +34,7 @@ service:
       http:
         port: 7878
     type: ClusterIP
+    controller: main
 
 ingress:
   main:
