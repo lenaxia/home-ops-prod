@@ -34,6 +34,7 @@ service:
       http:
         port: 8989
     type: ClusterIP
+    controller: main
 ingress:
   main:
     enabled: true
