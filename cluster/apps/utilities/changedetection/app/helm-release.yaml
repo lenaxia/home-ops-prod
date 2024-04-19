@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 2.6.0
+      version: 3.1.0
       sourceRef:
         kind: HelmRepository
         name: bjw-s-charts
@@ -40,21 +40,22 @@ spec:
               MINIMUM_SECONDS_RECHECK_TIME: 1
           browser-chrome:
             image:
-              repository:  selenium/standalone-chrome-debug
+              repository: selenium/standalone-chrome-debug
               tag: 3.141.59
 
 
     service:
       main:
-        primary: true
         annotations:
           metallb.universe.tf/address-pool: dev-infra
-        ports:
-          http:
-            port: 5000
         type: LoadBalancer
         externalTrafficPolicy: Local
 
+        ports:
+          http:
+            port: 5000
+        primary: true
+        controller: main
     ingress:
       main:
         enabled: true
@@ -71,7 +72,7 @@ spec:
               - path: /
                 pathType: Prefix
                 service:
-                  name: main
+                  identifier: main
                   port: http
         tls:
           - hosts:
@@ -85,6 +86,7 @@ spec:
         existingClaim: changedetection-data-volume
         globalMounts:
           - path: /datastore
+        type: persistentVolumeClaim
       shm:
         enabled: true
         type: hostPath

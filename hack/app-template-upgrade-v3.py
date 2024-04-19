@@ -40,7 +40,9 @@ def save_yaml_file(filepath, data):
 def load_key(data, path):
     value = data
     for key in path.split('.'):
-        value = value.get(key, {})
+        if key not in value:
+            return None  # Return None if the key is missing
+        value = value[key]
     return value
 
 
@@ -85,8 +87,10 @@ def main():
             if data['kind'] != 'HelmRelease':
                 continue
 
+            LOG.info(f"Assessing {filepath}")
             if should_process(args, filepath, data):
                 try:
+                    LOG.info(f"Trying to process {filepath}")
                     process(filepath, data)
                 except Exception as exc:
                     LOG.error(f'failed to process: {filepath}, script is not good enough - will need manual intervention', exc_info=exc)
@@ -200,7 +204,8 @@ def process_service(data, full_data):
             processed_ports[port_name] = processed_port_info
 
         # Add the processed ports data back to the service data
-        service_data['ports'] = processed_ports
+        if processed_ports:
+            service_data['ports'] = processed_ports
         # Add the primary key back to the service data
         service_data['primary'] = primary
 

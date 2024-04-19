@@ -8,7 +8,7 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 2.6.0
+      version: 3.1.0
       sourceRef:
         kind: HelmRepository
         name: bjw-s-charts
@@ -60,10 +60,12 @@ spec:
                 enabled: false
     service:
       main:
+        type: LoadBalancer
         ports:
           http:
             port: *port
-        type: LoadBalancer
+        primary: true
+        controller: main
     ingress:
       main:
         enabled: true
@@ -81,7 +83,7 @@ spec:
               - path: /
                 pathType: Prefix
                 service:
-                  name: main
+                  identifier: main
                   port: http
         tls:
           - hosts:

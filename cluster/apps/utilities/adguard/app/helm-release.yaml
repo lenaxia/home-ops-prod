@@ -8,7 +8,7 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 2.0.2
+      version: 3.1.0
       sourceRef:
         kind: HelmRepository
         name: bjw-s-charts
@@ -36,14 +36,15 @@ spec:
     # @default -- See values.yaml
     service:
       main:
-        primary: true
         annotations:
           metallb.universe.tf/address-pool: dev-infra
+        type: LoadBalancer
+        loadBalancerIP: 192.168.5.2
         ports:
           http:
             port: 3000
-        type: LoadBalancer
-        loadBalancerIP: 192.168.5.2
+        primary: true
+        controller: main
       dns-tcp:
         annotations:
           metallb.universe.tf/allow-shared-ip: adguard-shared-ip
@@ -51,13 +52,13 @@ spec:
         enabled: true
         type: LoadBalancer
         loadBalancerIP: 192.168.5.1
+        externalTrafficPolicy: Local
         ports:
           dns-tcp:
-            enabled: true
             port: 53
-            protocol: TCP
-            targetPort: 53
-        externalTrafficPolicy: Local
+            enabled: true
+        primary: false
+        controller: main
       dns-udp:
         annotations:
           metallb.universe.tf/allow-shared-ip: adguard-shared-ip
@@ -65,16 +66,16 @@ spec:
         enabled: true
         type: LoadBalancer
         loadBalancerIP: 192.168.5.1
-        ports:
-          dns-udp:
-            enabled: true
-            port: 53
-            protocol: UDP
-            targetPort: 53
         externalTrafficPolicy: Local
 
     # -- Configure persistence settings for the chart under this key.
     # @default -- See values.yaml
+        ports:
+          dns-udp:
+            port: 53
+            enabled: true
+        primary: false
+        controller: main
     ingress:
       main:
         enabled: true
@@ -90,7 +91,7 @@ spec:
               - path: /
                 pathType: Prefix
                 service:
-                  name: main
+                  identifier: main
                   port: http
         tls:
           - hosts:
@@ -108,6 +109,7 @@ spec:
         enabled: true
         globalMounts:
           - path: /opt/adguardhome/conf
+        volumeSpec:
       data:
         enabled: false
         globalMounts:

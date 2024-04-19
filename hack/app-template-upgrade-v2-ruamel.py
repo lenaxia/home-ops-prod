@@ -37,7 +37,9 @@ def save_yaml_file(filepath, data):
 def load_key(data, path):
     value = data
     for key in path.split('.'):
-        value = value.get(key, {})
+        if key not in value:
+            return None  # Return None if the key is missing
+        value = value[key]
     return value
 
 

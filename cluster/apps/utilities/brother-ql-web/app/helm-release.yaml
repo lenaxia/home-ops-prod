@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 2.6.0
+      version: 3.1.0
       sourceRef:
         kind: HelmRepository
         name: bjw-s-charts
@@ -39,14 +39,15 @@ spec:
               requests:
                 cpu: 15m
                 memory: 10M
-            command: [/bin/sh, -c, ./brother_ql_web.py --model QL-810W tcp://192.168.0.83 --default-label-size 62red]
+            command: [/bin/sh, -c, ./brother_ql_web.py --model QL-810W tcp://192.168.0.83
+                  --default-label-size 62red]
     service:
       main:
         ports:
           http:
             port: 80
-            targetPort: 8013
-
+        primary: true
+        controller: main
     ingress:
       main:
         enabled: true
@@ -64,14 +65,14 @@ spec:
               - path: /
                 pathType: Prefix
                 service:
-                  name: main
+                  identifier: main
                   port: http
           - host: &uri2 label.${SECRET_DEV_DOMAIN}
             paths:
               - path: /
                 pathType: Prefix
                 service:
-                  name: main
+                  identifier: main
                   port: http
         tls:
           - hosts:
