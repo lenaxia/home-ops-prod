@@ -15,7 +15,6 @@ class MyDumper(YAML):
     def increase_indent(self, flow=False, indentless=False):
         return super(MyDumper, self).increase_indent(flow, False)
 
-
 def setup_logging():
     LOG.setLevel(logging.DEBUG)
     if not LOG.handlers:  # Check if the logger already has handlers to avoid duplicate messages
@@ -57,7 +56,6 @@ def set_key(data, path, value):
         index += 1
 
     node[split_path[index]] = value
-
 
 def should_process(args, filepath, data):
     #if args.skip_version_check:
