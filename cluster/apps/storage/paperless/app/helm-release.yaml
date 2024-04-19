@@ -85,19 +85,16 @@ spec:
             image:
               repository: thecodingmachine/gotenberg
               tag: 8.1.0
-            imagePullPolicy: IfNotPresent
             env:
               - {name: DISABLE_GOOGLE_CHROME, value: '1'}
           redis:
             image:
               repository: public.ecr.aws/docker/library/redis
               tag: 7.2.4
-            imagePullPolicy: IfNotPresent
           tika:
             image:
               repository: ghcr.io/paperless-ngx/tika
               tag: 2.9.1-full
-            imagePullPolicy: IfNotPresent
     service:
       main:
         type: LoadBalancer
