@@ -37,7 +37,6 @@ spec:
           reloader.stakater.com/auto: 'true'
         initContainers:
           01-init-config:
-            imagePullPolicy: IfNotPresent
             command: [/bin/sh, -c, cp /tmp/config/recyclarr.yml /config/recyclarr.yml]
             image:
               repository: public.ecr.aws/docker/library/busybox
