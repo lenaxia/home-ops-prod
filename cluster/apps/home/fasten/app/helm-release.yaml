@@ -8,7 +8,7 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 2.6.0
+      version: 3.1.0
       interval: 16m
       sourceRef:
         kind: HelmRepository
@@ -36,6 +36,7 @@ spec:
           http:
             port: 8080
         primary: true
+        controller: main
     ingress:
       main:
         enabled: true
@@ -62,9 +63,9 @@ spec:
     persistence:
       config:
         enabled: true
-        accessMode: ReadWriteOnce
         existingClaim: fasten-volume
         globalMounts:
           - path: /opt/fasten/db
+        type: persistentVolumeClaim
     podAnnotations:
       secret.reloader.stakater.com/reload: fasten

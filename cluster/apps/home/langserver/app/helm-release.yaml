@@ -8,7 +8,7 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 2.6.0
+      version: 3.1.0
       interval: 16m
       sourceRef:
         kind: HelmRepository
@@ -29,12 +29,12 @@ spec:
               pullPolicy: Always
             envFrom:
               - secretRef:
-                  name: *appname 
+                  name: &appname langserver
             env:
               TZ: ${TIMEZONE}
               PGID: 1000
               PUID: 1000
-              LOGLEVEL: "DEBUG"
+              LOGLEVEL: DEBUG
               DEFAULT_RATE_LIMIT: 10
 
       # -- Set the application database type
@@ -43,7 +43,8 @@ spec:
         ports:
           http:
             port: 80
-
+        primary: true
+        controller: main
     ingress:
       main:
         enabled: true
@@ -57,7 +58,7 @@ spec:
               - path: /
                 pathType: Prefix
                 service:
-                  name: main
+                  identifier: main
                   port: http
         tls:
           - hosts:

@@ -7,7 +7,7 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 2.6.0
+      version: 3.1.0
       sourceRef:
         kind: HelmRepository
         name: bjw-s-charts
@@ -46,10 +46,13 @@ spec:
           metallb.universe.tf/address-pool: dev-infra
         ports:
           http:
+            port:
             enabled: false
           mqtt:
-            enabled: true
             port: 1883
+            enabled: true
+        primary: true
+        controller: main
     ingress:
       main:
         enabled: true
@@ -63,7 +66,7 @@ spec:
               - path: /
                 pathType: Prefix
                 service:
-                  name: main
+                  identifier: main
                   port: mqtt
         tls:
           - hosts:
@@ -76,13 +79,12 @@ spec:
         type: configMap
         name: mosquitto-config
         globalMounts:
-        - path: /mosquitto/config/mosquitto.conf
-          subPath: mosquitto.conf
+          - path: /mosquitto/config/mosquitto.conf
+            subPath: mosquitto.conf
       passwordfile:
         enabled: true
         type: secret
-        name: *app
-        readOnly: false
+        name: &app mosquitto
         globalMounts:
           - path: /mosquitto/config/mqttpassword
             subPath: mqttpassword
