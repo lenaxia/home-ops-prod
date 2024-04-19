@@ -10,7 +10,7 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 2.6.0
+      version: 3.1.0
       sourceRef:
         kind: HelmRepository
         name: bjw-s-charts
@@ -40,7 +40,7 @@ spec:
 
             envFrom:
               - secretRef:
-                  name: *appname
+                  name: &appname paperless
             env:
               PAPERLESS_POST_CONSUME_SCRIPT: /openai.py
               PAPERLESS_CONSUMER_RECURSIVE: 'true'
@@ -73,7 +73,8 @@ spec:
             lifecycle:
               postStart:
                 exec:
-                  command: ["/bin/sh", "-c", "pip install python-dateutil Pillow PyMuPDF && touch /tmp/dependencies_installed"]
+                  command: [/bin/sh, -c, pip install python-dateutil Pillow PyMuPDF
+                        && touch /tmp/dependencies_installed]
             resources:
               requests:
                 cpu: 100m
@@ -81,19 +82,19 @@ spec:
               limits:
                 memory: 5000Mi
           gotenburg:
-            image: 
+            image:
               repository: thecodingmachine/gotenberg
               tag: 8.1.0
             imagePullPolicy: IfNotPresent
             env:
-              - {name: "DISABLE_GOOGLE_CHROME", value: '1'}
+              - {name: DISABLE_GOOGLE_CHROME, value: '1'}
           redis:
-            image: 
+            image:
               repository: public.ecr.aws/docker/library/redis
               tag: 7.2.4
             imagePullPolicy: IfNotPresent
           tika:
-            image: 
+            image:
               repository: ghcr.io/paperless-ngx/tika
               tag: 2.9.1-full
             imagePullPolicy: IfNotPresent
@@ -103,6 +104,8 @@ spec:
         ports:
           http:
             port: *port
+        primary: true
+        controller: main
     ingress:
       main:
         enabled: true
@@ -120,7 +123,7 @@ spec:
               - path: /
                 pathType: Prefix
                 service:
-                  name: main
+                  identifier: main
                   port: http
         tls:
           - hosts:
@@ -132,7 +135,6 @@ spec:
         enabled: true
         type: configMap
         name: openai-configmap
-        readOnly: true
         defaultMode: 0777
         globalMounts:
           - path: /openai.py
@@ -142,12 +144,13 @@ spec:
         existingClaim: paperless-nfs
         globalMounts:
           - path: /library
+        type: persistentVolumeClaim
     sidecars:
       gotenburg:
         image: thecodingmachine/gotenberg:8.1.0
         imagePullPolicy: IfNotPresent
         env:
-          - {name: "DISABLE_GOOGLE_CHROME", value: '1'}
+          - {name: DISABLE_GOOGLE_CHROME, value: '1'}
       redis:
         image: public.ecr.aws/docker/library/redis:7.2.4
         imagePullPolicy: IfNotPresent

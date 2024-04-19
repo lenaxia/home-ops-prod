@@ -306,6 +306,8 @@ def process_persistence(data, full_data):
             if not any(key in persistence_values for key in conditional_keys):
                 persistence_values[conditional_keys.pop()] = None
 
+        # Access advanced_mounts directly from persistence_values
+        advanced_mounts = persistence_values.setdefault("advancedMounts", {})
         advanced_mounts_updated = False
         for controller_name, controller_info in controllers.items():
             for container_type in ['initContainers', 'containers']:
@@ -323,9 +325,8 @@ def process_persistence(data, full_data):
                             container_mounts.append(mount_config)
                             advanced_mounts_updated = True
 
-        if advanced_mounts_updated:
-            persistence_values["advancedMounts"] = advanced_mounts
-        elif "advancedMounts" in persistence_values:
+        # Eliminate the redundant assignment
+        if not advanced_mounts_updated and "advancedMounts" in persistence_values:
             del persistence_values["advancedMounts"]
 
     return data

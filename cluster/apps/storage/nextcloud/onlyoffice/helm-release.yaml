@@ -8,7 +8,7 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 2.6.0
+      version: 3.1.0
       interval: 15m
       sourceRef:
         kind: HelmRepository
@@ -49,7 +49,8 @@ spec:
         ports:
           http:
             port: 80
-
+        primary: true
+        controller: main
     ingress:
       main:
         enabled: true
@@ -67,7 +68,7 @@ spec:
               - path: /
                 pathType: Prefix
                 service:
-                  name: main
+                  identifier: main
                   port: http
         tls:
           - hosts:
@@ -78,33 +79,21 @@ spec:
     persistence:
       logs:
         enabled: true
-        accessMode: ReadWriteOnce
-        storageClass: longhorn
-        size: 2Gi
         globalMounts:
           - path: /var/log/onlyoffice
+        volumeSpec:
       cert:
         enabled: true
-        accessMode: ReadWriteOnce
-        storageClass: longhorn
-        size: 128Mi
-#      default-json:
-#        enabled: true
-#        type: configMap
-#        name: default-json
-#        subPath: default.json
-#        mountPath: /etc/onlyoffice/documentserver/default.json
-
-    # -- Configures service settings for the chart.
-    # @default -- See values.yaml
         globalMounts:
           - path: /var/www/onlyoffice/Data
+        volumeSpec:
     lifecycle:
       postStart:
         exec:
           command:
             - /bin/bash
             - -c
-            - sed -i 's/isSupportEditFeature=function(){return!1}/isSupportEditFeature=function(){return 1}/g' \
-                /var/www/onlyoffice/documentserver/web-apps/apps/*/mobile/dist/js/app.js
+            - sed -i 
+              's/isSupportEditFeature=function(){return!1}/isSupportEditFeature=function(){return
+              1}/g' \ /var/www/onlyoffice/documentserver/web-apps/apps/*/mobile/dist/js/app.js
 
