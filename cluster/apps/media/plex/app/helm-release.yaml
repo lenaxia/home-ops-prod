@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 2.6.0
+      version: 3.1.0
       sourceRef:
         kind: HelmRepository
         name: bjw-s-charts
@@ -21,9 +21,6 @@ spec:
     remediation:
       retries: 5
   values:
-    serviceAccount:
-      create: true
-      name: plex-sidecar
     defaultPodOptions:
       securityContext:
         runAsUser: 568
@@ -43,7 +40,8 @@ spec:
           main:
             image:
               repository: ghcr.io/onedr0p/plex
-              tag: 1.40.1.8227-c0dd5a73e@sha256:a60bc6352543b4453b117a8f2b89549e458f3ed8960206d2f3501756b6beb519
+              tag: 
+                1.40.1.8227-c0dd5a73e@sha256:a60bc6352543b4453b117a8f2b89549e458f3ed8960206d2f3501756b6beb519
             env:
               TZ: ${TIMEZONE}
               PLEX_CLAIM: claim-RGPtV5WwXo9JZcoHzti2
@@ -59,7 +57,7 @@ spec:
             image:
               repository: curlimages/curl
               tag: latest
-            command: ["/bin/sh", "-c"]
+            command: [/bin/sh, -c]
             args:
               - |
                 echo "Starting log watcher..."
@@ -94,6 +92,8 @@ spec:
         ports:
           http:
             port: 32400
+        primary: true
+        controller: main
     ingress:
       main:
         className: traefik
@@ -111,7 +111,7 @@ spec:
               - path: /
                 pathType: Prefix
                 service:
-                  name: main
+                  identifier: main
                   port: http
         tls:
           - hosts:
@@ -121,6 +121,7 @@ spec:
       config:
         enabled: true
         existingClaim: plex-config-volume
+        type: persistentVolumeClaim
       omoikane:
         enabled: true
         type: nfs
@@ -141,3 +142,6 @@ spec:
       scratch:
         enabled: true
         type: emptyDir
+    serviceAccount:
+      create: true
+      name: plex-sidecar
