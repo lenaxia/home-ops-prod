@@ -18,7 +18,7 @@ spec:
   # See https://github.com/bjw-s/helm-charts/blob/main/charts/library/common/values.yaml
   values:
     fullnameOverride: localai
-    replicaCount: 3
+    replicaCount: 1
 
     postRenderers:
     - kustomize:
