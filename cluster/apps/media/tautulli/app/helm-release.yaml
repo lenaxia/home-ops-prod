@@ -33,40 +33,39 @@ spec:
     controllers:
       main:
         containers:
-          main:
             image:
-              repository: linuxserver/tautulli
-              tag: v2.13.4@sha256:c6fb896971f612ad76eaf4742fcacc25d5176ccd29ae0dc383149b3b81895d31
-              pullPolicy: Always
+              repository: ghcr.io/tautulli/tautulli
+              tag: v2.13.4@sha256:fb5e22c7a4d9e770703a30d145f355786fecb28dfca6df56c5073c457f3c8a8e
             env:
-              TZ: ${TIMEZONE}
-              PUID: 1000
-              PGID: 1000
-                #command: ["/usr/local/bin/python3", "Tautulli.py"]
-                #args: [
-                #  "--config", "/config/config.ini",
-                #  "--datadir", "/config",
-                #  "--port", "80"
-                #]
+              TZ: America/New_York
+            command: ["/usr/local/bin/python", "Tautulli.py"]
+            args: [
+              "--config", "/config/config.ini",
+              "--datadir", "/config",
+              "--port", "80"
+            ]
             probes:
               liveness: &probes
-                enabled: false
+                enabled: true
                 custom: true
                 spec:
                   httpGet:
-                    path: /
-                    port: &port 8181
+                    path: /status
+                    port: &port 80
                   initialDelaySeconds: 0
                   periodSeconds: 10
                   timeoutSeconds: 1
                   failureThreshold: 3
               readiness: *probes
-              startup:
-                enabled: false
             securityContext: &securityContext
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: true
               capabilities: { drop: ["ALL"] }
+            resources:
+              requests:
+                cpu: 10m
+              limits:
+                memory: 1Gi
                 #          jbops:
                 #            image:
                 #              repository: registry.k8s.io/git-sync/git-sync
