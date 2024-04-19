@@ -37,8 +37,11 @@ spec:
             image:
               repository: ghcr.io/tautulli/tautulli
               tag: v2.13.4@sha256:fb5e22c7a4d9e770703a30d145f355786fecb28dfca6df56c5073c457f3c8a8e
+              pullPolicy: Always
             env:
-              TZ: America/New_York
+              TZ: ${TIMEZONE}
+              PUID: 1000
+              PGID: 1000
             command: ["/usr/local/bin/python", "Tautulli.py"]
             args: [
               "--config", "/config/config.ini",
@@ -47,26 +50,23 @@ spec:
             ]
             probes:
               liveness: &probes
-                enabled: true
+                enabled: false
                 custom: true
                 spec:
                   httpGet:
-                    path: /status
-                    port: &port 80
+                    path: /
+                    port: &port 8181
                   initialDelaySeconds: 0
                   periodSeconds: 10
                   timeoutSeconds: 1
                   failureThreshold: 3
               readiness: *probes
+              startup:
+                enabled: false
             securityContext: &securityContext
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: true
               capabilities: { drop: ["ALL"] }
-            resources:
-              requests:
-                cpu: 10m
-              limits:
-                memory: 1Gi
                 #          jbops:
                 #            image:
                 #              repository: registry.k8s.io/git-sync/git-sync
