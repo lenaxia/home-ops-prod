@@ -3,6 +3,8 @@ import logging
 import os
 from copy import deepcopy
 from ruamel.yaml import YAML
+import logging
+import sys
 
 LOG = logging.getLogger('app-template-upgrade')
 
@@ -16,10 +18,12 @@ class MyDumper(YAML):
 
 def setup_logging():
     LOG.setLevel(logging.DEBUG)
-    ch = logging.StreamHandler()
-    ch.setLevel(logging.DEBUG)
-    LOG.addHandler(ch)
-
+    if not LOG.handlers:  # Check if the logger already has handlers to avoid duplicate messages
+        ch = logging.StreamHandler(sys.stdout)
+        ch.setLevel(logging.DEBUG)
+        formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s', datefmt='%Y-%m-%d %H:%M:%S')
+        ch.setFormatter(formatter)
+        LOG.addHandler(ch)
 
 def load_yaml_file(filepath):
     yaml = YAML()
@@ -116,14 +120,10 @@ def process(filepath, data):
         new_helm_values['persistence'] = process_persistence(persistence_values, data)
 
     # Update controllers
-    controller_values = new_helm_values.pop('controller', None)
+    controller_values = new_helm_values.pop('controllers', None)
     if controller_values is not None:
         new_helm_values['controllers'] = process_controllers(controller_values, data)
 
-    # Update initContainers
-    if init_containers_values := new_helm_values.pop('initContainers', None):
-        for init_container_name, init_container_value in init_containers_values.items():
-            set_key(new_helm_values, f'controllers.main.initContainers.{init_container_name}', process_init_container(init_container_value))
 
     new['spec']['values'] = set_key_order(new_helm_values)
     LOG.info(f"Replacing Original file: {filepath}")
@@ -131,9 +131,15 @@ def process(filepath, data):
 
 
 def process_controllers(data, full_data):
-    return {
-        'main': data
-    }
+    processed_data = {}
+    for controller_name, controller_value in data.items():
+        processed_init_containers = process_init_container(controller_value.get('initContainers', {}), full_data)
+        if processed_init_containers:  # Check if processed_init_containers is not empty
+            controller_value['initContainers'] = processed_init_containers
+        processed_data[controller_name] = controller_value
+    return processed_data
+
+
 
 
 def process_ingress(data, full_data):
@@ -178,76 +184,186 @@ def process_service(data, full_data):
     controllers = full_data.get('controllers', {})
     processed_data = {}
 
+    primary_exists = False  # Flag to check if any service is marked as primary
+
     for service_name, service_data in data.items():
         primary = service_data.pop('primary', False)
         ports = service_data.pop('ports', {})
         processed_ports = {}
+
         for port_name, port_settings in ports.items():
-            processed_ports[port_name] = {
-                'port': port_settings['port'],
-                'enabled': port_settings.get('enabled', True),
-            }
-
-        service_data['ports'] = processed_ports
-        service_data['primary'] = primary
-
-        if 'controller' not in service_data:
-            controller_name = service_data.get('controller', 'main')
-            if controller_name in controllers:
-                service_data['controller'] = controller_name
-            elif 'main' in controllers:
-                service_data['controller'] = 'main'
-            elif 'app' in controllers:
-                service_data['controller'] = 'app'
+            if 'port' in port_settings:
+                port = port_settings['port']
             else:
-                # Return data unmodified if neither 'main' nor 'app' controllers are found
-                return data
+                port = None  # Or some default value
 
+            processed_port_info = {
+                'port': port,
+            }
+            if 'enabled' in port_settings:
+                processed_port_info['enabled'] = port_settings['enabled']
+            processed_ports[port_name] = processed_port_info
+
+        # Add the processed ports data back to the service data
+        service_data['ports'] = processed_ports
+        # Add the primary key back to the service data
+        service_data['primary'] = primary
+        # Add the service data to the processed data
         processed_data[service_name] = service_data
+
+        if primary:  # If this service is marked as primary
+            primary_exists = True
+
+    if not primary_exists:  # If no service was marked as primary
+        if 'main' in processed_data:
+            processed_data['main']['primary'] = True
+        elif 'app' in processed_data:
+            processed_data['app']['primary'] = True
+        else:  # If neither 'main' nor 'app' exist, mark the first service as primary
+            first_service_name = next(iter(processed_data))
+            processed_data[first_service_name]['primary'] = True
 
     return processed_data
 
 
 
+
 def process_persistence(data, full_data):
+    allowed_keys = {
+        "persistentVolumeClaim": {"enabled", "type", "accessMode", "annotations", "dataSource", "dataSourceRef",
+                                  "labels", "nameOverride", "retain", "storageClass", "volumeName",
+                                  "existingClaim", "advancedMounts", "globalMounts"},
+        "configMap": {"enabled", "type", "name", "identifier", "defaultMode", "items", "advancedMounts", "globalMounts"},
+        "secret": {"enabled", "type", "name", "identifier", "defaultMode", "items", "advancedMounts", "globalMounts"},
+        "nfs": {"enabled", "type", "path", "server", "advancedMounts", "globalMounts"},
+        "emptyDir": {"enabled", "type", "medium", "sizeLimit", "advancedMounts", "globalMounts"},
+        "hostPath": {"enabled", "type", "hostPath", "hostPathType", "advancedMounts", "globalMounts"},
+        "custom": {"enabled", "type", "volumeSpec", "advancedMounts", "globalMounts"}
+    }
+
+    required_keys = {
+        "persistentVolumeClaim": {"accessMode"},
+        "configMap": set(),
+        "secret": set(),
+        "nfs": {"server", "path"},
+        "emptyDir": set(),
+        "hostPath": set(),
+        "custom": {"volumeSpec"}
+    }
+
+    controllers = full_data.get('spec', {}).get('values', {}).get('controllers', {})
+
+    # Iterate over the persistence configuration
     for persistence_name, persistence_values in data.items():
-        if persistence_values.get('enabled') is False:
+        if not persistence_values.get('enabled', True):
             continue
-        if 'readOnly' in persistence_values:
-            persistence_values.pop('readOnly')
-        if mount_path := persistence_values.pop('mountPath', None):
-            persistence_values['globalMounts'] = [{
-                'path': mount_path
-            }]
-            if sub_path := persistence_values.pop('subPath', None):
-                persistence_values['globalMounts'][0]['subPath'] = sub_path
-    return data
 
-
-def process_init_container(data, full_data):
-    image = data.get('image')
-
-    # Check if image is a string and needs processing
-    if isinstance(image, str):
-        image_split = image.split(':', 1)
-        if len(image_split) == 2:
-            data['image'] = {
-                'repository': image_split[0],
-                'tag': image_split[1],
-            }
+        if 'existingClaim' in persistence_values and 'type' not in persistence_values:
+            persistence_type = "persistentVolumeClaim"
         else:
-            LOG.error(f'Image format incorrect, expected "repository:tag", got: {image}')
-    # Check if image is a map with 'repository' and 'tag'
-    elif isinstance(image, dict):
-        if 'repository' not in image or 'tag' not in image:
-            LOG.error('Image is incorrectly formatted. Expected keys "repository" and "tag"')
-    else:
-        LOG.error(f'Unexpected image data type: {type(image).__name__}')
+            persistence_type = persistence_values.get("type", "custom")
 
-    if 'volumeMounts' in data:
-        data.pop('volumeMounts')
+        valid_keys = allowed_keys[persistence_type]
+        extra_keys = set(persistence_values) - valid_keys
+        for key in extra_keys:
+            del persistence_values[key]
+
+        # Ensure required keys are present
+        for key in required_keys[persistence_type]:
+            if key == "size" and "existingClaim" in persistence_values:
+                continue
+            if key == "accessMode" and not persistence_values.get("accessMode"):
+                persistence_values["accessMode"] = "ReadWriteOnce"
+            else:
+                persistence_values.setdefault(key, None)
+
+        # Prepare and adjust the advancedMounts structure
+        advanced_mounts = persistence_values.get("advancedMounts", {})  # Use get to avoid KeyError
+        advanced_mounts_updated = False
+        for controller_name, controller_info in controllers.items():
+            for container_type in ['initContainers', 'containers']:
+                for container_name, container_details in controller_info.get(container_type, {}).items():
+                    for volume_mount in container_details.get('volumeMounts', []):
+                        if volume_mount['name'] == persistence_name:
+                            mount_config = {
+                                "path": volume_mount["mountPath"],
+                            }
+                            if "readOnly" in volume_mount:
+                                mount_config["readOnly"] = volume_mount["readOnly"]
+                            if "subPath" in volume_mount:
+                                mount_config["subPath"] = volume_mount["subPath"]
+
+                            controller_mounts = advanced_mounts.setdefault(controller_name, {})
+                            container_mounts = controller_mounts.setdefault(container_name, [])
+                            container_mounts.append(mount_config)
+                            advanced_mounts_updated = True
+
+        if advanced_mounts_updated:
+            persistence_values["advancedMounts"] = advanced_mounts
+        elif "advancedMounts" in persistence_values:
+            del persistence_values["advancedMounts"]
 
     return data
+
+
+
+def process_init_container(init_containers, full_data):
+    processed_init_containers = {}
+    controller_name = full_data.get('controller_name', 'main')  # Assuming default controller is 'main'
+    for container_name, container_value in init_containers.items():
+        data = container_value
+        image = data.get('image')
+
+        # Process image field
+        if isinstance(image, str):
+            image_split = image.split(':', 1)
+            if len(image_split) == 2:
+                data['image'] = {
+                    'repository': image_split[0],
+                    'tag': image_split[1],
+                }
+            else:
+                LOG.error(f'Image format incorrect, expected "repository:tag", got: {image}')
+        elif isinstance(image, dict):
+            if 'repository' not in image or 'tag' not in image:
+                LOG.error('Image is incorrectly formatted. Expected keys "repository" and "tag"')
+        else:
+            LOG.error(f'Unexpected image data type: {type(image).__name__}')
+
+            
+        # Check volumeMounts
+        if 'volumeMounts' in data:
+            persistence = full_data.get('persistence', {})
+
+            all_mounts_transferred = True
+            for volume_name, volume_data in persistence.items():  # Iterate over volumes in persistence
+                if 'advancedMounts' in volume_data:
+                    if controller_name in volume_data['advancedMounts']:
+                        for volume_mount in data['volumeMounts']:
+                            if volume_mount['name'] == volume_name:  # Check if volume name matches
+                                if container_name in volume_data['advancedMounts'][controller_name]:
+                                    if any(mount['path'] == volume_mount['mountPath'] for mount in volume_data['advancedMounts'][controller_name][container_name]):
+                                        LOG.debug(f"Mount check passed for {volume_name} at {volume_mount['mountPath']}")
+                                        continue  # This mount is okay
+                                    else:
+                                        LOG.warning(f"No matching mount path found for {volume_name} at {volume_mount['mountPath']} in advancedMounts")
+                                else:
+                                    LOG.warning(f"Container {container_name} not found in advancedMounts for {volume_name}")
+                            else:
+                                LOG.warning(f"Volume {volume_name} not found in volumeMounts data")
+                                all_mounts_transferred = False
+                                break
+                        if not all_mounts_transferred:
+                            break
+
+            if all_mounts_transferred:
+                LOG.info(f"All volume mounts for {container_name} were successfully transferred to advancedMounts. Removing volumeMounts from init container.")
+                data.pop('volumeMounts')
+            else:
+                LOG.error(f'Not all volume mounts for {container_name} were transferred to advancedMounts.')
+
+        processed_init_containers[container_name] = data
+    return processed_init_containers
 
 
 def set_key_order(data):
