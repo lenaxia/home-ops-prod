@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 2.6.0
+      version: 3.1.0
       sourceRef:
         kind: HelmRepository
         name: bjw-s-charts
@@ -33,7 +33,7 @@ spec:
           whenUnsatisfiable: DoNotSchedule
           labelSelector:
             matchLabels:
-              app.kubernetes.io/name: *app
+              app.kubernetes.io/name: &app vector-aggregator
     controllers:
       main:
         replicas: 3
@@ -56,21 +56,21 @@ spec:
           http:
             port: 8686
           journald-logs:
-            enabled: true
             port: 6000
+            enabled: true
           kubernetes-logs:
-            enabled: true
             port: 6010
-          opnsense-logs:
             enabled: true
+          opnsense-logs:
             port: 5140
-            protocol: UDP
+            enabled: true
+        primary: true
+        controller: main
     persistence:
       config:
         enabled: true
         type: configMap
         name: vector-aggregator-configmap
-        readOnly: true
         globalMounts:
           - path: /etc/vector/vector.yaml
             subPath: vector.yaml
