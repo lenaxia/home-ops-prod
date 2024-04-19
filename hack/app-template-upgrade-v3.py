@@ -56,10 +56,10 @@ def set_key(data, path, value):
 
 
 def should_process(args, filepath, data):
-    #if args.skip_version_check:
-    #    LOG.info(f'Probably already upgraded as "controllers" key exists, skipping {filepath}')
-    #    return False
-    return load_key(data, 'spec.chart.spec.chart') == 'app-template' and load_key(data, 'spec.chart.spec.version') < '3.2.0'
+    if args.skip_version_check and load_key(data, 'spec.values.controllers'):
+        LOG.info(f'Probably already upgraded as "controllers" key exists, skipping {filepath}')
+        return False
+    return load_key(data, 'spec.chart.spec.chart') == 'app-template' and load_key(data, 'spec.chart.spec.version') < '3.1.0'
 
 
 def main():
@@ -130,20 +130,16 @@ def process(filepath, data):
     save_yaml_file(filepath, new)
 
 
-def process_controllers(data, full_data):
+def process_controllers(data):
     return {
         'main': data
     }
 
 
-def process_ingress(data, full_data):
+def process_ingress(data):
     ingress_main = data.pop('main', None)
     if ingress_main is None:
         return data
-
-    service_identifiers = {
-        svc['name']: svc for svc in full_data.get('service', {}).values()
-    }
 
     ingress_main['hosts'] = [
         {
@@ -153,63 +149,37 @@ def process_ingress(data, full_data):
                     'path': path_data.get('path'),
                     'pathType': path_data.get('pathType'),
                     'service': {
-                        'identifier': path_data.get('service', {}).get('name', 'main'),
-                        'port': path_data.get('service', {}).get('port')
+                        'name': path_data.get('service', {}).get('name', 'main'),
+                        'port': path_data.get('service', {}).get('port', 'http')
                     },
                 } for path_data in host_data.get('paths', [])
             ],
         } for host_data in ingress_main.get('hosts', [])
     ]
 
-    for host in ingress_main['hosts']:
-        for path in host['paths']:
-            service = path['service']
-            if service['identifier'] in service_identifiers:
-                service_obj = service_identifiers[service['identifier']]
-                service['identifier'] = service_obj['identifier'] if 'identifier' in service_obj else service_obj['name']
-            else:
-                service['identifier'] = 'main'
-
     data['main'] = ingress_main
     return data
 
 
-def process_service(data, full_data):
-    controllers = full_data.get('controllers', {})
-    processed_data = {}
+def process_service(data):
+    service_main = data.pop('main', None)
+    if service_main is None:
+        return data
 
-    for service_name, service_data in data.items():
-        primary = service_data.pop('primary', False)
-        ports = service_data.pop('ports', {})
-        processed_ports = {}
-        for port_name, port_settings in ports.items():
-            processed_ports[port_name] = {
-                'port': port_settings['port'],
-                'enabled': port_settings.get('enabled', True),
-            }
+    ports = service_main.pop('ports', [])
+    service_main['ports'] = {}
+    for port in ports:
+        service_main['ports'][port['name']] = {
+            'port': port['port'],
+            'enabled': True,
+            'primary': port.get('primary', False)
+        }
 
-        service_data['ports'] = processed_ports
-        service_data['primary'] = primary
-
-        if 'controller' not in service_data:
-            controller_name = service_data.get('controller', 'main')
-            if controller_name in controllers:
-                service_data['controller'] = controller_name
-            elif 'main' in controllers:
-                service_data['controller'] = 'main'
-            elif 'app' in controllers:
-                service_data['controller'] = 'app'
-            else:
-                # Return data unmodified if neither 'main' nor 'app' controllers are found
-                return data
-
-        processed_data[service_name] = service_data
-
-    return processed_data
+    data['main'] = service_main
+    return data
 
 
-
-def process_persistence(data, full_data):
+def process_persistence(data):
     for persistence_name, persistence_values in data.items():
         if persistence_values.get('enabled') is False:
             continue
@@ -224,7 +194,7 @@ def process_persistence(data, full_data):
     return data
 
 
-def process_init_container(data, full_data):
+def process_init_container(data):
     image = data.get('image')
 
     # Check if image is a string and needs processing
