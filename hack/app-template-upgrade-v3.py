@@ -26,12 +26,14 @@ def setup_logging():
 
 def load_yaml_file(filepath):
     yaml = YAML()
+    yaml.preserve_quotes = True
     with open(filepath, 'r') as file:
         return yaml.load(file)
 
 
 def save_yaml_file(filepath, data):
     yaml = YAML()
+    yaml.preserve_quotes = True
     yaml.indent(mapping=2, sequence=4, offset=2)
     with open(filepath, 'w') as file:
         yaml.dump(data, file)
