@@ -31,7 +31,7 @@ spec:
         tag: latest
       env:
         DEBUG: true
-        GALLERIES: '[{"name":"model-gallery", "url":"github:go-skynet/model-gallery/index.yaml"}, {"url": "github:go-skynet/model-gallery/huggingface.yaml","name":"huggingface"}]'
+        GALLERIES: '[{"name":"model-gallery", "url":"github:go-skynet/model-gallery/index.yaml"}, {"name":"huggingface", "url": "github:go-skynet/model-gallery/huggingface.yaml"}]'
         PRELOAD_MODELS: '[{"id": "huggingface@thebloke__wizardlm-7b-v1-0-uncensored-superhot-8k-ggml__wizardlm-7b-v1.0-superhot-8k.ggmlv3.q3_k_m.bin","name": "WizardLM-7B-uncensored"}, {"id": "model-gallery@bert-embeddings"}, {"url": "github:go-skynet/model-gallery/stablediffusion.yaml"}]'
         COMPEL: 0
         threads: 4
