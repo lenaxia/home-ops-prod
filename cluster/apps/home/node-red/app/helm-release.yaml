@@ -71,7 +71,6 @@ spec:
     ingress:
       main:
         enabled: true
-        name: Node-RED
         annotations:
           hajimari.io/enable: 'true'
           hajimari.io/icon: resistor-nodes
