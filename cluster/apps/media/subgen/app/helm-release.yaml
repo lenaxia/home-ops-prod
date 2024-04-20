@@ -93,7 +93,7 @@ spec:
                 pathType: Prefix
                 service:
                   identifier: main
-                  port: web
+                  port: http
         tls:
           - hosts:
               - *uri
