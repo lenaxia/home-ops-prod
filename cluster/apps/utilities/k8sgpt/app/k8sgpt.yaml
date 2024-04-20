@@ -6,7 +6,7 @@ metadata:
 spec:
   ai:
     enabled: true
-    model: ggml-gpt4all-j
+    model: llama3-8b-instruct
     backend: localai
     baseUrl: http://localai.home.svc.cluster.local:80/v1
       #  ai:
@@ -27,9 +27,9 @@ spec:
   #  namespace: trivy-system
   # filters:
   #   - Ingress
-  # sink:
-  #   type: slack
-  #   webhook: <webhook-url>
+  sink:
+    type: slack
+    webhook: ${SECRET_SLACK_HOMEOPS_WEBHOOK}
   #extraOptions:
   #   backstage:
   #     enabled: true
