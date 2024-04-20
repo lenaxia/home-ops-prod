@@ -7,16 +7,16 @@ template:
   chat_message: |
     <|start_header_id|>{{if eq .RoleName "assistant"}}assistant{{else if eq .RoleName "system"}}system{{else if eq .RoleName "tool"}}tool{{else if eq .RoleName "user"}}user{{end}}<|end_header_id|>
 
-    {{ if .FunctionCall -}}
+    {{- if .FunctionCall}}
     Function call:
-    {{ else if eq .RoleName "tool" -}}
+    {{- else if eq .RoleName "tool"}}
     Function response:
-    {{ end -}}
-    {{ if .Content -}}
-    {{.Content -}}
-    {{ else if .FunctionCall -}}
-    {{ toJson .FunctionCall -}}
-    {{ end -}}
+    {{- end}}
+    {{- if .Content}}
+    {{.Content}}
+    {{- else if .FunctionCall}}
+    {{toJson .FunctionCall}}
+    {{- end}}
     <|eot_id|>
   function: |
     <|start_header_id|>system<|end_header_id|>
