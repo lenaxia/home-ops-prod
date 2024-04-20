@@ -1,0 +1,31 @@
+name: "llama3-8b-instruct"
+
+description: |
+  LLaMA-3 8B Instruct model provided by Second State, designed for structured and instructive responses based on function calls and complex user interactions.
+
+license: "Custom"
+urls:
+- https://huggingface.co/second-state/Llama-3-8B-Instruct-GGUF
+
+config_file: |
+    backend: llama
+    parameters:
+      model: Llama-3-8B-Instruct-Q5_K_M.gguf
+      mmap: true
+      f16: true
+    context_size: 8192
+    template:
+      completion: llama3-8b-instruct-completion
+      chat: llama3-8b-instruct-chat
+files:
+    - filename: "Llama-3-8B-Instruct-Q5_K_M.gguf"
+      uri: "https://huggingface.co/second-state/Llama-3-8B-Instruct-GGUF/Meta-Llama-3-8B-Instruct-Q5_K_M.gguf"
+
+prompt_templates:
+- name: "llama3-8b-instruct-completion"
+  content: |
+      Q: Complete the following text: {{.Input}}\nA: 
+- name: "llama3-8b-instruct-chat"
+  content: |
+    Q: {{.Input}}\nA: 
+
