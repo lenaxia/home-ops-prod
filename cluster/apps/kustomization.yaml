@@ -38,7 +38,7 @@ resources:
   # Home
   - ./home/babybuddy/ks.yaml
   #- ./home/babybuddy-ava/ks.yaml
-  #- ./home/babybuddy-pandaria/ks.yaml
+  - ./home/babybuddy-pandaria/ks.yaml
   #- ./home/grocy/ks.yaml
   #- ./home/actualbudget/ks.yaml
   #- ./home/langserver/ks.yaml
