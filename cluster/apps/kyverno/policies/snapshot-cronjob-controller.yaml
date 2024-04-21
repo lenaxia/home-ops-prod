@@ -83,12 +83,12 @@ spec:
                     # Stagger jobs to run randomly within X seconds to avoid bringing down all apps at once
                     initContainers:
                       - name: wait
-                        image: ghcr.io/onedr0p/kopia:0.13.0@sha256:ee6608635237c9ddf3ec5b456122cb60f0195c5cad84b06e945498f2338bff59
+                        image: kopia/kopia:0.17.0@sha256:51784ce0961940846f4f47cab2d4f58e2e0cb467de357f9a80279b149a00c06e
                         command: ["/scripts/sleep.sh"]
                         args: ["1", "1800"]
                     containers:
                       - name: snapshot
-                        image: ghcr.io/onedr0p/kopia:0.13.0@sha256:ee6608635237c9ddf3ec5b456122cb60f0195c5cad84b06e945498f2338bff59
+                        image: kopia/kopia:0.17.0@sha256:51784ce0961940846f4f47cab2d4f58e2e0cb467de357f9a80279b149a00c06e
                         env:
                           - name: KOPIA_CACHE_DIRECTORY
                             value: /snapshots/{{ namespace }}/{{ appName }}/{{ claimName }}/cache
@@ -96,6 +96,14 @@ spec:
                             value: /snapshots/{{ namespace }}/{{ appName }}/{{ claimName }}/logs
                           - name: KOPIA_PASSWORD
                             value: "none"
+                          - name: KOPIA_CONFIG_PATH
+                            value: "/config/repository.config"
+                          - name: KOPIA_PERSIST_CREDENTIALS_ON_CONNECT
+                            value: "false"
+                          - name: KOPIA_CHECK_FOR_UPDATES
+                            value: "false"
+                          - name: RCLONE_CONFIG
+                            value: "/config/rclone/rclone.conf"
                         command:
                           - /bin/bash
                           - -c
