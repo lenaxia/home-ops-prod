@@ -28,7 +28,7 @@ spec:
       image:
         repository: localai/localai
         tag: v2.12.4-ffmpeg
-          #tag: v2.10.1-sycl-f16-ffmpeg-core
+          #tag: v2.12.4-sycl-f32-ffmpeg
       env:
         DEBUG: true
         #GALLERIES: '[{"name":"model-gallery", "url":"github:go-skynet/model-gallery/index.yaml"}, {"name":"huggingface", "url": "github:go-skynet/model-gallery/huggingface.yaml"}]'
