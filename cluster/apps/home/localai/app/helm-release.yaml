@@ -28,8 +28,8 @@ spec:
       image:
         repository: localai/localai
         #tag: v2.12.4-ffmpeg
-        t#ag: v2.12.4-sycl-f32-ffmpeg
-      e#nv:
+        tag: v2.12.4-sycl-f32-ffmpeg
+      env:
         DEBUG: true
         #GALLERIES: '[{"name":"model-gallery", "url":"github:go-skynet/model-gallery/index.yaml"}, {"name":"huggingface", "url": "github:go-skynet/model-gallery/huggingface.yaml"}]'
         #GALLERIES: '[{"name":"huggingface", "url": "github:go-skynet/model-gallery/huggingface.yaml"}]'
