@@ -174,10 +174,11 @@ spec:
         requiredDuringSchedulingIgnoredDuringExecution:
           - labelSelector:
               matchExpressions:
+                - key: app.kubernetes.io/name
+                  operator: In
+                  values: [plex]
                 - key: "app.kubernetes.io/name"
                   operator: In
                   values:
                     - *appname
             topologyKey: "kubernetes.io/hostname"
-
-    
