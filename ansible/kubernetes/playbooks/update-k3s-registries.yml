@@ -19,11 +19,10 @@
         block: |
           embedded-registry: true
         create: yes
-      notify:
-        - Restart K3s
         marker: "# {mark} ANSIBLE MANAGED BLOCK EMBEDDED REGISTRY"
       notify:
         - Restart K3s
+
     - name: Update K3s registries configuration
       ansible.builtin.copy:
         dest: /etc/rancher/k3s/registries.yaml
