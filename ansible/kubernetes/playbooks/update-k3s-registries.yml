@@ -1,0 +1,49 @@
+---
+- name: Update K3s Registries Configuration
+  hosts: master,worker
+  become: true
+  gather_facts: false
+
+  tasks:
+    - name: Ensure K3s registries configuration directory exists
+      ansible.builtin.file:
+        path: /etc/rancher/k3s
+        state: directory
+        owner: root
+        group: root
+        mode: '0755'
+
+    - name: Update K3s registries configuration
+      ansible.builtin.copy:
+        dest: /etc/rancher/k3s/registries.yaml
+        content: |
+          mirrors:
+            "docker.io":
+              endpoint: []
+            "ghcr.io":
+              endpoint: []
+            "quay.io":
+              endpoint: []
+            "gcr.io":
+              endpoint: []
+            "k8s.gcr.io":
+              endpoint: []
+            "registry.gitlab.com":
+              endpoint: []
+            "registry.hub.docker.com":
+              endpoint: []
+            "registry-1.docker.io":
+              endpoint: []
+        owner: root
+        group: root
+        mode: '0644'
+      notify:
+        - Restart K3s
+
+  handlers:
+    - name: Restart K3s
+      ansible.builtin.systemd:
+        name: k3s
+        state: restarted
+        enabled: yes
+        daemon_reload: yes
