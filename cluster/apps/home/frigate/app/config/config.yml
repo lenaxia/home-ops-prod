@@ -50,10 +50,10 @@ objects:
       max_area: 100000
       threshold: 0.7
 
-go2rtc:
-  streams:
-    frigate_porch_hq: rtspx://unifi-protect.turbo.ac:7441/j0GwJJkeqgWeDict
-    frigate_porch_lq: rtspx://unifi-protect.turbo.ac:7441/vXHPHzP9FVRJfDuY
+#go2rtc:
+#  streams:
+#    frigate_porch_hq: rtspx://unifi-protect.turbo.ac:7441/j0GwJJkeqgWeDict
+#    frigate_porch_lq: rtspx://unifi-protect.turbo.ac:7441/vXHPHzP9FVRJfDuY
 
 cameras:
   frigate_porch:

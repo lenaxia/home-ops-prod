@@ -6,6 +6,7 @@ k3s_server:
     - "{{ k3s_registration_address }}"
   docker: false
   #flannel-backend: "none"
+  embedded-registry: true
   disable:
     - traefik
     - servicelb

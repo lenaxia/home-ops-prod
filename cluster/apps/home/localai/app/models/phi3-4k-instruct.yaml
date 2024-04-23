@@ -32,3 +32,4 @@ template:
 context_size: 4096
 f16: true
 stopwords:
+- <|end|>
