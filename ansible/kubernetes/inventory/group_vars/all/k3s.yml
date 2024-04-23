@@ -6,6 +6,7 @@ k3s_install_hard_links: true
 k3s_become: true
 k3s_debug: false
 k3s_embedded_registry: true
+embedded-registry: true
 k3s_etcd_datastore: true
 k3s_registration_address: 192.168.4.10  # prod
 k3s_use_unsupported_config: false
