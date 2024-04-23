@@ -5,19 +5,11 @@ parameters:
 
 template:
   chat_message: |
-    <|start_header_id|>{{if eq .RoleName "assistant"}}assistant{{else if eq .RoleName "system"}}system{{else if eq .RoleName "tool"}}tool{{else if eq .RoleName "user"}}user{{end}}<|end_header_id|>
+    <|user|>
 
-    {{- if .FunctionCall}}
-    Function call:
-    {{- else if eq .RoleName "tool"}}
-    Function response:
-    {{- end}}
-    {{- if .Content}}
-    {{.Content}}
-    {{- else if .FunctionCall}}
-    {{toJson .FunctionCall}}
-    {{- end}}
-    <|eot_id|>
+    {{.Content}}<|end|>
+    <|assistant|>
+
   function: |
     <|start_header_id|>system<|end_header_id|>
 
@@ -31,10 +23,12 @@ template:
     {'title': 'FunctionCall', 'type': 'object', 'properties': {'arguments': {'title': 'Arguments', 'type': 'object'}, 'name': {'title': 'Name', 'type': 'string'}}, 'required': ['arguments', 'name']}<|eot_id|><|start_header_id|>assistant<|end_header_id|>
     Function call:
   chat: |
-    <|begin_of_text|>{{.Input }}
-    <|start_header_id|>assistant<|end_header_id|>
+    <|user|>{{.Input }}<|end|>
+    <|assistant|>
+
   completion: |
-    {{.Input}}
+    {{.Input}}<|end|>
+    <|assistant|>
 context_size: 4096
 f16: true
 stopwords:
