@@ -26,22 +26,18 @@
         dest: /etc/rancher/k3s/registries.yaml
         content: |
           mirrors:
-            "docker.io":
-              endpoint: []
-            "ghcr.io":
-              endpoint: []
-            "quay.io":
-              endpoint: []
-            "gcr.io":
-              endpoint: []
-            "k8s.gcr.io":
-              endpoint: []
-            "registry.gitlab.com":
-              endpoint: []
-            "registry.hub.docker.com":
-              endpoint: []
-            "registry-1.docker.io":
-              endpoint: []
+            docker.io:
+            ghcr.io:
+            quay.io:
+            gcr.io:
+            mcr.microsoft.com:
+            lscr.io:
+            public.ecr.aws:
+            registry.k8s.io:
+            k8s.gcr.io:
+            registry.gitlab.com:
+            registry.hub.docker.com:
+            registry-1.docker.io:
         owner: root
         group: root
         mode: '0644'
