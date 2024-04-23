@@ -13,6 +13,14 @@
         group: root
         mode: '0755'
 
+    - name: Enable embedded registry in K3s configuration
+      ansible.builtin.lineinfile:
+        path: /etc/rancher/k3s/config.yaml
+        regexp: '^#?\\s*--embedded-registry\\s*'
+        line: '--embedded-registry true'
+        create: yes
+      notify:
+        - Restart K3s
     - name: Update K3s registries configuration
       ansible.builtin.copy:
         dest: /etc/rancher/k3s/registries.yaml
