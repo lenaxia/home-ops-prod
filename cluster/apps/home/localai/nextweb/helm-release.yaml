@@ -36,7 +36,7 @@ spec:
               TZ: ${TIMEZONE}
               BASE_URL: "http://localai.home.svc.cluster.local:8080"
               HIDE_USER_API_KEY: 1
-              CUSTOM_MODELS: "+llama3-8b-instruct"
+              CUSTOM_MODELS: "+llama3-8b-instruct,+phi3-4k-instruct"
             envFrom:
               - secretRef:
                   name: &appname chatgptnextweb
