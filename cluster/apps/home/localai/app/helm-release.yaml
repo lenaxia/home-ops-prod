@@ -27,8 +27,8 @@ spec:
     deployment:
       image:
         repository: localai/localai
-        tag: v2.9.0
-        #tag: v2.12.4-ffmpeg
+        #tag: v2.9.0
+        tag: v2.12.4-ffmpeg
         #tag: v2.12.4-sycl-f32-ffmpeg
       env:
         DEBUG: true
