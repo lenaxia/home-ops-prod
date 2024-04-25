@@ -35,6 +35,27 @@ func TestHandleStore(t *testing.T) {
 	rr := httptest.NewRecorder()
 	handler := http.HandlerFunc(handleStore)
 
+	// Define the store request payload
+	storeReq := StoreRequest{
+		Store: "test_store",
+		Items: []DataItem{
+			{Content: "test content 1"},
+			{Content: "test content 2"},
+		},
+	}
+	jsonReq, err := json.Marshal(storeReq)
+	if err != nil {
+		t.Fatal(err)
+	}
+	req, err := http.NewRequest("POST", "/store", bytes.NewBuffer(jsonReq))
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	// Create a ResponseRecorder to record the response
+	rr := httptest.NewRecorder()
+	handler := http.HandlerFunc(handleStore)
+
 	// Preload data into Redis and the local AI service for testing
 	preloadTestData(t)
 
@@ -59,6 +80,9 @@ func TestHandleStore(t *testing.T) {
 
 		// Verify that data is stored in Redis
 		// ... (mock verification logic for Redis storage) ...
+
+		// Verify that data is stored in Redis
+		// ... (mock verification logic for Redis storage) ...
 	})
 
 	// Test storing data with Redis disabled
@@ -79,6 +103,9 @@ func TestHandleStore(t *testing.T) {
 		if rr.Body.String() != expected {
 			t.Errorf("handler returned unexpected body with Redis disabled: got %v want %v", rr.Body.String(), expected)
 		}
+
+		// Verify that data is stored in the local AI service
+		// ... (mock verification logic for local AI service storage) ...
 
 		// Verify that data is stored in the local AI service
 		// ... (mock verification logic for local AI service storage) ...
@@ -169,6 +196,9 @@ func TestHandleStore(t *testing.T) {
 		if rr.Body.String() != expected {
 			t.Errorf("handler returned unexpected body with Redis disabled: got %v want %v", rr.Body.String(), expected)
 		}
+
+		// Verify that data is stored in the local AI service
+		// ... (mock verification logic for local AI service storage) ...
 
 		// Verify that data is stored in the local AI service
 		// ... (mock verification logic for local AI service storage) ...
