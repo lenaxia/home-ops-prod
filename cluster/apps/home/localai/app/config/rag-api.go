@@ -343,97 +343,83 @@ func handleCompletions(w http.ResponseWriter, r *http.Request) {
 	}
 	defer r.Body.Close()
 
-	embedding, err := getEmbeddings(req.Prompt)
+	// Fetch relevant data based on the prompt for RAG
+	findReq := FindRequest{
+		Store: req.Store,
+		Key:   DataItem{Content: req.Prompt},
+		Topk:  defaultTopk,
+		Limit: defaultLimit,
+	}
+	var respData FindResponse
+	err := fetchRelevantData(findReq, &respData)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
 
-	findReq := FindRequest{
-		Store: req.Store,
-		Key:   DataItem{Content: req.Prompt, Embedding: embedding},
-		Topk:  defaultTopk,
-		Limit: defaultLimit,
+	// Append relevant data to the prompt
+	ragPrompt := req.Prompt
+	for _, item := range respData.Items {
+		ragPrompt += "\n" + item.Content
 	}
 
-	var respData FindResponse
-
-	// Check Redis cache
-	if redisClient != nil {
-		redisKey := fmt.Sprintf("%s:%s", req.Store, string(embedding))
-		jsonValue, err := redisClient.Get(redisKey).Bytes()
-		if err == nil {
-			atomic.AddUint64(&requestMetrics.RedisHits, 1)
-			if err := json.Unmarshal(jsonValue, &respData.Items); err != nil {
-				http.Error(w, err.Error(), http.StatusInternalServerError)
-				return
-			}
-		} else {
-			atomic.AddUint64(&requestMetrics.RedisMisses, 1)
-		}
+	// Prepare the payload for the AI service
+	payload := map[string]interface{}{
+		"model":       "gpt-4",
+		"prompt":      ragPrompt,
+		"max_tokens":  req.MaxTokens,
+		"temperature": req.Temperature,
+		"top_p":       req.TopP,
+	}
+	if req.ConstrainedGrammar != "" {
+		payload["grammar"] = req.ConstrainedGrammar
+	}
+	jsonPayload, err := json.Marshal(payload)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
 	}
 
-	// Fetch from external store if not found in cache
-	if len(respData.Items) == 0 {
-		localAI := os.Getenv("LOCAL_AI_ENDPOINT")
-		if localAI == "" {
-			localAI = defaultLocalAI
-		}
+	localAI := os.Getenv("LOCAL_AI_ENDPOINT")
+	if localAI == "" {
+		localAI = defaultLocalAI
+	}
 
-		storesFind := struct {
-			Store string    `json:"store,omitempty"`
-			Key   DataItem  `json:"key"`
-			Topk  int       `json:"topk"`
-			Limit int       `json:"limit,omitempty"`
-			Page  int       `json:"page,omitempty"`
-		}{
-			Store: findReq.Store,
-			Key:   findReq.Key,
-			Topk:  findReq.Topk,
-			Limit: findReq.Limit,
-		}
+	resp, err := http.Post(localAI+"/v1/chat/completions", "application/json", bytes.NewBuffer(jsonPayload))
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+	defer resp.Body.Close()
 
-		jsonData, err := json.Marshal(storesFind)
+	if resp.StatusCode != http.StatusOK {
+		body, err := io.ReadAll(resp.Body)
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 			return
 		}
-
-		resp, err := http.Post(localAI+"/stores/find", "application/json", bytes.NewBuffer(jsonData))
-		if err != nil {
-			http.Error(w, err.Error(), http.StatusInternalServerError)
-			return
-		}
-		defer resp.Body.Close()
-
-		if resp.StatusCode != http.StatusOK {
-			http.Error(w, fmt.Sprintf("request to /stores/find failed with status code: %d", resp.StatusCode), resp.StatusCode)
-			return
-		}
-
-		if err := json.NewDecoder(resp.Body).Decode(&respData); err != nil {
-			http.Error(w, err.Error(), http.StatusInternalServerError)
-			return
-		}
-
-		// Store response in Redis cache
-		if redisClient != nil {
-			for _, item := range respData.Items {
-				jsonValue, err := json.Marshal(item)
-				if err != nil {
-					http.Error(w, err.Error(), http.StatusInternalServerError)
-					return
-				}
-				redisKey := fmt.Sprintf("%s:%s", req.Store, string(item.Embedding))
-				if err := redisClient.Set(redisKey, jsonValue, 0).Err(); err != nil {
-					http.Error(w, err.Error(), http.StatusInternalServerError)
-					return
-				}
-			}
-		}
+		http.Error(w, fmt.Sprintf("completion request failed with status code: %d: %s", resp.StatusCode, body), resp.StatusCode)
+		return
 	}
 
-	// Generate completion using retrieved data and constrained grammar (if requested)
+	var respBody struct {
+		Result CompletionResponse `json:"result"`
+	}
+	if err := json.NewDecoder(resp.Body).Decode(&respBody); err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	// Send the completion response
+	jsonResp, err := json.Marshal(respBody.Result)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusOK)
+	w.Write(jsonResp)
 func handleCompletions(w http.ResponseWriter, r *http.Request) {
 	atomic.AddUint64(&requestMetrics.CompletionRequests, 1)
 	logRequest(r)
