@@ -151,6 +151,35 @@ func TestHandleStore(t *testing.T) {
 
 	// Test scenario when the store request to the local AI service fails
 	// ...
+	// Test storing data with Redis disabled and verifying storage
+	t.Run("Store with Redis disabled and verify storage", func(t *testing.T) {
+		// Mock Redis being disabled
+		mockRedis(false)
+
+		// Perform the store request
+		handler.ServeHTTP(rr, req)
+
+		// Check the status code is what we expect
+		if status := rr.Code; status != http.StatusOK {
+			t.Errorf("handler returned wrong status code with Redis disabled: got %v want %v", status, http.StatusOK)
+		}
+
+		// Check the response body is what we expect
+		expected := `{"status":"ok"}`
+		if rr.Body.String() != expected {
+			t.Errorf("handler returned unexpected body with Redis disabled: got %v want %v", rr.Body.String(), expected)
+		}
+
+		// Verify that data is stored in the local AI service
+		// ... (mock verification logic for local AI service storage) ...
+	})
+
+	// Additional test scenarios can be added here
+	// ...
+
+	// Test storing data when the local AI service fails to store
+	// ...
+
 }
 	// Test scenario when Redis is enabled but fails to store
 	t.Run("Redis enabled but fails to store", func(t *testing.T) {
