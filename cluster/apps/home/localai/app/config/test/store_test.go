@@ -69,3 +69,24 @@ func TestHandleStore(t *testing.T) {
 	// Test scenario when the store request to the local AI service fails
 	// ...
 }
+	// Test scenario when Redis is enabled but fails to store
+	t.Run("Redis enabled but fails to store", func(t *testing.T) {
+		// Mock Redis being enabled and simulate a failure to store data
+		mockRedisFailure()
+
+		// Perform the request
+		handler.ServeHTTP(rr, req)
+
+		// Check the status code is what we expect
+		if status := rr.Code; status != http.StatusInternalServerError {
+			t.Errorf("handler returned wrong status code: got %v want %v", status, http.StatusInternalServerError)
+		}
+
+		// Check the response body for an error message
+		expected := "Failed to store data in Redis"
+		if !strings.Contains(rr.Body.String(), expected) {
+			t.Errorf("handler returned unexpected body: got %v want to include %v", rr.Body.String(), expected)
+		}
+	})
+
+	// ... Additional test scenarios for embedding service not available and store request failure ...
