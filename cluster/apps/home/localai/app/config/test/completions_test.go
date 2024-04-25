@@ -41,7 +41,15 @@ func TestHandleCompletions(t *testing.T) {
 		t.Errorf("handler returned wrong status code: got %v want %v", status, http.StatusOK)
 	}
 
-	// Check the response body is what we expect
-	// Expected response should be a valid JSON CompletionResponse
+	expectedCompletion := "expected completion text"
+	var resp CompletionResponse
+	if err := json.Unmarshal(rr.Body.Bytes(), &resp); err != nil {
+		t.Errorf("handler returned unexpected body: got %v want valid JSON CompletionResponse", rr.Body.String())
+	}
+	if resp.Text != expectedCompletion {
+		t.Errorf("handler returned unexpected body: got %v want %v", resp.Text, expectedCompletion)
+	}
+
+	// Add more test scenarios here
 	// ...
 }

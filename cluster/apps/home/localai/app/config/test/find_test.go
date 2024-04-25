@@ -40,7 +40,19 @@ func TestHandleFind(t *testing.T) {
 		t.Errorf("handler returned wrong status code: got %v want %v", status, http.StatusOK)
 	}
 
-	// Check the response body is what we expect
-	// Expected response should be a valid JSON FindResponse
+	expectedItems := []DataItem{
+		{Content: "related content 1", Similarity: 0.9},
+		{Content: "related content 2", Similarity: 0.8},
+		// ... more expected items ...
+	}
+	var resp FindResponse
+	if err := json.Unmarshal(rr.Body.Bytes(), &resp); err != nil {
+		t.Errorf("handler returned unexpected body: got %v want valid JSON FindResponse", rr.Body.String())
+	}
+	if !reflect.DeepEqual(resp.Items, expectedItems) {
+		t.Errorf("handler returned unexpected body: got %v want %v", resp.Items, expectedItems)
+	}
+
+	// Add more test scenarios here
 	// ...
 }
