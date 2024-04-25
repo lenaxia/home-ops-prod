@@ -61,3 +61,10 @@ func TestHandleMetrics(t *testing.T) {
 	// Add more test scenarios here
 	// ...
 }
+	// Test scenario when Redis is enabled
+	// ...
+
+	// Test scenario when Redis is disabled
+	// ...
+
+	// Additional test scenarios can be added here
