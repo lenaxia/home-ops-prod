@@ -1,5 +1,6 @@
 package main
 
+import "reflect"
 import (
 	"bytes"
 	"encoding/json"
@@ -14,6 +15,61 @@ func TestHandleStore(t *testing.T) {
 	// ...
 
 	// Preload data into Redis and the local AI service for testing
+	preloadTestData(t)
+
+	// Test storing data with Redis enabled
+	t.Run("Store with Redis enabled", func(t *testing.T) {
+		// Mock Redis being enabled
+		mockRedis(true)
+
+		// Perform the store request
+		handler.ServeHTTP(rr, req)
+
+		// Check the status code is what we expect
+		if status := rr.Code; status != http.StatusOK {
+			t.Errorf("handler returned wrong status code with Redis enabled: got %v want %v", status, http.StatusOK)
+		}
+
+		// Check the response body is what we expect
+		expected := `{"status":"ok"}`
+		if rr.Body.String() != expected {
+			t.Errorf("handler returned unexpected body with Redis enabled: got %v want %v", rr.Body.String(), expected)
+		}
+	})
+
+	// Test storing data with Redis disabled
+	t.Run("Store with Redis disabled", func(t *testing.T) {
+		// Mock Redis being disabled
+		mockRedis(false)
+
+		// Perform the store request
+		handler.ServeHTTP(rr, req)
+
+		// Check the status code is what we expect
+		if status := rr.Code; status != http.StatusOK {
+			t.Errorf("handler returned wrong status code with Redis disabled: got %v want %v", status, http.StatusOK)
+		}
+
+		// Check the response body is what we expect
+		expected := `{"status":"ok"}`
+		if rr.Body.String() != expected {
+			t.Errorf("handler returned unexpected body with Redis disabled: got %v want %v", rr.Body.String(), expected)
+		}
+	})
+
+	// Test storing data when the local AI service fails
+	t.Run("Store with local AI service failure", func(t *testing.T) {
+		// Mock local AI service failure
+		mockLocalAIServiceFailure()
+
+		// Perform the store request
+		handler.ServeHTTP(rr, req)
+
+		// Check the status code is what we expect
+		if status := rr.Code; status != http.StatusInternalServerError {
+			t.Errorf("handler returned wrong status code with local AI service failure: got %v want %v", status, http.StatusInternalServerError)
+		}
+	})
 	preloadTestData(t)
 
 	// Create a request to pass to our handler
