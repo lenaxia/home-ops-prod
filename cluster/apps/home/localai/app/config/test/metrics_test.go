@@ -12,6 +12,7 @@ func TestHandleMetrics(t *testing.T) {
 
 	// Setup Redis and other dependencies if needed
 	// ...
+	preloadTestData(t) // Preload data into Redis and the local AI service for testing
 
 	req, err := http.NewRequest("GET", "/metrics", nil)
 	if err != nil {
