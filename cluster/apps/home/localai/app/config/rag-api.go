@@ -445,36 +445,54 @@ func handleCompletions(w http.ResponseWriter, r *http.Request) {
 	}
 	defer r.Body.Close()
 
-	// Generate completion using constrained grammar (if requested)
-	var completion CompletionResponse
+	// Fetch relevant data based on the prompt for RAG
+	findReq := FindRequest{
+		Store: req.Store,
+		Key:   DataItem{Content: req.Prompt},
+		Topk:  defaultTopk,
+		Limit: defaultLimit,
+	}
+	var relevantItems []DataItem
+	relevantItems, err := fetchRelevantData(findReq)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	// Append relevant data to the prompt
+	ragPrompt := req.Prompt
+	for _, item := range relevantItems {
+		ragPrompt += "\n" + item.Content
+	}
+
+	// Prepare the payload for the AI service
+	payload := map[string]interface{}{
+		"model":       "gpt-4",
+		"prompt":      ragPrompt,
+		"max_tokens":  req.MaxTokens,
+		"temperature": req.Temperature,
+		"top_p":       req.TopP,
+	}
 	if req.ConstrainedGrammar != "" {
-		payload := map[string]interface{}{
-			"model":   "gpt-4",
-			"prompt":  req.Prompt,
-			"messages": []map[string]string{
-				{
-					"role":    "user",
-					"content": req.Prompt,
-				},
-			},
-			"grammar": req.ConstrainedGrammar,
-			"max_tokens": req.MaxTokens,
-			"temperature": req.Temperature,
-			"top_p": req.TopP,
-			"grammar": req.ConstrainedGrammar,
-		}
-		jsonPayload, err := json.Marshal(payload)
-		if err != nil {
-			http.Error(w, err.Error(), http.StatusInternalServerError)
-			return
-		}
+		payload["grammar"] = req.ConstrainedGrammar
+	}
+	jsonPayload, err := json.Marshal(payload)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
 
 		localAI := os.Getenv("LOCAL_AI_ENDPOINT")
 		if localAI == "" {
 			localAI = defaultLocalAI
 		}
 
-		resp, err := http.Post(localAI+"/v1/chat/completions", "application/json", bytes.NewBuffer(jsonPayload))
+	// Determine the appropriate endpoint based on whether a constrained grammar is provided
+	endpoint := "/v1/completions"
+	if req.ConstrainedGrammar != "" {
+		endpoint = "/v1/chat/completions"
+	}
+	resp, err := http.Post(localAI+endpoint, "application/json", bytes.NewBuffer(jsonPayload))
 		resp, err := http.Post(localAI+"/v1/chat/completions", "application/json", bytes.NewBuffer(jsonPayload))
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
@@ -500,7 +518,22 @@ func handleCompletions(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 
-		completion = respBody.Result
+		// Send the completion response
+	jsonResp, err := json.Marshal(respBody.Result)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusOK)
+	w.Write(jsonResp)
+}
+
+func fetchRelevantData(req FindRequest) ([]DataItem, error) {
+	// This function should implement the logic to fetch relevant data based on the prompt
+	// For now, it's a placeholder and should be implemented accordingly
+	return nil, errors.New("fetchRelevantData not implemented")
 	} else {
 		// Implement retrieval-augmented generation using retrieved data
 		// ...
