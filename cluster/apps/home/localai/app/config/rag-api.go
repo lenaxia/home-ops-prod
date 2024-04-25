@@ -231,6 +231,30 @@ func handleFind(w http.ResponseWriter, r *http.Request) {	// Ensure Redis suppor
 		}
 	}
 
+	// Check Redis cache first
+	redisEnabled, _ := strconv.ParseBool(os.Getenv("REDIS_ENABLED"))
+	var cachedItems []DataItem
+	if redisEnabled && redisClient != nil {
+		redisKey := fmt.Sprintf("embedding:%s", req.Key.Content)
+		cachedValue, err := redisClient.Get(redisKey).Result()
+		if err == nil {
+			err := json.Unmarshal([]byte(cachedValue), &cachedItems)
+			if err == nil && len(cachedItems) > 0 {
+				// If cache contains some relevant data, we need to determine if it's sufficient
+				if len(cachedItems) >= req.Limit {
+					// If we have enough items, no need to fetch from /stores/find
+					atomic.AddUint64(&requestMetrics.RedisHits, 1)
+					respondWithJSON(w, cachedItems)
+					return
+				}
+				// If not enough items, we still need to fetch from /stores/find
+				// but we can use the cached items to reduce the number of items we need
+				req.Limit -= len(cachedItems)
+			}
+		}
+		atomic.AddUint64(&requestMetrics.RedisMisses, 1)
+	}
+
 	atomic.AddUint64(&requestMetrics.FindRequests, 1)
 	logRequest(r)
 
