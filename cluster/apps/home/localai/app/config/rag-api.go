@@ -434,15 +434,34 @@ func handleCompletions(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// Generate completion using retrieved data and constrained grammar (if requested)
+func handleCompletions(w http.ResponseWriter, r *http.Request) {
+	atomic.AddUint64(&requestMetrics.CompletionRequests, 1)
+	logRequest(r)
+
+	var req CompletionRequest
+	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
+	}
+	defer r.Body.Close()
+
+	// Generate completion using constrained grammar (if requested)
 	var completion CompletionResponse
 	if req.ConstrainedGrammar != "" {
 		payload := map[string]interface{}{
 			"model":   "gpt-4",
 			"prompt":  req.Prompt,
+			"messages": []map[string]string{
+				{
+					"role":    "user",
+					"content": req.Prompt,
+				},
+			},
 			"grammar": req.ConstrainedGrammar,
 			"max_tokens": req.MaxTokens,
 			"temperature": req.Temperature,
 			"top_p": req.TopP,
+			"grammar": req.ConstrainedGrammar,
 		}
 		jsonPayload, err := json.Marshal(payload)
 		if err != nil {
@@ -455,6 +474,7 @@ func handleCompletions(w http.ResponseWriter, r *http.Request) {
 			localAI = defaultLocalAI
 		}
 
+		resp, err := http.Post(localAI+"/v1/chat/completions", "application/json", bytes.NewBuffer(jsonPayload))
 		resp, err := http.Post(localAI+"/v1/chat/completions", "application/json", bytes.NewBuffer(jsonPayload))
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
