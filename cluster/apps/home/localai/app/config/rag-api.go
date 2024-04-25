@@ -1,0 +1,589 @@
+package main
+
+import (
+	"bytes"
+	"encoding/json"
+	"errors"
+	"fmt"
+	"io"
+	"net/http"
+	"os"
+	"os/signal"
+	"strconv"
+	"sync/atomic"
+	"syscall"
+
+	"github.com/go-redis/redis"
+)
+
+const (
+	defaultEmbModel     string = "bert-cpp-minilm-v6"
+	defaultLocalAI      string = "http://localhost:8080"
+	defaultTopk         int    = 100
+	defaultLimit        int    = 10
+	defaultRedisAddr    string = "localhost:6379"
+	defaultRedisEnabled bool   = false
+)
+
+type DataItem struct {
+	Content    string    `json:"content"`
+	Embedding  []float32 `json:"embedding,omitempty"`
+	Similarity float32   `json:"similarity,omitempty"`
+}
+
+type StoreRequest struct {
+	Store string     `json:"store"`
+	Items []DataItem `json:"items"`
+}
+
+type FindRequest struct {
+	Store string    `json:"store,omitempty"`
+	Key   DataItem  `json:"key"`
+	Topk  int       `json:"topk"`
+	Limit int       `json:"limit,omitempty"`
+	Page  int       `json:"page,omitempty"`
+}
+
+type FindResponse struct {
+	Items []DataItem `json:"items"`
+}
+
+type CompletionRequest struct {
+	Prompt            string `json:"prompt"`
+	MaxTokens         int    `json:"max_tokens"`
+	Temperature       float32 `json:"temperature"`
+	TopP              float32 `json:"top_p"`
+	ConstrainedGrammar string `json:"grammar,omitempty"`
+	Store             string `json:"store,omitempty"`
+}
+
+type CompletionResponse struct {
+	Text string `json:"text"`
+}
+
+type metrics struct {
+	StoreRequests     uint64
+	FindRequests      uint64
+	CompletionRequests uint64
+	RedisHits         uint64
+	RedisMisses       uint64
+}
+
+var requestMetrics = metrics{}
+
+var redisClient *redis.Client
+
+func getEmbeddings(content string) ([]float32, error) {
+	embModel := os.Getenv("EMBEDDING_MODEL")
+	if embModel == "" {
+		embModel = defaultEmbModel
+	}
+
+	localAI := os.Getenv("LOCAL_AI_ENDPOINT")
+	if localAI == "" {
+		localAI = defaultLocalAI
+	}
+
+	payload := map[string]interface{}{
+		"model": embModel,
+		"input": content,
+	}
+
+	jsonPayload, err := json.Marshal(payload)
+	if err != nil {
+		return nil, err
+	}
+
+	resp, err := http.Post(localAI+"/embeddings", "application/json", bytes.NewBuffer(jsonPayload))
+	if err != nil {
+		return nil, err
+	}
+	defer resp.Body.Close()
+
+	if resp.StatusCode != http.StatusOK {
+		return nil, fmt.Errorf("request to embeddings API failed with status code: %d", resp.StatusCode)
+	}
+
+	var result struct {
+		Data []struct {
+			Embedding []float32 `json:"embedding"`
+		} `json:"data"`
+	}
+	if err := json.NewDecoder(resp.Body).Decode(&result); err != nil {
+		return nil, err
+	}
+
+	if len(result.Data) > 0 {
+		return result.Data[0].Embedding, nil
+	}
+	return nil, errors.New("no embedding received from API")
+}
+
+func handleStore(w http.ResponseWriter, r *http.Request) {
+	atomic.AddUint64(&requestMetrics.StoreRequests, 1)
+	logRequest(r)
+
+	var req StoreRequest
+	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
+	}
+	defer r.Body.Close()
+
+	keys := make([][]float32, 0, len(req.Items))
+	values := make([]string, 0, len(req.Items))
+
+	for _, item := range req.Items {
+		embedding, err := getEmbeddings(item.Content)
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+			return
+		}
+		keys = append(keys, embedding)
+		values = append(values, item.Content)
+
+		// Store in Redis cache
+		if redisClient != nil {
+			jsonValue, err := json.Marshal(item)
+			if err != nil {
+				http.Error(w, err.Error(), http.StatusInternalServerError)
+				return
+			}
+			redisKey := fmt.Sprintf("%s:%s", req.Store, string(embedding))
+			if err := redisClient.Set(redisKey, jsonValue, 0).Err(); err != nil {
+				http.Error(w, err.Error(), http.StatusInternalServerError)
+				return
+			}
+		}
+	}
+
+	localAI := os.Getenv("LOCAL_AI_ENDPOINT")
+	if localAI == "" {
+		localAI = defaultLocalAI
+	}
+
+	storesSet := struct {
+		Store  string    `json:"store"`
+		Keys   [][]float32 `json:"keys"`
+		Values []string  `json:"values"`
+	}{
+		Store:  req.Store,
+		Keys:   keys,
+		Values: values,
+	}
+
+	jsonData, err := json.Marshal(storesSet)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	resp, err := http.Post(localAI+"/stores/set", "application/json", bytes.NewBuffer(jsonData))
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+	defer resp.Body.Close()
+
+	if resp.StatusCode != http.StatusOK {
+		body, err := io.ReadAll(resp.Body)
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+			return
+		}
+		http.Error(w, fmt.Sprintf("store request failed with status code: %d: %s", resp.StatusCode, body), resp.StatusCode)
+		return
+	}
+
+	w.WriteHeader(http.StatusOK)
+}
+
+func handleFind(w http.ResponseWriter, r *http.Request) {
+	atomic.AddUint64(&requestMetrics.FindRequests, 1)
+	logRequest(r)
+
+	var req FindRequest
+	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
+	}
+	defer r.Body.Close()
+
+	embedding, err := getEmbeddings(req.Key.Content)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+	req.Key.Embedding = embedding
+
+	var respData FindResponse
+
+	// Check Redis cache
+	if redisClient != nil {
+		redisKey := fmt.Sprintf("%s:%s", req.Store, string(embedding))
+		jsonValue, err := redisClient.Get(redisKey).Bytes()
+		if err == nil {
+			atomic.AddUint64(&requestMetrics.RedisHits, 1)
+			if err := json.Unmarshal(jsonValue, &respData.Items); err != nil {
+				http.Error(w, err.Error(), http.StatusInternalServerError)
+				return
+			}
+			jsonResp, err := json.Marshal(respData)
+			if err != nil {
+				http.Error(w, err.Error(), http.StatusInternalServerError)
+				return
+			}
+			w.Header().Set("Content-Type", "application/json")
+			w.WriteHeader(http.StatusOK)
+			w.Write(jsonResp)
+			return
+		}
+		atomic.AddUint64(&requestMetrics.RedisMisses, 1)
+	}
+
+	localAI := os.Getenv("LOCAL_AI_ENDPOINT")
+	if localAI == "" {
+		localAI = defaultLocalAI
+	}
+
+	topk := os.Getenv("TOPK")
+	if topk == "" {
+		req.Topk = defaultTopk
+	} else {
+		req.Topk, err = strconv.Atoi(topk)
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusBadRequest)
+			return
+		}
+	}
+
+	limit := os.Getenv("LIMIT")
+	if limit == "" {
+		req.Limit = defaultLimit
+	} else {
+		req.Limit, err = strconv.Atoi(limit)
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusBadRequest)
+			return
+		}
+	}
+
+	storesFind := struct {
+		Store string    `json:"store,omitempty"`
+		Key   DataItem  `json:"key"`
+		Topk  int       `json:"topk"`
+		Limit int       `json:"limit,omitempty"`
+		Page  int       `json:"page,omitempty"`
+	}{
+		Store: req.Store,
+		Key:   req.Key,
+		Topk:  req.Topk,
+		Limit: req.Limit,
+		Page:  req.Page,
+	}
+
+	jsonData, err := json.Marshal(storesFind)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	resp, err := http.Post(localAI+"/stores/find", "application/json", bytes.NewBuffer(jsonData))
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+	defer resp.Body.Close()
+
+	if resp.StatusCode != http.StatusOK {
+		http.Error(w, fmt.Sprintf("request to /stores/find failed with status code: %d", resp.StatusCode), resp.StatusCode)
+		return
+	}
+
+	if err := json.NewDecoder(resp.Body).Decode(&respData); err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	// Store response in Redis cache
+	if redisClient != nil {
+		for _, item := range respData.Items {
+			jsonValue, err := json.Marshal(item)
+			if err != nil {
+				http.Error(w, err.Error(), http.StatusInternalServerError)
+				return
+			}
+			redisKey := fmt.Sprintf("%s:%s", req.Store, string(item.Embedding))
+			if err := redisClient.Set(redisKey, jsonValue, 0).Err(); err != nil {
+				http.Error(w, err.Error(), http.StatusInternalServerError)
+				return
+			}
+		}
+	}
+
+	jsonResp, err := json.Marshal(respData)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusOK)
+	w.Write(jsonResp)
+}
+
+func handleCompletions(w http.ResponseWriter, r *http.Request) {
+	atomic.AddUint64(&requestMetrics.CompletionRequests, 1)
+	logRequest(r)
+
+	var req CompletionRequest
+	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
+	}
+	defer r.Body.Close()
+
+	embedding, err := getEmbeddings(req.Prompt)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	findReq := FindRequest{
+		Store: req.Store,
+		Key:   DataItem{Content: req.Prompt, Embedding: embedding},
+		Topk:  defaultTopk,
+		Limit: defaultLimit,
+	}
+
+	var respData FindResponse
+
+	// Check Redis cache
+	if redisClient != nil {
+		redisKey := fmt.Sprintf("%s:%s", req.Store, string(embedding))
+		jsonValue, err := redisClient.Get(redisKey).Bytes()
+		if err == nil {
+			atomic.AddUint64(&requestMetrics.RedisHits, 1)
+			if err := json.Unmarshal(jsonValue, &respData.Items); err != nil {
+				http.Error(w, err.Error(), http.StatusInternalServerError)
+				return
+			}
+		} else {
+			atomic.AddUint64(&requestMetrics.RedisMisses, 1)
+		}
+	}
+
+	// Fetch from external store if not found in cache
+	if len(respData.Items) == 0 {
+		localAI := os.Getenv("LOCAL_AI_ENDPOINT")
+		if localAI == "" {
+			localAI = defaultLocalAI
+		}
+
+		storesFind := struct {
+			Store string    `json:"store,omitempty"`
+			Key   DataItem  `json:"key"`
+			Topk  int       `json:"topk"`
+			Limit int       `json:"limit,omitempty"`
+			Page  int       `json:"page,omitempty"`
+		}{
+			Store: findReq.Store,
+			Key:   findReq.Key,
+			Topk:  findReq.Topk,
+			Limit: findReq.Limit,
+		}
+
+		jsonData, err := json.Marshal(storesFind)
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+			return
+		}
+
+		resp, err := http.Post(localAI+"/stores/find", "application/json", bytes.NewBuffer(jsonData))
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+			return
+		}
+		defer resp.Body.Close()
+
+		if resp.StatusCode != http.StatusOK {
+			http.Error(w, fmt.Sprintf("request to /stores/find failed with status code: %d", resp.StatusCode), resp.StatusCode)
+			return
+		}
+
+		if err := json.NewDecoder(resp.Body).Decode(&respData); err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+			return
+		}
+
+		// Store response in Redis cache
+		if redisClient != nil {
+			for _, item := range respData.Items {
+				jsonValue, err := json.Marshal(item)
+				if err != nil {
+					http.Error(w, err.Error(), http.StatusInternalServerError)
+					return
+				}
+				redisKey := fmt.Sprintf("%s:%s", req.Store, string(item.Embedding))
+				if err := redisClient.Set(redisKey, jsonValue, 0).Err(); err != nil {
+					http.Error(w, err.Error(), http.StatusInternalServerError)
+					return
+				}
+			}
+		}
+	}
+
+	// Generate completion using retrieved data and constrained grammar (if requested)
+	var completion CompletionResponse
+	if req.ConstrainedGrammar != "" {
+		payload := map[string]interface{}{
+			"model":   "gpt-4",
+			"prompt":  req.Prompt,
+			"grammar": req.ConstrainedGrammar,
+			"max_tokens": req.MaxTokens,
+			"temperature": req.Temperature,
+			"top_p": req.TopP,
+		}
+		jsonPayload, err := json.Marshal(payload)
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+			return
+		}
+
+		localAI := os.Getenv("LOCAL_AI_ENDPOINT")
+		if localAI == "" {
+			localAI = defaultLocalAI
+		}
+
+		resp, err := http.Post(localAI+"/v1/chat/completions", "application/json", bytes.NewBuffer(jsonPayload))
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+			return
+		}
+		defer resp.Body.Close()
+
+		if resp.StatusCode != http.StatusOK {
+			body, err := io.ReadAll(resp.Body)
+			if err != nil {
+				http.Error(w, err.Error(), http.StatusInternalServerError)
+				return
+			}
+			http.Error(w, fmt.Sprintf("completion request failed with status code: %d: %s", resp.StatusCode, body), resp.StatusCode)
+			return
+		}
+
+		var respBody struct {
+			Result CompletionResponse `json:"result"`
+		}
+		if err := json.NewDecoder(resp.Body).Decode(&respBody); err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+			return
+		}
+
+		completion = respBody.Result
+	} else {
+		// Implement retrieval-augmented generation using retrieved data
+		// ...
+	}
+
+	jsonResp, err := json.Marshal(completion)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusOK)
+	w.Write(jsonResp)
+}
+
+func handleMetrics(w http.ResponseWriter, r *http.Request) {
+	logRequest(r)
+
+	metricsData := struct {
+		StoreRequests     uint64 `json:"store_requests"`
+		FindRequests      uint64 `json:"find_requests"`
+		CompletionRequests uint64 `json:"completion_requests"`
+		RedisHits         uint64 `json:"redis_hits"`
+		RedisMisses       uint64 `json:"redis_misses"`
+	}{
+		StoreRequests:     atomic.LoadUint64(&requestMetrics.StoreRequests),
+		FindRequests:      atomic.LoadUint64(&requestMetrics.FindRequests),
+		CompletionRequests: atomic.LoadUint64(&requestMetrics.CompletionRequests),
+		RedisHits:         atomic.LoadUint64(&requestMetrics.RedisHits),
+		RedisMisses:       atomic.LoadUint64(&requestMetrics.RedisMisses),
+	}
+
+	jsonResp, err := json.Marshal(metricsData)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusOK)
+	w.Write(jsonResp)
+}
+
+func logRequest(r *http.Request) {
+	fmt.Printf("%s %s %s\n", r.RemoteAddr, r.Method, r.URL.Path)
+}
+
+func main() {
+	http.HandleFunc("/store", handleStore)
+	http.HandleFunc("/find", handleFind)
+	http.HandleFunc("/completions", handleCompletions)
+	http.HandleFunc("/metrics", handleMetrics)
+
+	localAI := os.Getenv("LOCAL_AI_ENDPOINT")
+	if localAI == "" {
+		localAI = defaultLocalAI
+	}
+
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "8080"
+	}
+
+	redisAddr := os.Getenv("REDIS_ADDR")
+	if redisAddr == "" {
+		redisAddr = defaultRedisAddr
+	}
+
+	redisEnabled, _ := strconv.ParseBool(os.Getenv("REDIS_ENABLED"))
+	if !redisEnabled {
+		redisEnabled = defaultRedisEnabled
+	}
+
+	if redisEnabled {
+		redisClient = redis.NewClient(&redis.Options{
+			Addr: redisAddr,
+		})
+		_, err := redisClient.Ping().Result()
+		if err != nil {
+			fmt.Printf("Failed to connect to Redis: %v\n", err)
+			redisClient = nil
+		} else {
+			fmt.Printf("Connected to Redis at %s\n", redisAddr)
+		}
+	}
+
+	fmt.Printf("Starting server on :%s, using LOCAL_AI_ENDPOINT=%s, REDIS_ENABLED=%t\n", port, localAI, redisEnabled)
+
+	server := &http.Server{Addr: ":" + port}
+
+	stopChan := make(chan os.Signal, 1)
+	signal.Notify(stopChan, syscall.SIGINT, syscall.SIGTERM)
+
+	go func() {
+		<-stopChan
+		fmt.Println("Shutting down server...")
+		if err := server.Shutdown(nil); err != nil {
+			fmt.Printf("Error shutting down server: %v\n", err)
+		}
+	}()
+
+	if err := server.ListenAndServe(); err != nil && err != http.ErrServerClosed {
+		panic(err)
+	}
+}
