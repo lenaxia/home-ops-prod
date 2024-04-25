@@ -452,8 +452,8 @@ func handleCompletions(w http.ResponseWriter, r *http.Request) {
 		Topk:  defaultTopk,
 		Limit: defaultLimit,
 	}
-	var relevantItems []DataItem
-	relevantItems, err := fetchRelevantData(findReq)
+	var respData FindResponse
+	err := fetchRelevantData(findReq, &respData)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
@@ -461,7 +461,7 @@ func handleCompletions(w http.ResponseWriter, r *http.Request) {
 
 	// Append relevant data to the prompt
 	ragPrompt := req.Prompt
-	for _, item := range relevantItems {
+	for _, item := range respData.Items {
 		ragPrompt += "\n" + item.Content
 	}
 
@@ -487,12 +487,7 @@ func handleCompletions(w http.ResponseWriter, r *http.Request) {
 			localAI = defaultLocalAI
 		}
 
-	// Determine the appropriate endpoint based on whether a constrained grammar is provided
-	endpoint := "/v1/completions"
-	if req.ConstrainedGrammar != "" {
-		endpoint = "/v1/chat/completions"
-	}
-	resp, err := http.Post(localAI+endpoint, "application/json", bytes.NewBuffer(jsonPayload))
+	resp, err := http.Post(localAI+"/v1/chat/completions", "application/json", bytes.NewBuffer(jsonPayload))
 		resp, err := http.Post(localAI+"/v1/chat/completions", "application/json", bytes.NewBuffer(jsonPayload))
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
@@ -530,10 +525,34 @@ func handleCompletions(w http.ResponseWriter, r *http.Request) {
 	w.Write(jsonResp)
 }
 
-func fetchRelevantData(req FindRequest) ([]DataItem, error) {
-	// This function should implement the logic to fetch relevant data based on the prompt
-	// For now, it's a placeholder and should be implemented accordingly
-	return nil, errors.New("fetchRelevantData not implemented")
+func fetchRelevantData(req FindRequest, respData *FindResponse) error {
+	// Use the existing handleFind function logic to fetch relevant data
+	// This is a simplified version and should be adapted to match the actual data fetching logic
+	localAI := os.Getenv("LOCAL_AI_ENDPOINT")
+	if localAI == "" {
+		localAI = defaultLocalAI
+	}
+
+	jsonData, err := json.Marshal(req)
+	if err != nil {
+		return err
+	}
+
+	resp, err := http.Post(localAI+"/stores/find", "application/json", bytes.NewBuffer(jsonData))
+	if err != nil {
+		return err
+	}
+	defer resp.Body.Close()
+
+	if resp.StatusCode != http.StatusOK {
+		return fmt.Errorf("request to /stores/find failed with status code: %d", resp.StatusCode)
+	}
+
+	if err := json.NewDecoder(resp.Body).Decode(respData); err != nil {
+		return err
+	}
+
+	return nil
 	} else {
 		// Implement retrieval-augmented generation using retrieved data
 		// ...
