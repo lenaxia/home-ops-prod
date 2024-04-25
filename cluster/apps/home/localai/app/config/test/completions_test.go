@@ -10,6 +10,7 @@ import (
 
 func TestHandleCompletions(t *testing.T) {
 	// Setup Redis and other dependencies if needed
+	preloadTestData(t) // Preload data into Redis and the local AI service for testing
 	// ...
 
 	// Preload data into Redis and the local AI service for testing
@@ -52,6 +53,18 @@ func TestHandleCompletions(t *testing.T) {
 	if resp.Text != expectedCompletion {
 		t.Errorf("handler returned unexpected body: got %v want %v", resp.Text, expectedCompletion)
 	}
+
+	// Test scenario when Redis is enabled and has relevant data
+	// ...
+
+	// Test scenario when Redis is enabled but has no relevant data
+	// ...
+
+	// Test scenario when Redis is disabled
+	// ...
+
+	// Test scenario when the AI service is not available
+	// ...
 
 	// Add more test scenarios here
 	// ...

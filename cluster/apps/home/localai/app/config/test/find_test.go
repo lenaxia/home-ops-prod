@@ -10,6 +10,7 @@ import (
 
 func TestHandleFind(t *testing.T) {
 	// Setup Redis and other dependencies if needed
+	preloadTestData(t) // Preload data into Redis and the local AI service for testing
 	// ...
 
 	// Preload data into Redis and the local AI service for testing
@@ -55,6 +56,21 @@ func TestHandleFind(t *testing.T) {
 	if !reflect.DeepEqual(resp.Items, expectedItems) {
 		t.Errorf("handler returned unexpected body: got %v want %v", resp.Items, expectedItems)
 	}
+
+	// Test scenario when Redis is enabled but the key is not present
+	// ...
+
+	// Test scenario when Redis is enabled and the key is present
+	// ...
+
+	// Test scenario when Redis is disabled
+	// ...
+
+	// Test scenario when the local AI service is not available
+	// ...
+
+	// Test scenario when the find request to the local AI service fails
+	// ...
 
 	// Add more test scenarios here
 	// ...
