@@ -68,3 +68,26 @@ func TestHandleMetrics(t *testing.T) {
 	// ...
 
 	// Additional test scenarios can be added here
+	// Test scenario when Redis is enabled
+	t.Run("Redis enabled", func(t *testing.T) {
+		// Mock Redis being enabled and containing some metrics data
+		// ...
+
+		// Perform the request
+		handler.ServeHTTP(rr, req)
+
+		// Check the status code and response body
+		// ...
+	})
+
+	// Test scenario when Redis is disabled
+	t.Run("Redis disabled", func(t *testing.T) {
+		// Mock Redis being disabled
+		// ...
+
+		// Perform the request
+		handler.ServeHTTP(rr, req)
+
+		// Check the status code and response body
+		// ...
+	})
