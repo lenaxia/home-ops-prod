@@ -119,7 +119,23 @@ func getEmbeddings(content string) ([]float32, error) {
 	return nil, errors.New("no embedding received from API")
 }
 
-func handleStore(w http.ResponseWriter, r *http.Request) {
+func handleStore(w http.ResponseWriter, r *http.Request) {	// Ensure Redis support is optional and correctly implemented
+	redisEnabled, _ := strconv.ParseBool(os.Getenv("REDIS_ENABLED"))
+	if redisEnabled && redisClient == nil {
+		redisAddr := os.Getenv("REDIS_ADDR")
+		if redisAddr == "" {
+			redisAddr = defaultRedisAddr
+		}
+		redisClient = redis.NewClient(&redis.Options{
+			Addr: redisAddr,
+		})
+		_, err := redisClient.Ping().Result()
+		if err != nil {
+			fmt.Printf("Failed to connect to Redis: %v\n", err)
+			redisClient = nil
+		}
+	}
+
 	atomic.AddUint64(&requestMetrics.StoreRequests, 1)
 	logRequest(r)
 
@@ -198,7 +214,23 @@ func handleStore(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusOK)
 }
 
-func handleFind(w http.ResponseWriter, r *http.Request) {
+func handleFind(w http.ResponseWriter, r *http.Request) {	// Ensure Redis support is optional and correctly implemented
+	redisEnabled, _ := strconv.ParseBool(os.Getenv("REDIS_ENABLED"))
+	if redisEnabled && redisClient == nil {
+		redisAddr := os.Getenv("REDIS_ADDR")
+		if redisAddr == "" {
+			redisAddr = defaultRedisAddr
+		}
+		redisClient = redis.NewClient(&redis.Options{
+			Addr: redisAddr,
+		})
+		_, err := redisClient.Ping().Result()
+		if err != nil {
+			fmt.Printf("Failed to connect to Redis: %v\n", err)
+			redisClient = nil
+		}
+	}
+
 	atomic.AddUint64(&requestMetrics.FindRequests, 1)
 	logRequest(r)
 
@@ -337,7 +369,23 @@ func handleCompletions(w http.ResponseWriter, r *http.Request) {
 	// No changes are required here as the function is consistent with the
 	// store/find/RAG endpoint implementation and optional Redis support.
 	// The duplicate code block has been removed in a previous diff.
-func handleCompletions(w http.ResponseWriter, r *http.Request) {
+func handleCompletions(w http.ResponseWriter, r *http.Request) {	// Ensure Redis support is optional and correctly implemented
+	redisEnabled, _ := strconv.ParseBool(os.Getenv("REDIS_ENABLED"))
+	if redisEnabled && redisClient == nil {
+		redisAddr := os.Getenv("REDIS_ADDR")
+		if redisAddr == "" {
+			redisAddr = defaultRedisAddr
+		}
+		redisClient = redis.NewClient(&redis.Options{
+			Addr: redisAddr,
+		})
+		_, err := redisClient.Ping().Result()
+		if err != nil {
+			fmt.Printf("Failed to connect to Redis: %v\n", err)
+			redisClient = nil
+		}
+	}
+
 	atomic.AddUint64(&requestMetrics.CompletionRequests, 1)
 	logRequest(r)
 
