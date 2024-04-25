@@ -538,6 +538,21 @@ func handleCompletions(w http.ResponseWriter, r *http.Request) {	// Ensure Redis
 			return
 		}
 
+		// Merge cachedItems and newly fetched items, ensuring no duplicates
+		allItems := append(cachedItems, respData.Items...)
+		uniqueItemsMap := make(map[string]DataItem)
+		for _, item := range allItems {
+			uniqueItemsMap[item.Content] = item
+		}
+		uniqueItems := make([]DataItem, 0, len(uniqueItemsMap))
+		for _, item := range uniqueItemsMap {
+			uniqueItems = append(uniqueItems, item)
+		}
+
+		// Sort or truncate uniqueItems if necessary to match req.Limit
+		// ... code to sort or truncate uniqueItems ...
+
+		respData.Items = uniqueItems[:req.Limit]
 		// Send the completion response
 	jsonResp, err := json.Marshal(respBody.Result)
 	if err != nil {
