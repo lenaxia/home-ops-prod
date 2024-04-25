@@ -7,6 +7,9 @@ import (
 )
 
 func TestHandleMetrics(t *testing.T) {
+	// Preload data into Redis and the local AI service for testing
+	preloadTestData(t)
+
 	// Setup Redis and other dependencies if needed
 	// ...
 

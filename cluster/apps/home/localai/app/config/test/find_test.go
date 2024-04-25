@@ -12,6 +12,9 @@ func TestHandleFind(t *testing.T) {
 	// Setup Redis and other dependencies if needed
 	// ...
 
+	// Preload data into Redis and the local AI service for testing
+	preloadTestData(t)
+
 	// Create a request to pass to our handler
 	findReq := FindRequest{
 		Store: "test_store",
