@@ -284,13 +284,13 @@ spec:
             - "^/generate-speech/.*$"
             - "^/generate-speech"
 
-        # Grocy API
-        - domain_regex:
-            - 'grocy.*\.${SECRET_DEV_DOMAIN}$'
-          policy: bypass
-          resources:
-            - "^/api/.*$"
-            - "^/api"
+        ## Grocy API
+        #- domain_regex:
+        #    - 'grocy.*\.${SECRET_DEV_DOMAIN}$'
+        #  policy: bypass
+        #  resources:
+        #    - "^/api/.*$"
+        #    - "^/api"
 
         # Local only bypass policies
         - domain: 
@@ -599,8 +599,8 @@ spec:
             pre_configured_consent_duration: 1y
             scopes: ["openid", "profile", "email", "offline_access"]
             redirect_uris: ["https://w.${SECRET_DEV_DOMAIN}/auth/oidc.callback"]
-            userinfo_signing_algorithm: none
             token_endpoint_auth_method: client_secret_post
+            userinfo_signing_algorithm: none
           - id: overseerr
             description: overseerr
             secret: "${SECRET_OVERSEERR_OAUTH_CLIENT_SECRET}"
