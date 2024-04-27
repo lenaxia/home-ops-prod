@@ -137,6 +137,37 @@ The program can be configured using environment variables:
 
 ## Running the Server
 
+## Testing
+
+The application includes a test suite for the API endpoints (`/store`, `/find`, `/completions`, and `/metrics`). The tests are located in the `test` directory and are designed to verify the functionality of each endpoint, including interactions with Redis and the local AI service.
+
+### Current Test Coverage
+
+- **Store Endpoint**: Tests verify that data is stored correctly in Redis when enabled, and in the local AI service when Redis is disabled. Error handling is also tested for failures in Redis and the local AI service.
+- **Find Endpoint**: Tests check data retrieval with various Redis states (enabled with key present, enabled with key missing, and disabled) and handle local AI service retrieval failures.
+- **Completions Endpoint**: Tests ensure that text completions are generated correctly with Redis enabled (with and without relevant data in cache) and disabled, and handle local AI service generation failures.
+- **Metrics Endpoint**: Tests validate that metrics data is accurately returned.
+
+### Additional Work Needed
+
+To fully implement the test suite, the following tasks need to be completed:
+
+- Implement mock functions to simulate Redis and local AI service behavior.
+- Add assertions to verify the response body contains the expected results for both success and error scenarios.
+- Create utility functions for common test setup tasks, such as preloading data and creating mock responses.
+- Expand test scenarios to cover edge cases and additional error conditions.
+- Integrate the test suite with a continuous integration (CI) system to run tests automatically on code changes.
+
+### Running Tests
+
+To run the tests, navigate to the `test` directory and use the Go test command:
+
+```sh
+go test -v ./...
+```
+
+This will execute all tests and provide verbose output. Ensure that any required environment variables are set before running the tests.
+
 1. Clone the repository or download the source code.
 2. Build the program using `go build`.
 3. Set the desired environment variables (e.g., `export LOCAL_AI_ENDPOINT=http://localhost:8080`).

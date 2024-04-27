@@ -1,0 +1,76 @@
+---
+- name: Setup NVIDIA eGPU on Ubuntu 22.04 with service checks
+  hosts: all
+  become: yes
+
+  tasks:
+    - name: Check if k3s and containerd are installed and running
+      block:
+        - name: Check k3s service
+          command: systemctl is-active k3s
+          register: k3s_status
+          changed_when: false
+
+        - name: Check containerd service
+          command: systemctl is-active containerd
+          register: containerd_status
+          changed_when: false
+
+        - name: Fail if k3s or containerd are not active
+          fail:
+            msg: "Both k3s and containerd need to be active, but are not."
+          when: k3s_status.stdout != "active" or containerd_status.stdout != "active"
+      ignore_errors: no
+
+    - name: Install NVIDIA driver and dependencies
+      apt:
+        name:
+          - nvidia-driver-510
+          - dkms
+        state: latest
+        update_cache: yes
+
+    - name: Validate NVIDIA GPU presence
+      shell: lspci | grep -i nvidia
+      register: gpu_present
+      failed_when: gpu_present.stdout == ""
+
+    - name: Disable Nouveau driver
+      blockinfile:
+        path: /etc/modprobe.d/blacklist-nouveau.conf
+        block: |
+          blacklist nouveau
+        create: yes
+      notify: Update initramfs
+
+    - name: Setup NVIDIA container runtime for containerd
+      block:
+        - name: Ensure containerd config directory exists
+          file:
+            path: /etc/containerd
+            state: directory
+
+        - name: Add NVIDIA runtime to containerd config
+          blockinfile:
+            path: /etc/containerd/config.toml
+            block: |
+              [plugins."io.containerd.grpc.v1.cri".containerd.runtimes.nvidia]
+              runtime_type = "io.containerd.runc.v1"
+              [plugins."io.containerd.grpc.v1.cri".containerd.runtimes.nvidia.options]
+              BinaryName = "/usr/bin/nvidia-container-runtime"
+            marker: "# {mark} ANSIBLE MANAGED BLOCK nvidia-container-runtime"
+      notify:
+        - Restart containerd
+
+  handlers:
+    - name: Update initramfs
+      command: update-initramfs -u
+
+    - name: Restart containerd
+      systemd:
+        name: containerd
+        state: restarted
+
+    - name: Reboot
+      reboot:
+

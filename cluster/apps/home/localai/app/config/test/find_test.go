@@ -13,6 +13,26 @@ func TestHandleFind(t *testing.T) {
 	preloadTestData(t) // Preload data into Redis and the local AI service for testing
 	// ...
 
+	// Create a request to pass to our handler
+	findReq := FindRequest{
+		Store: "test_store",
+		Key:   DataItem{Content: "input text"},
+		Topk:  100,
+		Limit: 10,
+	}
+	jsonReq, err := json.Marshal(findReq)
+	if err != nil {
+		t.Fatal(err)
+	}
+	req, err := http.NewRequest("POST", "/find", bytes.NewBuffer(jsonReq))
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	// Create a ResponseRecorder to record the response
+	rr := httptest.NewRecorder()
+	handler := http.HandlerFunc(handleFind)
+
 	// Preload data into Redis and the local AI service for testing
 	preloadTestData(t)
 

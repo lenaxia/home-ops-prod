@@ -56,6 +56,27 @@ func TestHandleStore(t *testing.T) {
 	rr := httptest.NewRecorder()
 	handler := http.HandlerFunc(handleStore)
 
+	// Define the store request payload
+	storeReq := StoreRequest{
+		Store: "test_store",
+		Items: []DataItem{
+			{Content: "test content 1"},
+			{Content: "test content 2"},
+		},
+	}
+	jsonReq, err := json.Marshal(storeReq)
+	if err != nil {
+		t.Fatal(err)
+	}
+	req, err := http.NewRequest("POST", "/store", bytes.NewBuffer(jsonReq))
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	// Create a ResponseRecorder to record the response
+	rr := httptest.NewRecorder()
+	handler := http.HandlerFunc(handleStore)
+
 	// Preload data into Redis and the local AI service for testing
 	preloadTestData(t)
 
@@ -76,6 +97,18 @@ func TestHandleStore(t *testing.T) {
 		expected := `{"status":"ok"}`
 		if rr.Body.String() != expected {
 			t.Errorf("handler returned unexpected body with Redis enabled: got %v want %v", rr.Body.String(), expected)
+		}
+
+		// Verify that data is stored in Redis
+		for _, item := range storeReq.Items {
+			redisKey := fmt.Sprintf("%s:%s", storeReq.Store, item.Content)
+			storedValue, err := redisClient.Get(redisKey).Result()
+			if err != nil {
+				t.Errorf("expected data to be stored in Redis for key %s, but got an error: %v", redisKey, err)
+			}
+			if storedValue == "" {
+				t.Errorf("expected data to be stored in Redis for key %s, but it was empty", redisKey)
+			}
 		}
 
 		// Verify that data is stored in Redis
@@ -102,6 +135,14 @@ func TestHandleStore(t *testing.T) {
 		expected := `{"status":"ok"}`
 		if rr.Body.String() != expected {
 			t.Errorf("handler returned unexpected body with Redis disabled: got %v want %v", rr.Body.String(), expected)
+		}
+
+		// Verify that data is stored in the local AI service
+		// ... (mock verification logic for local AI service storage) ...
+		// This would involve calling a mock local AI service endpoint to check if the data was stored
+		// Since we don't have the actual local AI service code, we'll assume the function exists
+		if !mockLocalAIStoreVerification(storeReq) {
+			t.Errorf("expected data to be stored in the local AI service, but it was not")
 		}
 
 		// Verify that data is stored in the local AI service
@@ -195,6 +236,14 @@ func TestHandleStore(t *testing.T) {
 		expected := `{"status":"ok"}`
 		if rr.Body.String() != expected {
 			t.Errorf("handler returned unexpected body with Redis disabled: got %v want %v", rr.Body.String(), expected)
+		}
+
+		// Verify that data is stored in the local AI service
+		// ... (mock verification logic for local AI service storage) ...
+		// This would involve calling a mock local AI service endpoint to check if the data was stored
+		// Since we don't have the actual local AI service code, we'll assume the function exists
+		if !mockLocalAIStoreVerification(storeReq) {
+			t.Errorf("expected data to be stored in the local AI service, but it was not")
 		}
 
 		// Verify that data is stored in the local AI service

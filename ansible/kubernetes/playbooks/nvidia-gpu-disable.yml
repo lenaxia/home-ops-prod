@@ -1,0 +1,45 @@
+---
+- name: Revert NVIDIA eGPU setup on Ubuntu 22.04
+  hosts: all
+  become: yes
+
+  tasks:
+    - name: Remove NVIDIA driver
+      apt:
+        name:
+          - nvidia-driver-510
+          - dkms
+        state: absent
+
+    - name: Restore Nouveau driver
+      blockinfile:
+        path: /etc/modprobe.d/blacklist-nouveau.conf
+        block: ""
+        state: absent
+      notify: Update initramfs
+
+    - name: Remove NVIDIA container runtime from containerd
+      blockinfile:
+        path: /etc/containerd/config.toml
+        block: |
+          [plugins."io.containerd.grpc.v1.cri".containerd.runtimes.nvidia]
+          runtime_type = "io.containerd.runc.v1"
+          [plugins."io.containerd.grpc.v1.cri".containerd.runtimes.nvidia.options]
+          BinaryName = "/usr/bin/nvidia-container-runtime"
+        marker: "# {mark} ANSIBLE MANAGED BLOCK nvidia-container-runtime"
+        state: absent
+      notify:
+        - Restart containerd
+
+  handlers:
+    - name: Update initramfs
+      command: update-initramfs -u
+
+    - name: Restart containerd
+      systemd:
+        name: containerd
+        state: restarted
+
+    - name: Reboot
+      reboot:
+

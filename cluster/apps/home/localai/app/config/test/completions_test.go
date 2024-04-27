@@ -13,6 +13,27 @@ func TestHandleCompletions(t *testing.T) {
 	preloadTestData(t) // Preload data into Redis and the local AI service for testing
 	// ...
 
+	// Create a request to pass to our handler
+	completionReq := CompletionRequest{
+		Prompt:      "input text",
+		MaxTokens:   100,
+		Temperature: 0.7,
+		TopP:        1.0,
+		Store:       "test_store",
+	}
+	jsonReq, err := json.Marshal(completionReq)
+	if err != nil {
+		t.Fatal(err)
+	}
+	req, err := http.NewRequest("POST", "/completions", bytes.NewBuffer(jsonReq))
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	// Create a ResponseRecorder to record the response
+	rr := httptest.NewRecorder()
+	handler := http.HandlerFunc(handleCompletions)
+
 	// Preload data into Redis and the local AI service for testing
 	preloadTestData(t)
 
