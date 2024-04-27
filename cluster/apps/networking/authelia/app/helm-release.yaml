@@ -515,7 +515,10 @@ spec:
           database: authelia
           schema: public
           username: authelia
-          password: authelia
+          password: 
+            disabled: false
+            secret_name: 'authelia'
+            path: 'POSTGRES_PASSWORD' 
           ssl:
             mode: disable
             
