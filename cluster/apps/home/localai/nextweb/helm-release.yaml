@@ -34,7 +34,7 @@ spec:
               tag: v2.11.3
             env:
               TZ: ${TIMEZONE}
-              BASE_URL: "http://localai.home.svc.cluster.local:8080"
+              #BASE_URL: "http://localai.home.svc.cluster.local:8080"
               HIDE_USER_API_KEY: 1
               CUSTOM_MODELS: "+llama3-8b-instruct,+phi3-4k-instruct"
             envFrom:
