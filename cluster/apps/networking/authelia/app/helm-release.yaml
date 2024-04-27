@@ -46,7 +46,7 @@ spec:
     pod:
       # Must be Deployment, DaemonSet, or StatefulSet.
       kind: Deployment
-      replicas: 3
+      replicas: 1
 
     envFrom:
       - secretRef:
@@ -500,7 +500,7 @@ spec:
           timeout: 10s
 
         postgres:
-          enabled: true
+          enabled: false
           host: defaultpg-rw.databases.svc.cluster.local
           port: 5432
           database: authelia
