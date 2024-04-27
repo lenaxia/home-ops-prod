@@ -47,17 +47,22 @@ spec:
       # Must be Deployment, DaemonSet, or StatefulSet.
       kind: Deployment
       replicas: 3
+      extraVolumes:
+        - name: oidc-issuer-key
+          secret:
+            secretName: authelia  # Assuming the secret is named 'authelia'
+            items:
+              - key: OIDC_ISSUER_PRIVATE_KEY
+                path: oidc-issuer-key.pem
+      
+      extraVolumeMounts:
+        - name: oidc-issuer-key
+          mountPath: "/secrets/oidc"
+          readOnly: true
 
     envFrom:
       - secretRef:
           name: *appname
-
-    ## Authelia Domain
-    ## Should be the root domain you want to protect.
-    ## For example if you have apps app1.example.com and app2.example.com it should be example.com
-    ## This affects the ingress (partially sets the domain used) and configMap.
-    ## Authelia must be served from the domain or a subdomain under it.
-    domain: ${SECRET_DEV_DOMAIN}
 
     ##
     ## Authelia Config Map Generator
@@ -71,6 +76,9 @@ spec:
       key: configuration.yaml
     
       existingConfigMap: ""
+
+      filters:
+        enableTemplating: true
     
       log:
         level: debug
@@ -91,8 +99,6 @@ spec:
             enabled: true
             annotations: {}
             labels: {}
-    
-      default_redirection_url: https://authelia.${SECRET_DEV_DOMAIN}
     
       ## Options are totp, webauthn, mobile_push.
       default_2fa_method: "mobile_push"
@@ -455,7 +461,11 @@ spec:
         same_site: lax
         expiration: 1h
         inactivity: 5m
-        remember_me_duration: 1M
+        remember_me: 1M
+        cookies:
+          - domain:  ${SECRET_DEV_DOMAIN}
+            subdomain: 'authelia'
+            default_redirection_url: https://authelia.${SECRET_DEV_DOMAIN}
     
         ##
         ## Redis Provider
@@ -496,7 +506,6 @@ spec:
           port: 3306
           database: authelia-k3s
           username: authelia-k3s
-          password: authelia
           timeout: 10s
 
         postgres:
@@ -538,12 +547,19 @@ spec:
           ## See https://www.authelia.com/r/openid-connect/
           enabled: true
     
-          access_token_lifespan: 1h
-          authorize_code_lifespan: 1m
-          id_token_lifespan: 1h
-          refresh_token_lifespan: 90m
+          access_token: 1h
+          authorize_code: 1m
+          id_token: 1h
+          refresh_token: 90m
     
           enable_client_debug_messages: false
+
+          issuer_private_keys:
+            - key_id: 'default_cert'
+              algorithm: 'RS256'
+              use: 'sig'
+              key:
+                path: '/secrets/oidc/oidc-issuer-key.pem'
     
           ## Cross-Origin Resource Sharing (CORS) settings.
           cors:
@@ -554,7 +570,7 @@ spec:
           clients:
           - id: tailscale
             description: Tailscale
-            secret: ${SECRET_TAILSCALE_OAUTH_CLIENT_SECRET}
+            secret: ${SECRET_TAILSCALE_OAUTH_CLIENT_SECRET_HASHED}
             public: false
             authorization_policy: one_factor
             consent_mode: implicit
@@ -564,7 +580,7 @@ spec:
             userinfo_signing_algorithm: none
           - id: minio
             description: MinIO
-            secret: ${SECRET_MINIO_OAUTH_CLIENT_SECRET}
+            secret: ${SECRET_MINIO_OAUTH_CLIENT_SECRET_HASHED}
             public: false
             authorization_policy: one_factor
             consent_mode: implicit
@@ -573,7 +589,7 @@ spec:
             redirect_uris: ["https://minio.${SECRET_DEV_DOMAIN}/oauth_callback"]
           - id: pgadmin
             description: PGAdmin
-            secret: ${SECRET_PGADMIN_OAUTH_CLIENT_SECRET}
+            secret: ${SECRET_PGADMIN_OAUTH_CLIENT_SECRET_HASHED}
             public: false
             authorization_policy: one_factor
             consent_mode: implicit
@@ -582,7 +598,7 @@ spec:
             redirect_uris: ["https://pgadmin.${SECRET_DEV_DOMAIN}/oauth2/authorize"]
           - id: grafana
             description: Grafana
-            secret: ${SECRET_GRAFANA_OAUTH_CLIENT_SECRET}
+            secret: ${SECRET_GRAFANA_OAUTH_CLIENT_SECRET_HASHED}
             public: false
             authorization_policy: one_factor
             consent_mode: implicit
@@ -592,7 +608,7 @@ spec:
             userinfo_signing_algorithm: none
           - id: outline
             description: outline
-            secret: "${SECRET_OUTLINE_OAUTH_CLIENT_SECRET}"
+            secret: "${SECRET_OUTLINE_OAUTH_CLIENT_SECRET_HASHED}"
             public: false
             authorization_policy: one_factor
             consent_mode: implicit
@@ -603,7 +619,7 @@ spec:
             userinfo_signing_algorithm: none
           - id: overseerr
             description: overseerr
-            secret: "${SECRET_OVERSEERR_OAUTH_CLIENT_SECRET}"
+            secret: "${SECRET_OVERSEERR_OAUTH_CLIENT_SECRET_HASHED}"
             public: false
             authorization_policy: one_factor
             consent_mode: implicit
