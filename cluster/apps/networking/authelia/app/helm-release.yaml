@@ -500,7 +500,7 @@ spec:
           timeout: 10s
 
         postgres:
-          enabled: false
+          enabled: true
           host: defaultpg-rw.databases.svc.cluster.local
           port: 5432
           database: authelia
