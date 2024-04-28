@@ -37,6 +37,7 @@ template:
     {{.Input}}
 context_size: 8192
 f16: true
+gpu_layers: 100
 stopwords:
 - <|im_end|>
 - <dummy32000>
