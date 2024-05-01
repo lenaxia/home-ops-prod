@@ -30,7 +30,7 @@ spec:
         containers:
           main:
             image:
-              repository: ghcr.io/imartinez/privategpt
+              repository: ghcr.io/zylon-ai/private-gpt
               tag: v0.5.0
             env:
               TZ: ${TIMEZONE}
