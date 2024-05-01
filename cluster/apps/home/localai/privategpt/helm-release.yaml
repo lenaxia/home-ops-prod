@@ -17,28 +17,28 @@ spec:
   install:
     createNamespace: true
     remediation:
-      retries: 5
+      retries: 3
   upgrade:
     remediation:
-      retries: 5
+      retries: 3
   values:
     controllers:
       main:
-        type: statefulset
+        type: deployment
         annotations:
           reloader.stakater.com/auto: 'true'
         containers:
           main:
             image:
               repository: ghcr.io/imartinez/privategpt
-              tag: sha-6583dc8
+              tag: v0.5.0
             env:
               TZ: ${TIMEZONE}
               PERSIST_DIRECTORY: db
               MODEL_TYPE: OpenAI
-              EMBEDDINGS_MODEL_NAME: text-embedding-ada-002
+              EMBEDDINGS_MODEL_NAME: bert-embeddings
               MODEL_N_CTX: 1000
-              OPENAI_API_BASE: http://localai.home.svc.cluster.local/v1
+              OPENAI_API_BASE: http://192.168.12.72:8080/v1
 
             resources:
               requests:
@@ -74,7 +74,7 @@ spec:
           traefik.ingress.kubernetes.io/router.entrypoints: websecure
           traefik.ingress.kubernetes.io/router.middlewares: networking-chain-authelia@kubernetescrd
         hosts:
-          - host: &uri chat.${SECRET_DEV_DOMAIN}
+          - host: &uri chat2.${SECRET_DEV_DOMAIN}
             paths:
               - path: /
                 pathType: Prefix

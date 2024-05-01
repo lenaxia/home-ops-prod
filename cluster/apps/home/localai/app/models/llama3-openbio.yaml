@@ -1,8 +1,7 @@
-name: llama3-8b-instruct
+name: llama3-8b-openbio
 mmap: true
 parameters:
-  #model: huggingface://second-state/Llama-3-8B-Instruct-GGUF/Meta-Llama-3-8B-Instruct-Q5_K_M.gguf
-  model: huggingface://QuantFactory/Meta-Llama-3-8B-Instruct-GGUF/Meta-Llama-3-8B-Instruct.Q8_0.gguf
+  model: huggingface://aaditya/OpenBioLLM-Llama3-8B-GGUF/openbiollm-llama3-8b.Q8_0.gguf
 
 template:
   chat_message: |
