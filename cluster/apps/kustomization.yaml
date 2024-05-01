@@ -42,6 +42,7 @@ resources:
   - ./home/babybuddy-pandaria/ks.yaml
   #- ./home/grocy/ks.yaml
   #- ./home/actualbudget/ks.yaml
+  - ./home/browserless/ks.yaml
   - ./home/langserver/ks.yaml
   #- ./home/gamevault/ks.yaml
   - ./home/node-red/ks.yaml

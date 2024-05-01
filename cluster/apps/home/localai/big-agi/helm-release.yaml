@@ -39,11 +39,6 @@ spec:
               requests:
                 cpu: 15m
                 memory: 94M
-          browserless:
-            image:
-              repository: ghcr.io/browserless/chromium
-              tag: v2.8.0
-
         #statefulset:
         #  volumeClaimTemplates:
         #    - name: storage
