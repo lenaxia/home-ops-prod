@@ -36,8 +36,7 @@ spec:
               TZ: ${TIMEZONE}
               OPENAI_API_HOST: http://localai.home.svc.cluster.local
               OPENAI_API_KEY: DoesNotMatter
-              DEFAULT_MODEL: 
-                thebloke__wizardlm-7b-v1-0-uncensored-superhot-8k-ggml__wizardlm-7b-v1.0-superhot-8k.ggmlv3.q3_k_m.bin
+              DEFAULT_MODEL: llama3-8b-instruct
 
             resources:
               requests:
@@ -73,7 +72,7 @@ spec:
           traefik.ingress.kubernetes.io/router.entrypoints: websecure
           traefik.ingress.kubernetes.io/router.middlewares: networking-chain-authelia@kubernetescrd
         hosts:
-          - host: &uri chat3.${SECRET_DEV_DOMAIN}
+          - host: &uri chat2.${SECRET_DEV_DOMAIN}
             paths:
               - path: /
                 pathType: Prefix
