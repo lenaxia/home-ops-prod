@@ -39,6 +39,11 @@ spec:
               requests:
                 cpu: 15m
                 memory: 94M
+          browserless:
+            image:
+              repository: browserless/chrome
+              tag: v2.8.0
+
         #statefulset:
         #  volumeClaimTemplates:
         #    - name: storage
