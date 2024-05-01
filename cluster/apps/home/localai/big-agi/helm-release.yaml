@@ -41,7 +41,7 @@ spec:
                 memory: 94M
           browserless:
             image:
-              repository: browserless/chrome
+              repository: ghcr.io/browserless/chromium
               tag: v2.8.0
 
         #statefulset:
