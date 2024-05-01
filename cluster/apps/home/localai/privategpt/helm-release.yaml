@@ -17,14 +17,14 @@ spec:
   install:
     createNamespace: true
     remediation:
-      retries: 3
+      retries: 5
   upgrade:
     remediation:
-      retries: 3
+      retries: 5
   values:
     controllers:
       main:
-        type: deployment
+        type: statefulset
         annotations:
           reloader.stakater.com/auto: 'true'
         containers:
@@ -44,21 +44,21 @@ spec:
               requests:
                 cpu: 15m
                 memory: 94M
-#        statefulset:
-#          volumeClaimTemplates:
-#            - name: local-data
-#              accessMode: ReadWriteMany
-#              size: 5Gi
-#              storageClass: longhorn
-#              labels:
-#                snapshot.home.arpa/enabled: 'true'
-#              globalMounts:
-#                - path: /home/worker/app/local_data
+        #statefulset:
+        #  volumeClaimTemplates:
+        #    - name: storage
+        #      accessMode: ReadWriteMany
+        #      size: 5Gi
+        #      storageClass: longhorn
+        #      labels:
+        #        snapshot.home.arpa/enabled: 'true'
+        #      globalMounts:
+        #        - path: /app/server/storage
     service:
       main:
         ports:
           http:
-            port: 8080
+            port: 3000
         primary: true
         controller: main
     ingress:
@@ -86,13 +86,7 @@ spec:
               - *uri
             secretName: *uri
     # podSecurityContext:
-                      #   runAsUser: 1000
-                      #   runAsGroup: 1000
-                      #   fsGroup: 1000
-                      #   fsGroupChangePolicy: "OnRootMismatch"
-                   
-                   
-                   
-                   
-                   
-                   
+    #   runAsUser: 1000
+    #   runAsGroup: 1000
+    #   fsGroup: 1000
+    #   fsGroupChangePolicy: "OnRootMismatch"
