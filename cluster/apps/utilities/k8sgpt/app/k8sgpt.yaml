@@ -8,7 +8,8 @@ spec:
     enabled: true
     model: llama3-8b-instruct
     backend: localai
-    baseUrl: http://localai.home.svc.cluster.local:80/v1
+    #baseUrl: http://localai.home.svc.cluster.local:80/v1
+    baseUrl: http://192.168.12.72:8080/v1
       #  ai:
       #    enabled: true
       #    model: gpt-3.5-turbo
