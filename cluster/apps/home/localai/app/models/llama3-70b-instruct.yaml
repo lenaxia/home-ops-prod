@@ -2,7 +2,7 @@ name: llama3-70b-instruct
 mmap: true
 parameters:
   #model: huggingface://second-state/Meta-Llama-3-70B-Instruct-GGUF/Meta-Llama-3-70B-Instruct-Q5_K_M.gguf
-  model: huggingface://MaziyarPanahi/Meta-Llama-3-70B-Instruct-GGUF/Meta-Llama-3-70B-Instruct.IQ2_XS.gguf
+  model: huggingface://MaziyarPanahi/Meta-Llama-3-70B-Instruct-GGUF/Meta-Llama-3-70B-Instruct.IQ3_XS.gguf
 
 template:
   chat_message: |
@@ -38,7 +38,7 @@ template:
     {{.Input}}
 context_size: 8192
 f16: true
-gpu_layers: 81
+gpu_layers: 78
 stopwords:
 - <|im_end|>
 - <dummy32000>

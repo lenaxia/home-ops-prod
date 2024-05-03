@@ -1,0 +1,34 @@
+name: luna
+mmap: true
+parameters:
+  model: huggingface://TheBloke/Luna-AI-Llama2-Uncensored-GGUF/luna-ai-llama2-uncensored.Q6_K.gguf
+  top_k: 90
+  temperature: 0.2
+  top_p: 0.7
+
+  chat: |
+    USER: {{.Input}}
+    
+    ASSISTANT:
+  completion: |
+    Complete the following sentence: {{.Input}}
+
+context_size: 4096
+f16: false
+gpu_layers: 50
+threads: 4
+backend: llama
+roles:
+  assistant: 'ASSISTANT:'
+  system: 'SYSTEM:'
+  user: 'USER:'
+stopwords:
+- </s>
+
+usage: |
+    curl http://localhost:8080/v1/chat/completions -H "Content-Type: application/json" -d '{
+        "model": "luna",
+        "messages": [{"role": "user", "content": "How are you doing?"}],
+        "temperature": 0.1 
+    }'
+
