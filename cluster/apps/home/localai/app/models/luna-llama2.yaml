@@ -7,14 +7,14 @@ parameters:
   top_p: 0.7
 
   chat: |
-    USER: {{.Input}}
-    
+    {{.Input}}
+
     ASSISTANT:
   completion: |
     Complete the following sentence: {{.Input}}
 
 context_size: 4096
-f16: false
+f16: true
 gpu_layers: 50
 threads: 4
 backend: llama
