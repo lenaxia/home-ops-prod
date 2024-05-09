@@ -3,7 +3,6 @@ mmap: true
 parameters:
   #model: huggingface://MaziyarPanahi/Meta-Llama-3-70B-Instruct-GGUF/Meta-Llama-3-70B-Instruct.IQ2_XS.gguf
   model: huggingface://bartowski/Meta-Llama-3-70B-Instruct-GGUF/Meta-Llama-3-70B-Instruct-IQ2_S.gguf
-
 template:
   chat_message: |
     <|start_header_id|>{{if eq .RoleName "assistant"}}assistant{{else if eq .RoleName "system"}}system{{else if eq .RoleName "tool"}}tool{{else if eq .RoleName "user"}}user{{end}}<|end_header_id|>
@@ -42,8 +41,7 @@ gpu_layers: 78
 stopwords:
 - <|im_end|>
 - <dummy32000>
-- <|eot_id|>
-- <|end_of_text|>
+- "<|eot_id|>"
 usage: |
       curl http://localhost:8080/v1/chat/completions -H "Content-Type: application/json" -d '{
           "model": "llama3-70b-instruct",

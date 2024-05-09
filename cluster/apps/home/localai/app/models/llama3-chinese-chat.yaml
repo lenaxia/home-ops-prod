@@ -1,8 +1,8 @@
-name: llama3-8b-instruct
+name: llama3-8b-chinese
 mmap: true
 parameters:
-  #model: huggingface://second-state/Llama-3-8B-Instruct-GGUF/Meta-Llama-3-8B-Instruct-Q5_K_M.gguf
-  model: huggingface://QuantFactory/Meta-Llama-3-8B-Instruct-GGUF/Meta-Llama-3-8B-Instruct.Q8_0.gguf
+  #model: huggingface://huggingface.co/shenzhi-wang/Llama3-8B-Chinese-Chat-GGUF-f16/Llama3-8B-Chinese-Chat-f16-v2.gguf
+  model: huggingface://shenzhi-wang/Llama3-8B-Chinese-Chat-GGUF-8bit/Llama3-8B-Chinese-Chat-q8-v2.gguf
 template:
   chat_message: |
     <|start_header_id|>{{if eq .RoleName "assistant"}}assistant{{else if eq .RoleName "system"}}system{{else if eq .RoleName "tool"}}tool{{else if eq .RoleName "user"}}user{{end}}<|end_header_id|>

@@ -2,7 +2,8 @@ name: llama3-8b-basic
 mmap: true
 parameters:
   #model: huggingface://second-state/Llama-3-8B-Instruct-GGUF/Meta-Llama-3-8B-Instruct-Q5_K_M.gguf
-  model: huggingface://QuantFactory/Meta-Llama-3-8B-Instruct-GGUF/Meta-Llama-3-8B-Instruct.Q8_0.gguf
+  #model: huggingface://QuantFactory/Meta-Llama-3-8B-Instruct-GGUF/Meta-Llama-3-8B-Instruct.Q8_0.gguf
+  model: 96519624f6fae501db4dbf45abe1c168
 
 template:
   chat: |

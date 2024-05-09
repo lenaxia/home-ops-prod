@@ -2,7 +2,6 @@ name: llama3-8b-openbio
 mmap: true
 parameters:
   model: huggingface://aaditya/OpenBioLLM-Llama3-8B-GGUF/openbiollm-llama3-8b.Q8_0.gguf
-
 template:
   chat_message: |
     <|start_header_id|>{{if eq .RoleName "assistant"}}assistant{{else if eq .RoleName "system"}}system{{else if eq .RoleName "tool"}}tool{{else if eq .RoleName "user"}}user{{end}}<|end_header_id|>

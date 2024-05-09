@@ -35,7 +35,7 @@ spec:
         node-role.kubernetes.io/worker: 'true'
     controllers:
       main:
-        type: statefulset
+        type: deployment
         containers:
           main:
             image:
