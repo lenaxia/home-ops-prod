@@ -52,11 +52,6 @@ spec:
         data:
           config.yaml: |
               model_list: 
-                - model_name: gpt-3.5-turbo
-                  litellm_params:
-                    model: azure/gpt-turbo-small-ca
-                    api_base: https://my-endpoint-canada-berri992.openai.azure.com/
-                    api_key: os.environ/CA_AZURE_OPENAI_API_KEY
                 - model_name: bedrock-claude-v2-sonnet
                   litellm_params:
                     model: bedrock/anthropic.claude-3-sonnet-20240229-v1:0
