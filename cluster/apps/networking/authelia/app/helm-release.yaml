@@ -148,8 +148,7 @@ spec:
         ldap:
           enabled: true
           implementation: custom
-          #url: ldap://${NAS_ADDR}
-          url: ldap://192.168.0.122
+          url: ldap://${NAS_ADDR}
           timeout: 5s
           start_tls: false
     
