@@ -1,0 +1,100 @@
+# yaml-language-server: $schema=https://kubernetes-schemas.devbu.io/helm.toolkit.fluxcd.io/helmrelease_v2beta1.json
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
+kind: HelmRelease
+metadata:
+  name: &appname litellm
+  namespace: &namespace home
+spec:
+  interval: 15m
+  chart:
+    spec:
+      chart: app-template
+      version: 3.1.0
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s-charts
+        namespace: flux-system
+  install:
+    createNamespace: true
+    remediation:
+      retries: 5
+  upgrade:
+    remediation:
+      retries: 5
+  values:
+    controllers:
+      main:
+        type: statefulset
+        annotations:
+          reloader.stakater.com/auto: 'true'
+        containers:
+          main:
+            image:
+              repository: ghcr.io/berriai/litellm
+              tag: main-latest
+            env:
+              TZ: ${TIMEZONE}
+            envFrom:
+              - secretRef:
+                  name: *appname 
+
+            resources:
+              requests:
+                cpu: 15m
+                memory: 94M
+
+    configMaps:
+      configyaml:
+        enabled: true
+        data:
+          config.yaml: |
+              model_list: 
+                - model_name: gpt-3.5-turbo
+                  litellm_params:
+                    model: azure/gpt-turbo-small-ca
+                    api_base: https://my-endpoint-canada-berri992.openai.azure.com/
+                    api_key: os.environ/CA_AZURE_OPENAI_API_KEY
+    persistence:
+      configyaml:
+        enabled: true
+        type: configMap
+        name: configyaml
+        globalMounts:
+          - path: /app/proxy_server_config.yaml
+            subPath: config.yaml
+    service:
+      main:
+        ports:
+          http:
+            port: 4000
+        primary: true
+        controller: main
+    ingress:
+      main:
+        enabled: true
+        className: traefik
+        annotations:
+          hajimari.io/enable: 'true'
+          hajimari.io/icon: baby-bottle-outline
+          hajimari.io/info: ChatGPT
+          hajimari.io/group: &namespace home
+          cert-manager.io/cluster-issuer: letsencrypt-production
+          traefik.ingress.kubernetes.io/router.entrypoints: websecure
+          traefik.ingress.kubernetes.io/router.middlewares: networking-chain-authelia@kubernetescrd
+        hosts:
+          - host: &uri llm.${SECRET_DEV_DOMAIN}
+            paths:
+              - path: /
+                pathType: Prefix
+                service:
+                  identifier: main
+                  port: http
+        tls:
+          - hosts:
+              - *uri
+            secretName: *uri
+    # podSecurityContext:
+    #   runAsUser: 1000
+    #   runAsGroup: 1000
+    #   fsGroup: 1000
+    #   fsGroupChangePolicy: "OnRootMismatch"
