@@ -84,7 +84,7 @@ spec:
         type: configMap
         name: litellm-configyaml
         globalMounts:
-          - path: /app/proxy_server_config.yaml
+          - path: /app/config.yaml
             subPath: config.yaml
     service:
       main:
