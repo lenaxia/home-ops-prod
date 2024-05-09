@@ -69,6 +69,7 @@ spec:
             port: 4000
         primary: true
         controller: main
+        type: LoadBalancer
     ingress:
       main:
         enabled: true
