@@ -14,7 +14,10 @@ mqtt:
 database:
   path: /data/frigate.db
 
-  #detectors:
+detectors:
+  ov:
+    type: openvino
+    device: AUTO
   #  coral:
   #    type: edgetpu
   #    device: pci
