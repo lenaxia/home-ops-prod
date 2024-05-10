@@ -17,7 +17,7 @@ database:
 detectors:
   ov:
     type: openvino
-    device: AUTO
+    device: GPU
   #  coral:
   #    type: edgetpu
   #    device: pci
