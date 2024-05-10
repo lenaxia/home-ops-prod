@@ -15,9 +15,9 @@ database:
   path: /data/frigate.db
 
 detectors:
-  coral:
-    type: edgetpu
-    device: pci
+  #  coral:
+  #    type: edgetpu
+  #    device: pci
 
 ffmpeg:
   global_args: ["-hide_banner", "-loglevel", "warning"]
