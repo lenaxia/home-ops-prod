@@ -61,31 +61,31 @@ objects:
 #    frigate_porch_lq: rtspx://unifi-protect.turbo.ac:7441/vXHPHzP9FVRJfDuY
 
 cameras:
-  frigate_porch:
-    ffmpeg:
-      inputs:
-        - path: rtsp://localhost:8554/frigate_porch_lq
-          roles: ["detect"]
-        - path: rtsp://localhost:8554/frigate_porch_hq
-          roles: ["record"]
-    detect:
-      width: 960
-      height: 720
-      fps: 10
-    objects:
-      filters:
-        person:
-          mask:
-            - 39,445,199,427,198,263,36,228
+  #  frigate_porch:
+  #    ffmpeg:
+  #      inputs:
+  #        - path: rtsp://localhost:8554/frigate_porch_lq
+  #          roles: ["detect"]
+  #        - path: rtsp://localhost:8554/frigate_porch_hq
+  #          roles: ["record"]
+  #    detect:
+  #      width: 960
+  #      height: 720
+  #      fps: 10
+  #    objects:
+  #      filters:
+  #        person:
+  #          mask:
+  #            - 39,445,199,427,198,263,36,228
   reolink_e1_pro:
     ffmpeg:
       inputs:
         - path: rtsp://admin:faith6510@192.168.0.72:554/h264Preview_01_sub
           roles:
-            - detect
+            #- detect
             - rtmp
-    detect:
-      width: 640
-      height: 352
-      fps: 7
-
+              #    detect:
+              #      width: 640
+              #      height: 352
+              #      fps: 7
+              #
