@@ -24,10 +24,6 @@ spec:
         initContainers:
           download:
             command: [/bin/bash, -c, "/tmp/download.sh"]
-            volumeMounts:
-              - name: download-sh
-                mountPath: /tmp/download.sh
-                subPath: download.sh
             image:            
               repository: ubuntu
               tag: latest
