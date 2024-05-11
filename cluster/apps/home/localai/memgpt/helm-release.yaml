@@ -28,8 +28,8 @@ spec:
     controllers:
       main:
         replicas: 1  
-        strategy: R  ollingUpdate
-        type: deplo  yment
+        strategy: RollingUpdate
+        type: deployment
         annotations:
           reloader.stakater.com/auto: 'true'
         containers:
