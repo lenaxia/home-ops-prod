@@ -24,7 +24,7 @@ spec:
   values:
     controllers:
       main:
-        type: statefulset
+        type: deployment
         annotations:
           reloader.stakater.com/auto: 'true'
         containers:
@@ -38,7 +38,7 @@ spec:
               POSTGRES_PRISMA_URL:
               POSTGRES_URL_NON_POOLING:
               # LLMs
-              LOCALAI_API_HOST: http://192.168.12.72:8080
+              LOCALAI_API_HOST: http://localai.home.svc.cluster.local:8080
               # Browse
               PUPPETEER_WSS_ENDPOINT: ws://browserless:3000
             envFrom:
@@ -49,16 +49,6 @@ spec:
               requests:
                 cpu: 15m
                 memory: 94M
-        #statefulset:
-        #  volumeClaimTemplates:
-        #    - name: storage
-        #      accessMode: ReadWriteMany
-        #      size: 5Gi
-        #      storageClass: longhorn
-        #      labels:
-        #        snapshot.home.arpa/enabled: 'true'
-        #      globalMounts:
-        #        - path: /app/server/storage
     service:
       main:
         ports:

@@ -21,6 +21,16 @@ spec:
   values:
     controllers:
       stable-diffusion-webui:
+        initContainers:
+          download:
+            command: [/bin/bash, -c, "/tmp/download.sh"]
+            volumeMounts:
+              - name: download-sh
+                mountPath: /tmp/download.sh
+                subPath: download.sh
+            image:            
+              repository: ubuntu
+              tag: latest
         containers:
           app:
             image:
@@ -62,6 +72,13 @@ spec:
             port: 7860
 
     persistence:
+      download-sh:
+        enabled: true
+        type: configMap
+        name: download-sh
+        globalMounts:
+          - path: /tmp/download.sh
+            subPath: download.sh
       data:
         enabled: true
         type: persistentVolumeClaim 

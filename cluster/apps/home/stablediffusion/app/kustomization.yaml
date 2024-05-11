@@ -7,3 +7,11 @@ commonLabels:
 resources:
   - helm-release.yaml
   - secret.sops.yaml
+configMapGenerator:
+  - name: download-sh
+    files:
+      - download.sh=./scripts/download.sh
+generatorOptions:
+  disableNameSuffixHash: true
+  annotations:
+    kustomize.toolkit.fluxcd.io/substitute: disabled
