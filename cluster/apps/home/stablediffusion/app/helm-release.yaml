@@ -21,12 +21,12 @@ spec:
   values:
     controllers:
       stable-diffusion-webui:
-        initContainers:
-          download:
-            command: [/bin/bash, -c, "/tmp/download.sh"]
-            image:            
-              repository: ubuntu
-              tag: latest
+        #initContainers:
+        #  download:
+        #    command: [/bin/bash, -c, "/tmp/download.sh"]
+        #    image:            
+        #      repository: ubuntu
+        #      tag: latest
         containers:
           app:
             image:
