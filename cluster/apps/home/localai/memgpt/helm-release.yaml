@@ -40,6 +40,8 @@ spec:
             envFrom:
               - secretRef: 
                   name: memgpt
+            env:
+              PGDATA: /var/lib/postgresql/data/pgdata
           main:
             image: 
               repository: memgpt/memgpt-server
