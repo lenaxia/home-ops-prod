@@ -76,8 +76,8 @@ spec:
               - secretRef: 
                   name: memgpt
             env:
-              POSTGRES_URI: postgresql://${MEMGPT_PG_USER}:${MEMGPT_PG_PASSWORD}@db:5432/${MEMGPT_PG_DB}
-              MEMGPT_PG_HOST: db
+              POSTGRES_URI: postgresql://${MEMGPT_PG_USER}:${MEMGPT_PG_PASSWORD}@localhost:5432/${MEMGPT_PG_DB}
+              MEMGPT_PG_HOST: localhost 
               MEMGPT_PG_PORT: 5432
     persistence:
       pgdata:
