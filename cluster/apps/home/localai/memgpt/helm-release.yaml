@@ -22,69 +22,101 @@ spec:
     remediation:
       retries: 5
   values:
+    defaultPodOptions:
+      nodeSelector:
+        node-role.kubernetes.io/worker: 'true'
     controllers:
       main:
-        type: deployment
+        replicas: 3
+        strategy: RollingUpdate
+        type: Deployment
         annotations:
           reloader.stakater.com/auto: 'true'
         containers:
+          db:
+            image: ankane/pgvector:v0.5.1
+            envFrom:
+              - secretRef: memgpt-env
+            environment:
+              POSTGRES_USER: ${MEMGPT_PG_USER}
+              POSTGRES_PASSWORD: ${MEMGPT_PG_PASSWORD}
+              POSTGRES_DB: ${MEMGPT_PG_DB}
           main:
-            image:
-              repository: memgpt/memgpt-server
-              tag: latest
-            env:
-              TZ: ${TIMEZONE}
-              OPENAI_API_HOST: http://192.168.12.72:8080
-              OPENAI_API_KEY: DoesNotMatter
-              DEFAULT_MODEL: llama3-8b-instruct
+            image: memgpt/memgpt-server:latest
+            envFrom:
+              - secretRef: memgpt-env
+            environment:
+              POSTGRES_URI: postgresql://${MEMGPT_PG_USER}:${MEMGPT_PG_PASSWORD}@db:5432/${MEMGPT_PG_DB}
+              MEMGPT_SERVER_PASS: ${MEMGPT_SERVER_PASS}
+              MEMGPT_PG_DB: ${MEMGPT_PG_DB}
+              MEMGPT_PG_USER: ${MEMGPT_PG_USER}
+              MEMGPT_PG_PASSWORD: ${MEMGPT_PG_PASSWORD}
+              MEMGPT_PG_HOST: db
+              MEMGPT_PG_PORT: 5432
+              OPENAI_API_KEY: ${OPENAI_API_KEY}
+    persistence:
+      pgdata:
+        enabled: true
+        type: persistentVolumeClaim
+        storageClass: longhorn
+        accessModes: ReadWriteOnce
+        size: 10Gi
+        advancedMounts:
+          main:
+            db:
+              - path: /var/lib/postgresql/data
+      init-sql:
+        enabled: true
+        type: configMap
+        name: memgpt-configmap
+        advancedMounts:
+          main:
+            db:
+              - path: /docker-entrypoint-initdb.d/init.sql
+                subPath: init.sql
+      server-config-yaml:
+        enabled: true
+        type: configMap
+        name: memgpt-configmap
+        advancedMounts:
+          main:
+            main:
+              - path: /root/.memgpt/config
+                subPath: server_config.yaml
 
-            resources:
-              requests:
-                cpu: 15m
-                memory: 94M
-        #statefulset:
-        #  volumeClaimTemplates:
-        #    - name: storage
-        #      accessMode: ReadWriteMany
-        #      size: 5Gi
-        #      storageClass: longhorn
-        #      labels:
-        #        snapshot.home.arpa/enabled: 'true'
-        #      globalMounts:
-        #        - path: /app/server/storage
     service:
       main:
+        type: ClusterIP
         ports:
-          http:
-            port: 3000
+          api:
+            port: 8083
+          admin:
+            port: 8283
         primary: true
         controller: main
     ingress:
       main:
         enabled: true
-        className: traefik
         annotations:
-          hajimari.io/enable: 'true'
-          hajimari.io/icon: baby-bottle-outline
-          hajimari.io/info: ChatBot UI - ChatGPT
-          hajimari.io/group: &namespace home
           cert-manager.io/cluster-issuer: letsencrypt-production
           traefik.ingress.kubernetes.io/router.entrypoints: websecure
           traefik.ingress.kubernetes.io/router.middlewares: networking-chain-authelia@kubernetescrd
         hosts:
-          - host: &uri chat2.${SECRET_DEV_DOMAIN}
+          - host: memgpt.${SECRET_DEV_DOMAIN}
             paths:
               - path: /
                 pathType: Prefix
-                service:
-                  identifier: main
-                  port: http
+                backend:
+                  service:
+                    name: main
+                    port: api
+              - path: /admin
+                pathType: Prefix
+                backend:
+                  service:
+                    name: main
+                    port: admin
         tls:
           - hosts:
-              - *uri
-            secretName: *uri
-    # podSecurityContext:
-    #   runAsUser: 1000
-    #   runAsGroup: 1000
-    #   fsGroup: 1000
-    #   fsGroupChangePolicy: "OnRootMismatch"
+              - memgpt.${SECRET_DEV_DOMAIN}
+            secretName: memgpt.${SECRET_DEV_DOMAIN}-tls
