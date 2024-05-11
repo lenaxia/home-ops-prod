@@ -34,7 +34,9 @@ spec:
           reloader.stakater.com/auto: 'true'
         containers:
           db:
-            image: ankane/pgvector:v0.5.1
+            image: 
+              repository: ankane/pgvector
+              tag: v0.5.1
             envFrom:
               - secretRef: 
                   name: memgpt-env
@@ -43,7 +45,9 @@ spec:
               POSTGRES_PASSWORD: ${MEMGPT_PG_PASSWORD}
               POSTGRES_DB: ${MEMGPT_PG_DB}
           main:
-            image: memgpt/memgpt-server:latest
+            image: 
+              repository: memgpt/memgpt-server
+              tag: latest
             envFrom:
               - secretRef: 
                   name: memgpt-env
@@ -61,7 +65,7 @@ spec:
         enabled: true
         type: persistentVolumeClaim
         storageClass: longhorn
-        accessModes: ReadWriteOnce
+        accessMode: ReadWriteOnce
         size: 10Gi
         advancedMounts:
           main:
