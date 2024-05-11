@@ -2,7 +2,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
-  name: &appname chatbot-ui
+  name: &appname memgpt
   namespace: &namespace home
 spec:
   interval: 15m
@@ -24,14 +24,14 @@ spec:
   values:
     controllers:
       main:
-        type: statefulset
+        type: deployment
         annotations:
           reloader.stakater.com/auto: 'true'
         containers:
           main:
             image:
-              repository: ghcr.io/mckaywrigley/chatbot-ui
-              tag: main
+              repository: memgpt/memgpt-server
+              tag: latest
             env:
               TZ: ${TIMEZONE}
               OPENAI_API_HOST: http://192.168.12.72:8080

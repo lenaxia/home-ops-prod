@@ -1,7 +1,7 @@
 name: neuralhermes-2.5-7b
 mmap: true
 parameters:
-  model: huggingface:///TheBloke/NeuralHermes-2.5-Mistral-7B-GGUF/neuralhermes-2.5-mistral-7b.Q8_0.gguf
+  model: huggingface://TheBloke/NeuralHermes-2.5-Mistral-7B-GGUF/neuralhermes-2.5-mistral-7b.Q8_0.gguf
 template:
   chat_message: |
     <|im_start|>{{if eq .RoleName "assistant"}}assistant{{else if eq .RoleName "system"}}system{{else if eq .RoleName "user"}}user{{end}}
