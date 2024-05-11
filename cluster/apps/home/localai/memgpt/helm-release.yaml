@@ -33,6 +33,16 @@ spec:
         annotations:
           reloader.stakater.com/auto: 'true'
         containers:
+          main:
+            image:
+              repository: memgpt/memgpt-server
+              tag: latest
+            envFrom:
+              - secretRef:
+                  name: memgpt
+            env:
+              MEMGPT_PG_HOST: localhost
+              MEMGPT_PG_PORT: 5432
           db:
             image: 
               repository: ankane/pgvector
@@ -42,17 +52,12 @@ spec:
                   name: memgpt
             env:
               PGDATA: /var/lib/postgresql/data/pgdata
-          main:
-            image: 
-              repository: memgpt/memgpt-server
+          debug-sidecar:
+            image:
+              repository: postgres
               tag: latest
-            envFrom:
-              - secretRef: 
-                  name: memgpt
-            env:
-              POSTGRES_URI: postgresql://${MEMGPT_PG_USER}:${MEMGPT_PG_PASSWORD}@localhost:5432/${MEMGPT_PG_DB}
-              MEMGPT_PG_HOST: localhost 
-              MEMGPT_PG_PORT: 5432
+            command: ["sleep"]
+            args: ["infinity"]
     persistence:
       config:
         enabled: true
@@ -60,10 +65,7 @@ spec:
         storageClass: longhorn
         accessMode: ReadWriteOnce
         size: 1Gi
-        advancedMounts:
-          main:
-            main:
-              - path: /root/.memgpt
+        globalMount: /root/.memgpt
       pgdata:
         enabled: true
         type: persistentVolumeClaim
