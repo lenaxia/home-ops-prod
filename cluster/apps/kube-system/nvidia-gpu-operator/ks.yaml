@@ -8,7 +8,7 @@ metadata:
 spec:
   dependsOn:
     - name: cluster-apps-node-feature-discovery
-  path: ./cluster/staging/apps/kube-system/nvidia-gpu-operator/app
+  path: ./cluster/apps/kube-system/nvidia-gpu-operator/app
   prune: true
   sourceRef:
     kind: GitRepository
