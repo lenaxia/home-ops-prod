@@ -73,10 +73,8 @@ spec:
         storageClass: longhorn
         accessMode: ReadWriteOnce
         size: 10Gi
-        advancedMounts:
-          main:
-            db:
-              - path: /var/lib/postgresql/data
+        globalMounts:
+          - path: /var/lib/postgresql/data
       init-sql:
         enabled: true
         type: configMap
