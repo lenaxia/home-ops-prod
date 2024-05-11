@@ -21,26 +21,6 @@ spec:
   upgrade:
     remediation:
       retries: 5
-  postRenderers:
-  - kustomize:
-      patches:
-        - target:
-            version: v1
-            kind: Deployment
-            name: localai
-          patch: |
-            - op: add
-              path: /spec/template/spec/containers/0/lifecycle
-              value:
-                postStart:
-                  exec:
-                    command:
-                      - /bin/sh
-                      - -c
-                      - >
-                        echo "Copying config file from read only location to rw location";
-                        cp /root/.memgpt/config-ro /root/.memgpt/config
-
   values:
     defaultPodOptions:
       nodeSelector:
@@ -80,6 +60,16 @@ spec:
               MEMGPT_PG_HOST: localhost 
               MEMGPT_PG_PORT: 5432
     persistence:
+      config:
+        enabled: true
+        type: persistentVolumeClaim
+        storageClass: longhorn
+        accessMode: ReadWriteOnce
+        size: 1Gi
+        advancedMounts:
+          main:
+            db:
+              - path: /root/.memgpt
       pgdata:
         enabled: true
         type: persistentVolumeClaim
@@ -106,7 +96,7 @@ spec:
         advancedMounts:
           main:
             main:
-              - path: /root/.memgpt/config-ro
+              - path: /tmp/server_config.yaml
                 subPath: server_config.yaml
 
     service:
@@ -137,6 +127,7 @@ spec:
               - path: /admin
                 pathType: Prefix
                 service:
+
                   identifier: main
                   port: admin
         tls:
