@@ -27,9 +27,9 @@ spec:
         node-role.kubernetes.io/worker: 'true'
     controllers:
       main:
-        replicas: 3
-        strategy: RollingUpdate
-        type: deployment
+        replicas: 1  
+        strategy: R  ollingUpdate
+        type: deplo  yment
         annotations:
           reloader.stakater.com/auto: 'true'
         containers:
