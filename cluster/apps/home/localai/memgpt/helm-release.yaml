@@ -40,10 +40,6 @@ spec:
             envFrom:
               - secretRef: 
                   name: memgpt
-            env:
-              POSTGRES_USER: ${MEMGPT_PG_USER}
-              POSTGRES_PASSWORD: ${MEMGPT_PG_PASSWORD}
-              POSTGRES_DB: ${MEMGPT_PG_DB}
           main:
             image: 
               repository: memgpt/memgpt-server
@@ -53,13 +49,8 @@ spec:
                   name: memgpt
             env:
               POSTGRES_URI: postgresql://${MEMGPT_PG_USER}:${MEMGPT_PG_PASSWORD}@db:5432/${MEMGPT_PG_DB}
-              MEMGPT_SERVER_PASS: ${MEMGPT_SERVER_PASS}
-              MEMGPT_PG_DB: ${MEMGPT_PG_DB}
-              MEMGPT_PG_USER: ${MEMGPT_PG_USER}
-              MEMGPT_PG_PASSWORD: ${MEMGPT_PG_PASSWORD}
               MEMGPT_PG_HOST: db
               MEMGPT_PG_PORT: 5432
-              OPENAI_API_KEY: ${OPENAI_API_KEY}
     persistence:
       pgdata:
         enabled: true
