@@ -37,4 +37,4 @@ resources:
   - piraeus.yaml
   - backube.yaml
   - k8sgpt-charts.yaml
-  - spegel-charts.yaml
+  - nvidia.yaml
