@@ -39,7 +39,7 @@ spec:
               tag: v0.5.1
             envFrom:
               - secretRef: 
-                  name: memgpt-env
+                  name: memgpt
             env:
               POSTGRES_USER: ${MEMGPT_PG_USER}
               POSTGRES_PASSWORD: ${MEMGPT_PG_PASSWORD}
@@ -50,7 +50,7 @@ spec:
               tag: latest
             envFrom:
               - secretRef: 
-                  name: memgpt-env
+                  name: memgpt
             env:
               POSTGRES_URI: postgresql://${MEMGPT_PG_USER}:${MEMGPT_PG_PASSWORD}@db:5432/${MEMGPT_PG_DB}
               MEMGPT_SERVER_PASS: ${MEMGPT_SERVER_PASS}
