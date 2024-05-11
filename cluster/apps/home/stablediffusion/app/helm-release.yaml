@@ -1,0 +1,104 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2beta2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
+kind: HelmRelease
+metadata:
+  name: stable-diffusion-webui
+  namespace: default
+spec:
+  chart:
+    spec:
+      chart: app-template
+      version: 3.1.0
+      reconcileStrategy: ChartVersion
+      sourceRef:
+        kind: HelmRepository
+        namespace: flux-system
+        name: bjw-s-charts
+  interval: 1h
+  driftDetection:
+    mode: enabled
+  timeout: 15m
+  values:
+    controllers:
+      stable-diffusion-webui:
+        containers:
+          app:
+            image:
+              repository: ghcr.io/gabe565/stable-diffusion/webui
+              tag: 1.9.3@sha256:9b1c652e71787a35b646860a81aa267e3a5774b8133ba18535cf102960100ac4
+              pullPolicy: IfNotPresent
+            args:
+            #  - --medvram-sdxl
+              - --xformers
+            env:
+              TZ: America/Los_Angeles
+              IIB_ACCESS_CONTROL_ALLOWED_PATHS: /app/outputs
+            resources:
+              limits:
+                nvidia.com/gpu: "1"
+                memory: "16Gi"
+            probes:
+              startup:
+                enabled: true
+                spec:
+                  failureThreshold: 90
+                  periodSeconds: 5
+              liveness:
+                enabled: true
+              readiness:
+                enabled: true
+        pod:
+          runtimeClassName: nvidia
+          terminationGracePeriodSeconds: 1
+          securityContext:
+            fsGroup: 1000
+
+    service:
+      stable-diffusion-webui:
+        controller: stable-diffusion-webui
+        type: LoadBalancer
+        ports:
+          http:
+            port: 7860
+
+    persistence:
+      data:
+        enabled: true
+        type: persistentVolumeClaim 
+        accessMode: ReadWriteOnce
+        size: 100Gi
+        storageClass: longhorn
+        globalMounts:
+          - path: /data
+          - path: /app/repositories
+            subPath: repositories
+      output:
+        enabled: true
+        type: nfs
+        server: ${NAS_ADDR}
+        path: /volume2/downloads/stablediffusion/output
+        globalMounts:
+        - path: /data/outputs
+    ingress:
+      stable-diffusion-webui:
+        enabled: true
+        annotations:
+          hajimari.io/enable: 'true'
+          hajimari.io/icon: baby-bottle-outline
+          hajimari.io/info: Baby Buddy
+          hajimari.io/group: Home
+          cert-manager.io/cluster-issuer: letsencrypt-production
+          traefik.ingress.kubernetes.io/router.entrypoints: websecure
+          traefik.ingress.kubernetes.io/router.middlewares: networking-chain-authelia@kubernetescrd
+        hosts:
+          - host: &uri generate.${SECRET_DEV_DOMAIN}
+            paths:
+              - path: /
+                pathType: Prefix
+                service:
+                  identifier: stable-diffusion-webui
+                  port: http
+        tls:
+          - hosts:
+              - *uri
+            secretName: *uri

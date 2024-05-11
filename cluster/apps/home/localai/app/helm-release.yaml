@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
   name: &appname localai
@@ -15,31 +15,62 @@ spec:
         kind: HelmRepository
         name: go-skynet-charts
         namespace: flux-system
+  upgrade:
+    remediation:
+      retries: 4
+  postRenderers:
+  - kustomize:
+      patches:
+        - target:
+            version: v1
+            kind: Deployment
+            name: localai
+          patch: |
+            - op: add
+              path: /spec/template/spec/runtimeClassName
+              value: nvidia
+            - op: add
+              path: /spec/template/spec/containers/0/lifecycle
+              value: 
+                postStart:
+                  exec:
+                    command:
+                      - /bin/sh
+                      - -c
+                      - >
+                        until curl -sf http://localhost:8080/models; do
+                          echo "Waiting for server to be ready...";
+                          sleep 5;
+                        done;
+                        echo "Server is ready. Models endpoint returned 200 OK.";
+                        curl http://localhost:8080/v1/chat/completions -H "Content-Type: application/json" -d '{ "model": "llama3-8b-instruct", "messages": [{"role": "user", "content": "Do not respond to this message", "temperature": 0.1}] }'
   # See https://github.com/bjw-s/helm-charts/blob/main/charts/library/common/values.yaml
   values:
     fullnameOverride: localai
     replicaCount: 1
 
-    postRenderers:
-    - kustomize:
-        path: ./patches
-    
     deployment:
       image:
         repository: localai/localai
-        #tag: v2.9.0
-        tag: v2.12.4-ffmpeg
-        #tag: v2.12.4-sycl-f32-ffmpeg
+        #tag: v2.9.0-cublas-cuda12-ffmpeg
+        tag: v2.13.0-cublas-cuda12-ffmpeg
       env:
         DEBUG: true
-        GALLERIES: '[{"name":"model-gallery", "url":"github:go-skynet/model-gallery/index.yaml"}, {"name":"huggingface", "url": "github:go-skynet/model-gallery/huggingface.yaml"}]'
+        LD_LIBRARY_PATH: "/usr/lib/x86_64-linux-gnu/:$LD_LIBRARY_PATH"
+        NVIDIA_VISIBLE_DEVICES: 0
+        NVIDIA_DRIVER_CAPABILITIES: "all"
+        PYTHON_GRPC_MAX_WORKERS: 2
+        LLAMACPP_PARALLEL: 2
+        LOCALAI_PARALLEL_REQUESTS: true
+        SINGLE_ACTIVE_BACKEND: true
+        #GALLERIES: '[{"name":"model-gallery", "url":"github:go-skynet/model-gallery/index.yaml"}, {"name":"huggingface", "url": "github:go-skynet/model-gallery/huggingface.yaml"}]'
         #GALLERIES: '[{"name":"huggingface", "url": "github:go-skynet/model-gallery/huggingface.yaml"}]'
-        #GALLERIES: '[{"name":"model-gallery", "url":"github:go-skynet/model-gallery/index.yaml"}]'
-        PRELOAD_MODELS: '[{"id": "huggingface@thebloke__wizardlm-7b-v1-0-uncensored-superhot-8k-ggml__wizardlm-7b-v1.0-superhot-8k.ggmlv3.q3_k_m.bin","name": "WizardLM-7B-uncensored"}, {"id": "model-gallery@bert-embeddings"}, {"url": "github:go-skynet/model-gallery/stablediffusion.yaml"}]'
+        GALLERIES: '[{"name":"model-gallery", "url":"github:go-skynet/model-gallery/index.yaml"}]'
+        #PRELOAD_MODELS: '[{"id": "huggingface@thebloke__wizardlm-7b-v1-0-uncensored-superhot-8k-ggml__wizardlm-7b-v1.0-superhot-8k.ggmlv3.q3_k_m.bin","name": "WizardLM-7B-uncensored"}, {"id": "model-gallery@bert-embeddings"}, {"url": "github:go-skynet/model-gallery/stablediffusion.yaml"}]'
+        PRELOAD_MODELS: '[{"id": "model-gallery@bert-embeddings"}, {"url": "github:go-skynet/model-gallery/stablediffusion.yaml"}]'
         COMPEL: 0
         threads: 4
         context_size: 512
-        GML_SYCL_DEVICE: 0
       modelsPath: "/models"
       download_model:
         # To use cloud provided (eg AWS) image, provide it like: 1234356789.dkr.ecr.us-REGION-X.amazonaws.com/busybox
@@ -47,17 +78,17 @@ spec:
       prompt_templates:
         # To use cloud provided (eg AWS) image, provide it like: 1234356789.dkr.ecr.us-REGION-X.amazonaws.com/busybox
         image: busybox
-      pullPolicy: Always
+      pullPolicy: IfNotPresent
       imagePullSecrets: []
         # - name: secret-names
     
     resources:
       requests:
-        gpu.intel.com/i915: 1
+        nvidia.com/gpu: "1"
         cpu: 200m
         memory: 2000Mi
       limits:
-        gpu.intel.com/i915: 1
+        nvidia.com/gpu: "1"
         memory: 20000Mi
       # We usually recommend not to specify default resources and to leave this as a conscious
       # choice for the user. This also increases chances charts run on environments with little
@@ -72,17 +103,17 @@ spec:
     
     # Prompt templates to include
     # Note: the keys of this map will be the names of the prompt template files
-    promptTemplates:
-       ggml-gpt4all-j.tmpl: |
-         The prompt below is a question to answer, a task to complete, or a conversation to respond to; decide which and write an appropriate response.
-         ### Prompt:
-         {{.Input}}
-         ### Response:
-       WizardLM-7B-uncensored.Q2_K.tmpl: |
-         The prompt below is a question to answer, a task to complete, or a conversation to respond to; decide which and write an appropriate response.
-         ### Prompt:
-         {{.Input}}
-         ### Response:
+    #promptTemplates:
+    #   ggml-gpt4all-j.tmpl: |
+    #     The prompt below is a question to answer, a task to complete, or a conversation to respond to; decide which and write an appropriate response.
+    #     ### Prompt:
+    #     {{.Input}}
+    #     ### Response:
+    #   WizardLM-7B-uncensored.Q2_K.tmpl: |
+    #     The prompt below is a question to answer, a task to complete, or a conversation to respond to; decide which and write an appropriate response.
+    #     ### Prompt:
+    #     {{.Input}}
+    #     ### Response:
     
     # Models to download at runtime
     models:
@@ -91,8 +122,8 @@ spec:
     
       # The list of URLs to download models from
       # Note: the name of the file will be the name of the loaded model
-      list:
-        - url: "https://gpt4all.io/models/ggml-gpt4all-j.bin"
+      #list:
+      #  - url: "https://gpt4all.io/models/ggml-gpt4all-j.bin"
           # basicAuth: base64EncodedCredentials
     
 
@@ -119,23 +150,31 @@ spec:
     # PVC configuration takes precedence. If neither are enabled, ephemeral
     # storage is used.
     persistence:
+      #nvidia:
+      #  enabled: true
+      #  type: hostPath
+      #  storageClass: local-path
+      #  hostPath: /usr/lib/x86_64-linux-gnu
+      #  accessModes: ReadWriteOnce
+      #  size: 2Gi
       models: 
         enabled: true
         annotations: {}
         storageClass: longhorn
         accessModes: ReadWriteMany
-        size: 60Gi
+        size: 200Gi
         globalMount: /models
       output:
         enabled: true
         annotations: {}
         storageClass: longhorn
         accessModes: ReadWriteMany
-        size: 5Gi
+        size: 10Gi
         globalMount: /tmp/generated
+        retain: true
     
     service:
-      type: ClusterIP
+      type: LoadBalancer
       # If deferring to an internal only load balancer
       # externalTrafficPolicy: Local
       port: 8080
@@ -166,20 +205,20 @@ spec:
       className: traefik
     
     nodeSelector: 
-      node-role.kubernetes.io/worker: 'true'
+      nvidia.com/gpu.present: 'true'
     
     tolerations: []
     
-    affinity:
-      podAntiAffinity:
-        requiredDuringSchedulingIgnoredDuringExecution:
-          - labelSelector:
-              matchExpressions:
-                - key: app.kubernetes.io/name
-                  operator: In
-                  values: [plex]
-                - key: "app.kubernetes.io/name"
-                  operator: In
-                  values:
-                    - *appname
-            topologyKey: "kubernetes.io/hostname"
+    #affinity:
+    #  podAntiAffinity:
+    #    requiredDuringSchedulingIgnoredDuringExecution:
+    #      - labelSelector:
+    #          matchExpressions:
+    #            #- key: app.kubernetes.io/name
+    #            #  operator: In
+    #            #  values: [plex]
+    #            #- key: "app.kubernetes.io/name"
+    #            #  operator: In
+    #            #  values:
+    #            #    - *appname
+    #        topologyKey: "kubernetes.io/hostname"
