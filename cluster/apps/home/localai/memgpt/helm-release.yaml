@@ -36,7 +36,8 @@ spec:
           db:
             image: ankane/pgvector:v0.5.1
             envFrom:
-              - secretRef: memgpt-env
+              - secretRef: 
+                  name: memgpt-env
             env:
               POSTGRES_USER: ${MEMGPT_PG_USER}
               POSTGRES_PASSWORD: ${MEMGPT_PG_PASSWORD}
@@ -44,7 +45,8 @@ spec:
           main:
             image: memgpt/memgpt-server:latest
             envFrom:
-              - secretRef: memgpt-env
+              - secretRef: 
+                  name: memgpt-env
             env:
               POSTGRES_URI: postgresql://${MEMGPT_PG_USER}:${MEMGPT_PG_PASSWORD}@db:5432/${MEMGPT_PG_DB}
               MEMGPT_SERVER_PASS: ${MEMGPT_SERVER_PASS}
@@ -106,16 +108,14 @@ spec:
             paths:
               - path: /
                 pathType: Prefix
-                backend:
-                  service:
-                    name: main
-                    port: api
+                service:
+                  name: main
+                  port: api
               - path: /admin
                 pathType: Prefix
-                backend:
-                  service:
-                    name: main
-                    port: admin
+                service:
+                  name: main
+                  port: admin
         tls:
           - hosts:
               - memgpt.${SECRET_DEV_DOMAIN}
