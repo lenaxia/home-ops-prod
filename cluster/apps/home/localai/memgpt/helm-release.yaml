@@ -85,7 +85,7 @@ spec:
 
     service:
       main:
-        type: ClusterIP
+        type: LoadBalancer
         ports:
           api:
             port: 8083
