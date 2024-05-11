@@ -29,7 +29,7 @@ spec:
       main:
         replicas: 3
         strategy: RollingUpdate
-        type: Deployment
+        type: deployment
         annotations:
           reloader.stakater.com/auto: 'true'
         containers:
@@ -113,12 +113,12 @@ spec:
               - path: /
                 pathType: Prefix
                 service:
-                  name: main
+                  identifier: main
                   port: api
               - path: /admin
                 pathType: Prefix
                 service:
-                  name: main
+                  identifier: main
                   port: admin
         tls:
           - hosts:
