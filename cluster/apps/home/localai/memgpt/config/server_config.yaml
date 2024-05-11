@@ -20,17 +20,17 @@ embedding_chunk_size = 300
 [archival_storage]
 type = postgres
 path = /root/.memgpt/chroma
-uri = postgresql+pg8000://memgpt:adsfjkh*&^wer13@db:5432/memgpt
+uri = postgresql+pg8000://memgpt:adsfjkh*&^wer13@localhost:5432/memgpt
 
 [recall_storage]
 type = postgres
 path = /root/.memgpt
-uri = postgresql+pg8000://memgpt:adsfjkh*&^wer13@db:5432/memgpt
+uri = postgresql+pg8000://memgpt:adsfjkh*&^wer13@localhost:5432/memgpt
 
 [metadata_storage]
 type = postgres
 path = /root/.memgpt
-uri = postgresql+pg8000://memgpt:adsfjkh*&^wer13@db:5432/memgpt
+uri = postgresql+pg8000://memgpt:adsfjkh*&^wer13@localhost:5432/memgpt
 
 
 [client]

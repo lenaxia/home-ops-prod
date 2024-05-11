@@ -33,12 +33,6 @@ spec:
         annotations:
           reloader.stakater.com/auto: 'true'
         containers:
-          debug-sidecar:
-            image:
-              repository: postgres
-              tag: latest
-            command: ["sleep"]
-            args: ["infinity"]
           db:
             image: 
               repository: ankane/pgvector
@@ -68,7 +62,7 @@ spec:
         size: 1Gi
         advancedMounts:
           main:
-            db:
+            main:
               - path: /root/.memgpt
       pgdata:
         enabled: true
