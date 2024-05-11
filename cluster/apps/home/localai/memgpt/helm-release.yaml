@@ -65,7 +65,8 @@ spec:
         storageClass: longhorn
         accessMode: ReadWriteOnce
         size: 1Gi
-        globalMount: /root/.memgpt
+        globalMounts: 
+          - path: /root/.memgpt
       pgdata:
         enabled: true
         type: persistentVolumeClaim
