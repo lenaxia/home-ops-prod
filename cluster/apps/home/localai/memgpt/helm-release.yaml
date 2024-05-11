@@ -88,11 +88,9 @@ spec:
         enabled: true
         type: configMap
         name: memgpt-configmap
-        advancedMounts:
-          main:
-            main:
-              - path: /tmp/server_config.yaml
-                subPath: server_config.yaml
+        globalMounts:
+          - path: /tmp/server_config.yaml
+            subPath: server_config.yaml
 
     service:
       main:
