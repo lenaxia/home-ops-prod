@@ -37,7 +37,7 @@ spec:
           main:
             image:
               repository: lscr.io/linuxserver/nzbhydra2
-              tag: 6.0.0
+              tag: 6.2.1
               pullPolicy: Always
 
             env:
