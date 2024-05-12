@@ -18,7 +18,7 @@ gpu_layers: 33
 stopwords:
 - <|im_end|>
 usage: |
-      curl http://localhost:8080/v1/chat/completions -H "Content-Type: application/json" -d '{
+      curl $LOCALAI/v1/chat/completions -H "Content-Type: application/json" -d '{
           "model": "neuralhermes-2.5-7b",
           "messages": [{"role": "user", "content": "How are you doing?", "temperature": 0.1}]
       }'

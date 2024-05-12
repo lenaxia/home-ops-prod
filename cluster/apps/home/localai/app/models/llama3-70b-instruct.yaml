@@ -43,7 +43,7 @@ stopwords:
 - <dummy32000>
 - "<|eot_id|>"
 usage: |
-      curl http://localhost:8080/v1/chat/completions -H "Content-Type: application/json" -d '{
+      curl $LOCALAI/v1/chat/completions -H "Content-Type: application/json" -d '{
           "model": "llama3-70b-instruct",
           "messages": [{"role": "user", "content": "How are you doing?", "temperature": 0.1}]
       }'

@@ -41,9 +41,10 @@ spec:
               - secretRef:
                   name: memgpt
             env:
+              DEBUG: true
               MEMGPT_PG_HOST: localhost
               MEMGPT_PG_PORT: 5432
-          db:
+          vectordb:
             image: 
               repository: ankane/pgvector
               tag: v0.5.1
@@ -81,7 +82,7 @@ spec:
         name: memgpt-configmap
         advancedMounts:
           main:
-            db:
+            vectordb:
               - path: /docker-entrypoint-initdb.d/init.sql
                 subPath: init.sql
       server-config-yaml:
