@@ -66,9 +66,20 @@ spec:
                 spec:
                   failureThreshold: 30
                   periodSeconds: 5
+    persistence:
+      models:
+        enabled: true
+        type: persistentVolumeClaim
+        storageClass: longhorn
+        accessMode: ReadWriteMany
+        size: 100Gi
+        globalMounts:
+          - path: /root/.ollama
     service:
       app:
         controller: *app
         ports:
           http:
             port: &port 11434
+
+
