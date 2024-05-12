@@ -48,6 +48,7 @@ spec:
               NVIDIA_DRIVER_CAPABILITIES: all
               OLLAMA_HOST: 0.0.0.0
               OLLAMA_ORIGINS: "*"
+              OLLAMA_DEBUG: "1"
             resources:
               requests:
                 cpu: 200m
