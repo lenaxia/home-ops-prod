@@ -52,6 +52,21 @@ spec:
         data:
           config.yaml: |
               model_list: 
+                # Ollama
+                - model_name: ollama-openhermes
+                  litellm_params:
+                    model: ollama_chat/openhermes:7b-mistral-v2.5-q8_0
+                    api_base: http://ollama.home.svc.cluster.local:11434
+                - model_name: ollama-llama3
+                  litellm_params:
+                    model: ollama_chat/llama3:8b-instruct-q8_0
+                    api_base: http://ollama.home.svc.cluster.local:11434
+                - model_name: ollama-phi3
+                  litellm_params:
+                    model: ollama_chat/phi3:latest
+                    api_base: http://ollama.home.svc.cluster.local:11434
+
+                # Bedrock
                 - model_name: bedrock-claude-v2-sonnet
                   litellm_params:
                     model: bedrock/anthropic.claude-3-sonnet-20240229-v1:0
