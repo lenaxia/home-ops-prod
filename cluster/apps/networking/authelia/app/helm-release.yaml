@@ -300,6 +300,7 @@ spec:
             - "hass.${SECRET_DEV_DOMAIN}"
             - "jelly.${SECRET_DEV_DOMAIN}"
             - "ai.${SECRET_DEV_DOMAIN}"
+            - "llm.${SECRET_DEV_DOMAIN}"
             - "overseerr.${SECRET_DEV_DOMAIN}"
           policy: bypass
           networks:
