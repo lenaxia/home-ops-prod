@@ -69,14 +69,8 @@ spec:
               - path: /
                 pathType: Prefix
                 service:
-                  identifier: main
-                  port: api
-              - path: /admin
-                pathType: Prefix
-                service:
-
-                  identifier: main
-                  port: admin
+                  identifier: app
+                  port: http
         tls:
           - hosts:
               - ollama.${SECRET_DEV_DOMAIN}
