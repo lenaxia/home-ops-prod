@@ -41,10 +41,10 @@ spec:
               - secretRef:
                   name: memgpt
             env:
-              DEBUG: true
               MEMGPT_PG_HOST: localhost
               MEMGPT_PG_PORT: 5432
-                MEMGPT_ENVIRONMENT: DEVELOPMENT
+              MEMGPT_ENVIRONMENT: DEVELOPMENT
+              LOG_LEVEL: debug
           vectordb:
             image: 
               repository: ankane/pgvector
