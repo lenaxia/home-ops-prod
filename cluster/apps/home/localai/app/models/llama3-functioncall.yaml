@@ -20,7 +20,7 @@ template:
     {{ if .Content -}}
     {{.Content -}}
     {{ else if .FunctionCall -}}
-    { "name": "{{ get .FunctionCall "name"}}", "arguments": {{get .FunctionCall "arguments"}} }{{ end -}}<|eot_id|>
+    {{ toJson .FunctionCall }}
   completion: |
     {{.Input}}
   function: |-

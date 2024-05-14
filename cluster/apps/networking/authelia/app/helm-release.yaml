@@ -396,6 +396,8 @@ spec:
             - "library.${SECRET_DEV_DOMAIN}"
             - "plex.${SECRET_DEV_DOMAIN}"
             - "jelly.${SECRET_DEV_DOMAIN}"
+            # AI
+            - "memgpt.${SECRET_DEV_DOMAIN}"
             #storage
             - "paperless.${SECRET_DEV_DOMAIN}"
             #utilities

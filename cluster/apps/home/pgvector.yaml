@@ -1,0 +1,41 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pgvector
+  namespace: home
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: pgvector
+  template:
+    metadata:
+      labels:
+        app: pgvector
+    spec:
+      containers:
+      - name: pgvector
+        image: ankane/pgvector:latest
+        env:
+        - name: POSTGRES_USER
+          value: memgpt
+        - name: POSTGRES_PASSWORD
+          value: memgpt
+        - name: POSTGRES_DB
+          value: memgpt
+        ports:
+        - containerPort: 5432
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: pgvector
+  namespace: home
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 5432
+    targetPort: 5432
+  selector:
+    app: pgvector
