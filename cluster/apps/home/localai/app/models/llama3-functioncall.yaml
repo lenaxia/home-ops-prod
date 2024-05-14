@@ -21,6 +21,7 @@ template:
     {{.Content -}}
     {{ else if .FunctionCall -}}
     {{ toJson .FunctionCall }}
+    {{ end }}
   completion: |
     {{.Input}}
   function: |-
