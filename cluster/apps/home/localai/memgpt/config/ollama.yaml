@@ -11,9 +11,9 @@ model_wrapper = chatml
 context_window = 8192
 
 [embedding]
-embedding_endpoint_type = ollama
-model_endpoint = http://ollama.home.svc.cluster.local:11434
-embedding_model = nomic-embed-text:v1.5
+embedding_endpoint_type = openai
+embedding_endpoint = http://localai.home.svc.cluster.local:8080/v1
+embedding_model = bert-embeddings
 embedding_dim = 1536
 embedding_chunk_size = 300
 

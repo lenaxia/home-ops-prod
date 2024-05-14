@@ -1,0 +1,5 @@
+backend: bert-embeddings
+embeddings: true
+name: text-embedding-ada-002
+parameters:
+  model: bert-MiniLM-L6-v2q4_0.bin

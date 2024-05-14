@@ -37,6 +37,7 @@ spec:
             image:
               repository: memgpt/memgpt-server
               tag: latest
+            command: ["uvicorn", "memgpt.server.rest_api.server:app", "--host", "0.0.0.0", "--port", "8083", "--debug"]
             envFrom:
               - secretRef:
                   name: memgpt
@@ -53,7 +54,7 @@ spec:
                   name: memgpt
             env:
               PGDATA: /var/lib/postgresql/data/pgdata
-          debug-sidecar:
+          sidecar-debug:
             image:
               repository: postgres
               tag: latest
@@ -91,7 +92,7 @@ spec:
         name: memgpt-configmap
         globalMounts:
           - path: /tmp/server_config.yaml
-            subPath: server_config.yaml
+            subPath: localai.yaml
 
     service:
       main:
