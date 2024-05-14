@@ -37,7 +37,7 @@ spec:
             image:
               repository: memgpt/memgpt-server
               tag: latest
-            command: ["uvicorn", "memgpt.server.rest_api.server:app", "--host", "0.0.0.0", "--port", "8083", "--debug"]
+            command: ["uvicorn", "--host", "0.0.0.0", "--port", "8083", "memgpt.server.rest_api.server:app", "--debug"]
             envFrom:
               - secretRef:
                   name: memgpt
