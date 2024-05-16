@@ -4,7 +4,7 @@ persona = sam_pov
 human = basic
 
 [model]
-model = macadeliccc/laser-dolphin-mixtral-2x7b-dpo
+model = openhermes:7b-mistral-v2.5-q8_0
 model_endpoint = http://ollama.home.svc.cluster.local:11434
 model_endpoint_type = ollama
 model_wrapper = chatml
