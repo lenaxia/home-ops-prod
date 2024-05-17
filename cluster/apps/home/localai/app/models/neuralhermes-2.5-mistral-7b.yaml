@@ -19,6 +19,9 @@ function:
     "<tool_call>": ""
     "\'": "\""
     "Processing user message.": ""
+    "&quot;": "\""
+    ": True": ": \"True\""
+    ": False": ": \"False\""
 template:
   chat_message: |
     <|im_start|>{{if eq .RoleName "assistant"}}assistant{{else if eq .RoleName "system"}}system{{else if eq .RoleName "tool"}}tool{{else if eq .RoleName "user"}}user{{end}}
