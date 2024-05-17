@@ -4,22 +4,26 @@ parameters:
   model: huggingface://NousResearch/Hermes-2-Pro-Mistral-7B-GGUF/Hermes-2-Pro-Mistral-7B.Q6_K.gguf
 
 function:
+  parallel_calls: false
   # disable injecting the "answer" tool
   disable_no_action: true
   # This allows the grammar to also return messages
   grammar_message: true
   # Suffix to add to the grammar
-  #grammar_prefix: '<tool_call>\n'
+  grammar_prefix: '<tool_call>\n'
   return_name_in_function_response: true
   # Without grammar uncomment the lines below
   # Warning: this is relying only on the capability of the
   # LLM model to generate the correct function call.
-  # no_grammar: true
+  #no_grammar: true
   # json_regex_match: "(?s)<tool_call>(.*?)</tool_call>"
   replace_results:
     "<tool_call>": ""
     "\'": "\""
-    "\n": ""
+    "Processing user message.": ""
+    "&quot;": "\""
+    ": True": ": \"True\""
+    ": False": ": \"False\""
 template:
   function: |
     <|im_start|>system

@@ -27,9 +27,9 @@ OPENAI_API_KEY = os.getenv('OPENAI_APIKEY')
 OPENAI_API_ENDPOINT = "https://api.openai.com"
 
 # OpenAI Model Configuration
-VISION_MODEL = "gpt-4-vision-preview"
+VISION_MODEL = "gpt-4o"
 VISION_MODEL_TOKENS_MAX = 128000
-TEXT_MODEL = "gpt-4-0125-preview"
+TEXT_MODEL = "gpt-4o"
 TEXT_MODEL_TOKENS_MAX = 128000
 MAX_RETURN_TOKENS = 4096 
 
