@@ -1,5 +1,5 @@
 {
-  "model": "llama3-functioncall",
+  "model": "neuralhermes-2.5-7b",
   "language": "",
   "n": 1,
   "top_p": 1,
@@ -126,33 +126,6 @@
     {
       "role": "tool",
       "content": "{\"status\": \"OK\", \"message\": \"None\", \"time\": \"2024-05-14 07:38:55 PM UTC+0000\"}"
-    },
-    {
-      "role": "user",
-      "content": "{\"type\": \"user_message\", \"message\": \"My name is actually jane and I'm a woman\", \"time\": \"2024-05-14 07:39:03 PM UTC+0000\"}"
-    },
-    {
-      "role": "assistant",
-      "content": null,
-      "tool_calls": [
-        {
-          "index": 0,
-          "id": "83eac307-7b45-4f0e-8144-3b3e1",
-          "type": "function",
-          "function": {
-            "name": "core_memory_replace",
-            "arguments": "{\"name\":\"answer\",\"new_content\":\"I apologize for the mistake. Hello Jane, it's nice to meet you. How can I assist you today?\",\"old_content\":\"Hello, I'm MemGPT. It's nice to meet you too, Chad. How can I assist you today?\",\"request_heartbeat\":true}"
-          }
-        }
-      ]
-    },
-    {
-      "role": "tool",
-      "content": "{\"status\": \"Failed\", \"message\": \"Error calling function core_memory_replace: 'No memory section named answer (must be either \\\"persona\\\" or \\\"human\\\")'\", \"time\": \"2024-05-14 07:39:15 PM UTC+0000\"}"
-    },
-    {
-      "role": "user",
-      "content": "{\"type\": \"heartbeat\", \"reason\": \"[This is an automated system message hidden from the user] Function call failed, returning control\", \"time\": \"2024-05-14 07:39:15 PM UTC+0000\"}"
     }
   ],
   "functions": null,

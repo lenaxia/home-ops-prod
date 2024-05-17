@@ -2,6 +2,22 @@ name: hermes2-pro
 mmap: true
 parameters:
   model: huggingface://NousResearch/Hermes-2-Pro-Llama-3-8B-GGUF/Hermes-2-Pro-Llama-3-8B-Q8_0.gguf
+function:
+  # disable injecting the "answer" tool
+  disable_no_action: true
+  # This allows the grammar to also return messages
+  grammar_message: true
+  # Suffix to add to the grammar
+  grammar_prefix: '<tool_call>\n'
+  return_name_in_function_response: true
+  # Without grammar uncomment the lines below
+  # Warning: this is relying only on the capability of the
+  # LLM model to generate the correct function call.
+  # no_grammar: true
+  # json_regex_match: "(?s)<tool_call>(.*?)</tool_call>"
+  replace_results:
+    "<tool_call>": ""
+    "\'": "\""
 template:
   chat_message: |
     <|im_start|>{{if eq .RoleName "assistant"}}assistant{{else if eq .RoleName "system"}}system{{else if eq .RoleName "tool"}}tool{{else if eq .RoleName "user"}}user{{end}}
