@@ -19,6 +19,7 @@ function:
     "<tool_call>": ""
     "\'": "\""
     "Processing user message.": ""
+    "Continuing conversation.": ""
     "&quot;": "\""
     ": True": ": \"True\""
     ": False": ": \"False\""

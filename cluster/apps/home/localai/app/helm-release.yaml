@@ -79,7 +79,7 @@ spec:
       prompt_templates:
         # To use cloud provided (eg AWS) image, provide it like: 1234356789.dkr.ecr.us-REGION-X.amazonaws.com/busybox
         image: busybox
-      pullPolicy: Always
+      pullPolicy: IfNotPresent
       imagePullSecrets: []
         # - name: secret-names
     
