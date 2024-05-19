@@ -3,7 +3,7 @@
 dataRoot: /data
 # -- SERVER CONFIGURATION --
 # Listen for incoming connections
-listen: false
+listen: true
 # Server port
 port: 8000
 # -- SECURITY CONFIGURATION --
