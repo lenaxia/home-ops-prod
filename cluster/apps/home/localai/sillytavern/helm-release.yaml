@@ -42,6 +42,24 @@ spec:
               requests:
                 cpu: 15m
                 memory: 94M
+    persistence:
+      data:
+        enabled: true
+        type: persistentVolumeClaim
+        storageClass: longhorn
+        accessMode: ReadWriteOnce
+        size: 10Gi
+        globalMounts:
+          - path: /data
+      config-yaml:
+        enabled: true
+        type: configMap
+        name: sillytavern-configmap
+        advancedMounts:
+          main:
+            vectordb:
+              - path: /config/config.yaml
+                subPath: config.yaml
     service:
       main:
         ports:
