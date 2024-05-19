@@ -55,11 +55,9 @@ spec:
         enabled: true
         type: configMap
         name: sillytavern-configmap
-        advancedMounts:
-          main:
-            vectordb:
-              - path: /config/config.yaml
-                subPath: config.yaml
+        globalMounts:
+          - path: /config/config.yaml
+            subPath: config.yaml
     service:
       main:
         ports:
