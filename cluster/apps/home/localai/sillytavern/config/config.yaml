@@ -32,7 +32,7 @@ enableDiscreetLogin: false
 # Used to sign session cookies. Will be auto-generated if not set
 cookieSecret: ''
 # Disable CSRF protection - NOT RECOMMENDED
-disableCsrfProtection: false
+disableCsrfProtection: true
 # Disable startup security checks - NOT RECOMMENDED
 securityOverride: false
 # -- ADVANCED CONFIGURATION --
@@ -58,6 +58,7 @@ whitelistImportDomains:
   - files.catbox.moe
   - raw.githubusercontent.com
   - thekao.cloud
+  - silly.thekao.cloud
 # API request overrides (for KoboldAI and Text Completion APIs)
 ## Note: host includes the port number if it's not the default (80 or 443)
 ## Format is an array of objects:
