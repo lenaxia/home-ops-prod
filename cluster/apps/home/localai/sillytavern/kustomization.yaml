@@ -11,6 +11,7 @@ configMapGenerator:
   - name: sillytavern-configmap
     files:
       - config.yaml=./config/config.yaml
+      - docker-entrypoint.sh=./config/docker-entrypoint.sh
 generatorOptions:
   disableNameSuffixHash: true
   annotations:
