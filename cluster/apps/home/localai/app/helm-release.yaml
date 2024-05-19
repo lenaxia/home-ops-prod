@@ -55,8 +55,8 @@ spec:
         #tag: v2.9.0-cublas-cuda12-ffmpeg
         #tag: v2.13.0-cublas-cuda12-ffmpeg
         tag: master-cublas-cuda12-ffmpeg
-          #pullPolicy: IfNotPresent
-        pullPolicy: Always 
+      #pullPolicy: IfNotPresent
+      pullPolicy: Always 
       env:
         DEBUG: true
         LD_LIBRARY_PATH: "/usr/lib/x86_64-linux-gnu/:$LD_LIBRARY_PATH"
@@ -81,7 +81,6 @@ spec:
       prompt_templates:
         # To use cloud provided (eg AWS) image, provide it like: 1234356789.dkr.ecr.us-REGION-X.amazonaws.com/busybox
         image: busybox
-      pullPolicy: IfNotPresent
       imagePullSecrets: []
         # - name: secret-names
     
