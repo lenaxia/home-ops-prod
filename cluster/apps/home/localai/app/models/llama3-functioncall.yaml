@@ -3,10 +3,10 @@ context_size: 8192
 parameters:
   model: huggingface://mudler/LocalAI-Llama3-8b-Function-Call-v0.2-GGUF/LocalAI-Llama3-8b-Function-Call-v0.2-q4_k_m.bin
 stopwords:
-- <|im_end|>
-- <dummy32000>
-- <|eot_id|>
-- <|end_of_text|>
+  - "<|im_end|>"
+  - "<dummy32000>"
+  - "<|eot_id|>"
+  - "<|end_of_text|>"
 
 function:
   # disable injecting the "answer" tool
@@ -21,9 +21,9 @@ function:
   # LLM model to generate the correct function call.
   # no_grammar: true
   # json_regex_match: "(?s)<tool_call>(.*?)</tool_call>"
-  replace_results:
-    "<tool_call>": ""
-    "\'": "\""
+replace_results:
+  "<tool_call>": ""
+  "\'": "\""
 template:
   chat: |
     <|begin_of_text|>{{.Input }}

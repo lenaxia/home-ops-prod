@@ -29,21 +29,21 @@ spec:
             - op: add
               path: /spec/template/spec/runtimeClassName
               value: nvidia
-            - op: add
-              path: /spec/template/spec/containers/0/lifecycle
-              value: 
-                postStart:
-                  exec:
-                    command:
-                      - /bin/sh
-                      - -c
-                      - >
-                        until curl -sf http://localhost:8080/models; do
-                          echo "Waiting for server to be ready...";
-                          sleep 5;
-                        done;
-                        echo "Server is ready. Models endpoint returned 200 OK.";
-                        curl http://localhost:8080/v1/chat/completions -H "Content-Type: application/json" -d '{ "model": "llama3-functioncall", "messages": [{"role": "user", "content": "Do not respond to this message", "temperature": 0.1}] }'
+#            - op: add
+#              path: /spec/template/spec/containers/0/lifecycle
+#              value: 
+#                postStart:
+#                  exec:
+#                    command:
+#                      - /bin/sh
+#                      - -c
+#                      - >
+#                        until curl -sf http://localhost:8080/models; do
+#                          echo "Waiting for server to be ready...";
+#                          sleep 5;
+#                        done;
+#                        echo "Server is ready. Models endpoint returned 200 OK.";
+#                        curl http://localhost:8080/v1/chat/completions -H "Content-Type: application/json" -d '{ "model": "llama3-functioncall", "messages": [{"role": "user", "content": "Do not respond to this message", "temperature": 0.1}] }'
   # See https://github.com/bjw-s/helm-charts/blob/main/charts/library/common/values.yaml
   values:
     fullnameOverride: localai
