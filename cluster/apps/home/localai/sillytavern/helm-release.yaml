@@ -30,7 +30,7 @@ spec:
         containers:
           main:
             image:
-              repository: ghcr.io/sillytavern/sillytavern:release
+              repository: ghcr.io/sillytavern/sillytavern
               tag: 1.11.7
             env:
               TZ: ${TIMEZONE}
