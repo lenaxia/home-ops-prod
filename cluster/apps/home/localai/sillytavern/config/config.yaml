@@ -10,7 +10,7 @@ port: 8000
 # Toggle whitelist mode
 whitelistMode: true
 # Whitelist will also verify IP in X-Forwarded-For / X-Real-IP headers
-enableForwardedWhitelist: true
+enableForwardedWhitelist: false
 # Whitelist of allowed IP addresses
 whitelist:
   - 0.0.0.0
