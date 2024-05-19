@@ -17,14 +17,18 @@ function:
   #json_regex_match: "(?s)<tool_call>(.*?)</tool_call>?"
   replace_results:
     "<tool_call>": ""
-    "\'": "\""
-    "<(?s)^[a-zA-Z0-9.\\w\\s]*(?=\\{)>": ""
-    "<(?s)\\}>[^{}]+$>": ""
     "Processing user message.": ""
     "Continuing conversation.": ""
     "&quot;": "\""
-    ": True": ": \"True\""
-    ": False": ": \"False\""
+    "(?s)^[^{\\[]*": ""
+    "(?s)[^}\\]]*$": ""
+    "'([^']*?)'": "_DQUOTE_${1}_DQUOTE_"
+    "\\\"": "__TEMP_QUOTE__"
+    "\"": "\\\""
+    "\\\'": "'"
+    "_DQUOTE_": "\""
+    "__TEMP_QUOTE__": "\""
+
 template:
   chat_message: |
     <|im_start|>{{if eq .RoleName "assistant"}}assistant{{else if eq .RoleName "system"}}system{{else if eq .RoleName "tool"}}tool{{else if eq .RoleName "user"}}user{{end}}
