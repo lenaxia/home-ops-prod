@@ -4,7 +4,7 @@ persona = sam_pov
 human = basic
 
 [model]
-model = neuralhermes-2.5-7b
+model = openhermes-2.5-7b
 model_endpoint = http://localai.home.svc.cluster.local:8080/v1
 model_endpoint_type = openai
 model_wrapper = chatml

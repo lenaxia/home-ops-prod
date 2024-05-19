@@ -18,8 +18,30 @@ function:
   #no_grammar: true
   # json_regex_match: "(?s)<tool_call>(.*?)</tool_call>"
   replace_results:
-    "<tool_call>": ""
-    "\'": "\""
+    - key: "<tool_call>"
+      value: ""
+    - key: "Processing user message."
+      value: ""
+    - key: "Continuing conversation."
+      value: ""
+    - key: "&quot;"
+      value: "\""
+    - key: "(?s)^[^{\\[]*"
+      value: ""
+    - key: "(?s)[^}\\]]*$"
+      value: ""
+    - key: "'([^']*?)'"
+      value: "_DQUOTE_${1}_DQUOTE_"
+    - key: "\\\""
+      value: "__TEMP_QUOTE__"
+    - key: "\""
+      value: "\\\""
+    - key: "\\'"
+      value: "'"
+    - key: "_DQUOTE_"
+      value: "\""
+    - key: "__TEMP_QUOTE__"
+      value: "\""
 
 template:
   chat_message: |
