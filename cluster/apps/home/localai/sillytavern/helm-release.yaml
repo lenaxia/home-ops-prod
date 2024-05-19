@@ -58,13 +58,13 @@ spec:
         globalMounts:
           - path: /home/node/app/config/config.yaml
             subPath: config.yaml
-      docker-entrypoint-sh:
-        enabled: true
-        type: configMap
-        name: sillytavern-configmap
-        globalMounts:
-          - path: /home/node/app/docker-entrypoint.sh
-            subPath: docker-entrypoint.sh
+      #docker-entrypoint-sh:
+      #  enabled: true
+      #  type: configMap
+      #  name: sillytavern-configmap
+      #  globalMounts:
+      #    - path: /home/node/app/docker-entrypoint.sh
+      #      subPath: docker-entrypoint.sh
     service:
       main:
         ports:
