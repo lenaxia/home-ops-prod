@@ -18,6 +18,8 @@ function:
   replace_results:
     "<tool_call>": ""
     "\'": "\""
+    "<(?s)^[a-zA-Z0-9.\\w\\s]*(?=\\{)>": ""
+    "<(?s)\\}>[^{}]+$>": ""
     "Processing user message.": ""
     "Continuing conversation.": ""
     "&quot;": "\""
