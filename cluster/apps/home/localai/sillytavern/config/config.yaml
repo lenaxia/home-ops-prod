@@ -8,12 +8,15 @@ listen: true
 port: 8000
 # -- SECURITY CONFIGURATION --
 # Toggle whitelist mode
-whitelistMode: false
+whitelistMode: true
 # Whitelist will also verify IP in X-Forwarded-For / X-Real-IP headers
 enableForwardedWhitelist: true
 # Whitelist of allowed IP addresses
 whitelist:
-  - 0.0.0.0
+  - 0.0.0.0/0
+  - 10.0.0.0/8
+  - 172.16.0.0/12
+  - 192.168.0.0/16
 # Toggle basic authentication for endpoints
 basicAuthMode: false
 # Basic authentication credentials
