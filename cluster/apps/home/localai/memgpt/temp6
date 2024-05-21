@@ -1,5 +1,5 @@
 {
-  "model": "neuralhermes-2.5-7b",
+  "model": "hermes-2-pro-theta-llama3",
   "response_format": {"type": "json_object"},
   "messages": [
     {
