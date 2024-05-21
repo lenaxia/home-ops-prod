@@ -1,11 +1,11 @@
 {
-  "model": "llama3-functioncall",
+  "model": "hermes-2-pro-theta-llama3",
   "language": "",
   "n": 0,
   "top_p": 1,
   "top_k": null,
   "temperature": 0.5,
-  "max_tokens": 150,
+  "max_tokens": 500,
   "echo": false,
   "batch": 0,
   "ignore_eos": false,
@@ -37,7 +37,7 @@
     },
     {
       "role": "user",
-      "content": "turn on the nursey lights"
+      "content": "turn on all the lights"
     }
   ],
   "functions": null,

@@ -1,5 +1,5 @@
 {
-  "model": "llama3-functioncall",
+  "model": "hermes-2-pro-theta-llama3",
   "language": "",
   "n": 1,
   "top_p": 1,

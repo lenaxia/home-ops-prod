@@ -1,5 +1,5 @@
 {
-  "model": "llama3-functioncall",
+  "model": "neuralhermes-2.5-7b",
   "response_format": {"type": "json_object"},
   "messages": [
     {

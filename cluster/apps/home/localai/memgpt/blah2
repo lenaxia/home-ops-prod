@@ -1,5 +1,5 @@
 {
-  "model": "llama3-functioncall",
+  "model": "neuralhermes-2.5-7b",
   "language": "",
   "n": 0,
   "top_p": 1,
