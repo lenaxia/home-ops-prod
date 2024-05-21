@@ -24,7 +24,7 @@
   "clip_skip": 0,
   "tokenizer": "",
   "file": "",
-  "response_format": {},
+  "response_format": {"type": "json_object"},
   "size": "",
   "prompt": null,
   "instruction": "",

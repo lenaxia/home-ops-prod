@@ -67,9 +67,6 @@ spec:
           enabled: true
         RemovePodsViolatingNodeAffinity:
           enabled: true
-          params:
-            nodeAffinityType:
-            - requiredDuringSchedulingIgnoredDuringExecution
         RemovePodsViolatingInterPodAntiAffinity:
           enabled: true
         LowNodeUtilization:

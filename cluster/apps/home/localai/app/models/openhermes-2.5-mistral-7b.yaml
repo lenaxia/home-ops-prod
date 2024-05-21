@@ -18,6 +18,10 @@ function:
   #no_grammar: true
   # json_regex_match: "(?s)<tool_call>(.*?)</tool_call>"
   replace_results:
+    - key: "“"
+      value: "\""
+    - key: "”"
+      value: "\""
     - key: "<tool_call>"
       value: ""
     - key: "Processing user message."

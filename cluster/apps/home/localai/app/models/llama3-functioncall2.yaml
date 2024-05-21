@@ -3,49 +3,13 @@ context_size: 8192
 parameters:
   model: huggingface://mudler/LocalAI-Llama3-8b-Function-Call-v0.2-GGUF/LocalAI-Llama3-8b-Function-Call-v0.2-q8_0.bin
 stopwords:
-  - "<|im_end|>"
-  - "<dummy32000>"
-  - "<|eot_id|>"
-  - "<|end_of_text|>"
+- <|im_end|>
+- <dummy32000>
+- <|eot_id|>
+- <|end_of_text|>
 
 function:
-  # disable injecting the "answer" tool
-  disable_no_action: true
-  # This allows the grammar to also return messages
-  grammar_message: true
-  # Suffix to add to the grammar
-  grammar_prefix: '<tool_call>\n'
   return_name_in_function_response: true
-  # Without grammar uncomment the lines below
-  # Warning: this is relying only on the capability of the
-  # LLM model to generate the correct function call.
-  # no_grammar: true
-  # json_regex_match: "(?s)<tool_call>(.*?)</tool_call>"
-  replace_results:
-    - key: "<tool_call>"
-      value: ""
-    - key: "Processing user message."
-      value: ""
-    - key: "Continuing conversation."
-      value: ""
-    - key: "&quot;"
-      value: "\""
-    - key: "(?s)^[^{\\[]*"
-      value: ""
-    - key: "(?s)[^}\\]]*$"
-      value: ""
-    - key: "'([^']*?)'"
-      value: "_DQUOTE_${1}_DQUOTE_"
-    - key: "\\\""
-      value: "__TEMP_QUOTE__"
-    - key: "\""
-      value: "\\\""
-    - key: "\\'"
-      value: "'"
-    - key: "_DQUOTE_"
-      value: "\""
-    - key: "__TEMP_QUOTE__"
-      value: "\""
 template:
   chat: |
     <|begin_of_text|>{{.Input }}
@@ -56,8 +20,7 @@ template:
     {{ if .Content -}}
     {{.Content -}}
     {{ else if .FunctionCall -}}
-    {{ toJson .FunctionCall }}
-    {{ end }}
+    { "name": "{{ index .FunctionCall "name"}}", "arguments": {{index .FunctionCall "arguments"}} }{{ end -}}<|eot_id|>
   completion: |
     {{.Input}}
   function: |-
