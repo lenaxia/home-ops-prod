@@ -16,7 +16,7 @@ controllers:
       main:
         image:
           repository: ghcr.io/onedr0p/sonarr-develop
-          tag: 4.0.1.1168@sha256:5ea8846eb99054ec31f412a5af3c87fc5d359c0a0de5571636831530ce8d6348
+          tag: 4.0.4.1668@sha256:0b89ee847f0b7e782386be22f964de18046e828c47d0d34eba5b3651c361eaa4
           pullPolicy: Always
         env:
           TZ: ${TIMEZONE}
