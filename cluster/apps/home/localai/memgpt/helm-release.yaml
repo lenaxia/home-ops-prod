@@ -81,11 +81,9 @@ spec:
         enabled: true
         type: configMap
         name: memgpt-configmap
-        advancedMounts:
-          main:
-            vectordb:
-              - path: /docker-entrypoint-initdb.d/init.sql
-                subPath: init.sql
+        globalMounts:
+          - path: /docker-entrypoint-initdb.d/init.sql
+            subPath: init.sql
       server-config-yaml:
         enabled: true
         type: configMap
@@ -93,6 +91,20 @@ spec:
         globalMounts:
           - path: /tmp/server_config.yaml
             subPath: localai.yaml
+      llm-api-tools-py:
+        enabled: true
+        type: configMap
+        name: memgpt-configmap
+        globalMounts:
+          - path: /memgpt/llm_api/llm_api_tools.py
+            subPath: llm_api_tools.py
+      utils-py:
+        enabled: true
+        type: configMap
+        name: memgpt-configmap
+        globalMounts:
+          - path: /memgpt/utils.py
+            subPath: utils.py
 
     service:
       main:

@@ -11,7 +11,9 @@ configMapGenerator:
   - name: memgpt-configmap
     files:
       - init.sql=./config/init.sql
+      - llm_api_tools.py=./config/llm_api_tools.py
       - localai.yaml=./config/localai.yaml
+      - utils.py=./config/utils.py
 generatorOptions:
   disableNameSuffixHash: true
   annotations:
