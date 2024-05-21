@@ -37,27 +37,23 @@ spec:
       existingSecret: grafana-admin-creds
     extraInitContainers:
       - name: init-db
-        image: ghcr.io/onedr0p/postgres-initdb:14.8
+        image: ghcr.io/onedr0p/postgres-init:16.3
         env:
-          #- name: POSTGRES_RESET # True - drops the table upon init if it exists
-          #  value: "false"
-          #- name: POSTGRES_RESET_CONFIRM # Are you sure you want to do this?
-          #  value: "NO"
-          - name: POSTGRES_HOST
+          - name: INIT_POSTGRES_HOST
             value: defaultpg-rw.databases.svc.cluster.local
-          - name: POSTGRES_DB
+          - name: INIT_POSTGRES_DBNAME
             value: *app
-          - name: POSTGRES_SUPER_PASS
+          - name: INIT_POSTGRES_SUPER_PASS
             valueFrom:
               secretKeyRef:
                 name: postgres-superuser
                 key: password
-          - name: POSTGRES_USER
+          - name: INIT_POSTGRES_USER
             valueFrom:
               secretKeyRef:
                 name: *app
                 key: POSTGRES_USERNAME
-          - name: POSTGRES_PASS
+          - name: INIT_POSTGRES_PASS
             valueFrom:
               secretKeyRef:
                 name: *app
