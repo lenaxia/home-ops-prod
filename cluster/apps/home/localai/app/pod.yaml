@@ -1,0 +1,252 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    app.kubernetes.io/instance: localai
+    app.kubernetes.io/name: local-ai
+  name: localai-testpod
+  namespace: default
+spec:
+  containers:
+  - env:
+    - name: COMPEL
+      value: "0"
+    - name: DEBUG
+      value: "true"
+    - name: GALLERIES
+      value: '[{"name":"model-gallery", "url":"github:go-skynet/model-gallery/index.yaml"}]'
+    - name: LD_LIBRARY_PATH
+      value: /usr/lib/x86_64-linux-gnu/:$LD_LIBRARY_PATH
+    - name: LLAMACPP_PARALLEL
+      value: "2"
+    - name: LOCALAI_PARALLEL_REQUESTS
+      value: "true"
+    - name: NVIDIA_DRIVER_CAPABILITIES
+      value: all
+    - name: NVIDIA_VISIBLE_DEVICES
+      value: "0"
+    - name: PRELOAD_MODELS
+      value: '[{"id": "model-gallery@bert-embeddings"}, {"url": "github:go-skynet/model-gallery/stablediffusion.yaml"}]'
+    - name: PYTHON_GRPC_MAX_WORKERS
+      value: "2"
+    - name: SINGLE_ACTIVE_BACKEND
+      value: "true"
+    - name: CONTEXT_SIZE
+      value: "512"
+    - name: THREADS
+      value: "4"
+    - name: MODELS_PATH
+      value: /models
+    image: localai/localai:master-cublas-cuda12-ffmpeg
+    imagePullPolicy: IfNotPresent
+    name: localai
+    resources:
+      limits:
+        memory: 20000Mi
+        nvidia.com/gpu: "1"
+      requests:
+        cpu: 200m
+        memory: 2000Mi
+        nvidia.com/gpu: "1"
+    terminationMessagePath: /dev/termination-log
+    terminationMessagePolicy: File
+    volumeMounts:
+    - mountPath: /models
+      name: models
+    - mountPath: /tmp/generated
+      name: output
+    - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+      name: kube-api-access-j8tl9
+      readOnly: true
+  dnsPolicy: ClusterFirst
+  enableServiceLinks: true
+  initContainers:
+  - args:
+    - |
+      MODEL_DIR=/models
+      FORCE_DOWNLOAD=false
+      URLS=""
+      LOCK_DIR=/tmp/model-download-locks
+
+      mkdir -p "$MODEL_DIR"
+      mkdir -p "$LOCK_DIR"
+      mkdir -p "/tmp/generated/images"
+      mkdir -p "/tmp/generated/audio"
+      rm -rf "/models/lost+found"
+
+      validate_url() {
+          local url=$1
+          local regex='^(https?|ftp)://[a-zA-Z0-9.-]+(:[a-zA-Z0-9.-]+)?(/[a-zA-Z0-9.-]*)*$'
+          if [[ $url =~ $regex ]]; then
+              return 0 # URL is valid
+          else
+              return 1 # URL is invalid
+          fi
+      }
+
+      echo "List of URLs:"
+      echo "$URLS"
+
+      echo "$URLS" | awk -F, '{for (i=1; i<=NF; i++) print $i}' | while read -r line; do
+          url=$(echo "$line" | awk '{print $1}')
+          auth=$(echo "$line" | awk '{print $2}')
+          full_filename=$(basename "$url" .bin)
+          short_filename=$(echo "$full_filename" | cut -c1-20)
+          hash=$(echo "$full_filename" | sha256sum | cut -c1-12)
+          filename="${short_filename}_${hash}"
+          lockfile="$LOCK_DIR/$filename.lock"
+
+          # Validate URL
+          if ! validate_url "$url"; then
+              echo "Invalid URL: $url. Skipping download."
+              continue
+          fi
+
+          if [ -e "$MODEL_DIR/$filename" ]; then
+              echo "File $filename already exists. Skipping download."
+              continue
+          fi
+
+          if [ -e "$lockfile" ]; then
+              echo "Another pod is downloading $filename. Waiting for download to complete."
+              while [ -e "$lockfile" ]; do sleep 1; done
+              continue
+          fi
+
+          touch "$lockfile"
+
+          echo "Downloading $filename"
+          if [ -n "$auth" ]; then
+              wget --header "Authorization: Basic $auth" "$url" -O "$MODEL_DIR/$filename"
+          else
+              wget "$url" -O "$MODEL_DIR/$filename"
+          fi
+
+          if [ "$?" -ne 0 ]; then
+              echo "Download failed."
+              rm -f "$lockfile"
+              exit 1
+          else
+              echo "Download completed."
+              rm -f "$lockfile"
+          fi
+      done
+    command:
+    - /bin/sh
+    - -c
+    image: busybox
+    imagePullPolicy: Always
+    name: download-model
+    resources: {}
+    terminationMessagePath: /dev/termination-log
+    terminationMessagePolicy: File
+    volumeMounts:
+    - mountPath: /models
+      name: models
+    - mountPath: /tmp/generated
+      name: output
+    - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+      name: kube-api-access-j8tl9
+      readOnly: true
+  nodeName: k3s-worker-00
+  nodeSelector:
+    nvidia.com/gpu.present: "true"
+  preemptionPolicy: PreemptLowerPriority
+  priority: 0
+  restartPolicy: Always
+  runtimeClassName: nvidia
+  schedulerName: default-scheduler
+  securityContext: {}
+  serviceAccount: default
+  serviceAccountName: default
+  terminationGracePeriodSeconds: 30
+  tolerations:
+  - effect: NoExecute
+    key: node.kubernetes.io/not-ready
+    operator: Exists
+    tolerationSeconds: 300
+  - effect: NoExecute
+    key: node.kubernetes.io/unreachable
+    operator: Exists
+    tolerationSeconds: 300
+  volumes:
+  - name: models
+    persistentVolumeClaim:
+      claimName: localai-models
+  - name: output
+    persistentVolumeClaim:
+      claimName: localai-output
+  - configMap:
+      defaultMode: 420
+      name: localai-prompt-templates
+    name: prompt-templates
+  - name: kube-api-access-j8tl9
+    projected:
+      defaultMode: 420
+      sources:
+      - serviceAccountToken:
+          expirationSeconds: 3607
+          path: token
+      - configMap:
+          items:
+          - key: ca.crt
+            path: ca.crt
+          name: kube-root-ca.crt
+      - downwardAPI:
+          items:
+          - fieldRef:
+              apiVersion: v1
+              fieldPath: metadata.namespace
+            path: namespace
+status:
+  conditions:
+  - lastProbeTime: null
+    lastTransitionTime: "2024-05-22T03:47:21Z"
+    status: "True"
+    type: Initialized
+  - lastProbeTime: null
+    lastTransitionTime: "2024-05-22T03:47:23Z"
+    status: "True"
+    type: Ready
+  - lastProbeTime: null
+    lastTransitionTime: "2024-05-22T03:47:23Z"
+    status: "True"
+    type: ContainersReady
+  - lastProbeTime: null
+    lastTransitionTime: "2024-05-22T03:47:18Z"
+    status: "True"
+    type: PodScheduled
+  containerStatuses:
+  - containerID: containerd://208e73ccfe69d8c91f2efa62113fd1f263f1c9e071e386ea80481f9a09ee7666
+    image: docker.io/localai/localai:master-cublas-cuda12-ffmpeg
+    imageID: docker.io/localai/localai@sha256:8a3dba35fc6ea7dcffce5e2a1137b10e7b1722f3252fef5e2b4ec7bf19bfc73b
+    lastState: {}
+    name: localai
+    ready: true
+    restartCount: 0
+    started: true
+    state:
+      running:
+        startedAt: "2024-05-22T03:47:22Z"
+  hostIP: 192.168.3.20
+  initContainerStatuses:
+  - containerID: containerd://99a7880131aa910d5554a7c7fab56d265f4bd1f0aa90e05952dc8b0a4af59fa7
+    image: docker.io/library/busybox:latest
+    imageID: docker.io/library/busybox@sha256:5eef5ed34e1e1ff0a4ae850395cbf665c4de6b4b83a32a0bc7bcb998e24e7bbb
+    lastState: {}
+    name: download-model
+    ready: true
+    restartCount: 0
+    state:
+      terminated:
+        containerID: containerd://99a7880131aa910d5554a7c7fab56d265f4bd1f0aa90e05952dc8b0a4af59fa7
+        exitCode: 0
+        finishedAt: "2024-05-22T03:47:20Z"
+        reason: Completed
+        startedAt: "2024-05-22T03:47:20Z"
+  phase: Running
+  podIP: 10.42.3.237
+  podIPs:
+  - ip: 10.42.3.237
+  qosClass: Burstable
+  startTime: "2024-05-22T03:47:18Z"
