@@ -5,7 +5,7 @@ metadata:
     app.kubernetes.io/instance: localai
     app.kubernetes.io/name: local-ai
   name: localai-testpod
-  namespace: default
+  namespace: home
 spec:
   containers:
   - env:
@@ -58,7 +58,6 @@ spec:
     - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
       name: kube-api-access-j8tl9
       readOnly: true
-  dnsPolicy: ClusterFirst
   enableServiceLinks: true
   initContainers:
   - args:
@@ -148,27 +147,10 @@ spec:
     - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
       name: kube-api-access-j8tl9
       readOnly: true
-  nodeName: k3s-worker-00
   nodeSelector:
     nvidia.com/gpu.present: "true"
-  preemptionPolicy: PreemptLowerPriority
-  priority: 0
   restartPolicy: Always
   runtimeClassName: nvidia
-  schedulerName: default-scheduler
-  securityContext: {}
-  serviceAccount: default
-  serviceAccountName: default
-  terminationGracePeriodSeconds: 30
-  tolerations:
-  - effect: NoExecute
-    key: node.kubernetes.io/not-ready
-    operator: Exists
-    tolerationSeconds: 300
-  - effect: NoExecute
-    key: node.kubernetes.io/unreachable
-    operator: Exists
-    tolerationSeconds: 300
   volumes:
   - name: models
     persistentVolumeClaim:
@@ -180,73 +162,3 @@ spec:
       defaultMode: 420
       name: localai-prompt-templates
     name: prompt-templates
-  - name: kube-api-access-j8tl9
-    projected:
-      defaultMode: 420
-      sources:
-      - serviceAccountToken:
-          expirationSeconds: 3607
-          path: token
-      - configMap:
-          items:
-          - key: ca.crt
-            path: ca.crt
-          name: kube-root-ca.crt
-      - downwardAPI:
-          items:
-          - fieldRef:
-              apiVersion: v1
-              fieldPath: metadata.namespace
-            path: namespace
-status:
-  conditions:
-  - lastProbeTime: null
-    lastTransitionTime: "2024-05-22T03:47:21Z"
-    status: "True"
-    type: Initialized
-  - lastProbeTime: null
-    lastTransitionTime: "2024-05-22T03:47:23Z"
-    status: "True"
-    type: Ready
-  - lastProbeTime: null
-    lastTransitionTime: "2024-05-22T03:47:23Z"
-    status: "True"
-    type: ContainersReady
-  - lastProbeTime: null
-    lastTransitionTime: "2024-05-22T03:47:18Z"
-    status: "True"
-    type: PodScheduled
-  containerStatuses:
-  - containerID: containerd://208e73ccfe69d8c91f2efa62113fd1f263f1c9e071e386ea80481f9a09ee7666
-    image: docker.io/localai/localai:master-cublas-cuda12-ffmpeg
-    imageID: docker.io/localai/localai@sha256:8a3dba35fc6ea7dcffce5e2a1137b10e7b1722f3252fef5e2b4ec7bf19bfc73b
-    lastState: {}
-    name: localai
-    ready: true
-    restartCount: 0
-    started: true
-    state:
-      running:
-        startedAt: "2024-05-22T03:47:22Z"
-  hostIP: 192.168.3.20
-  initContainerStatuses:
-  - containerID: containerd://99a7880131aa910d5554a7c7fab56d265f4bd1f0aa90e05952dc8b0a4af59fa7
-    image: docker.io/library/busybox:latest
-    imageID: docker.io/library/busybox@sha256:5eef5ed34e1e1ff0a4ae850395cbf665c4de6b4b83a32a0bc7bcb998e24e7bbb
-    lastState: {}
-    name: download-model
-    ready: true
-    restartCount: 0
-    state:
-      terminated:
-        containerID: containerd://99a7880131aa910d5554a7c7fab56d265f4bd1f0aa90e05952dc8b0a4af59fa7
-        exitCode: 0
-        finishedAt: "2024-05-22T03:47:20Z"
-        reason: Completed
-        startedAt: "2024-05-22T03:47:20Z"
-  phase: Running
-  podIP: 10.42.3.237
-  podIPs:
-  - ip: 10.42.3.237
-  qosClass: Burstable
-  startTime: "2024-05-22T03:47:18Z"
