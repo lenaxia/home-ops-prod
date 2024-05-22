@@ -52,6 +52,12 @@ spec:
         data:
           config.yaml: |
               model_list: 
+                # LocalAI
+                - model_name: localai-hermes2pro-llama3
+                  litellm_params:
+                    model: openai/hermes-2-pro-theta-llama3
+                    api_base: http://localai.home.svc.cluster.local:8080
+
                 # Ollama
                 - model_name: ollama-openhermes
                   litellm_params:
