@@ -1,6 +1,7 @@
 name: hermes-2-pro-theta-llama3
 mmap: true
 context_size: 8192
+gpu_layers: 33
 parameters:
   model: huggingface://NousResearch/Hermes-2-Theta-Llama-3-8B-GGUF/Hermes-2-Pro-Llama-3-Instruct-Merged-DPO-Q8_0.gguf
 
@@ -12,6 +13,8 @@ stopwords:
 
 function:
   return_name_in_function_response: true
+  grammar:
+    parallel_calls: true
 template:
   chat: |
     <|begin_of_text|>{{.Input }}
