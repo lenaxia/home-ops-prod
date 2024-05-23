@@ -10,30 +10,30 @@ spec:
         initContainers:
           init-db:
             image:
-              repository: ghcr.io/onedr0p/postgres-initdb
-              tag: 14.8
+              repository: ghcr.io/onedr0p/postgres-init
+              tag: 16.3
             env:
-              - name: POSTGRES_HOST
+              - name: INIT_POSTGRES_HOST
                 valueFrom:
                   secretKeyRef:
                     name: &appname babybuddy
                     key: DB_HOST
-              - name: POSTGRES_DB
+              - name: INIT_POSTGRES_DBNAME
                 valueFrom:
                   secretKeyRef:
                     name: *appname
                     key: DB_NAME
-              - name: POSTGRES_SUPER_PASS
+              - name: INIT_POSTGRES_SUPER_PASS
                 valueFrom:
                   secretKeyRef:
                     name: postgres-superuser
                     key: password
-              - name: POSTGRES_USER
+              - name: INIT_POSTGRES_USER
                 valueFrom:
                   secretKeyRef:
                     name: *appname
                     key: DB_NAME
-              - name: POSTGRES_PASS
+              - name: INIT_POSTGRES_PASS
                 valueFrom:
                   secretKeyRef:
                     name: *appname
