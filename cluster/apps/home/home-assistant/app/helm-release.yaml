@@ -44,7 +44,7 @@ spec:
         initContainers:
           init-db:
             env:
-              - name: POSTGRES_SUPER_PASS
+              - name: INIT_POSTGRES_SUPER_PASS
                 valueFrom:
                   secretKeyRef:
                     name: postgres-superuser
@@ -53,8 +53,8 @@ spec:
               - secretRef:
                   name: home-assistant-secret
             image:
-              repository: ghcr.io/onedr0p/postgres-initdb
-              tag: '14.8'
+              repository: ghcr.io/onedr0p/postgres-init
+              tag: '16.3'
         containers:
           main:
             image:

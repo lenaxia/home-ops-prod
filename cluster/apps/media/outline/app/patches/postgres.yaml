@@ -16,7 +16,7 @@ spec:
             env:
               - name: INIT_POSTGRES_HOST
                 value: defaultpg-rw.databases.svc.cluster.local
-              - name: INIT_POSTGRES_DB
+              - name: INIT_POSTGRES_DBNAME
                 value: *app
               - name: INIT_POSTGRES_SUPER_PASS
                 valueFrom:
