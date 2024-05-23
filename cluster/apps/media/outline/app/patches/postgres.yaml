@@ -14,11 +14,11 @@ spec:
               repository: ghcr.io/onedr0p/postgres-initdb
               tag: 14.8
             env:
-              - name: POSTGRES_HOST
+              - name: INIT_POSTGRES_HOST
                 value: defaultpg-rw.databases.svc.cluster.local
-              - name: POSTGRES_DB
+              - name: INIT_POSTGRES_DB
                 value: *app
-              - name: POSTGRES_SUPER_PASS
+              - name: INIT_POSTGRES_SUPER_PASS
                 valueFrom:
                   secretKeyRef:
                     name: postgres-superuser

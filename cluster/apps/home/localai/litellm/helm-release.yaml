@@ -56,7 +56,8 @@ spec:
                 - model_name: localai-hermes2pro-llama3
                   litellm_params:
                     model: openai/hermes-2-pro-theta-llama3
-                    api_base: http://localai.home.svc.cluster.local:8080/v1
+                    api_base: http://localai.home.svc.cluster.local:8080
+                    api_key: doesnotmatter
 
                 # Ollama
                 - model_name: ollama-openhermes
