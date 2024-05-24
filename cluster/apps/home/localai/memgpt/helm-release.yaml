@@ -45,6 +45,12 @@ spec:
               MEMGPT_PG_PORT: 5432
               MEMGPT_ENVIRONMENT: DEVELOPMENT
               LOG_LEVEL: debug
+            resources:
+              requests:
+                cpu: 200m
+                memory: 1000Mi
+              limits:
+                memory: 2000Mi
           vectordb:
             image: 
               repository: ankane/pgvector
