@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: nginx
-      version: 16.0.7
+      version: 16.0.1
       sourceRef:
         kind: HelmRepository
         name: bitnami
