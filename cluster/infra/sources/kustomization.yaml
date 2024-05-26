@@ -39,3 +39,4 @@ resources:
   - k8sgpt-charts.yaml
   - nvidia.yaml
   - kubereboot.yaml
+  - nginx.yaml
