@@ -7,5 +7,5 @@ metadata:
   namespace: flux-system
 spec:
   interval: 1h
-  url: https://charts.helm.sh/stable
+  url: https://helm.nginx.com/
 ---

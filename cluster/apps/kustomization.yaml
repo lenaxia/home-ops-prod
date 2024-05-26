@@ -19,10 +19,8 @@ resources:
   - ./kube-system/kured/ks.yaml
   - ./kube-system/reloader
   #- ./kube-system/descheduler
-  #- ./kube-system/metrics-server  # k3s already comes with a metrics server
 
   # Storage
-  #- ./storage/nextcloud/ks.yaml
   - ./storage/kopia-web/ks.yaml
   - ./storage/longhorn/ks.yaml
   - ./storage/minio/ks.yaml
@@ -39,15 +37,11 @@ resources:
   
   # Home
   - ./home/babybuddy/ks.yaml
-  #- ./home/babybuddy-ava/ks.yaml
   - ./home/babybuddy-pandaria/ks.yaml
-  #- ./home/grocy/ks.yaml
-  #- ./home/actualbudget/ks.yaml
   - ./home/browserless/ks.yaml
   - ./home/langserver/ks.yaml
   #- ./home/gamevault/ks.yaml
   - ./home/node-red/ks.yaml
-  #- ./home/vscode/ks.yaml
   #- ./home/roskills/ks.yaml
   - ./home/localai/ks.yaml
   - ./home/stablediffusion/ks.yaml
@@ -99,7 +93,6 @@ resources:
   - ./utilities/changedetection/ks.yaml
   - ./utilities/librespeed/ks.yaml
   - ./utilities/guacamole/ks.yaml
-  #- ./utilities/ltb-project/ks.yaml
   - ./utilities/pgadmin/ks.yaml
   - ./utilities/podinfo/ks.yaml
   - ./utilities/echo-server/ks.yaml
