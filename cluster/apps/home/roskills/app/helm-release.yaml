@@ -73,5 +73,7 @@ spec:
       config:
         enabled: true
         type: persistentVolumeClaim
+        accessMode: ReadOnlyMany
+        size: 1Gi
         globalMounts:
           - path: /usr/local/apache2/htdocs/
