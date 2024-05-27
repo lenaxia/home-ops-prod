@@ -27,9 +27,9 @@ spec:
             image:
               repository: httpd
               tag: 2.4.59
-            envFrom:
-              - secretRef:
-                  name: *appname 
+#            envFrom:
+#              - secretRef:
+#                  name: *appname 
             env:
               TZ: ${TIMEZONE}
     service:
