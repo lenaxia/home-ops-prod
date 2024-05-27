@@ -44,5 +44,6 @@ spec:
         storageClass: local-path
     metrics:
       enabled: true
+      resourcesPreset: micro
       serviceMonitor:
         enabled: true
