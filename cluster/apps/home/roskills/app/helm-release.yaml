@@ -75,7 +75,7 @@ spec:
       config:
         enabled: true
         type: persistentVolumeClaim
-        accessMode: ReadOnlyMany
+        accessMode: ReadWriteMany
         size: 1Gi
         storageClass: longhorn
         globalMounts:
