@@ -24,7 +24,8 @@ spec:
       main:
         initContainers:
           download-content:
-            image: alpine
+            image: 
+              repository: alpine
             command: ["/bin/sh", "-c"]
             args:
               - |
