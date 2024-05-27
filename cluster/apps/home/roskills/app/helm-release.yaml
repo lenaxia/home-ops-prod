@@ -23,7 +23,7 @@ spec:
     controllers:
       main:
         initContainers:
-          - name: download-content
+          download-content:
             image: alpine
             command: ["/bin/sh", "-c"]
             args:
@@ -75,5 +75,6 @@ spec:
         type: persistentVolumeClaim
         accessMode: ReadOnlyMany
         size: 1Gi
+        storageClass: longhorn
         globalMounts:
           - path: /usr/local/apache2/htdocs/
