@@ -1,105 +1,72 @@
 apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
-  name: webfinger
-  namespace: networking
+  name: &appname webfinger
+  namespace: home
 spec:
   interval: 5m
   chart:
     spec:
-      name: nginx
-      chart: nginx
-      version: 1.21.3
+      chart: app-template
+      version: 3.1.0
+      interval: 16m
       sourceRef:
         kind: HelmRepository
-        name: nginx
+        name: bjw-s-charts
         namespace: flux-system
-      interval: 5m
-  install:
-    createNamespace: true
-    remediation:
-      retries: 3
-  upgrade:
-    remediation:
-      retries: 3
-      remediateLastFailure: true
-    cleanupOnFail: true
   values:
-    image:
-      repository: nginx
-      tag: 1.21.3
-    pullPolicy: IfNotPresent
-    replicaCount: 1
-    updateStrategy:
-      type: RollingUpdate
-      rollingUpdate: {}
-    serverBlockConfig: |-
-      server {
-        listen 80;
-
-        # Allow access to .well-known explicitly
-        location ^~ /.well-known/ {
-            allow all;
-        }
-
-        location = /.well-known/webfinger {
-            alias /app/.well-known/webfinger/webfinger.json;
-            add_header Content-Type application/json;
-        }
-
-        error_log /app/error.log debug;
-      }
-
-    configMapName: webfinger-json
-    configMapMountPath: /app/.well-known/webfinger
-    extraVolumeMounts:
-      - name: protect-hidden-files-conf
-        mountPath: /etc/nginx/conf.d/protect-hidden-files.conf
-        subPath: protect-hidden-files.conf
-    extraVolumes:
-      - name: protect-hidden-files-conf
-        configMap:
-          name: protect-hidden-files-conf
-
-    livenessProbe:
-      enabled: true
-      initialDelaySeconds: 60
-      timeoutSeconds: 5
-      periodSeconds: 10
-      failureThreshold: 6
-      successThreshold: 1
-    readinessProbe:
-      enabled: true
-      initialDelaySeconds: 60
-      timeoutSeconds: 3
-      periodSeconds: 5
-      failureThreshold: 3
-      successThreshold: 1
-
+    defaultPodOptions:
+      nodeSelector:
+        node-role.kubernetes.io/worker: 'true'
+    podAnnotations:
+      secret.reloader.stakater.com/reload: *appname
+    controllers:
+      main:
+        containers:
+          main:
+            image:
+              repository: httpd
+              tag: 2.4.59
+            envFrom:
+              - secretRef:
+                  name: &appname 
+            env:
+              TZ: ${TIMEZONE}
     service:
-      ports:
-        http: &port 80
-      type: LoadBalancer
       main:
         ports:
           http:
-            port: *port
-
+            port: 80
+        primary: true
+        controller: main
     ingress:
-      enabled: true
-      hostname: &uri "${SECRET_DEV_DOMAIN}"
-      path: /
-      annotations:
-        cert-manager.io/cluster-issuer: "letsencrypt-production"
-        traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
-        traefik.ingress.kubernetes.io/router.middlewares: networking-chain-authelia@kubernetescrd
-      ingressClassName: "traefik"
-      tls: true
-
-    resources:
-      requests:
-        cpu: 15m
-        memory: 79M
-      limits:
-        cpu: 15m
-        memory: 79M
+      main:
+        enabled: true
+        annotations:
+          hajimari.io/enable: 'true'
+          hajimari.io/icon: baby-bottle-outline
+          hajimari.io/info: *appname
+          hajimari.io/group: Home
+          cert-manager.io/cluster-issuer: letsencrypt-production
+          traefik.ingress.kubernetes.io/router.entrypoints: websecure
+          traefik.ingress.kubernetes.io/router.middlewares: networking-chain-authelia@kubernetescrd
+        hosts:
+          - host: &uri ${SECRET_DEV_DOMAIN}
+            paths:
+              - path: /
+                pathType: Prefix
+                service:
+                  identifier: main
+                  port: http
+        tls:
+          - hosts:
+              - *uri
+            secretName: *uri
+    persistence:
+      configmap:
+        enabled: true
+        type: configMap
+        name: *appname
+        globalMounts:
+          - path: /usr/local/apache2/htdocs/.well-known/webfinger  
+            subPath: webfinger.json
