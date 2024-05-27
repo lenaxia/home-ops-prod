@@ -60,7 +60,7 @@ spec:
           traefik.ingress.kubernetes.io/router.entrypoints: websecure
           traefik.ingress.kubernetes.io/router.middlewares: networking-chain-authelia@kubernetescrd
         hosts:
-          - host: &uri ${SECRET_DEV_DOMAIN}
+          - host: &uri ro.${SECRET_DEV_DOMAIN}
             paths:
               - path: /
                 pathType: Prefix
