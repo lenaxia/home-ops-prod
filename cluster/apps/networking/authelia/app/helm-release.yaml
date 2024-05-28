@@ -332,13 +332,6 @@ spec:
             - "s3.${SECRET_DEV_DOMAIN}"
           policy: bypass
 
-        # Local only policies
-        - domain: 
-            - "*.${SECRET_DEV_DOMAIN}"
-          policy: one_factor
-          networks:
-            - private
-
         # Admin services - 2 Factor
         - domain:
             - "traefik.${SECRET_DEV_DOMAIN}"
@@ -405,6 +398,11 @@ spec:
           domain_regex:
             - 'baby.*\.${SECRET_DEV_DOMAIN}$'
           policy: one_factor
+
+        # Catchall for anything undefined to be two factor
+        - domain: 
+            - "*.${SECRET_DEV_DOMAIN}"
+          policy: two_factor
 
         # rules:
         # - domain_regex: '^.*\.example.com$'
