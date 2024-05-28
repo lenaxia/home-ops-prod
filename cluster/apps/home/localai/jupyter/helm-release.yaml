@@ -53,7 +53,7 @@ spec:
         enabled: true
         type: persistentVolumeClaim
         accessMode: ReadWriteMany
-        size: 10Gi
+        size: 70Gi
         globalMounts:
           - path: /data
     service:
