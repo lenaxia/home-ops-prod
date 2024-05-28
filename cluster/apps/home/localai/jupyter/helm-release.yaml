@@ -1,0 +1,90 @@
+# yaml-language-server: $schema=https://kubernetes-schemas.devbu.io/helm.toolkit.fluxcd.io/helmrelease_v2beta1.json
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
+kind: HelmRelease
+metadata:
+  name: &appname litellm
+  namespace: &namespace home
+spec:
+  interval: 15m
+  chart:
+    spec:
+      chart: app-template
+      version: 3.1.0
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s-charts
+        namespace: flux-system
+  install:
+    createNamespace: true
+    remediation:
+      retries: 5
+  upgrade:
+    remediation:
+      retries: 5
+  values:
+    controllers:
+      main:
+        type: statefulset
+        annotations:
+          reloader.stakater.com/auto: 'true'
+        containers:
+          main:
+            image: 
+              repository: jupyter/scipy-notebook
+              tag: latest
+            resources:
+              limits:
+                nvidia.com/gpu: 1
+              requests:
+                nvidia.com/gpu: 1
+          tensorflow:
+            image: 
+              repository: tensorflow/tensorflow
+              tag: latest-gpu
+            command: ["sleep", "infinity"]
+            resources:
+              limits:
+                nvidia.com/gpu: 1
+              requests:
+                nvidia.com/gpu: 1
+
+    persistence:
+      data:
+        enabled: true
+        type: persistentVolumeClaim
+        accessMode: ReadWriteMany
+        size: 10Gi
+        globalMounts:
+          - path: /data
+    service:
+      main:
+        ports:
+          http:
+            port: 8888
+        primary: true
+        controller: main
+        type: LoadBalancer
+    ingress:
+      main:
+        enabled: true
+        className: traefik
+        annotations:
+          hajimari.io/enable: 'true'
+          hajimari.io/icon: baby-bottle-outline
+          hajimari.io/info: Jupyter
+          hajimari.io/group: &namespace home
+          cert-manager.io/cluster-issuer: letsencrypt-production
+          traefik.ingress.kubernetes.io/router.entrypoints: websecure
+          traefik.ingress.kubernetes.io/router.middlewares: networking-chain-authelia@kubernetescrd
+        hosts:
+          - host: &uri jupyter.${SECRET_DEV_DOMAIN}
+            paths:
+              - path: /
+                pathType: Prefix
+                service:
+                  identifier: main
+                  port: http
+        tls:
+          - hosts:
+              - *uri
+            secretName: *uri
