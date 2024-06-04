@@ -57,6 +57,6 @@ spec:
         enabled: false
     metrics:
       enabled: true
-      resourcesPreset: micro
+      resourcesPreset: none
       serviceMonitor:
         enabled: true

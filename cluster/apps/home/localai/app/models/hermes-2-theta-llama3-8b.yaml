@@ -14,7 +14,7 @@ stopwords:
 function:
   return_name_in_function_response: true
   grammar:
-    parallel_calls: false
+    parallel_calls: true
 template:
   chat: |
     <|begin_of_text|>{{.Input }}
