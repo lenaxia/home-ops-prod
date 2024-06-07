@@ -283,6 +283,7 @@ spec:
           resources:
             - "^/generate-speech/.*$"
             - "^/generate-speech"
+            - "^/healthz"
 
         # Grocy API
         - domain_regex:
