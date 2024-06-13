@@ -30,7 +30,7 @@ spec:
           main:
             image:
               repository: docker.io/fallenbagel/jellyseerr
-              tag: 1.8.1
+              tag: 1.9.2
               pullPolicy: Always
             env:
               TZ: ${TIMEZONE}
