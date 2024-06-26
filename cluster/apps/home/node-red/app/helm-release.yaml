@@ -24,7 +24,7 @@ spec:
           main:
             image:
               repository: nodered/node-red
-              tag: 3.1.9
+              tag: 4.0.1
               pullPolicy: Always
         #    lifecycle:
         #      postStart:
