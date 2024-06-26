@@ -604,6 +604,7 @@ spec:
             scopes: ["openid", "profile", "email", "offline_access"]
             redirect_uris: ["https://w.${SECRET_DEV_DOMAIN}/auth/oidc.callback"]
             userinfo_signing_algorithm: none
+            token_endpoint_auth_method: client_secret_post
           - id: overseerr
             description: overseerr
             secret: "${SECRET_OVERSEERR_OAUTH_CLIENT_SECRET}"
