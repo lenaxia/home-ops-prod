@@ -28,7 +28,7 @@ spec:
   values:
     image:
       repository: ghcr.io/authelia/authelia
-      tag: 4.38.8
+      tag: 4.38.9
       pullPolicy: Always
 
     nodeSelector:
