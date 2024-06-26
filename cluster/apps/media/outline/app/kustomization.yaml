@@ -1,13 +1,22 @@
----
 apiVersion: kustomize.config.k8s.io/v1beta1
+commonLabels:
+  app.kubernetes.io/instance: outline
+  app.kubernetes.io/name: outline
 kind: Kustomization
 namespace: media
-commonLabels:
-  app.kubernetes.io/name: &app outline
-  app.kubernetes.io/instance: *app
-resources:
-  - secret.sops.yaml
-  - helm-release.yaml
 patches:
-  - patches/env.yaml
-  - patches/postgres.yaml
+- path: patches/env.yaml
+  target:
+    group: helm.toolkit.fluxcd.io
+    kind: HelmRelease
+    name: outline
+    version: v2
+- path: patches/postgres.yaml
+  target:
+    group: helm.toolkit.fluxcd.io
+    kind: HelmRelease
+    name: outline
+    version: v2
+resources:
+- secret.sops.yaml
+- helm-release.yaml

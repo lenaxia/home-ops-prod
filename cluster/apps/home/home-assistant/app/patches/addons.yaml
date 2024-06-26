@@ -29,7 +29,7 @@ spec:
             cert-manager.io/cluster-issuer: letsencrypt-production
             hajimari.io/appName: Hass Config
             hajimari.io/icon: cib:visual-studio-code
-            hajimari.io/group: &namespace home
+            hajimari.io/group: *namespace 
           hosts:
             - host: &host hass-code.${SECRET_DEV_DOMAIN}
               paths:
