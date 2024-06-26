@@ -8,6 +8,6 @@ commonLabels:
 resources:
   - secret.sops.yaml
   - helm-release.yaml
-patchesStrategicMerge:
+patches:
   - patches/env.yaml
   - patches/postgres.yaml

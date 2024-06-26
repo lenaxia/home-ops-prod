@@ -7,7 +7,7 @@ commonLabels:
 resources:
   - helm-release.yaml
   - secret.sops.yaml
-patchesStrategicMerge:
+patches:
   - patches/postgres.yaml
 configMapGenerator:
   - name: invidious-configmap

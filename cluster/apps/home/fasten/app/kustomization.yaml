@@ -8,5 +8,5 @@ resources:
   - helm-release.yaml
   - config-pvc.yaml
   - secret.sops.yaml
-    #patchesStrategicMerge:
+    #patches:
     #  - patches/patch-postgres.yaml
