@@ -1,5 +1,5 @@
 ---
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: &appname authelia
@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: *appname
-      version: 0.9.0-beta2
+      version: 0.9.0-beta5
       sourceRef:
         kind: HelmRepository
         name: authelia-charts
@@ -28,7 +28,7 @@ spec:
   values:
     image:
       repository: ghcr.io/authelia/authelia
-      tag: 4.38.8
+      tag: 4.38.9
       pullPolicy: Always
 
     nodeSelector:

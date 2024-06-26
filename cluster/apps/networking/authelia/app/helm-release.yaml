@@ -1,5 +1,5 @@
 ---
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: &appname authelia
@@ -28,7 +28,7 @@ spec:
   values:
     image:
       repository: ghcr.io/authelia/authelia
-      tag: 4.37.5
+      tag: 4.38.9
       pullPolicy: Always
 
     nodeSelector:
