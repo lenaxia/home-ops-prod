@@ -9,7 +9,13 @@ resources:
   - config-pvc.yaml
   - secret.sops.yaml
 patches:
-  - patches/patch-postgres.yaml
+  - path: patches/patch-postgres.yaml
+    target:
+      group: helm.toolkit.fluxcd.io
+      version: v2
+      kind: HelmRelease
+      name: paperless
+  #- patches/patch-postgres.yaml
 configMapGenerator:
   - name: openai-configmap
     files:
