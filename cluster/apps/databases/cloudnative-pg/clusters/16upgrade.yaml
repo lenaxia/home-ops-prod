@@ -1,0 +1,45 @@
+---
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: defaultpg16
+  namespace: databases
+spec:
+  instances: 2
+  imageName: ghcr.io/cloudnative-pg/postgresql:16.3
+  primaryUpdateStrategy: unsupervised
+  storage:
+    size: 20Gi
+    storageClass: local-path
+  enableSuperuserAccess: true
+  superuserSecret:
+    name: postgres-superuser
+  affinity:
+    nodeSelector:
+      node-role.kubernetes.io/worker: "true"
+  monitoring:
+    enablePodMonitor: true
+  postgresql:
+    parameters:
+      max_connections: "300"
+      shared_buffers: 512MB
+  bootstrap:
+    initdb:
+      import:
+        type: monolith
+        databases:
+          - "*" # Import all databases
+        roles:
+          - "*" # Import all roles
+        source:
+          externalCluster: defaultpg
+  externalClusters:
+    - name: defaultpg
+      connectionParameters:
+        host: defaultpg-rw.databases.svc.cluster.local
+        user: postgres
+        dbname: postgres
+        sslmode: disable
+      password:
+        name: postgres-superuser
+        key: password
