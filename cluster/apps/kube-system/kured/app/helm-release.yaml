@@ -30,7 +30,7 @@ spec:
     configuration:
       timeZone: ${TIMEZONE}
       startTime: "3:00"
-      endTime: "5:00"
+      endTime: "22:00"
       notifyUrl: "${SECRET_SLACK_HOMEOPS_WEBHOOK}"
       drainPodSelector: 'app!=csi-attacher,app!=csi-provisioner,longhorn.io/component!=instance-manager,app!=influxdb'
     metrics:
