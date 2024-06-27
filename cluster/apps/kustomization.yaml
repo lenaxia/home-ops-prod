@@ -67,7 +67,7 @@ resources:
   # Media Namespace
   - ./media/plex/ks.yaml
   - ./media/jellyfin/ks.yaml
-  - ./media/ersatztv/ks.yaml
+    #- ./media/ersatztv/ks.yaml
   - ./media/tautulli/ks.yaml
   - ./media/subgen/ks.yaml
   - ./media/recyclarr/ks.yaml
