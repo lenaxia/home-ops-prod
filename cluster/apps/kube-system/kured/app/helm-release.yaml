@@ -32,6 +32,6 @@ spec:
       startTime: "3:00"
       endTime: "22:00"
       notifyUrl: "${SECRET_SLACK_HOMEOPS_WEBHOOK}"
-      drainPodSelector: 'app!=csi-attacher,app!=csi-provisioner,longhorn.io/component!=instance-manager,app!=influxdb'
+      drainPodSelector: 'app!=csi-attacher,app!=csi-provisioner,longhorn.io/component!=instance-manager,app!=influxdb,app.kubernetes.io/name!=influxdb2'
     metrics:
       create: true
