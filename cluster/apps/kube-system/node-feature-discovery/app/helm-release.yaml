@@ -24,17 +24,17 @@ spec:
   values:
     nodeFeatureRule:
       createCRD: false
+    gc:
+      resources: {}
+    master:
+      resources: {}
     worker:
       annotations:
         configmap.reloader.stakater.com/reload: node-feature-discovery-worker-conf
 # disable this node selector for now and just put it on all nodes
 #      nodeSelector:
 #        node-role.kubernetes.io/worker: "true"
-      resources:
-        limits: {}
-        requests:
-          cpu:      5m
-          memory:   64Mi
+      resources: {}
       config:
         core:
           sources:
