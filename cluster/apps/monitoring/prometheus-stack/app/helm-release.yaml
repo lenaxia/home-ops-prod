@@ -119,6 +119,9 @@ spec:
             - receiver: "null"
               matchers:
                 - alertname =~ "InfoInhibitor|Watchdog"
+            - receiver: "null"
+              matchers:
+                - severity = "info"
             - receiver: "pushover"
               matchers:
                 - severity = "critical"
