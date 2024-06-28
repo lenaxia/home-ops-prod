@@ -30,6 +30,11 @@ spec:
 # disable this node selector for now and just put it on all nodes
 #      nodeSelector:
 #        node-role.kubernetes.io/worker: "true"
+      resources:
+        limits: {}
+        requests:
+          cpu:      5m
+          memory:   64Mi
       config:
         core:
           sources:
