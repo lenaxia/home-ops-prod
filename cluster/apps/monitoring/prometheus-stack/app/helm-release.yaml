@@ -118,7 +118,7 @@ spec:
           routes:
             - receiver: "null"
               matchers:
-                - alertname =~ "InfoInhibitor|Watchdog"
+                - alertname =~ "InfoInhibitor|Watchdog|RebootScheduled"
             - receiver: "null"
               matchers:
                 - severity = "info"
