@@ -31,7 +31,7 @@ spec:
           main:
             image:
               repository: ghcr.io/berriai/litellm
-              tag: v1.41.1
+              tag: v1.40.31 
             args:
               - "--config"
               - "/app/proxy_server_config.yaml"
