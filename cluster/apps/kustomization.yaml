@@ -8,7 +8,7 @@ resources:
   - ./databases/redis/ks.yaml
     #- ./databases/redis-operator/ks.yaml
   - ./databases/cloudnative-pg/ks.yaml
-    #- ./databases/mariadb/ks.yaml
+  - ./databases/mariadb/ks.yaml
   - ./databases/influxdb/ks.yaml
   - ./databases/telegraf/ks.yaml
   - ./databases/chronograf/ks.yaml
@@ -51,7 +51,7 @@ resources:
   - ./home/frigate/ks.yaml
   - ./home/zwavejs/ks.yaml
   - ./home/mosquitto/ks.yaml
-    #- ./home/hercules/ks.yaml
+  - ./home/hercules/ks.yaml
   #- ./home/fasten/ks.yaml
 
   # Monitoring Namespace
