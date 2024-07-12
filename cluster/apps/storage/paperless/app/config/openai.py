@@ -24,13 +24,14 @@ logger = logging.getLogger(__name__)
 PAPERLESS_HOST = 'http://paperless.storage.svc.cluster.local:80/api'
 PAPERLESS_API_KEY = os.getenv('PAPERLESS_APIKEY')
 OPENAI_API_KEY = os.getenv('OPENAI_APIKEY')
-OPENAI_API_ENDPOINT = "https://api.openai.com"
+#OPENAI_API_ENDPOINT = "https://api.openai.com"
+OPENAI_API_ENDPOINT = "http://localai.home.svc.cluster.local:8080"
 
 # OpenAI Model Configuration
-VISION_MODEL = "gpt-4o"
-VISION_MODEL_TOKENS_MAX = 128000
-TEXT_MODEL = "gpt-4o"
-TEXT_MODEL_TOKENS_MAX = 128000
+VISION_MODEL = "bedrock-claude-v2-sonnet"
+VISION_MODEL_TOKENS_MAX = 200000
+TEXT_MODEL = "bedrock-claude-v2-sonnet"
+TEXT_MODEL_TOKENS_MAX = 200000
 MAX_RETURN_TOKENS = 4096 
 
 def encode_image(image_path):
