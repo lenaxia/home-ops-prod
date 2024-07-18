@@ -38,7 +38,7 @@ spec:
           main:
             image:
               repository: httpd
-              tag: 2.4.59
+              tag: 2.4.62
             env:
               TZ: ${TIMEZONE}
     service:
