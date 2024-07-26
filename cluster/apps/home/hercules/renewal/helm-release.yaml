@@ -38,6 +38,7 @@ spec:
               repository: ubuntu
               tag: latest
           1-init-db:
+          1-init-db:
             command: [sh, -c]
             args:
               - |
@@ -57,18 +58,20 @@ spec:
               - name: INIT_MYSQL_USER
                 valueFrom:
                   secretKeyRef:
-                    name: *appname
+                    name: hercules-classic
                     key: MYSQL_USERNAME
               - name: INIT_MYSQL_PASS
                 valueFrom:
                   secretKeyRef:
-                    name: *appname
+                    name: hercules-classic
                     key: MYSQL_PASSWORD
               - name: INIT_MYSQL_DBNAME
                 valueFrom:
                   secretKeyRef:
-                    name: *appname
+                    name: hercules-classic
                     key: MYSQL_DATABASE
+              - name: INIT_MYSQL_SUPER_USER
+                value: root
             volumeMounts:
               - name: db-scripts
                 mountPath: /db-scripts
