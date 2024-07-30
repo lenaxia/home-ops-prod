@@ -1,0 +1,73 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &app stirling-pdf
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: app-template
+      version: 3.3.1
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+  maxHistory: 2
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      strategy: rollback
+      retries: 3
+  values:
+    controllers:
+      stirling-pdf:
+        annotations:
+          reloader.stakater.com/auto: "true"
+        containers:
+          app:
+            image:
+              repository: ghcr.io/frooodle/s-pdf
+              tag: 0.18.1
+            env:
+              TZ: ${TIMEZONE}
+              SYSTEM_DEFAULTLOCALE: en_US
+            resources:
+              requests:
+                cpu: 10m
+                memory: 50M
+              limits:
+                memory: 512M
+    service:
+      app:
+        controller: stirling-pdf
+        ports:
+          http:
+            port: 8080
+    ingress:
+      app:
+        enabled: true
+        annotations:
+          hajimari.io/enable: 'true'
+          hajimari.io/icon: resistor-nodes
+          hajimari.io/appName: Stirling PDF
+          hajimari.io/group: Home
+          cert-manager.io/cluster-issuer: letsencrypt-production
+          traefik.ingress.kubernetes.io/router.entrypoints: websecure
+          traefik.ingress.kubernetes.io/router.middlewares: networking-chain-authelia@kubernetescrd
+        hosts:
+          - host: &uri pdf.${SECRET_DEV_DOMAIN}
+            paths:
+            - path: /
+              pathType: Prefix
+              service:
+                identifier: app
+                port: http
+        tls:
+          - hosts:
+              - *uri
+            secretName: *uri
+        className: traefik

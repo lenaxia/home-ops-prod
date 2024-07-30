@@ -42,6 +42,7 @@ resources:
   - ./home/langserver/ks.yaml
   #- ./home/gamevault/ks.yaml
   - ./home/node-red/ks.yaml
+  - ./home/stirling-pdf/ks.yaml
   - ./home/roskills/ks.yaml
   - ./home/localai/ks.yaml
   #- ./home/stablediffusion/ks.yaml
