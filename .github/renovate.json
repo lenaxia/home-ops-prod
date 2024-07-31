@@ -54,6 +54,9 @@
       "versioningTemplate": "redhat"
     }
   ],
+  "ignorePaths": [
+      "archive/**"
+  ],
   "packageRules": [
     {
       "description": "Loose versioning for non-semver packages",
