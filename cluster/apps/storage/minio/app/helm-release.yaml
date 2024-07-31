@@ -35,7 +35,7 @@ spec:
           main:
             image:
               repository: docker.io/minio/minio
-              tag: RELEASE.2024-06-26T01-06-18Z
+              tag: RELEASE.2024-07-31T05-46-26Z
               pullPolicy: Always
             envFrom:
               - secretRef:

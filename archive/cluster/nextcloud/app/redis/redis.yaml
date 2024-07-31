@@ -9,7 +9,7 @@ spec:
   #    secretPath: nextcloud-config
   sentinel:
     replicas: 1
-    image: redis:7.2.5
+    image: redis:7.4.0
     imagePullPolicy: Always
     resources:
       requests:
@@ -18,7 +18,7 @@ spec:
         memory: 100Mi
   redis:
     replicas: 1
-    image: redis:7.2.5
+    image: redis:7.4.0
     imagePullPolicy: Always
     command:
       - "redis-server"
