@@ -33,8 +33,8 @@ spec:
               repository: ghcr.io/auricom/redlib
               tag: 0.35.1@sha256:54a6aaf677c2f447ba786361c3f8968337e05d1c8016f55d1d207c57c9d4b4f0
             env:
-              SUBSCRIPTIONS: "Alonetv+BabyBumps+daddit+e28+EarthPorn+Economics+etymology+everymanshouldknow+f1Academy+femalefashionadvice+FoodPorn+FormulaE+gsuitelegacymigration+homeassistant+homeautomation+HomeDataCenter+HomeNetworking+kubernetes+law+lenaxia+LocalLLaMA+LocalLLM+MachineLearning+malefashionadvice+malelifestyle+minilab+mxroute+NewParents+PacificNorthwest+RagnarokOnline+RoomPorn+sailing+science+scotus+scuba+seaporn+Seattle+SeattleHistory+selfhosted+SoftwareEngineering+StableDiffusion+SVRiders+synology+tallfashionadvice+WashingtonHistory" 
-              THEME: "gruvboxdark"
+              REDLIB_DEFAULT_SUBSCRIPTIONS: "Alonetv+BabyBumps+daddit+e28+EarthPorn+Economics+etymology+everymanshouldknow+f1Academy+femalefashionadvice+FoodPorn+FormulaE+gsuitelegacymigration+homeassistant+homeautomation+HomeDataCenter+HomeNetworking+kubernetes+law+lenaxia+LocalLLaMA+LocalLLM+MachineLearning+malefashionadvice+malelifestyle+minilab+mxroute+NewParents+PacificNorthwest+RagnarokOnline+RoomPorn+sailing+science+scotus+scuba+seaporn+Seattle+SeattleHistory+selfhosted+SoftwareEngineering+StableDiffusion+SVRiders+synology+tallfashionadvice+WashingtonHistory" 
+              REDLIB_DEFAULT_THEME: "gruvboxdark"
             probes:
               liveness: &probes
                 enabled: true
