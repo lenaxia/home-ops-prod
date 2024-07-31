@@ -6,6 +6,6 @@ commonLabels:
   app.kubernetes.io/instance: *app
 resources:
   # renovate: registryUrl=https://metallb.github.io/metallb chart=metallb
-  - github.com/metallb/metallb//config/crd?ref=v0.14.5
+  - github.com/metallb/metallb//config/crd?ref=v0.14.8
   - helm-release.yaml
   - ipaddresspools.yaml
