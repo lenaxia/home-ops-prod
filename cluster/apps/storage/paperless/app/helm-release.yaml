@@ -90,7 +90,7 @@ spec:
           redis:
             image:
               repository: public.ecr.aws/docker/library/redis
-              tag: 7.2.5
+              tag: 7.4.0
           tika:
             image:
               repository: ghcr.io/paperless-ngx/tika
@@ -149,7 +149,7 @@ spec:
         env:
           - {name: DISABLE_GOOGLE_CHROME, value: '1'}
       redis:
-        image: public.ecr.aws/docker/library/redis:7.2.5
+        image: public.ecr.aws/docker/library/redis:7.4.0
         imagePullPolicy: IfNotPresent
       tika:
         image: ghcr.io/paperless-ngx/tika:2.9.1-full
