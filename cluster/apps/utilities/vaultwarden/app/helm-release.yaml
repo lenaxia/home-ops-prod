@@ -33,7 +33,7 @@ spec:
           main:
             image:
               repository: vaultwarden/server
-              tag: 1.30.5
+              tag: 1.31.0
 
     # -- environment variables.
             envFrom:
