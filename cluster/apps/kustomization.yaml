@@ -40,7 +40,7 @@ resources:
   - ./home/babybuddy-pandaria/ks.yaml
   - ./home/browserless/ks.yaml
   - ./home/langserver/ks.yaml
-  - ./home/gamevault/ks.yaml
+    #- ./home/gamevault/ks.yaml
   - ./home/node-red/ks.yaml
   - ./home/stirling-pdf/ks.yaml
   - ./home/redlib/ks.yaml
