@@ -84,20 +84,22 @@ spec:
         containers:
           main:
             image:
-              repository: ghcr.io/lenaxia/hercules
-              tag: renewal-20190605
-              #repository: florianpiesche/hercules-renewal-packetver20180418
-              #tag: v2022.06.01
+              #repository: ghcr.io/lenaxia/hercules
+              #tag: renewal-20190605
+              repository: ghcr.io/lenaxia/hercules-renewal-packetver20200401
+              tag: v2024.06
             envFrom:
               - secretRef:
                   name: *appname
             env:
-              - name: MYSQL_HOST
+              #- name: MYSQL_HOST
+              - name: HERCULES_DB_HOST
                 valueFrom:
                   secretKeyRef:
                     name: mariadb-secret
                     key: ip
-              - name: MYSQL_PORT
+              #- name: MYSQL_PORT
+              - name: HERCULES_DB_PORT
                 valueFrom:
                   secretKeyRef:
                     name: mariadb-secret
