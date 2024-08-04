@@ -84,8 +84,10 @@ spec:
         containers:
           main:
             image:
-              repository: ghcr.io/lenaxia/hercules
-              tag: renewal-20190605
+              #repository: ghcr.io/lenaxia/hercules
+              #tag: renewal-20190605
+              repository: florianpiesche/hercules-renewal-packetver20180418
+              tag: v2022.06.01
             envFrom:
               - secretRef:
                   name: *appname
