@@ -110,3 +110,11 @@ metadata:
   name: home
   labels:
     app.kubernetes.io/component: home
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: openkore
+  labels:
+    app.kubernetes.io/component: openkore
+---

@@ -1,8 +1,8 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: fasten
-  namespace: home
+  name: &app openkore-primary
+  namespace: openkore
 spec:
   interval: 5m
   chart:
@@ -23,49 +23,19 @@ spec:
         containers:
           main:
             image:
-              repository: ghcr.io/fastenhealth/fasten-onprem
-              tag: v0.0.8
+              repository: ghcr.io/lenaxia/docker-openkore
+              tag: 20240805
             envFrom:
               - secretRef:
-                  name: fasten
+                  name: *app
             env:
               TZ: ${TIMEZONE}
-    service:
-      main:
-        ports:
-          http:
-            port: 8080
-        primary: true
-        controller: main
-    ingress:
-      main:
-        enabled: true
-        annotations:
-          hajimari.io/enable: 'true'
-          hajimari.io/icon: game-icons:meal
-          hajimari.io/info: Meal Recipes
-          hajimari.io/group: documents
-          cert-manager.io/cluster-issuer: letsencrypt-production
-          traefik.ingress.kubernetes.io/router.entrypoints: websecure
-          traefik.ingress.kubernetes.io/router.middlewares: networking-chain-authelia@kubernetescrd
-        hosts:
-          - host: health.${SECRET_DEV_DOMAIN}
-            paths:
-              - path: /
-                pathType: Prefix
-                service:
-                  identifier: main
-                  port: http
-        tls:
-          - hosts:
-              - health.${SECRET_DEV_DOMAIN}
-            secretName: health.${SECRET_DEV_DOMAIN}
-    persistence:
-      config:
-        enabled: true
-        existingClaim: fasten-volume
-        globalMounts:
-          - path: /opt/fasten/db
-        type: persistentVolumeClaim
+              OK_USERNAME: primary 
+              OK_USERNAMEMAXSUFFIX: 3 
+              OK_LOCKMAP: "prt_fild07" 
+              OK_CHAR: 0 
+              TERM: xterm 
+              OK_FOLLOW_USERNAME1: Lenaxia 
+              
     podAnnotations:
       secret.reloader.stakater.com/reload: fasten
