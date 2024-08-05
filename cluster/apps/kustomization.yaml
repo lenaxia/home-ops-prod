@@ -45,7 +45,7 @@ resources:
   - ./home/stirling-pdf/ks.yaml
   - ./home/redlib/ks.yaml
   - ./home/roskills/ks.yaml
-  #- ./home/localai/ks.yaml
+  - ./home/localai/ks.yaml
   #- ./home/stablediffusion/ks.yaml
   - ./home/home-assistant/ks.yaml
   - ./home/esphome/ks.yaml
