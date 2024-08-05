@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+    name: rathena-renewal-volume
+    labels:
+      app: rathena-renewal
+spec:
+    accessModes:
+        - ReadWriteOnce
+    storageClassName: longhorn
+    resources:
+        requests:
+            storage: 3Gi
+

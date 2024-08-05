@@ -54,6 +54,7 @@ resources:
   - ./home/zwavejs/ks.yaml
   - ./home/mosquitto/ks.yaml
   - ./home/hercules/ks.yaml
+  - ./home/rathena/ks.yaml
   #- ./home/fasten/ks.yaml
 
   # Monitoring Namespace

@@ -1,7 +1,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: &appname hercules-classic
+  name: &appname rathena-renewal
   namespace: home
 spec:
   interval: 5m
@@ -22,19 +22,7 @@ spec:
     controllers:
       main:
         initContainers:
-          0-prep-db:
-            command: [/bin/sh, -c]
-            args:
-              - |
-                apt-get update && apt-get install -y curl &&
-                curl https://s3.thekao.cloud/public/ragnarok/ro-herc-classic-sql.tar.gz -o sql-files.tar.gz &&
-                tar -xzf sql-files.tar.gz -C /docker-entrypoint-initdb.d/ &&
-                rm sql-files.tar.gz
-                ls -la /docker-entrypoint-initdb.d
-            image:            # use an image with curl
-              repository: ubuntu
-              tag: latest
-          1-init-db:
+          init-db:
             command: [sh, -c]
             args:
               - |
@@ -54,17 +42,17 @@ spec:
               - name: INIT_MYSQL_USER
                 valueFrom:
                   secretKeyRef:
-                    name: hercules-classic
+                    name: rathena-classic
                     key: MYSQL_USERNAME
               - name: INIT_MYSQL_PASS
                 valueFrom:
                   secretKeyRef:
-                    name: hercules-classic
+                    name: rathena-classic
                     key: MYSQL_PASSWORD
               - name: INIT_MYSQL_DBNAME
                 valueFrom:
                   secretKeyRef:
-                    name: hercules-classic
+                    name: rathena-classic
                     key: MYSQL_DATABASE
               - name: INIT_MYSQL_SUPER_USER
                 value: root
@@ -75,18 +63,20 @@ spec:
         containers:
           main:
             image:
-              repository: ghcr.io/lenaxia/hercules
-              tag: classic-20190605
+              repository: ghcr.io/lenaxia/docker-rathena/rathena-renewal-packetver20200401
+              tag: 20240805
             envFrom:
               - secretRef:
-                  name: &appname hercules-classic
+                  name: &appname rathena-renewal
             env:
-              - name: MYSQL_HOST
+              #- name: MYSQL_HOST
+              - name: rathena_DB_HOST
                 valueFrom:
                   secretKeyRef:
                     name: mariadb-secret
                     key: ip
-              - name: MYSQL_PORT
+              #- name: MYSQL_PORT
+              - name: rathena_DB_PORT
                 valueFrom:
                   secretKeyRef:
                     name: mariadb-secret
@@ -95,7 +85,7 @@ spec:
     service:
       main:
         type: LoadBalancer
-        loadBalancerIP: ${SVC_HERCULES_CLASSIC_ADDR}
+        loadBalancerIP: ${SVC_RATHENA_RENEWAL_ADDR}
         externalTrafficPolicy: Local
         ports:
           http:
@@ -109,13 +99,8 @@ spec:
     persistence:
       config:
         enabled: true
-        existingClaim: hercules-classic-volume
+        existingClaim: rathena-renewal-volume
         type: persistentVolumeClaim
-      db-scripts:
-        enabled: true
-        type: emptyDir
-        globalMounts:
-          - path: /docker-entrypoint-initdb.d
       entrypoint-sh:
         enabled: true
         type: configMap
@@ -124,6 +109,5 @@ spec:
         globalMounts:
           - path: /entrypoint.sh
             subPath: entrypoint.sh
-
     podAnnotations:
       secret.reloader.stakater.com/reload: *appname
