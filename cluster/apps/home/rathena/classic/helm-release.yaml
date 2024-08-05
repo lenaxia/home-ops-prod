@@ -90,6 +90,8 @@ spec:
                 value: "1"
               - name: SET_SERVER_NAME
                 value: "KaoCloudRO"
+              - name: SET_NEW_ACCOUNT
+                value: "yes"
 
     service:
       main:
