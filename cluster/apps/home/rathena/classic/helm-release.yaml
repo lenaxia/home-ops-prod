@@ -63,8 +63,8 @@ spec:
         containers:
           main:
             image:
-              repository: ghcr.io/lenaxia/rathena
-              tag: classic-20190605
+              repository: ghcr.io/lenaxia/docker-rathena/rathena-packetver20200401
+              tag: classic-20240805
             envFrom:
               - secretRef:
                   name: &appname rathena-classic
