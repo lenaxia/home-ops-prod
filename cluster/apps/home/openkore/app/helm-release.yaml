@@ -1,0 +1,71 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: fasten
+  namespace: home
+spec:
+  interval: 5m
+  chart:
+    spec:
+      chart: app-template
+      version: 3.1.0
+      interval: 16m
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s-charts
+        namespace: flux-system
+  values:
+    defaultPodOptions:
+      nodeSelector:
+        node-role.kubernetes.io/worker: 'true'
+    controllers:
+      main:
+        containers:
+          main:
+            image:
+              repository: ghcr.io/fastenhealth/fasten-onprem
+              tag: v0.0.8
+            envFrom:
+              - secretRef:
+                  name: fasten
+            env:
+              TZ: ${TIMEZONE}
+    service:
+      main:
+        ports:
+          http:
+            port: 8080
+        primary: true
+        controller: main
+    ingress:
+      main:
+        enabled: true
+        annotations:
+          hajimari.io/enable: 'true'
+          hajimari.io/icon: game-icons:meal
+          hajimari.io/info: Meal Recipes
+          hajimari.io/group: documents
+          cert-manager.io/cluster-issuer: letsencrypt-production
+          traefik.ingress.kubernetes.io/router.entrypoints: websecure
+          traefik.ingress.kubernetes.io/router.middlewares: networking-chain-authelia@kubernetescrd
+        hosts:
+          - host: health.${SECRET_DEV_DOMAIN}
+            paths:
+              - path: /
+                pathType: Prefix
+                service:
+                  identifier: main
+                  port: http
+        tls:
+          - hosts:
+              - health.${SECRET_DEV_DOMAIN}
+            secretName: health.${SECRET_DEV_DOMAIN}
+    persistence:
+      config:
+        enabled: true
+        existingClaim: fasten-volume
+        globalMounts:
+          - path: /opt/fasten/db
+        type: persistentVolumeClaim
+    podAnnotations:
+      secret.reloader.stakater.com/reload: fasten

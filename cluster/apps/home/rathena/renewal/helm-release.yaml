@@ -69,18 +69,26 @@ spec:
               - secretRef:
                   name: &appname rathena-renewal
             env:
-              #- name: MYSQL_HOST
-              - name: rathena_DB_HOST
+              - name: MYSQL_HOST
                 valueFrom:
                   secretKeyRef:
                     name: mariadb-secret
                     key: ip
-              #- name: MYSQL_PORT
-              - name: rathena_DB_PORT
+              - name: MYSQL_PORT
                 valueFrom:
                   secretKeyRef:
                     name: mariadb-secret
                     key: port
+              - name: ADD_SUBNET_MAP1
+                value: "255.255.255.0:${SVC_RATHENA_CLASSIC_ADDR}:${SVC_RATHENA_CLASSIC_ADDR}"
+              - name: SET_CHAR_PUBLIC_IP
+                value: ${SVC_RATHENA_RENEWAL_ADDR}
+              - name: SET_MAP_PUBLIC_IP
+                value: ${SVC_RATHENA_RENEWAL_ADDR}
+              - name: MYSQL_ACCOUNTSANDCHARS
+                value: "1"
+              - name: SET_SERVER_NAME
+                value: "KaoCloudRO Renewal"
 
     service:
       main:

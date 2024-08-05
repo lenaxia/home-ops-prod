@@ -79,6 +79,16 @@ spec:
                   secretKeyRef:
                     name: mariadb-secret
                     key: port
+              - name: ADD_SUBNET_MAP1
+                value: "255.255.255.0:${SVC_RATHENA_CLASSIC_ADDR}:${SVC_RATHENA_CLASSIC_ADDR}"
+              - name: SET_CHAR_PUBLIC_IP
+                value: ${SVC_RATHENA_CLASSIC_ADDR} 
+              - name: SET_MAP_PUBLIC_IP
+                value: ${SVC_RATHENA_CLASSIC_ADDR}
+              - name: MYSQL_ACCOUNTSANDCHARS
+                value: "1"
+              - name: SET_SERVER_NAME
+                value: "KaoCloudRO"
 
     service:
       main:
@@ -99,15 +109,6 @@ spec:
         enabled: true
         existingClaim: rathena-classic-volume
         type: persistentVolumeClaim
-      db-scripts:
-        enabled: true
-        type: emptyDir
-        globalMounts:
-          - path: /docker-entrypoint-initdb.d
-        advancedMounts:
-          main:
-            init-db:
-              - path: /db-scripts
       entrypoint-sh:
         enabled: true
         type: configMap
@@ -116,11 +117,5 @@ spec:
         globalMounts:
           - path: /entrypoint.sh
             subPath: entrypoint.sh
-
-        advancedMounts:
-          main:
-            init-db:
-              - path: /entrypoint.sh
-                subPath: entrypoint.sh
     podAnnotations:
       secret.reloader.stakater.com/reload: *appname
