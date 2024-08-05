@@ -65,6 +65,7 @@ spec:
             image:
               repository: ghcr.io/lenaxia/docker-rathena/rathena-packetver20200401
               tag: classic-20240805
+              pullPolicy: Always
             envFrom:
               - secretRef:
                   name: &appname rathena-classic
