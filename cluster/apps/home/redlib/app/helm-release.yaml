@@ -34,7 +34,7 @@ spec:
               tag: 0.35.1@sha256:54a6aaf677c2f447ba786361c3f8968337e05d1c8016f55d1d207c57c9d4b4f0
             envFrom:
               - secretRef:
-                  name: *appname
+                  name: *app
             env:
               REDLIB_DEFAULT_THEME: "gruvboxdark"
             probes:
@@ -68,7 +68,7 @@ spec:
         annotations:
           hajimari.io/enable: 'true'
           hajimari.io/icon: resistor-nodes
-          hajimari.io/appName: Reddit
+          hajimari.io/aeppName: Reddit
           hajimari.io/group: Home
           cert-manager.io/cluster-issuer: letsencrypt-production
           traefik.ingress.kubernetes.io/router.entrypoints: websecure
