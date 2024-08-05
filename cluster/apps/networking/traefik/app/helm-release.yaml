@@ -26,9 +26,9 @@ spec:
     remediation:
       retries: 5
   values:
-    image:
-      name: traefik
-      tag: v2.9.6
+    #image:
+    #  name: traefik
+    #  tag: v2.9.6
     deployment:
       kind: Deployment
       replicas: 3
