@@ -81,7 +81,7 @@ spec:
                     name: mariadb-secret
                     key: port
               - name: ADD_SUBNET_MAP1
-                value: "255.255.255.0:${SVC_RATHENA_CLASSIC_ADDR}:${SVC_RATHENA_CLASSIC_ADDR}"
+                value: "255.255.0.0:${SVC_RATHENA_CLASSIC_ADDR}:${SVC_RATHENA_CLASSIC_ADDR}"
               - name: SET_CHAR_PUBLIC_IP
                 value: ${SVC_RATHENA_RENEWAL_ADDR}
               - name: SET_MAP_PUBLIC_IP
