@@ -43,11 +43,11 @@ spec:
                 value: 0 
               - name: OK_FOLLOW_USERNAME1
                 value: Lenaxia 
-              - name: REDIS_CONNSTR
+              - name: REDIS_HOST
                 valueFrom:
                   secretKeyRef:
                     name: redis-secret
-                    key: connstr
+                    key: host
               - name: REDIS_PASSWORD
                 valueFrom:
                   secretKeyRef:
