@@ -1,0 +1,54 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &app openkore-botijo
+  namespace: openkore
+spec:
+  interval: 5m
+  chart:
+    spec:
+      chart: app-template
+      version: 3.1.0
+      interval: 16m
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s-charts
+        namespace: flux-system
+  values:
+    defaultPodOptions:
+      nodeSelector:
+        node-role.kubernetes.io/worker: 'true'
+    controllers:
+      main:
+        replicas: 300
+        containers:
+          main:
+            image:
+              repository: ghcr.io/lenaxia/docker-openkore
+              tag: "20240807"
+              pullPolicy: Always
+            envFrom:
+              - secretRef:
+                  name: *app
+            env:
+              - name: TZ
+                value: ${TIMEZONE}
+              - name: OK_USERNAME
+                value: botijo
+              - name: OK_USERNAMEMAXSUFFIX
+                value: 299
+              - name: OK_CHAR
+                value: 0 
+              - name: REDIS_HOST
+                valueFrom:
+                  secretKeyRef:
+                    name: redis-secret
+                    key: host
+              - name: REDIS_PASSWORD
+                valueFrom:
+                  secretKeyRef:
+                    name: redis-secret
+                    key: password
+              
+    podAnnotations:
+      secret.reloader.stakater.com/reload: *app

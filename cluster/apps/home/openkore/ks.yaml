@@ -11,7 +11,7 @@ spec:
   dependsOn:
     - name: cluster-home-rathena-classic
     - name: cluster-home-rathena-renewal
-  path: ./cluster/apps/home/openkore/app
+  path: ./cluster/apps/home/openkore/primary
   prune: true
   sourceRef:
     kind: GitRepository
@@ -20,6 +20,32 @@ spec:
     - apiVersion: helm.toolkit.fluxcd.io/v2beta1
       kind: HelmRelease
       name: openkore-primary
+      namespace: openkore
+  interval: 30m
+  retryInterval: 1m
+  timeout: 3m
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.devbu.io/kustomization_v1beta2.json
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: cluster-openkore-botijo
+  namespace: flux-system
+  labels:
+    substitution.flux.home.arpa/enabled: "true"
+spec:
+  dependsOn:
+    - name: cluster-home-rathena-classic
+    - name: cluster-home-rathena-renewal
+  path: ./cluster/apps/home/openkore/botijo
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+  healthChecks:
+    - apiVersion: helm.toolkit.fluxcd.io/v2beta1
+      kind: HelmRelease
+      name: openkore-botijo
       namespace: openkore
   interval: 30m
   retryInterval: 1m
