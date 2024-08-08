@@ -20,12 +20,12 @@ spec:
         node-role.kubernetes.io/worker: 'true'
     controllers:
       main:
-        replicas: 300
+        replicas: 20
         containers:
           main:
             image:
               repository: ghcr.io/lenaxia/docker-openkore
-              tag: "20240807"
+              tag: latest
               pullPolicy: Always
             envFrom:
               - secretRef:
