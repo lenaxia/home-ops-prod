@@ -25,7 +25,7 @@ spec:
           main:
             image:
               repository: ghcr.io/lenaxia/docker-openkore
-              tag: "20240807"
+              tag: latest
               pullPolicy: Always
             envFrom:
               - secretRef:
