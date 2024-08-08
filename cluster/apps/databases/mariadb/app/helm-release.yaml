@@ -25,7 +25,7 @@ spec:
   uninstall:
     keepHistory: false
   values:
-    architecture: standalone
+    architecture: replication
     auth:
       existingSecret: mariadb-secret
       database: "ragnarok"
@@ -39,7 +39,7 @@ spec:
         loadBalancerIP: ${SVC_MARIADB_PRIMARY_ADDR}
     secondary:
       name: replica
-      replicaCount: 2
+      replicaCount: 3
       persistence:
         storageClass: local-path
     metrics:
