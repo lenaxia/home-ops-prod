@@ -16,6 +16,8 @@ spec:
         namespace: flux-system
   values:
     defaultPodOptions:
+      imagePullSecrets:
+        - name: ghcr-openkore
       nodeSelector:
         node-role.kubernetes.io/worker: 'true'
     controllers:
