@@ -18,7 +18,7 @@ resources:
   - ./kube-system/nvidia-gpu-operator/ks.yaml
   - ./kube-system/kured/ks.yaml
   - ./kube-system/reloader
-  #- ./kube-system/descheduler
+  - ./kube-system/descheduler
 
   # Storage
   - ./storage/kopia-web/ks.yaml
