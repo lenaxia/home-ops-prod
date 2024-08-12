@@ -45,6 +45,10 @@ spec:
                 value: 0 
               - name: OK_FOLLOW_USERNAME1
                 value: Lenaxia 
+              - name: OK_WAIT4PARTY
+                value: 1
+              - name: OK_LLM
+                value: 1
               - name: REDIS_HOST
                 valueFrom:
                   secretKeyRef:
