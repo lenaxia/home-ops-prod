@@ -77,6 +77,10 @@ spec:
                     api_base: http://ollama.home.svc.cluster.local:11434
 
                 # Bedrock
+                - model_name: bedrock-claude-sonnet-3-5
+                  litellm_params:
+                    model: bedrock/anthropic.claude-3-5-sonnet-20240620-v1:0
+                    aws_region_name: us-west-2
                 - model_name: bedrock-claude-v2-sonnet
                   litellm_params:
                     model: bedrock/anthropic.claude-3-sonnet-20240229-v1:0
