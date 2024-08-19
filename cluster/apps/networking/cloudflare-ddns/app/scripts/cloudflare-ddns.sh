@@ -16,21 +16,6 @@ error_exit() {
     exit 1
 }
 
-log "ENV: PUSHOVER_TOKEN: $PUSHOVER_TOKEN"
-log "ENV: PUSHOVER_USER_KEY: $PUSHOVER_USER_KEY"
-log "ENV: CLOUDFLARE_DOMAIN: $CLOUDFLARE_DOMAIN"
-log "ENV: CLOUDFLARE_EMAIL: $CLOUDFLARE_EMAIL"
-log "ENV: CLOUDFLARE_TOKEN: $CLOUDFLARE_TOKEN"
-
-pushover_result=$(curl -s \
-    --form-string "token=$PUSHOVER_TOKEN" \
-    --form-string "user=$PUSHOVER_USER_KEY" \
-    --form-string "message=Attempting IP update check for $CLOUDFLARE_DOMAIN" \
-    --form-string "title=IP Update Attempt - $CLOUDFLARE_DOMAIN" \
-    https://api.pushover.net/1/messages.json)
-
-log "Pushover result: $pushover_result"
-
 # Fetch Current External IP
 current_ipv4="$(curl -s https://ipv4.icanhazip.com/)" || error_exit "Failed to fetch current IPv4 address"
 
@@ -54,7 +39,7 @@ record_ipv4=$(curl -s -X GET \
     -H "X-Auth-Key: $CLOUDFLARE_TOKEN" \
     -H "Content-Type: application/json" || error_exit "Failed to fetch current DNS record")
 
-log "Fechted ipv4 record $record_ipv4"
+log "ipv4 record $record_ipv4"
 
 old_ip4=$(echo "$record_ipv4" | jq --raw-output '.result[0] | .content' || error_exit "Failed to parse current DNS record")
 
@@ -78,8 +63,6 @@ update_ipv4=$(curl -s -X PUT \
     -H "Content-Type: application/json" \
     --data "{\"id\":\"$zone_id\",\"type\":\"A\",\"proxied\":false,\"name\":\"$CLOUDFLARE_DOMAIN\",\"content\":\"$current_ipv4\"}" || error_exit "Failed to update DNS record")
 
-log "Update ipv4 result: $update_ipv4"
-
 if [[ "$(echo "$update_ipv4" | jq --raw-output '.success')" == "true" ]]; then
     log "Success - IP Address '$current_ipv4' has been updated"
     pushover_result=$(curl -s \
@@ -89,6 +72,12 @@ if [[ "$(echo "$update_ipv4" | jq --raw-output '.success')" == "true" ]]; then
         --form-string "title=IP Address Updated - $CLOUDFLARE_DOMAIN" \
         https://api.pushover.net/1/messages.json)
 else
+    pushover_result=$(curl -s \
+        --form-string "token=$PUSHOVER_TOKEN" \
+        --form-string "user=$PUSHOVER_USER_KEY" \
+        --form-string "message=Failed to update IP address for  $CLOUDFLARE_DOMAIN" \
+        --form-string "title=IP Address Failed - $CLOUDFLARE_DOMAIN" \
+        https://api.pushover.net/1/messages.json)
     error_exit "Updating IP Address '$current_ipv4' has failed"
 fi
 
