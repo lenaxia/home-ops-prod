@@ -44,9 +44,9 @@ spec:
                 value: "${SECRET_CLOUDFLARE_EMAIL}"
               - name: CLOUDFLARE_TOKEN
                 value: "${SECRET_CLOUDFLARE_TOKEN}"
-              - name: PUSHOVER_TOKEN
-                value: "${SECRET_PUSHOVER_USER_KEY}"
               - name: PUSHOVER_USER_KEY
+                value: "${SECRET_PUSHOVER_USER_KEY}"
+              - name: PUSHOVER_TOKEN
                 value: "${SECRET_PUSHOVER_PROD_TOKEN}"
             resources:
               requests:
