@@ -27,7 +27,7 @@ resources:
   - ./storage/paperless/ks.yaml
 
   # Networking
-  - ./networking/cloudflare-ddns/ks.yaml
+  #- ./networking/cloudflare-ddns/ks.yaml
   - ./networking/traefik/ks.yaml
   - ./networking/authelia/ks.yaml
   - ./networking/webfinger/ks.yaml
