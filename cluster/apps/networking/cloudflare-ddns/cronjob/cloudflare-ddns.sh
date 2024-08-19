@@ -21,17 +21,17 @@ current_ipv4="$(curl -s https://ipv4.icanhazip.com/)" || error_exit "Failed to f
 
 # Fetch Cloudflare Zone ID
 zone_id=$(curl -s -X GET \
-    "https://api.cloudflare.com/client/v4/zones?name=${CLOUDFLARE_RECORD_NAME#*.}&status=active" \
-    -H "X-Auth-Email: ${CLOUDFLARE_EMAIL}" \
-    -H "X-Auth-Key: ${CLOUDFLARE_APIKEY}" \
+    "https://api.cloudflare.com/client/v4/zones?name=${SECRET_DEV_DOMAIN}&status=active" \
+    -H "X-Auth-Email: ${SECRET_CLOUDFLARE_EMAIL}" \
+    -H "X-Auth-Key: ${SECRET_CLOUDFLARE_TOKEN}" \
     -H "Content-Type: application/json" \
     | jq --raw-output ".result[0] | .id" || error_exit "Failed to fetch Cloudflare Zone ID")
 
 # Fetch Current DNS Record
 record_ipv4=$(curl -s -X GET \
-    "https://api.cloudflare.com/client/v4/zones/${zone_id}/dns_records?name=${CLOUDFLARE_RECORD_NAME}&type=A" \
-    -H "X-Auth-Email: ${CLOUDFLARE_EMAIL}" \
-    -H "X-Auth-Key: ${CLOUDFLARE_APIKEY}" \
+    "https://api.cloudflare.com/client/v4/zones/${zone_id}/dns_records?name=${SECRET_DEV_DOMAIN}&type=A" \
+    -H "X-Auth-Email: ${SECRET_CLOUDFLARE_EMAIL}" \
+    -H "X-Auth-Key: ${SECRET_CLOUDFLARE_TOKEN}" \
     -H "Content-Type: application/json" || error_exit "Failed to fetch current DNS record")
 
 old_ip4=$(echo "$record_ipv4" | jq --raw-output '.result[0] | .content' || error_exit "Failed to parse current DNS record")
@@ -47,10 +47,10 @@ record_ipv4_identifier="$(echo "$record_ipv4" | jq --raw-output '.result[0] | .i
 # Update DNS Record
 update_ipv4=$(curl -s -X PUT \
     "https://api.cloudflare.com/client/v4/zones/${zone_id}/dns_records/${record_ipv4_identifier}" \
-    -H "X-Auth-Email: ${CLOUDFLARE_EMAIL}" \
-    -H "X-Auth-Key: ${CLOUDFLARE_APIKEY}" \
+    -H "X-Auth-Email: ${SECRET_CLOUDFLARE_EMAIL}" \
+    -H "X-Auth-Key: ${SECRET_CLOUDFLARE_TOKEN}" \
     -H "Content-Type: application/json" \
-    --data "{\"id\":\"${zone_id}\",\"type\":\"A\",\"proxied\":true,\"name\":\"${CLOUDFLARE_RECORD_NAME}\",\"content\":\"${current_ipv4}\"}" || error_exit "Failed to update DNS record")
+    --data "{\"id\":\"${zone_id}\",\"type\":\"A\",\"proxied\":true,\"name\":\"${SECRET_DEV_DOMAIN}\",\"content\":\"${current_ipv4}\"}" || error_exit "Failed to update DNS record")
 
 if [[ "$(echo "$update_ipv4" | jq --raw-output '.success')" == "true" ]]; then
     log "Success - IP Address '${current_ipv4}' has been updated"
