@@ -16,12 +16,20 @@ error_exit() {
     exit 1
 }
 
+log "ENV: PUSHOVER_TOKEN: $PUSHOVER_TOKEN"
+log "ENV: PUSHOVER_USER_KEY: $PUSHOVER_USER_KEY"
+log "ENV: CLOUDFLARE_DOMAIN: $CLOUDFLARE_DOMAIN"
+log "ENV: CLOUDFLARE_EMAIL: $CLOUDFLARE_EMAIL"
+log "ENV: CLOUDFLARE_TOKEN: $CLOUDFLARE_TOKEN"
+
 pushover_result=$(curl -s \
     --form-string "token=${PUSHOVER_TOKEN}" \
     --form-string "user=${PUSHOVER_USER_KEY}" \
     --form-string "message=Attempting IP update check for ${CLOUDFLARE_DOMAIN}" \
     --form-string "title=IP Update Attempt - ${CLOUDFLARE_DOMAIN}" \
     https://api.pushover.net/1/messages.json)
+
+log "Pushover result: $pushover_result"
 
 # Fetch Current External IP
 current_ipv4="$(curl -s https://ipv4.icanhazip.com/)" || error_exit "Failed to fetch current IPv4 address"
