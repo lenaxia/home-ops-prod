@@ -16,7 +16,7 @@ error_exit() {
     exit 1
 }
 
-$(curl -s \
+pushover_result=$(curl -s \
     --form-string "token=${PUSHOVER_TOKEN}" \
     --form-string "user=${PUSHOVER_USER_KEY}" \
     --form-string "message=Attempting IP update check for ${CLOUDFLARE_DOMAIN}" \
@@ -61,7 +61,7 @@ update_ipv4=$(curl -s -X PUT \
 
 if [[ "$(echo "$update_ipv4" | jq --raw-output '.success')" == "true" ]]; then
     log "Success - IP Address '${current_ipv4}' has been updated"
-    $(curl -s \
+    pushover_result=$(curl -s \
         --form-string "token=${PUSHOVER_TOKEN}" \
         --form-string "user=${PUSHOVER_USER_KEY}" \
         --form-string "message=IP Address for ${CLOUDFLARE_DOMAIN} has been updated to ${current_ipv4}" \
