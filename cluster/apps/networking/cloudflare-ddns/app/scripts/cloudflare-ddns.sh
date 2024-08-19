@@ -49,7 +49,7 @@ log "Fetched zone id: $zone_id"
 
 # Fetch Current DNS Record
 record_ipv4=$(curl -s -X GET \
-    "https://api.cloudflare.com/client/v4/zones/${zone_id}/dns_records?name=$CLOUDFLARE_DOMAIN&type=A" \
+    "https://api.cloudflare.com/client/v4/zones/$zone_id/dns_records?name=$CLOUDFLARE_DOMAIN&type=A" \
     -H "X-Auth-Email: $CLOUDFLARE_EMAIL" \
     -H "X-Auth-Key: $CLOUDFLARE_TOKEN" \
     -H "Content-Type: application/json" || error_exit "Failed to fetch current DNS record")
@@ -61,8 +61,8 @@ old_ip4=$(echo "$record_ipv4" | jq --raw-output '.result[0] | .content' || error
 log "Fetched old IP $old_ip4 from record"
 
 # Compare IPs and Update if Different
-if [[ "${current_ipv4}" == "${old_ip4}" ]]; then
-    log "IP Address '${current_ipv4}' has not changed ${old_ipv4}"
+if [[ "$current_ipv4" == "$old_ip4" ]]; then
+    log "IP Address '$current_ipv4' has not changed $old_ipv4"
     exit 0
 fi
 
@@ -72,16 +72,16 @@ log "Fetched ipv4 identifier $record_ipv4_identifier"
 
 # Update DNS Record
 update_ipv4=$(curl -s -X PUT \
-    "https://api.cloudflare.com/client/v4/zones/${zone_id}/dns_records/${record_ipv4_identifier}" \
+    "https://api.cloudflare.com/client/v4/zones/$zone_id/dns_records/$record_ipv4_identifier" \
     -H "X-Auth-Email: $CLOUDFLARE_EMAIL" \
     -H "X-Auth-Key: $CLOUDFLARE_TOKEN" \
     -H "Content-Type: application/json" \
-    --data "{\"id\":\"${zone_id}\",\"type\":\"A\",\"proxied\":false,\"name\":\"$CLOUDFLARE_DOMAIN\",\"content\":\"${current_ipv4}\"}" || error_exit "Failed to update DNS record")
+    --data "{\"id\":\"$zone_id\",\"type\":\"A\",\"proxied\":false,\"name\":\"$CLOUDFLARE_DOMAIN\",\"content\":\"$current_ipv4\"}" || error_exit "Failed to update DNS record")
 
 log "Update ipv4 result: $update_ipv4"
 
 if [[ "$(echo "$update_ipv4" | jq --raw-output '.success')" == "true" ]]; then
-    log "Success - IP Address '${current_ipv4}' has been updated"
+    log "Success - IP Address '$current_ipv4' has been updated"
     pushover_result=$(curl -s \
         --form-string "token=$PUSHOVER_TOKEN" \
         --form-string "user=$PUSHOVER_USER_KEY" \
