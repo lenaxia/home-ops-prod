@@ -41,12 +41,12 @@ record_ipv4=$(curl -s -X GET \
 
 log "ipv4 record $record_ipv4"
 
-old_ip4=$(echo "$record_ipv4" | jq --raw-output '.result[0] | .content' || error_exit "Failed to parse current DNS record")
+old_ipv4=$(echo "$record_ipv4" | jq --raw-output '.result[0] | .content' || error_exit "Failed to parse current DNS record")
 
-log "Fetched old IP $old_ip4 from record"
+log "Fetched old IP $old_ipv4 from record"
 
 # Compare IPs and Update if Different
-if [[ "$current_ipv4" == "$old_ip4" ]]; then
+if [[ "$current_ipv4" == "$old_ipv4" ]]; then
     log "IP Address '$current_ipv4' has not changed $old_ipv4"
     exit 0
 fi
