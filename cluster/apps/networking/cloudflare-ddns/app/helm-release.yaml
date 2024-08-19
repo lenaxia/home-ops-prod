@@ -28,13 +28,16 @@ spec:
         type: cronjob
         cronjob:
           schedule: "*/5 * * * *"
-          successfulJobsHistory: 0
+          successfulJobsHistory: 3
+          failedJobsHistoryLimit: 5
+          ttlSecondsAfterFinished: 3600
         containers: &container
           app:
             image:
               repository: ghcr.io/onedr0p/kubanetics
               tag: 2024.8.1@sha256:45ffec868c477b1ae0e339dffb0bcec4dddb4de5ff3ac2562002401fccb201a8
             command: ["/app/cloudflare-ddns.sh"]
+            restartPolicy: Never
             env:
               - name: CLOUDFLARE_DOMAIN
                 value: "${SECRET_DEV_DOMAIN}"
