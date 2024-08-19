@@ -16,6 +16,13 @@ error_exit() {
     exit 1
 }
 
+$(curl -s \
+    --form-string "token=${PUSHOVER_TOKEN}" \
+    --form-string "user=${PUSHOVER_USER_KEY}" \
+    --form-string "message=Attempting IP update check for ${CLOUDFLARE_DOMAIN}" \
+    --form-string "title=IP Update Attempt - ${CLOUDFLARE_DOMAIN}" \
+    https://api.pushover.net/1/messages.json)
+
 # Fetch Current External IP
 current_ipv4="$(curl -s https://ipv4.icanhazip.com/)" || error_exit "Failed to fetch current IPv4 address"
 
@@ -54,6 +61,12 @@ update_ipv4=$(curl -s -X PUT \
 
 if [[ "$(echo "$update_ipv4" | jq --raw-output '.success')" == "true" ]]; then
     log "Success - IP Address '${current_ipv4}' has been updated"
+    $(curl -s \
+        --form-string "token=${PUSHOVER_TOKEN}" \
+        --form-string "user=${PUSHOVER_USER_KEY}" \
+        --form-string "message=IP Address for ${CLOUDFLARE_DOMAIN} has been updated to ${current_ipv4}" \
+        --form-string "title=IP Address Updated - ${CLOUDFLARE_DOMAIN}" \
+        https://api.pushover.net/1/messages.json)
 else
     error_exit "Updating IP Address '${current_ipv4}' has failed"
 fi
