@@ -29,7 +29,6 @@ spec:
         cronjob:
           schedule: "*/5 * * * *"
           successfulJobsHistory: 3
-          failedJobsHistoryLimit: 5
           ttlSecondsAfterFinished: 3600
         containers: &container
           app:
