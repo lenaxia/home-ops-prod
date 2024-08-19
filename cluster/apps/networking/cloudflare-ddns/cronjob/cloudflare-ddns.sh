@@ -50,7 +50,7 @@ update_ipv4=$(curl -s -X PUT \
     -H "X-Auth-Email: ${SECRET_CLOUDFLARE_EMAIL}" \
     -H "X-Auth-Key: ${SECRET_CLOUDFLARE_TOKEN}" \
     -H "Content-Type: application/json" \
-    --data "{\"id\":\"${zone_id}\",\"type\":\"A\",\"proxied\":true,\"name\":\"${SECRET_DEV_DOMAIN}\",\"content\":\"${current_ipv4}\"}" || error_exit "Failed to update DNS record")
+    --data "{\"id\":\"${zone_id}\",\"type\":\"A\",\"proxied\":false,\"name\":\"${SECRET_DEV_DOMAIN}\",\"content\":\"${current_ipv4}\"}" || error_exit "Failed to update DNS record")
 
 if [[ "$(echo "$update_ipv4" | jq --raw-output '.success')" == "true" ]]; then
     log "Success - IP Address '${current_ipv4}' has been updated"
