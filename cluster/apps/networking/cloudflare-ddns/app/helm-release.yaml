@@ -27,8 +27,8 @@ spec:
       cloudflare-ddns:
         type: cronjob
         cronjob:
-          schedule: "*/5 * * * *"
-          successfulJobsHistory: 3
+          schedule: "@hourly"
+          successfulJobsHistory: 2
           ttlSecondsAfterFinished: 3600
         containers: &container
           app:

@@ -75,7 +75,7 @@ else
     pushover_result=$(curl -s \
         --form-string "token=$PUSHOVER_TOKEN" \
         --form-string "user=$PUSHOVER_USER_KEY" \
-        --form-string "message=Failed to update IP address for  $CLOUDFLARE_DOMAIN" \
+        --form-string "message=Failed to update IP address for  $CLOUDFLARE_DOMAIN - Error Response: $update_ipv4" \
         --form-string "title=IP Address Failed - $CLOUDFLARE_DOMAIN" \
         https://api.pushover.net/1/messages.json)
     error_exit "Updating IP Address '$current_ipv4' has failed"
