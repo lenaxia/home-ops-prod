@@ -24,8 +24,7 @@ log "Fetched current IP Address: $current_ipv4"
 # Fetch Cloudflare Zone ID
 zone_id=$(curl -s -X GET \
     "https://api.cloudflare.com/client/v4/zones?name=$CLOUDFLARE_DOMAIN&status=active" \
-    -H "X-Auth-Email: $CLOUDFLARE_EMAIL" \
-    -H "X-Auth-Key: $CLOUDFLARE_TOKEN" \
+    -H "Authorization: Bearer $CLOUDFLARE_TOKEN" \
     -H "Content-Type: application/json" \
     | jq --raw-output ".result[0] | .id" || error_exit "Failed to fetch Cloudflare Zone ID")
 
@@ -35,8 +34,7 @@ log "Fetched zone id: $zone_id"
 # Fetch Current DNS Record
 record_ipv4=$(curl -s -X GET \
     "https://api.cloudflare.com/client/v4/zones/$zone_id/dns_records?name=$CLOUDFLARE_DOMAIN&type=A" \
-    -H "X-Auth-Email: $CLOUDFLARE_EMAIL" \
-    -H "X-Auth-Key: $CLOUDFLARE_TOKEN" \
+    -H "Authorization: Bearer $CLOUDFLARE_TOKEN" \
     -H "Content-Type: application/json" || error_exit "Failed to fetch current DNS record")
 
 log "ipv4 record $record_ipv4"
@@ -58,8 +56,7 @@ log "Fetched ipv4 identifier $record_ipv4_identifier"
 # Update DNS Record
 update_ipv4=$(curl -s -X PUT \
     "https://api.cloudflare.com/client/v4/zones/$zone_id/dns_records/$record_ipv4_identifier" \
-    -H "X-Auth-Email: $CLOUDFLARE_EMAIL" \
-    -H "X-Auth-Key: $CLOUDFLARE_TOKEN" \
+    -H "Authorization: Bearer $CLOUDFLARE_TOKEN" \
     -H "Content-Type: application/json" \
     --data "{\"id\":\"$zone_id\",\"type\":\"A\",\"proxied\":false,\"name\":\"$CLOUDFLARE_DOMAIN\",\"content\":\"$current_ipv4\"}" || error_exit "Failed to update DNS record")
 
