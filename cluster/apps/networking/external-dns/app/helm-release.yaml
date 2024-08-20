@@ -34,16 +34,8 @@ spec:
       - --annotation-filter=external-dns.home.arpa/enabled in (true)
 
     env:
-      - name: CF_API_EMAIL
-        valueFrom:
-          secretKeyRef:
-            name: cloudflare-creds
-            key: email
-      - name: CF_API_KEY
-        valueFrom:
-          secretKeyRef:
-            name: cloudflare-creds
-            key: api-key
+      - name: CF_API_TOKEN
+        value: ${SECRET_CLOUDFLARE_TOKEN}
 
     policy: sync
 
