@@ -40,8 +40,6 @@ spec:
             env:
               - name: CLOUDFLARE_DOMAIN
                 value: "${SECRET_DEV_DOMAIN}"
-              - name: CLOUDFLARE_EMAIL
-                value: "${SECRET_CLOUDFLARE_EMAIL}"
               - name: CLOUDFLARE_TOKEN
                 value: "${SECRET_CLOUDFLARE_TOKEN}"
               - name: PUSHOVER_USER_KEY
