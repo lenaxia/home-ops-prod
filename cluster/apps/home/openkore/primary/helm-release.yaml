@@ -38,7 +38,7 @@ spec:
               - name: OK_USERNAME
                 value: primary 
               - name: OK_USERNAMEMAXSUFFIX
-                value: 5
+                value: 4
               - name: OK_LOCKMAP
                 value: "prt_fild07" 
               - name: OK_CHAR
