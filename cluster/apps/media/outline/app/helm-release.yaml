@@ -47,7 +47,7 @@ spec:
           main:
             image:
               repository: docker.io/outlinewiki/outline
-              tag: 0.77.2
+              tag: 0.79.1
               pullPolicy: Always
             envFrom:
               - secretRef:
