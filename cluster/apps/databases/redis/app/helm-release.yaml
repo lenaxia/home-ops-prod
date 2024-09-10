@@ -10,7 +10,7 @@ spec:
   chart:
     spec:
       chart: redis
-      version: 19.6.4
+      version: 20.1.0
       sourceRef:
         kind: HelmRepository
         name: bitnami
@@ -34,21 +34,36 @@ spec:
       sentinel: true
       existingSecret: redis-secret
       existingSecretPasswordKey: password
+
+    commonConfiguration: |-
+      appendonly no
+      save ""
+      maxmemory 2048m
+      maxmemory-policy allkeys-lru
+
     master:
       resourcesPreset: none
       persistence:
         enabled: false
-        storageClass: local-path
-        size: 3Gi
       service:
         type: LoadBalancer
+      resources:
+        requests:
+          cpu: 500m
+          memory: 512Mi
+        limits:
+          memory: 2Gi
 
     replica:
       resourcesPreset: none
       persistence:
         enabled: false
-        storageClass: local-path
-        size: 3Gi
+      resources:
+        requests:
+          cpu: 500m
+          memory: 512Mi
+        limits:
+          memory: 2Gi          
 
     sentinel:
       resourcesPreset: none
@@ -59,9 +74,16 @@ spec:
         failureThreshold: 2
       persistence:
         enabled: false
+      resources:
+        requests:
+          cpu: 100m
+          memory: 10Mi
+        limits:
+          memory: 50Mi
 
     metrics:
       enabled: true
       resourcesPreset: none
       serviceMonitor:
         enabled: true
+        interval: 1m
