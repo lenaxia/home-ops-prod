@@ -76,7 +76,7 @@ spec:
             secretName: *uri
     persistence:
       config:
-        enabled: true
+        enabled: false
         type: emptyDir
         globalMounts:
           - path: /usr/local/apache2/htdocs/
