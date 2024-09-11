@@ -3,9 +3,9 @@ kind: Kustomization
 metadata:
   namespace: databases
 resources:
-  - config-pvc.yaml
   - helm-release.yaml
   - secret.sops.yaml
+  - configmap.yaml
     #namespace not specifiedconfigMapGenerator:
     #  - name: redis-dashboard
     #    files:
