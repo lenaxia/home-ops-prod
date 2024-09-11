@@ -16,7 +16,7 @@ resources:
   - ./kube-system/node-feature-discovery/ks.yaml
   - ./kube-system/intel-device-plugin/ks.yaml
   - ./kube-system/nvidia-gpu-operator/ks.yaml
-  - ./kube-system/kured/ks.yaml
+    #- ./kube-system/kured/ks.yaml
   - ./kube-system/reloader
   - ./kube-system/descheduler
 
@@ -44,7 +44,7 @@ resources:
   - ./home/node-red/ks.yaml
   - ./home/stirling-pdf/ks.yaml
   - ./home/redlib/ks.yaml
-  - ./home/roskills/ks.yaml
+    #- ./home/roskills/ks.yaml
   - ./home/localai/ks.yaml
   #- ./home/stablediffusion/ks.yaml
   - ./home/home-assistant/ks.yaml
