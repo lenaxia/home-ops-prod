@@ -74,9 +74,6 @@ spec:
     persistence:
       config:
         enabled: true
-        type: persistentVolumeClaim
-        accessMode: ReadWriteMany
-        size: 1Gi
-        storageClass: longhorn
+        type: emptyDir
         globalMounts:
           - path: /usr/local/apache2/htdocs/
