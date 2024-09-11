@@ -4,7 +4,7 @@
     "version": "0.0.1",
     "private": true,
     "dependencies": {
-        "node-red-contrib-home-assistant-websocket": "~0.65.0",
+        "node-red-contrib-home-assistant-websocket": "~0.72.0",
         "node-red-contrib-alexa-smart-home": "~0.4.68",
         "node-red-contrib-edge-trigger": "~1.0.0",
         "node-red-contrib-homeseer": "~1.0.4",
