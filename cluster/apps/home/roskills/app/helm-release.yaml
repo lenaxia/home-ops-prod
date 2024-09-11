@@ -17,7 +17,7 @@ spec:
   values:
     defaultPodOptions:
       imagePullSecrets:
-        - name: openkore/ghcr-openkore
+        - name: ghcr-roskills
       nodeSelector:
         node-role.kubernetes.io/worker: 'true'
     podAnnotations:
