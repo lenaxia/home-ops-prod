@@ -28,6 +28,13 @@ spec:
   values:
     updateStrategy: RollingUpdate
     configuration:
+      rebootDays: 
+        - fri
+      rebootSentinelCommand:
+        - "sh"
+        - "-c" 
+        - "true"
+      period: 1w
       timeZone: ${TIMEZONE}
       startTime: "3:00"
       endTime: "7:00"
