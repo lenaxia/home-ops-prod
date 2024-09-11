@@ -22,23 +22,23 @@ spec:
       secret.reloader.stakater.com/reload: *appname
     controllers:
       main:
-        initContainers:
-          download-content:
-            image: 
-              repository: alpine
-              tag: latest
-            command: ["/bin/sh", "-c"]
-            args:
-              - |
-                apk --no-cache add ca-certificates wget
-                wget https://s3.thekao.cloud/public/ragnarok-calcs.tar -P /usr/local/apache2/htdocs/
-                tar -xf /usr/local/apache2/htdocs/ragnarok-calcs.tar -C /usr/local/apache2/htdocs/ --overwrite
-                rm -rf /usr/local/apache2/htdocs/ragnarok-calcs.tar
+        #initContainers:
+        #  download-content:
+        #    image: 
+        #      repository: alpine
+        #      tag: latest
+        #    command: ["/bin/sh", "-c"]
+        #    args:
+        #      - |
+        #        apk --no-cache add ca-certificates wget
+        #        wget https://s3.thekao.cloud/public/ragnarok-calcs.tar -P /usr/local/apache2/htdocs/
+        #        tar -xf /usr/local/apache2/htdocs/ragnarok-calcs.tar -C /usr/local/apache2/htdocs/ --overwrite
+        #        rm -rf /usr/local/apache2/htdocs/ragnarok-calcs.tar
         containers:
           main:
             image:
-              repository: httpd
-              tag: 2.4.62
+              repository: ghcr.io/lenaxia/ro-utils
+              tag: latest
             env:
               TZ: ${TIMEZONE}
     service:
