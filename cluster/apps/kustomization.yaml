@@ -16,7 +16,7 @@ resources:
   - ./kube-system/node-feature-discovery/ks.yaml
   - ./kube-system/intel-device-plugin/ks.yaml
   - ./kube-system/nvidia-gpu-operator/ks.yaml
-  - ./kube-system/kured/ks.yaml
+    #- ./kube-system/kured/ks.yaml
   - ./kube-system/reloader
   - ./kube-system/descheduler
 
