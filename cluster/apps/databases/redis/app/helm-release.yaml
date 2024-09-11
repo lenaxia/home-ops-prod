@@ -93,10 +93,10 @@ spec:
             port: 6379
     persistence:
       data:
-      models:
         enabled: true
         storageClass: longhorn
-        accessModes: ReadWriteMany
+        type: persistentVolumeClaim
+        accessMode: ReadWriteMany
         size: 5Gi 
         globalMounts:
           - path: /data
