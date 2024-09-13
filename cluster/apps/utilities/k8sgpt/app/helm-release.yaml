@@ -63,7 +63,7 @@ spec:
             - ALL
         image:
           repository: ghcr.io/k8sgpt-ai/k8sgpt-operator
-          tag: v0.1.6  # x-release-please-version
+          tag: v0.1.7  # x-release-please-version
         resources:
           limits:
             cpu: 500m
