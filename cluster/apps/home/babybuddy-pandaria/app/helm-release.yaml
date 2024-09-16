@@ -25,7 +25,7 @@ spec:
           main:
             image:
               repository: lscr.io/linuxserver/babybuddy
-              tag: 2.5.0
+              tag: 2.6.0
 
             envFrom:
               - secretRef:
