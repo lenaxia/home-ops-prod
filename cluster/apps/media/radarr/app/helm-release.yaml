@@ -36,4 +36,4 @@ spec:
               - *uri
             secretName: *uri
     podLabels:
-      app: &appname radarr
+      app: *appname 
