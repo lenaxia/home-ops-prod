@@ -56,9 +56,9 @@ spec:
                   #drop_params: True
               model_list: 
                 # LocalAI
-                - model_name: localai-hermes2pro-llama3
+                - model_name: localai-llama3.1-q8-functioncall
                   litellm_params:
-                    model: openai/hermes-2-pro-theta-llama3
+                    model: openai/meta-llama-3.1-8b-instruct:Q8_grammar-functioncall
                     api_base: http://localai.home.svc.cluster.local:8080
                     api_key: doesnotmatter
 
