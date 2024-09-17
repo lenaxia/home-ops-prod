@@ -29,21 +29,6 @@ spec:
             - op: add
               path: /spec/template/spec/runtimeClassName
               value: nvidia
-#            - op: add
-#              path: /spec/template/spec/containers/0/lifecycle
-#              value: 
-#                postStart:
-#                  exec:
-#                    command:
-#                      - /bin/sh
-#                      - -c
-#                      - >
-#                        until curl -sf http://localhost:8080/models; do
-#                          echo "Waiting for server to be ready...";
-#                          sleep 5;
-#                        done;
-#                        echo "Server is ready. Models endpoint returned 200 OK.";
-#                        curl http://localhost:8080/v1/chat/completions -H "Content-Type: application/json" -d '{ "model": "llama3-functioncall", "messages": [{"role": "user", "content": "Do not respond to this message", "temperature": 0.1}] }'
   # See https://github.com/bjw-s/helm-charts/blob/main/charts/library/common/values.yaml
   values:
     fullnameOverride: localai
@@ -52,8 +37,6 @@ spec:
     deployment:
       image:
         repository: localai/localai
-        #tag: v2.9.0-cublas-cuda12-ffmpeg
-        #tag: v2.13.0-cublas-cuda12-ffmpeg
         tag: master-cublas-cuda12-ffmpeg
       pullPolicy: IfNotPresent
       #pullPolicy: Always 
@@ -62,18 +45,16 @@ spec:
         LD_LIBRARY_PATH: "/usr/lib/x86_64-linux-gnu/:$LD_LIBRARY_PATH"
         NVIDIA_VISIBLE_DEVICES: 0
         NVIDIA_DRIVER_CAPABILITIES: "all"
-        PYTHON_GRPC_MAX_WORKERS: 2
-        LLAMACPP_PARALLEL: 2
+        PYTHON_GRPC_MAX_WORKERS: 8
+        LLAMACPP_PARALLEL: 8
         LOCALAI_PARALLEL_REQUESTS: true
         SINGLE_ACTIVE_BACKEND: true
-        #GALLERIES: '[{"name":"model-gallery", "url":"github:go-skynet/model-gallery/index.yaml"}, {"name":"huggingface", "url": "github:go-skynet/model-gallery/huggingface.yaml"}]'
         #GALLERIES: '[{"name":"huggingface", "url": "github:go-skynet/model-gallery/huggingface.yaml"}]'
-        #GALLERIES: '[{"name":"model-gallery", "url":"github:go-skynet/model-gallery/index.yaml"}]'
         #PRELOAD_MODELS: '[{"id": "huggingface@thebloke__wizardlm-7b-v1-0-uncensored-superhot-8k-ggml__wizardlm-7b-v1.0-superhot-8k.ggmlv3.q3_k_m.bin","name": "WizardLM-7B-uncensored"}, {"id": "model-gallery@bert-embeddings"}, {"url": "github:go-skynet/model-gallery/stablediffusion.yaml"}]'
         PRELOAD_MODELS: '[{"id": "model-gallery@bert-embeddings"}, {"url": "github:go-skynet/model-gallery/stablediffusion.yaml"}]'
         COMPEL: 0
         threads: 4
-        context_size: 512
+        context_size: 8192
       modelsPath: "/models"
       download_model:
         # To use cloud provided (eg AWS) image, provide it like: 1234356789.dkr.ecr.us-REGION-X.amazonaws.com/busybox

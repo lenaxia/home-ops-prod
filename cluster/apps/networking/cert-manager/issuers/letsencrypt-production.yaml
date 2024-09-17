@@ -13,10 +13,10 @@ spec:
     solvers:
       - dns01:
           cloudflare:
-            email: "${SECRET_CLOUDFLARE_EMAIL}"
+            #email: "${SECRET_CLOUDFLARE_EMAIL}"
             apiKeySecretRef:
-              name: cloudflare-api-key
-              key: api-key
+              name: cloudflare-api-token
+              key: api-token
         selector:
           dnsZones:
             - ${SECRET_PROD_DOMAIN_MGO}
