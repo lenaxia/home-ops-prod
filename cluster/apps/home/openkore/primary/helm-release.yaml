@@ -49,6 +49,8 @@ spec:
                 value: 1
               - name: OK_LLM
                 value: 1
+              - name: OK_LLM_GRAMMAR
+                value: 1
               - name: REDIS_HOST
                 valueFrom:
                   secretKeyRef:
