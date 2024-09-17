@@ -41,7 +41,7 @@ spec:
       pullPolicy: IfNotPresent
       #pullPolicy: Always 
       env:
-        DEBUG: true
+        DEBUG: false
         LD_LIBRARY_PATH: "/usr/lib/x86_64-linux-gnu/:$LD_LIBRARY_PATH"
         NVIDIA_VISIBLE_DEVICES: 0
         NVIDIA_DRIVER_CAPABILITIES: "all"
