@@ -76,35 +76,35 @@ spec:
                     model: ollama_chat/phi3:latest
                     api_base: http://ollama.home.svc.cluster.local:11434
 
-                # Bedrock
-                - model_name: bedrock-claude-sonnet-3-5
-                  litellm_params:
-                    model: bedrock/anthropic.claude-3-5-sonnet-20240620-v1:0
-                    aws_region_name: us-east-1
-                - model_name: bedrock-claude-v2-sonnet
-                  litellm_params:
-                    model: bedrock/anthropic.claude-3-sonnet-20240229-v1:0
-                    aws_region_name: us-west-2
-                - model_name: bedrock-claude-v2-haiku
-                  litellm_params:
-                    model: bedrock/anthropic.claude-3-haiku-20240307-v1:0
-                    aws_region_name: us-west-2
-                - model_name: bedrock-claude-v2-opus
-                  litellm_params:
-                    model: bedrock/anthropic.claude-3-opus-20240229-v1:0
-                    aws_region_name: us-west-2
-                - model_name: bedrock-mixtral-8x7b
-                  litellm_params:
-                    model: bedrock/mistral.mixtral-8x7b-instruct-v0:1
-                    aws_region_name: us-west-2
-                - model_name: bedrock-llama3-70b
-                  litellm_params:
-                    model: bedrock/meta.llama3-70b-instruct-v1:0
-                    aws_region_name: us-west-2
-                - model_name: bedrock-command-r-plus
-                  litellm_params:
-                    model: bedrock/cohere.command-r-plus-v1:0
-                    aws_region_name: us-west-2
+                ## Bedrock
+                #- model_name: bedrock-claude-sonnet-3-5
+                #  litellm_params:
+                #    model: bedrock/anthropic.claude-3-5-sonnet-20240620-v1:0
+                #    aws_region_name: us-east-1
+                #- model_name: bedrock-claude-v2-sonnet
+                #  litellm_params:
+                #    model: bedrock/anthropic.claude-3-sonnet-20240229-v1:0
+                #    aws_region_name: us-west-2
+                #- model_name: bedrock-claude-v2-haiku
+                #  litellm_params:
+                #    model: bedrock/anthropic.claude-3-haiku-20240307-v1:0
+                #    aws_region_name: us-west-2
+                #- model_name: bedrock-claude-v2-opus
+                #  litellm_params:
+                #    model: bedrock/anthropic.claude-3-opus-20240229-v1:0
+                #    aws_region_name: us-west-2
+                #- model_name: bedrock-mixtral-8x7b
+                #  litellm_params:
+                #    model: bedrock/mistral.mixtral-8x7b-instruct-v0:1
+                #    aws_region_name: us-west-2
+                #- model_name: bedrock-llama3-70b
+                #  litellm_params:
+                #    model: bedrock/meta.llama3-70b-instruct-v1:0
+                #    aws_region_name: us-west-2
+                #- model_name: bedrock-command-r-plus
+                #  litellm_params:
+                #    model: bedrock/cohere.command-r-plus-v1:0
+                #    aws_region_name: us-west-2
     persistence:
       configyaml:
         enabled: true
