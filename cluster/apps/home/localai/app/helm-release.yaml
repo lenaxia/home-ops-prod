@@ -36,8 +36,8 @@ spec:
 
     deployment:
       image:
-        repository: localai/localai
-        tag: master-cublas-cuda12-ffmpeg
+        repository: quay.io/go-skynet/local-ai
+        tag: v2.20.1-cublas-cuda12-ffmpeg
       pullPolicy: IfNotPresent
       #pullPolicy: Always 
       env:
