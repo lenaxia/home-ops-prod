@@ -37,7 +37,7 @@ spec:
     deployment:
       image:
         repository: quay.io/go-skynet/local-ai
-        tag: v2.20.1-cublas-cuda12-ffmpeg
+        tag: v2.21.1-cublas-cuda12-ffmpeg
       pullPolicy: IfNotPresent
       #pullPolicy: Always 
       env:
