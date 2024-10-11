@@ -28,6 +28,7 @@ OPENAI_API_KEY = os.getenv('OPENAI_APIKEY')
 OPENAI_API_ENDPOINT = "http://localai.home.svc.cluster.local:8080"
 
 # OpenAI Model Configuration
+ENABLE_VISION = False
 VISION_MODEL = "bedrock-claude-v2-sonnet"
 VISION_MODEL_TOKENS_MAX = 200000
 TEXT_MODEL = "bedrock-claude-v2-sonnet"
@@ -442,7 +443,7 @@ def main(document_id, debug=False):
     aggregated_ocr_text = []
 
     # OCR the document if it is a PDF and contains only images
-    if content_type == 'application/pdf' and is_pdf_image_only(tmp_file_path):
+    if content_type == 'application/pdf' and is_pdf_image_only(tmp_file_path) and ENABLE_VISION:
         logger.info("PDF contains only images, extracting for OCR...")
         with fitz.open(tmp_file_path) as doc:
             for page_number in range(len(doc)):
@@ -468,7 +469,7 @@ def main(document_id, debug=False):
 
 
     # Handle image documents
-    elif content_type in ['image/jpeg', 'image/png']:
+    elif content_type in ['image/jpeg', 'image/png'] and ENABLE_VISION:
         with tempfile.NamedTemporaryFile(suffix='.png', delete=False) as tmp_file:
             tmp_file.write(file_content)
             logger.info("Image file detected, processing with OCR...")
