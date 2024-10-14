@@ -40,6 +40,8 @@ spec:
         tag: v2.20.1-cublas-cuda12-ffmpeg
       pullPolicy: IfNotPresent
       #pullPolicy: Always 
+      args:
+        - --p2p
       env:
         DEBUG: false
         LD_LIBRARY_PATH: "/usr/lib/x86_64-linux-gnu/:$LD_LIBRARY_PATH"
