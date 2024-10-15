@@ -30,7 +30,7 @@ spec:
               path: /spec/template/spec/runtimeClassName
               value: nvidia
             - op: add
-              path: /spec/template/spec/containers/name=localai/command
+              path: /spec/template/spec/containers/0/command
               value: ["/bin/bash", "-c", "/build/entrypoint.sh", "--p2p"]
   # See https://github.com/bjw-s/helm-charts/blob/main/charts/library/common/values.yaml
   values:
