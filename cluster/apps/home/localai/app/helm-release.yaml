@@ -46,6 +46,7 @@ spec:
       args:
         - --p2p
       env:
+        LOCALAI_P2P_TOKEN: b3RwOgogIGRodDoKICAgIGludGVydmFsOiAzNjAKICAgIGtleTogbDFiTEdXZFRLU1AwUFI4ZlJqZTJjMzZHM0Z6bDVPaGM0OWp5WnFWOE1ZdgogICAgbGVuZ3RoOiA0MwogIGNyeXB0bzoKICAgIGludGVydmFsOiA5MDAwCiAgICBrZXk6IHZVTjdqZUJ6TkxiSHdPTEVHVFJmSE5yZnhVUmUxWVVpcUMybkwxeVpOVDEKICAgIGxlbmd0aDogNDMKcm9vbTogbzBoaVpLNFNCM2Nqb0JLdUxpY0pVMklBVFd5alZoYWVnTldUQkJHbUtOcgpyZW5kZXp2b3VzOiB2TGFIbXBuWU1CWlpmY3VVT3FGSzU2M2hVUDBSTXNRNzZDRmlKWlFZVlBICm1kbnM6IFV5WENNaUFMNFdQc2NvcXgyQUhyV2VyNmxqSUF4SHFudERXN1VJQ2pCeDIKbWF4X21lc3NhZ2Vfc2l6ZTogMjA5NzE1MjAK
         DEBUG: false
         LD_LIBRARY_PATH: "/usr/lib/x86_64-linux-gnu/:$LD_LIBRARY_PATH"
         NVIDIA_VISIBLE_DEVICES: 0
@@ -197,16 +198,13 @@ spec:
     
     tolerations: []
     
-    #affinity:
-    #  podAntiAffinity:
-    #    requiredDuringSchedulingIgnoredDuringExecution:
-    #      - labelSelector:
-    #          matchExpressions:
-    #            #- key: app.kubernetes.io/name
-    #            #  operator: In
-    #            #  values: [plex]
-    #            #- key: "app.kubernetes.io/name"
-    #            #  operator: In
-    #            #  values:
-    #            #    - *appname
-    #        topologyKey: "kubernetes.io/hostname"
+    affinity:
+      podAntiAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          - labelSelector:
+              matchExpressions:
+                - key: app.kubernetes.io/name
+                  operator: In
+                  values:
+                    - localai
+            topologyKey: kubernetes.io/hostname
