@@ -29,9 +29,9 @@ spec:
             - op: add
               path: /spec/template/spec/runtimeClassName
               value: nvidia
-            - op: add
-              path: /spec/template/spec/containers/0/command
-              value: ["/build/entrypoint.sh", "--p2p"]
+            #- op: add
+            #  path: /spec/template/spec/containers/0/command
+            #  value: ["/build/entrypoint.sh", "--p2p"]
   # See https://github.com/bjw-s/helm-charts/blob/main/charts/library/common/values.yaml
   values:
     fullnameOverride: localai
