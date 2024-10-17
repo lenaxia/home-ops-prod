@@ -1,0 +1,368 @@
+---
+# Source: local-ai/templates/configmap-models-configs.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: localai-test-local-ai-models-configs
+  namespace: "default"
+data:
+  phi-2: |-
+    name: phi-2
+    context_size: 2048
+    f16: true
+    mmap: true
+    trimsuffix:
+    - "\n"
+    parameters:
+      model: phi-2.Q8_0.gguf
+      temperature: 0.2
+      top_k: 40
+      top_p: 0.95
+      seed: -1
+    template:
+      chat: &template |-
+        Instruct: {{.Input}}
+        Output:
+      completion: *template
+---
+## Source: local-ai/templates/pvcs.yaml
+#kind: PersistentVolumeClaim
+#apiVersion: v1
+#metadata:
+#  name: localai-test-local-ai-main-models
+#  namespace: "default"
+#  labels:
+#    app.kubernetes.io/instance: localai-test
+#    app.kubernetes.io/managed-by: Helm
+#    app.kubernetes.io/name: local-ai
+#    app.kubernetes.io/version: "1.4"
+#    helm.sh/chart: local-ai-4.0.0
+#spec:
+#  accessModes:
+#    - ReadWriteMany
+#  resources:
+#    requests:
+#      storage: "60Gi"
+#---
+## Source: local-ai/templates/pvcs.yaml
+#kind: PersistentVolumeClaim
+#apiVersion: v1
+#metadata:
+#  name: localai-test-local-ai-main-output
+#  namespace: "default"
+#  labels:
+#    app.kubernetes.io/instance: localai-test
+#    app.kubernetes.io/managed-by: Helm
+#    app.kubernetes.io/name: local-ai
+#    app.kubernetes.io/version: "1.4"
+#    helm.sh/chart: local-ai-4.0.0
+#spec:
+#  accessModes:
+#    - ReadWriteMany
+#  resources:
+#    requests:
+#      storage: "5Gi"
+#---
+## Source: local-ai/templates/pvcs.yaml
+#kind: PersistentVolumeClaim
+#apiVersion: v1
+#metadata:
+#  name: localai-test-local-ai-worker-models
+#  namespace: "default"
+#  labels:
+#    app.kubernetes.io/instance: localai-test
+#    app.kubernetes.io/managed-by: Helm
+#    app.kubernetes.io/name: local-ai
+#    app.kubernetes.io/version: "1.4"
+#    helm.sh/chart: local-ai-4.0.0
+#spec:
+#  accessModes:
+#    - ReadWriteMany
+#  resources:
+#    requests:
+#      storage: "60Gi"
+#---
+## Source: local-ai/templates/pvcs.yaml
+#kind: PersistentVolumeClaim
+#apiVersion: v1
+#metadata:
+#  name: localai-test-local-ai-worker-output
+#  namespace: "default"
+#  labels:
+#    app.kubernetes.io/instance: localai-test
+#    app.kubernetes.io/managed-by: Helm
+#    app.kubernetes.io/name: local-ai
+#    app.kubernetes.io/version: "1.4"
+#    helm.sh/chart: local-ai-4.0.0
+#spec:
+#  accessModes:
+#    - ReadWriteMany
+#  resources:
+#    requests:
+#      storage: "5Gi"
+---
+# Source: local-ai/templates/service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: localai-test-local-ai
+  namespace: "default"
+  labels:
+    helm.sh/chart: local-ai-4.0.0
+    app.kubernetes.io/name: local-ai
+    app.kubernetes.io/instance: "localai-test"
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/version: "1.4"
+spec:
+  selector:
+    app.kubernetes.io/name: local-ai
+    app.kubernetes.io/component: main
+  type: "LoadBalancer"
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8080
+      name: http
+---
+# Source: local-ai/templates/deployments.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: local-ai-main
+  namespace: "default"
+  labels:
+    helm.sh/chart: local-ai-4.0.0
+    app.kubernetes.io/name: local-ai
+    app.kubernetes.io/instance: "localai-test"
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/version: "1.4"
+    app.kubernetes.io/component: main
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: local-ai
+      app.kubernetes.io/instance: localai-test
+      app.kubernetes.io/component: main
+  replicas: 1
+  template:
+    metadata:
+      name:
+      labels:
+        app.kubernetes.io/name: local-ai
+        app.kubernetes.io/instance: localai-test
+        app.kubernetes.io/component: main
+      annotations:
+    spec:
+      runtimeClassName: nvidia
+      initContainers:
+        - name: models-configs
+          image: busybox
+          imagePullPolicy: IfNotPresent
+          command: ["/bin/sh", "-c"]
+          args:
+            - |
+              for file in /models-configs/*; do
+                filename=$(basename "$file")
+                if [[ $filename != *.yaml ]]; then
+                  cp -fL "$file" "/models/$filename.yaml"
+                else
+                  cp -fL "$file" "/models/$filename"
+                fi
+              done
+          volumeMounts:
+            - mountPath: /models-configs
+              name: models-configs
+            - name: models
+              mountPath: /models
+            - name: output
+              mountPath: /tmp/generated
+      containers:
+        - name: app
+          image: "quay.io/go-skynet/local-ai:v2.20.1-cublas-cuda12-ffmpeg"
+          imagePullPolicy: IfNotPresent
+          resources:
+            limits:
+              memory: 20000Mi
+              nvidia.com/gpu: "1"
+            requests:
+              cpu: 200m
+              memory: 2000Mi
+              nvidia.com/gpu: "1"
+          command:
+            - /build/entrypoint.sh
+            - --p2p
+          env:
+            - name: LOCALAI_P2P_TOKEN
+              value: "b3RwOgogIGRodDoKICAgIGludGVydmFsOiAzNjAKICAgIGtleTogWml6NlJEeUVDc3lwcm5vQUhKaThDMXJzR2xUUkpsSnhFNGRnTWxkaUgxcAogICAgbGVuZ3RoOiA0MwogIGNyeXB0bzoKICAgIGludGVydmFsOiA5MDAwCiAgICBrZXk6IHFWNFRqTFFHUzk1NTdlZ0lVcGVteURwcHR3UXYzaGRaSzJ0Q05hYW1tUmsKICAgIGxlbmd0aDogNDMKcm9vbTogR0pmTlI2RVA0Wm8wQ0JxRjhrNEhJNEpjQ3FReEZwQzJEWmZnbVZsS0JtUQpyZW5kZXp2b3VzOiBzV2Z4c1Rza3VHakMwSEhheXlRQ3lXTFVHTHlXaWcxVlJ3UW5TZHlEUlVYCm1kbnM6IGVjWDNZZFhxM3FlSFY5UkV1OGhDNDNyZk9KelJwNzNicXJXY0cwZ091WVQKbWF4X21lc3NhZ2Vfc2l6ZTogMjA5NzE1MjAK"
+            - name: MODELS_PATH
+              value: /models
+            - name: DEBUG
+              value: "true"
+          volumeMounts:
+            - name: models
+              mountPath: /models
+            - name: output
+              mountPath: /tmp/generated
+      volumes:
+        - name: models
+          persistentVolumeClaim:
+            claimName: localai-test-local-ai-main-models
+        - name: output
+          persistentVolumeClaim:
+            claimName: localai-test-local-ai-main-output
+        - name: models-configs
+          configMap:
+            name: localai-test-local-ai-models-configs
+      nodeSelector:
+        nvidia.com/gpu.present: "true"
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+          - labelSelector:
+              matchExpressions:
+              - key: app.kubernetes.io/name
+                operator: In
+                values:
+                - localai
+            topologyKey: kubernetes.io/hostname
+---
+# Source: local-ai/templates/deployments.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: local-ai-worker
+  namespace: "default"
+  labels:
+    helm.sh/chart: local-ai-4.0.0
+    app.kubernetes.io/name: local-ai
+    app.kubernetes.io/instance: "localai-test"
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/version: "1.4"
+    app.kubernetes.io/component: worker
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: local-ai
+      app.kubernetes.io/instance: localai-test
+      app.kubernetes.io/component: worker
+  replicas: 1
+  template:
+    metadata:
+      name:
+      labels:
+        app.kubernetes.io/name: local-ai
+        app.kubernetes.io/instance: localai-test
+        app.kubernetes.io/component: worker
+      annotations:
+    spec:
+      runtimeClassName: nvidia
+      initContainers:
+        - name: models-configs
+          image: busybox
+          imagePullPolicy: IfNotPresent
+          command: ["/bin/sh", "-c"]
+          args:
+            - |
+              for file in /models-configs/*; do
+                filename=$(basename "$file")
+                if [[ $filename != *.yaml ]]; then
+                  cp -fL "$file" "/models/$filename.yaml"
+                else
+                  cp -fL "$file" "/models/$filename"
+                fi
+              done
+          volumeMounts:
+            - mountPath: /models-configs
+              name: models-configs
+            - name: models
+              mountPath: /models
+            - name: output
+              mountPath: /tmp/generated
+      containers:
+        - name: app
+          image: "quay.io/go-skynet/local-ai:v2.20.1-cublas-cuda12-ffmpeg"
+          imagePullPolicy: IfNotPresent
+          resources:
+            limits:
+              memory: 20000Mi
+              nvidia.com/gpu: "1"
+            requests:
+              cpu: 200m
+              memory: 2000Mi
+              nvidia.com/gpu: "1"
+          command:
+            - /build/entrypoint.sh
+            - worker
+            - p2p-llama-cpp-rpc
+          env:
+            - name: LOCALAI_P2P_TOKEN
+              value: "b3RwOgogIGRodDoKICAgIGludGVydmFsOiAzNjAKICAgIGtleTogWml6NlJEeUVDc3lwcm5vQUhKaThDMXJzR2xUUkpsSnhFNGRnTWxkaUgxcAogICAgbGVuZ3RoOiA0MwogIGNyeXB0bzoKICAgIGludGVydmFsOiA5MDAwCiAgICBrZXk6IHFWNFRqTFFHUzk1NTdlZ0lVcGVteURwcHR3UXYzaGRaSzJ0Q05hYW1tUmsKICAgIGxlbmd0aDogNDMKcm9vbTogR0pmTlI2RVA0Wm8wQ0JxRjhrNEhJNEpjQ3FReEZwQzJEWmZnbVZsS0JtUQpyZW5kZXp2b3VzOiBzV2Z4c1Rza3VHakMwSEhheXlRQ3lXTFVHTHlXaWcxVlJ3UW5TZHlEUlVYCm1kbnM6IGVjWDNZZFhxM3FlSFY5UkV1OGhDNDNyZk9KelJwNzNicXJXY0cwZ091WVQKbWF4X21lc3NhZ2Vfc2l6ZTogMjA5NzE1MjAK"
+            - name: MODELS_PATH
+              value: /models
+            - name: DEBUG
+              value: "true"
+          volumeMounts:
+            - name: models
+              mountPath: /models
+            - name: output
+              mountPath: /tmp/generated
+      volumes:
+        - name: models
+          persistentVolumeClaim:
+            claimName: localai-test-local-ai-worker-models
+        - name: output
+          persistentVolumeClaim:
+            claimName: localai-test-local-ai-worker-output
+        - name: models-configs
+          configMap:
+            name: localai-test-local-ai-models-configs
+      nodeSelector:
+        nvidia.com/gpu.present: "true"
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+          - labelSelector:
+              matchExpressions:
+              - key: app.kubernetes.io/name
+                operator: In
+                values:
+                - localai
+            topologyKey: kubernetes.io/hostname
+---
+# Source: local-ai/templates/ingress.yaml
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: localai-test-local-ai
+  namespace: "default"
+  labels:
+    helm.sh/chart: local-ai-4.0.0
+    app.kubernetes.io/name: local-ai
+    app.kubernetes.io/instance: "localai-test"
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/version: "1.4"
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-production
+    hajimari.io/appName: LocalAI
+    hajimari.io/enable: "true"
+    hajimari.io/group: Home
+    hajimari.io/icon: resistor-nodes
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
+    traefik.ingress.kubernetes.io/router.middlewares: networking-chain-authelia@kubernetescrd
+spec:
+  ingressClassName: traefik
+  tls:
+    - hosts:
+        - "ai-test.thekao.cloud"
+      secretName: ai-test.thekao.cloud
+  rules:
+    - host: "ai-test.thekao.cloud"
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: localai-test-local-ai
+                port:
+                  number: 80
