@@ -31,7 +31,7 @@ spec:
           main:
             image:
               repository: ghcr.io/sillytavern/sillytavern
-              tag: 1.12.5
+              tag: 1.12.6
             env:
               TZ: ${TIMEZONE}
             envFrom:
