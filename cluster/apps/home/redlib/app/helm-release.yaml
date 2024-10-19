@@ -22,7 +22,6 @@ spec:
     remediation:
       strategy: rollback
       retries: 3
-    pullPolicy: Always
   values:
     controllers:
       redlib:
