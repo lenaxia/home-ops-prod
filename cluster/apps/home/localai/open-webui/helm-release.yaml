@@ -35,8 +35,10 @@ spec:
             env:
               TZ: ${TIMEZONE}
               WEBUI_URL: https://chat2.${SECRET_DEV_DOMAIN}
+              WEBUI_NAME: The Kao Cloud
               ENABLE_LOGIN_FORM: false
               DEFAULT_MODELS: qwen2.5-72b-instruct
+              ENABLE_OLLAMA_API: false
               # OAuth
               ENABLE_OAUTH_SIGNUP: true
               OAUTH_CLIENT_ID: open-webui
