@@ -46,6 +46,7 @@ spec:
               OPENID_PROVIDER_URL: https://authelia.${SECRET_DEV_DOMAIN}/.well-known/openid-configuration
               # OpenAI
               OPENAI_API_BASE_URL: http://localai.home.svc.cluster.local:8080/v1
+              OPENAI_API_KEY: does-not-matter
 
             envFrom:
               - secretRef:
