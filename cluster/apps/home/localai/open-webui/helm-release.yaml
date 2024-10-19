@@ -2,7 +2,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: &appname sillytavern
+  name: &appname open-webui
   namespace: &namespace home
 spec:
   interval: 15m
@@ -30,13 +30,24 @@ spec:
         containers:
           main:
             image:
-              repository: ghcr.io/sillytavern/sillytavern
-              tag: 1.12.5
+              repository: ghcr.io/open-webui/open-webui
+              tag: git-c2d1a31
             env:
               TZ: ${TIMEZONE}
+              WEBUI_URL: https://chat2.${SECRET_DEV_DOMAIN}
+              ENABLE_LOGIN_FORM: false
+              DEFAULT_MODELS: qwen2.5-72b-instruct
+              # OAuth
+              ENABLE_OAUTH_SIGNUP: true
+              OAUTH_CLIENT_ID: open-webui
+              OAUTH_CLIENT_SECRET: ${SECRET_OPEN_WEBUI_OAUTH_CLIENT_SECRET}
+              OPENID_PROVIDER_URL: https://authelia.${SECRET_DEV_DOMAIN}/.well-known/openid-configuration
+              # OpenAI
+              OPENAI_API_BASE_URL: http://localai.home.svc.cluster.local:8080/v1
+
             envFrom:
               - secretRef:
-                  name: &appname sillytavern
+                  name: &appname open-webui
 
             resources:
               requests:
@@ -51,17 +62,17 @@ spec:
         size: 10Gi
         globalMounts:
           - path: /data
-      config-yaml:
-        enabled: true
-        type: configMap
-        name: sillytavern-configmap
-        globalMounts:
-          - path: /home/node/app/config/config.yaml
-            subPath: config.yaml
+      #config-yaml:
+      #  enabled: true
+      #  type: configMap
+      #  name: open-webui-configmap
+      #  globalMounts:
+      #    - path: /home/node/app/config/config.yaml
+      #      subPath: config.yaml
       #docker-entrypoint-sh:
       #  enabled: true
       #  type: configMap
-      #  name: sillytavern-configmap
+      #  name: open-webui-configmap
       #  globalMounts:
       #    - path: /home/node/app/docker-entrypoint.sh
       #      subPath: docker-entrypoint.sh
@@ -69,7 +80,7 @@ spec:
       main:
         ports:
           http:
-            port: 8000
+            port: 8080
         primary: true
         controller: main
     ingress:
@@ -85,7 +96,7 @@ spec:
           traefik.ingress.kubernetes.io/router.entrypoints: websecure
           traefik.ingress.kubernetes.io/router.middlewares: networking-chain-authelia@kubernetescrd
         hosts:
-          - host: &uri silly.${SECRET_DEV_DOMAIN}
+          - host: &uri chat2.${SECRET_DEV_DOMAIN}
             paths:
               - path: /
                 pathType: Prefix
