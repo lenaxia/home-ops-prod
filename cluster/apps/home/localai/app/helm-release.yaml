@@ -57,8 +57,7 @@ spec:
         LOCALAI_CONTEXT_SIZE: 8192
         SINGLE_ACTIVE_BACKEND: true
         #GALLERIES: '[{"name":"huggingface", "url": "github:go-skynet/model-gallery/huggingface.yaml"}]'
-        #PRELOAD_MODELS: '[{"id": "huggingface@thebloke__wizardlm-7b-v1-0-uncensored-superhot-8k-ggml__wizardlm-7b-v1.0-superhot-8k.ggmlv3.q3_k_m.bin","name": "WizardLM-7B-uncensored"}, {"id": "model-gallery@bert-embeddings"}, {"url": "github:go-skynet/model-gallery/stablediffusion.yaml"}]'
-        PRELOAD_MODELS: '[{"id": "model-gallery@bert-embeddings"}, {"url": "github:go-skynet/model-gallery/stablediffusion.yaml"}]'
+        #PRELOAD_MODELS: '[{"id": "model-gallery@bert-embeddings"}, {"url": "github:go-skynet/model-gallery/stablediffusion.yaml"}]'
         COMPEL: 0
         threads: 4
         context_size: 8192
