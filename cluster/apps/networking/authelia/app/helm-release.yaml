@@ -464,7 +464,7 @@ spec:
         ## Redis Provider
         ##
         redis:
-          enabled: false
+          enabled: true 
           enabledSecret: true
           host: redis-lb.databases.svc.cluster.local
           port: 6379
