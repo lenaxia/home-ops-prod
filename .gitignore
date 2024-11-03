@@ -18,3 +18,4 @@ terraform.tfstate*
 # SOPS
 .sops.yaml
 .aider*
+.env
