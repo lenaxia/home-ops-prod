@@ -62,6 +62,13 @@ spec:
                     api_base: http://localai.home.svc.cluster.local:8080
                     api_key: doesnotmatter
 
+                # Tabby API 
+                - model_name: exl2-qwen2.5-72b-instruct_4_25
+                  litellm_params:
+                    model: openai/Qwen2.5-72B-Instruct-exl2-4_25
+                    api_base: http://tabby.home.svc.cluster.local:5000
+                    api_key: doesnotmatter
+
                 # Ollama
                 - model_name: ollama-openhermes
                   litellm_params:
