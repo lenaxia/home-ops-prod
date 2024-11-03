@@ -66,7 +66,7 @@ spec:
                 - model_name: exl2-qwen2.5-72b-instruct_4_25
                   litellm_params:
                     model: openai/Qwen2.5-72B-Instruct-exl2-4_25
-                    api_base: http://tabby.home.svc.cluster.local:5000
+                    api_base: http://tabbyapi.home.svc.cluster.local:5000
                     api_key: doesnotmatter
 
                 # Ollama
