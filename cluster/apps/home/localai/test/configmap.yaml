@@ -66,7 +66,7 @@ data:
       # An initial model to load.
       # Make sure the model is located in the model directory!
       # REQUIRED: This must be filled out to load a model on startup.
-      model_name: Qwen2.5-72B-Instruct-exl2-2_2
+      model_name: Qwen2.5-72B-Instruct-exl2-4_25
     
       # Names of args to use as a fallback for API load requests (default: []).
       # For example, if you always want cache_mode to be Q4 instead of on the inital model load, add "cache_mode" to this array.
@@ -88,11 +88,11 @@ data:
     
       # Reserve VRAM used for autosplit loading (default: 96 MB on GPU 0).
       # Represented as an array of MB per GPU.
-      autosplit_reserve: [128]
+      autosplit_reserve: [64]
     
       # An integer array of GBs of VRAM to split between GPUs (default: []).
       # Used with tensor parallelism.
-      gpu_split: [18, 18]
+      gpu_split: [20, 20]
     
       # Rope scale (default: 1.0).
       # Same as compress_pos_emb.
@@ -107,7 +107,7 @@ data:
     
       # Enable different cache modes for VRAM savings (default: FP16).
       # Possible values: 'FP16', 'Q8', 'Q6', 'Q4'.
-      cache_mode: 'Q4' 
+      cache_mode: Q8
     
       # Size of the prompt cache to allocate (default: max_seq_len).
       # Must be a multiple of 256 and can't be less than max_seq_len.
