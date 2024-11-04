@@ -100,6 +100,6 @@ resources:
   - ./utilities/pgadmin/ks.yaml
   - ./utilities/podinfo/ks.yaml
   - ./utilities/echo-server/ks.yaml
-  - ./utilities/brother-ql-web/ks.yaml
+    #- ./utilities/brother-ql-web/ks.yaml
   - ./utilities/it-tools/ks.yaml
   #- ./utilities/k8sgpt/ks.yaml
