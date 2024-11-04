@@ -301,6 +301,7 @@ spec:
             - "hass.${SECRET_DEV_DOMAIN}"
             - "jelly.${SECRET_DEV_DOMAIN}"
             - "ai.${SECRET_DEV_DOMAIN}"
+            - "tabby.${SECRET_DEV_DOMAIN}"
             - "llm.${SECRET_DEV_DOMAIN}"
             - "ollama.${SECRET_DEV_DOMAIN}"
             - "overseerr.${SECRET_DEV_DOMAIN}"
