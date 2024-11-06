@@ -4,10 +4,9 @@ commonLabels:
   app.kubernetes.io/name: &app authelia
   app.kubernetes.io/instance: *app
 resources:
-  - helm-release.yaml
+  #- helm-release.yaml
   - ingress.yaml
   - secret.sops.yaml
-    #  - service.yaml
 patches:
   - path: config/patch-deployment.yaml
     target:
