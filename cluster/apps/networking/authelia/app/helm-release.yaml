@@ -40,7 +40,7 @@ spec:
     ## RBAC Configuration.
     ##
     rbac:
-      enabled: true
+      enabled: false
       serviceAccountName: authelia
     
     service:
