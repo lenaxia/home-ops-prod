@@ -8,8 +8,8 @@ spec:
   interval: 5m
   chart:
     spec:
-      chart: *appname
-      version: 0.8.58
+      chart: authelia
+      version: 0.9.9  
       sourceRef:
         kind: HelmRepository
         name: authelia-charts
@@ -27,13 +27,22 @@ spec:
       retries: 6
   values:
     image:
-      repository: ghcr.io/authelia/authelia
-      tag: 4.37.5
-      pullPolicy: Always
-
-    nodeSelector:
-      node-role.kubernetes.io/worker: "true"
-
+      registry: ghcr.io
+      repository: authelia/authelia
+      tag: 
+      pullPolicy: IfNotPresent
+    
+    annotations: {}
+    
+    labels: {}
+    
+    ##
+    ## RBAC Configuration.
+    ##
+    rbac:
+      enabled: true
+      serviceAccountName: authelia
+    
     service:
       enabled: true
       type: LoadBalancer
@@ -43,40 +52,183 @@ spec:
         externalTrafficPolicy: Local
       annotations:
         metallb.universe.tf/address-pool: dev-infra
+    
+    ingress:
+      enabled: false
+    
     pod:
-      # Must be Deployment, DaemonSet, or StatefulSet.
       kind: Deployment
+    
+      annotations: {}
+    
+      labels: {}
+    
       replicas: 1
-
-    envFrom:
-      - secretRef:
-          name: *appname
-
-    ## Authelia Domain
-    ## Should be the root domain you want to protect.
-    ## For example if you have apps app1.example.com and app2.example.com it should be example.com
-    ## This affects the ingress (partially sets the domain used) and configMap.
-    ## Authelia must be served from the domain or a subdomain under it.
-    domain: ${SECRET_DEV_DOMAIN}
-
+    
+      selectors:
+        nodeSelector:
+          node-role.kubernetes.io/worker: "true"
+    
+        affinity:
+          nodeAffinity: {}
+    
+      env: []
+      # env:
+      # - name: 'TZ'
+      #   value: 'Australia/Melbourne'
+    
+      resources:
+        limits: {}
+        # limits:
+        #   cpu: '4.00'
+        #   memory: '125Mi'
+        requests: {}
+        # requests:
+        #   cpu: '0.25'
+        #   memory: '50Mi'
+    
+      probes:
+        method:
+          httpGet:
+            path: /api/health
+            port: http
+            scheme: HTTP
+    
+        liveness:
+          initialDelaySeconds: 0
+          periodSeconds: 30
+          timeoutSeconds: 5
+          successThreshold: 1
+          failureThreshold: 5
+    
+        readiness:
+          initialDelaySeconds: 0
+          periodSeconds: 5
+          timeoutSeconds: 5
+          successThreshold: 1
+          failureThreshold: 5
+    
+        startup:
+          initialDelaySeconds: 10
+          periodSeconds: 5
+          timeoutSeconds: 5
+          successThreshold: 1
+          failureThreshold: 6
+    
+      extraVolumeMounts: []
+      extraVolumes: []
+    
+    ##
+    ## Kubernetes Pod Disruption Budget
+    ##
+    podDisruptionBudget:
+      enabled: false
+    
+      minAvailable: 0
+      maxUnavailable: 0
+    
     ##
     ## Authelia Config Map Generator
     ##
     configMap:
-      enabled: true
     
-      annotations: {}
-      labels: {}
+      # Enable the configMap source for the Authelia config.
+      # If this is false you need to provide a volumeMount via PV/PVC or other means that mounts to /config.
+      disabled: false
     
       key: configuration.yaml
     
-      existingConfigMap: ""
+      existingConfigMap: 
+    
+      extraConfigs: []
+      # extraConfigs:
+      # - '/configuration.oidc.yaml'
+    
+      filters:
+        disabled: false
+    
+      ##
+      ## Server Configuration
+      ##
+      server:
+        ##
+        ## Port sets the configured port for the daemon, service, and the probes.
+        ## Default is 9091 and should not need to be changed.
+        ##
+        port: 9091
+    
+        ## Set the single level path Authelia listens on.
+        ## Must be alphanumeric chars and should not contain any slashes.
+        path: 
+    
+        ## Set the path on disk to Authelia assets.
+        ## Useful to allow overriding of specific static assets.
+        # asset_path: '/config/assets/'
+        asset_path: 
+    
+        ## Customize Authelia headers.
+        headers:
+          ## Read the Authelia docs before setting this advanced option.
+          ## https://www.authelia.com/configuration/miscellaneous/server/#csp_template.
+          csp_template: 
+    
+        ## Server Buffers configuration.
+        buffers:
+          ## Read buffer.
+          read: 4096
+    
+          ## Write buffer.
+          write: 4096
+    
+        ## Server Timeouts configuration.
+        timeouts:
+          ## Read timeout.
+          read: 6s
+    
+          ## Write timeout.
+          write: 6s
+    
+          ## Idle timeout.
+          idle: 30s
+    
+        endpoints:
+          enable_pprof: false
+          enable_expvars: false
+    
+          ## A list of automatically configured authz implementations if you don't wish to manually configure each one.
+          ## Important Note: If you configure the 'authz' section this is completely ignored.
+          automatic_authz_implementations: []
+          # automatic_authz_implementations:
+          # - 'AuthRequest'
+          # - 'ExtAuthz'
+          # - 'ForwardAuth'
+    
+          authz:
+            auth-request:
+              implementation: AuthRequest
+              authn_strategies:
+              - name: HeaderAuthRequestProxyAuthorization
+                schemes:
+                - Basic
+              - name: CookieSession
+            ext-authz:
+              implementation: ExtAuthz
+              authn_strategies:
+              - name: HeaderProxyAuthorization
+                schemes:
+                - Basic
+              - name: CookieSession
+            forward-auth:
+              implementation: ForwardAuth
+              authn_strategies:
+              - name: HeaderProxyAuthorization
+                schemes:
+                - Basic
+              - name: CookieSession
     
       log:
-        level: debug
+        level: info
         format: text
-        ## File path where the logs will be written. If not set logs are written to stdout.
-        # file_path: /config/authelia.log
         file_path: /config/authelia.log
     
       ##
@@ -86,29 +238,65 @@ spec:
         metrics:
           enabled: true
           port: 9959
+          buffers:
+            read: 4096
+            write: 4096
+          timeouts:
+            read: 6s
+            write: 6s
+            idle: 30s
     
           serviceMonitor:
             enabled: true
             annotations: {}
             labels: {}
     
-      default_redirection_url: https://authelia.${SECRET_DEV_DOMAIN}
-    
+      ## Set the default 2FA method for new users and for when a user has a preferred method configured that has been
+      ## disabled. This setting must be a method that is enabled.
       ## Options are totp, webauthn, mobile_push.
-      default_2fa_method: "mobile_push"
+      default_2fa_method: mobile_push
     
       theme: light
+    
+      identity_validation:
+        reset_password:
+          jwt_lifespan: 5m
+          jwt_algorithm: HS256
+          secret:
+            ## Disables this secret and leaves configuring it entirely up to you.
+            disabled: false
+            path: identity_validation.reset_password.jwt.hmac.key
+        elevated_session:
+          code_lifespan: 5m
+          elevation_lifespan: 10m
+          characters: 8
+          require_second_factor: false
+          skip_second_factor: false
+    
     
       ##
       ## TOTP Configuration
       ##
+      ## Parameters used for TOTP generation.
       totp:
         disable: false
-        issuer: ${SECRET_DEV_DOMAIN}
-        algorithm: sha1
+        issuer: Authelia
+        skew: 1
+        secret_size: 32
+        ## It is CRITICAL you read the documentation before changing this option:
+        ## https://www.authelia.com/configuration/second-factor/time-based-one-time-password/#algorithm
+        algorithm: SHA1
         digits: 6
         period: 30
-        skew: 1
+    
+        allowed_algorithms:
+          - SHA1
+    
+        allowed_digits:
+          - 6
+    
+        allowed_periods:
+          - 30
     
       ##
       ## WebAuthn Configuration
@@ -117,67 +305,108 @@ spec:
         disable: false
         timeout: 60s
         display_name: ${SECRET_DEV_DOMAIN}
-        ## Options are none, indirect, direct.
         attestation_conveyance_preference: indirect
-        ## Options are required, preferred, discouraged.
         user_verification: preferred
+    
+      ##
+      ## NTP Configuration
+      ##
+      ## This is used to validate the servers time is accurate enough to validate TOTP.
+      ntp:
+        ## NTP server address.
+        address: udp://time.cloudflare.com:123
+    
+        ## NTP version.
+        version: 4
+    
+        ## Maximum allowed time offset between the host and the NTP server.
+        max_desync: 3s
+    
+        ## Disables the NTP check on startup entirely. This means Authelia will not contact a remote service at all if you
+        ## set this to true, and can operate in a truly offline mode.
+        disable_startup_check: false
+    
+        ## The default of false will prevent startup only if we can contact the NTP server and the time is out of sync with
+        ## the NTP server more than the configured max_desync. If you set this to true, an error will be logged but startup
+        ## will continue regardless of results.
+        disable_failure: false
     
       ##
       ## Duo Push API Configuration
       ##
       ## Parameters used to contact the Duo API. Those are generated when you protect an application of type
-      ## "Partner Auth API" in the management panel.
+      ## 'Partner Auth API' in the management panel.
       duo_api:
         enabled: true
         hostname: api-b68b8774.duosecurity.com
         integration_key: DI2IGENLJKFDHSKGWT1L
         enable_self_enrollment: true
+        secret:
+          disabled: false
+          path: duo.key
     
       ##
       ## Authentication Backend Provider Configuration
       ##
       authentication_backend:
+        ## Password Reset Options.
         password_reset:
           disable: false
-          custom_url: ""
+          custom_url: 
     
         refresh_interval: 5m
     
         ## LDAP backend configuration.
         ##
+        ## This backend allows Authelia to be scaled to more
+        ## than one instance and therefore is recommended for
+        ## production.
         ldap:
+    
+          ## Enable LDAP Backend.
           enabled: true
           implementation: custom
-          url: ldap://${NAS_ADDR}
+          address: 'ldap://192.168.0.120'
           timeout: 5s
           start_tls: false
     
           tls:
-            server_name: ""
+            server_name: 
             skip_verify: false
             minimum_version: TLS1.2
+            maximum_version: TLS1.3
     
           base_dn: dc=kao,dc=family
-    
-          username_attribute: uid
           additional_users_dn: cn=users
           users_filter: (&({username_attribute}={input})(objectClass=posixAccount))
     
           additional_groups_dn: cn=groups
+    
           groups_filter: (&(member={dn})(objectclass=posixGroup))
-          group_name_attribute: cn
-    
-          mail_attribute: mail
-    
-          display_name_attribute: displayName 
     
           permit_referrals: false
-    
-          ## Strongly discouraged. See https://www.authelia.com/configuration/first-factor/ldap/#permit_unauthenticated_bind.
           permit_unauthenticated_bind: false
+          permit_feature_detection_failure: false
     
-          ## The username of the admin user.
           user: uid=autheliauser,cn=users,dc=kao,dc=family
+    
+          password:
+            disabled: false
+            path: authentication.ldap.password.txt
+    
+          attributes:
+            distinguished_name:  # Not sure what this does, its not used in the helm chart
+            username: uid
+            display_name: displayName
+            mail: mail
+            member_of: memberOf
+            group_name: cn
+    
+        ##
+        ## File (Authentication Provider)
+        ##
+        file:
+          enabled: false
     
       ##
       ## Password Policy Configuration.
@@ -187,10 +416,10 @@ spec:
           enabled: false
           min_length: 8
           max_length: 0
-          require_uppercase: true
-          require_lowercase: true
-          require_number: true
-          require_special: true
+          require_uppercase: false
+          require_lowercase: false
+          require_number: false
+          require_special: false
     
         ## zxcvbn is a well known and used password strength algorithm. It does not have tunable settings.
         zxcvbn:
@@ -228,7 +457,7 @@ spec:
         secret:
           enabled: false
           key: configuration.acl.yaml
-          existingSecret: ""
+          existingSecret: 
     
         default_policy: deny
     
@@ -238,7 +467,7 @@ spec:
           - 10.0.0.0/8
           - 172.16.0.0/12
           - 192.168.0.0/16
-    
+
         rules:
         - domain: authelia.${SECRET_DEV_DOMAIN}
           policy: bypass
@@ -252,7 +481,7 @@ spec:
           policy: two_factor
 
         # Vaultwarden admin auth
-        - domain: 
+        - domain:
             - "vault.${SECRET_DEV_DOMAIN}"
           resources:
             - "^/admin/.*$"
@@ -294,7 +523,7 @@ spec:
             - "^/api"
 
         # Local only bypass policies
-        - domain: 
+        - domain:
             - "ldap.${SECRET_DEV_DOMAIN}"
             - "collabora.${SECRET_DEV_DOMAIN}"
             - "minio.${SECRET_DEV_DOMAIN}"
@@ -310,7 +539,7 @@ spec:
             - private
 
         # Public bypass policies
-        - domain: 
+        - domain:
             # Games
             #- "hercules-renewal.${SECRET_DEV_DOMAIN}"
             #- "hercules-classic.${SECRET_DEV_DOMAIN}"
@@ -402,80 +631,88 @@ spec:
           policy: one_factor
 
         # Catchall for anything undefined to be two factor
-        - domain: 
+        - domain:
             - "*.${SECRET_DEV_DOMAIN}"
           policy: two_factor
-
-        # rules:
-        # - domain_regex: '^.*\.example.com$'
-        #   policy: bypass
-        # - domain: public.example.com
-        #   policy: bypass
-        # - domain: "*.example.com"
-        #   policy: bypass
-        #   methods:
-        #   - OPTIONS
-        # - domain: secure.example.com
-        #   policy: one_factor
-        #   networks:
-        #   - private
-        #   - vpn
-        #   - 192.168.1.0/24
-        #   - 10.0.0.1
-        # - domain:
-        #   - secure.example.com
-        #   - private.example.com
-        #   policy: two_factor
-        # - domain: singlefactor.example.com
-        #   policy: one_factor
-        # - domain: "mx2.mail.example.com"
-        #   subject: "group:admins"
-        #   policy: deny
-        # - domain: "*.example.com"
-        #   subject:
-        #   - "group:admins"
-        #   - "group:moderators"
-        #   policy: two_factor
-        # - domain: dev.example.com
-        #   resources:
-        #   - "^/groups/dev/.*$"
-        #   subject: "group:dev"
-        #   policy: two_factor
-        # - domain: dev.example.com
-        #   resources:
-        #   - "^/users/john/.*$"
-        #   subject:
-        #   - ["group:dev", "user:john"]
-        #   - "group:admins"
-        #   policy: two_factor
-        # - domain: "{user}.example.com"
-        #   policy: bypass
     
       ##
       ## Session Provider Configuration
       ##
+      ## The session cookies identify the user once logged in.
+      ## The available providers are: `memory`, `redis`. Memory is the provider unless redis is defined.
       session:
+        ## The name of the session cookie. (default: authelia_session).
         name: authelia_auth_session
         same_site: lax
         expiration: 1h
         inactivity: 5m
-        remember_me_duration: 1M
+        remember_me: 1M
+    
+        encryption_key:
+          disabled: false
+          path: session.encryption.key
+    
+        cookies:
+        -
+        # The subdomain to prefix the domain with. For example using `domain` value `example.com` and `subdomain`
+        # `auth` should yield the URL `https://auth.example.com`. This option does not affect the cookie domain.
+         subdomain: authelia
+    
+        # The domain for cookie and to build the Authelia URL.
+         domain: thekao.cloud
     
         ##
         ## Redis Provider
         ##
+        ## Important: Kubernetes (or HA) users must read https://www.authelia.com/overview/authorization/statelessness/
+        ##
+        ## The redis connection details
         redis:
-          enabled: false 
-          enabledSecret: true
-          host: redis-lb.databases.svc.cluster.local
+          enabled: true
+          deploy: true
+          enabledSecret: false
+          host: redis.databases.svc.cluster.local
           port: 6379
-          username: ""
+          username: 
+          password:
+            disabled: false
+            path: session.redis.password.txt
           database_index: 0
           maximum_active_connections: 8
           minimum_idle_connections: 0
-    
           tls:
             enabled: false
+            server_name: 
+            skip_verify: false
+            minimum_version: TLS1.2
+            maximum_version: TLS1.3
+    
+          ## The Redis HA configuration options.
+          ## This provides specific options to Redis Sentinel, sentinel_name must be defined (Master Name).
+          high_availability:
+            enabled: false
+            enabledSecret: false
+            sentinel_name: mysentinel
+            username: 
+            password:
+              disabled: false
+              path: session.redis.sentinel.password.txt
+    
+            ## The additional nodes to pre-seed the redis provider with (for sentinel).
+            ## If the host in the above section is defined, it will be combined with this list to connect to sentinel.
+            ## For high availability to be used you must have either defined; the host above or at least one node below.
+            nodes: []
+            # nodes:
+            #   - host: 'sentinel-0.databases.svc.cluster.local'
+            #     port: 26379
+            #   - host: 'sentinel-1.databases.svc.cluster.local'
+            #     port: 26379
+    
+            ## Choose the host with the lowest latency.
+            route_by_latency: false
+    
+            ## Choose the host randomly.
+            route_randomly: false
     
       ##
       ## Regulation Configuration
@@ -487,55 +724,89 @@ spec:
         find_time: 2m
         ban_time: 5m
     
+    
       ##
       ## Storage Provider Configuration
       ##
       storage:
+        encryption_key:
+          disabled: false
+          path: storage.encryption.key
+    
+        ##
+        ## Local (Storage Provider)
+        ##
         local:
-          enabled: true
-          path: /config/db.sqlite3
-
+          enabled: false
+    
+        ##
+        ## MySQL (Storage Provider)
+        ##
+        ## Also supports MariaDB
+        ##
         mysql:
           enabled: false
-          host: ${RURI_ADDR}
-          port: 3306
-          database: authelia-k3s
-          username: authelia-k3s
-          password: authelia
-          timeout: 10s
-
+          deploy: false
+    
+        ##
+        ## PostgreSQL (Storage Provider)
+        ##
         postgres:
-          enabled: false
-          host: defaultpg-rw.databases.svc.cluster.local
-          port: 5432
+          enabled: true
+          deploy: false
+          address: defaultpg-rw.databases.svc.cluster.local
+          timeout: 5s
           database: authelia
           schema: public
           username: authelia
-          password: authelia
-          ssl:
-            mode: disable
-            
+          password:
+            disabled: false
+            path: storage.postgres.password.txt
+          tls:
+            enabled: false
+            server_name: 
+            skip_verify: false
+            minimum_version: TLS1.2
+            maximum_version: TLS1.3
     
       ##
       ## Notification Provider
       ##
       ##
+      ## Notifications are sent to users when they require a password reset, a u2f registration or a TOTP registration.
       notifier:
         disable_startup_check: true
+    
+        filesystem:
+          enabled: true
     
         ##
         ## SMTP (Notification Provider)
         ##
         smtp:
-          enabled: true
-          enabledSecret: true
-          host: ${SECRET_AWS_SMTP_HOST}
-          port: ${SECRET_AWS_SMTP_PORT}
+          enabled: false
+          enabledSecret: false
+          address: ${SECRET_AWS_SMTP_HOST}
           timeout: 5s
-          username: ${SECRET_AWS_SMTP_USERNAME}
           sender: ${SECRET_AWS_SMTP_FROM_ADDR}
           identifier: thekao.cloud
-          subject: "[TheKaoCloud] {title}"
+          subject: '[TheKaoCloud] {title}'
+          startup_check_address: 'test@authelia.com'
+          disable_html_emails: false
+          disable_require_tls: false
+    
+          disable_starttls: false
+    
+          username: ${SECRET_AWS_SMTP_USERNAME}
+          password:
+            disabled: false
+            path: notifier.smtp.password.txt
+    
+          tls:
+            server_name: 
+            skip_verify: false
+            minimum_version: TLS1.2
+            maximum_version: TLS1.3
     
       identity_providers:
         oidc:
@@ -543,164 +814,188 @@ spec:
           ## See https://www.authelia.com/r/openid-connect/
           enabled: true
     
-          access_token_lifespan: 1h
-          authorize_code_lifespan: 1m
-          id_token_lifespan: 1h
-          refresh_token_lifespan: 90m
+          hmac_secret:
+            disabled: false
+            path: identity_providers.oidc.hmac.key
     
+          lifespans:
+            access_token: 1h
+            authorize_code: 1m
+            id_token: 1h
+            refresh_token: 90m
+            # custom:
+            #   lifespan_name:
+            #     access_token: 1h
+            #     authorize_code: '1 minute'
+            #     id_token: 1h
+            #     refresh_token: '1 hour and 30 minutes'
+            #     grants:
+            #       authorize_code:
+            #         access_token: 1h
+            #         authorize_code: '1 minute'
+            #         id_token: 1h
+            #         refresh_token: '1 hour and 30 minutes'
+            #       implicit:
+            #         access_token: 1h
+            #         authorize_code: '1 minute'
+            #         id_token: 1h
+            #         refresh_token: '1 hour and 30 minutes'
+            #       client_credentials:
+            #         access_token: 1h
+            #         authorize_code: '1 minute'
+            #         id_token: 1h
+            #         refresh_token: '1 hour and 30 minutes'
+            #       refresh_token:
+            #         access_token: 1h
+            #         authorize_code: '1 minute'
+            #         id_token: 1h
+            #         refresh_token: '1 hour and 30 minutes'
+            #       jwt_bearer:
+            #         access_token: 1h
+            #         authorize_code: '1 minute'
+            #         id_token: 1h
+            #         refresh_token: '1 hour and 30 minutes'
+    
+          ## Adjusts the PKCE enforcement. Options are always, public_clients_only, never.
+          ## For security reasons it's recommended this option is public_clients_only or always, however always is not
+          ## compatible with all clients.
+          enforce_pkce: public_clients_only
+    
+          ## Enables the plain PKCE challenge which is not recommended for security reasons but may be necessary for some clients.
+          enable_pkce_plain_challenge: false
+    
+          ## Enables additional debug messages.
           enable_client_debug_messages: false
+    
+          pushed_authorizations:
+            enforce: false
+            context_lifespan: 5m
+    
+          authorization_policies: {}
+          # authorization_policies:
+          #   policy_name:
+          #     default_policy: 'deny'
+          #     rules:
+          #       - policy: 'two_factor'
+          #         subject: 'user:abc'
+    
+          ## The JWK's issuer option configures multiple JSON Web Keys. It's required that at least one of the JWK's
+          ## configured has the RS256 algorithm. For RSA keys (RS or PS) the minimum is a 2048 bit key.
+          jwks:
+            - key_id: 
+              algorithm: RS256
+              use: sig
+              key:
+                value: |
+                  ${oidc.jwk.RS256.pem}
+              certificate_chain:
+                value: |
+                  ${oidc.jwk.RS256.crt}
+
     
           ## Cross-Origin Resource Sharing (CORS) settings.
           cors:
-            ## List of endpoints in addition to the metadata endpoints to permit cross-origin requests on.
-            endpoints: ["authorization", "token", "revocation", "introspection", "userinfo"]
+            endpoints:
+               - authorization
+               - pushed-authorization-request
+               - token
+               - revocation
+               - introspection
+               - userinfo
+    
+            ## Any origin with https is permitted unless this option is configured or the
+            ## allowed_origins_from_client_redirect_uris option is enabled.
+            allowed_origins: []
+    
+            ## Automatically adds the origin portion of all redirect URI's on all clients to the list of allowed_origins,
+            ## provided they have the scheme http or https and do not have the hostname of localhost.
             allowed_origins_from_client_redirect_uris: true
     
           clients:
-          - id: tailscale
-            description: Tailscale
-            secret: ${SECRET_TAILSCALE_OAUTH_CLIENT_SECRET}
+          - client_id: tailscale
+            client_secret: ${SECRET_TAILSCALE_OAUTH_CLIENT_SECRET_HASHED}
+            client_name: Tailscale
             public: false
-            authorization_policy: one_factor
-            consent_mode: implicit
-            pre_configured_consent_duration: 1y
-            scopes: ["openid", "profile", "email"]
-            redirect_uris: ["https://login.tailscale.com/a/oauth_response"]
-            userinfo_signing_algorithm: none
-          - id: minio
-            description: MinIO
-            secret: ${SECRET_MINIO_OAUTH_CLIENT_SECRET}
-            public: false
-            authorization_policy: one_factor
-            consent_mode: implicit
-            pre_configured_consent_duration: 1y
-            scopes: ["openid", "profile", "email"]
-            redirect_uris: ["https://minio.${SECRET_DEV_DOMAIN}/oauth_callback"]
-          - id: open-webui
-            description: Open-WebUI
-            secret: ${SECRET_OPEN_WEBUI_OAUTH_CLIENT_SECRET}
-            public: false
-            authorization_policy: one_factor
-            consent_mode: implicit
-            pre_configured_consent_duration: 1y
-            scopes: ["openid", "profile", "email"]
-            redirect_uris: ["https://chat2.${SECRET_DEV_DOMAIN}/oauth/oidc/callback"]
-          - id: pgadmin
-            description: PGAdmin
-            secret: ${SECRET_PGADMIN_OAUTH_CLIENT_SECRET}
-            public: false
-            authorization_policy: one_factor
-            consent_mode: implicit
-            pre_configured_consent_duration: 1y
-            scopes: ["openid", "profile", "email"]
-            redirect_uris: ["https://pgadmin.${SECRET_DEV_DOMAIN}/oauth2/authorize"]
-          - id: grafana
-            description: Grafana
-            secret: ${SECRET_GRAFANA_OAUTH_CLIENT_SECRET}
-            public: false
-            authorization_policy: one_factor
+            authorization_policy: two_factor
             consent_mode: implicit
             pre_configured_consent_duration: 1y
             scopes: ["openid", "profile", "groups", "email"]
-            redirect_uris: ["https://grafana.${SECRET_DEV_DOMAIN}/login/generic_oauth"]
-            userinfo_signing_algorithm: none
-          - id: outline
-            description: outline
-            secret: "${SECRET_OUTLINE_OAUTH_CLIENT_SECRET}"
-            public: false
-            authorization_policy: one_factor
-            consent_mode: implicit
-            pre_configured_consent_duration: 1y
-            scopes: ["openid", "profile", "email", "offline_access"]
-            redirect_uris: ["https://w.${SECRET_DEV_DOMAIN}/auth/oidc.callback"]
-            userinfo_signing_algorithm: 'none'
-            token_endpoint_auth_method: 'client_secret_post'
-          - id: overseerr
-            description: overseerr
-            secret: "${SECRET_OVERSEERR_OAUTH_CLIENT_SECRET}"
-            public: false
-            authorization_policy: one_factor
-            consent_mode: implicit
-            pre_configured_consent_duration: 1y
-            scopes: ["openid", "profile", "email"]
-            redirect_uris: ["https://request.${SECRET_DEV_DOMAIN}/api/v1/auth/oidc-callback","https://request2.${SECRET_DEV_DOMAIN}/api/v1/auth/oidc-callback", "https://overseerr.${SECRET_DEV_DOMAIN}/api/v1/auth/oidc-callback"]
-            userinfo_signing_algorithm: none
-            # -
-              ## The ID is the OpenID Connect ClientID which is used to link an application to a configuration.
-              # id: myapp
+            redirect_uris: ["https://login.tailscale.com/a/oauth_response"]
+          #- id: minio
+          #  description: MinIO
+          #  secret: ${SECRET_MINIO_OAUTH_CLIENT_SECRET_HASHED}
+          #  public: false
+          #  authorization_policy: one_factor
+          #  consent_mode: implicit
+          #  pre_configured_consent_duration: 1y
+          #  scopes: ["openid", "profile", "email"]
+          #  redirect_uris: ["https://minio.${SECRET_DEV_DOMAIN}/oauth_callback"]
+          #- id: open-webui
+          #  description: Open-WebUI
+          #  secret: ${SECRET_OPEN_WEBUI_OAUTH_CLIENT_SECRET_HASHED}
+          #  public: false
+          #  authorization_policy: one_factor
+          #  consent_mode: implicit
+          #  pre_configured_consent_duration: 1y
+          #  scopes: ["openid", "profile", "email"]
+          #  redirect_uris: ["https://chat2.${SECRET_DEV_DOMAIN}/oauth/oidc/callback"]
+          #- id: pgadmin
+          #  description: PGAdmin
+          #  secret: ${SECRET_PGADMIN_OAUTH_CLIENT_SECRET_HASHED}
+          #  public: false
+          #  authorization_policy: one_factor
+          #  consent_mode: implicit
+          #  pre_configured_consent_duration: 1y
+          #  scopes: ["openid", "profile", "email"]
+          #  redirect_uris: ["https://pgadmin.${SECRET_DEV_DOMAIN}/oauth2/authorize"]
+          #- id: grafana
+          #  description: Grafana
+          #  secret: ${SECRET_GRAFANA_OAUTH_CLIENT_SECRET_HASHED}
+          #  public: false
+          #  authorization_policy: one_factor
+          #  consent_mode: implicit
+          #  pre_configured_consent_duration: 1y
+          #  scopes: ["openid", "profile", "groups", "email"]
+          #  redirect_uris: ["https://grafana.${SECRET_DEV_DOMAIN}/login/generic_oauth"]
+          #  userinfo_signing_algorithm: none
+          #- id: outline
+          #  description: outline
+          #  secret: ${SECRET_OUTLINE_OAUTH_CLIENT_SECRET_HASHED}
+          #  public: false
+          #  authorization_policy: one_factor
+          #  consent_mode: implicit
+          #  pre_configured_consent_duration: 1y
+          #  scopes: ["openid", "profile", "email", "offline_access"]
+          #  redirect_uris: ["https://w.${SECRET_DEV_DOMAIN}/auth/oidc.callback"]
+          #  userinfo_signing_algorithm: 'none'
+          #  token_endpoint_auth_method: 'client_secret_post'
+          #- id: overseerr
+          #  description: overseerr
+          #  secret: ${SECRET_OVERSEERR_OAUTH_CLIENT_SECRET_HASHED}
+          #  public: false
+          #  authorization_policy: one_factor
+          #  consent_mode: implicit
+          #  pre_configured_consent_duration: 1y
+          #  scopes: ["openid", "profile", "email"]
+          #  redirect_uris: 
+          #    - "https://request.${SECRET_DEV_DOMAIN}/api/v1/auth/oidc-callback"
+          #    - "https://request2.${SECRET_DEV_DOMAIN}/api/v1/auth/oidc-callback"
+          #    - "https://overseerr.${SECRET_DEV_DOMAIN}/api/v1/auth/oidc-callback"
+          #  userinfo_signing_algorithm: none
     
-              ## The description to show to users when they end up on the consent screen. Defaults to the ID above.
-              # description: My Application
-    
-              ## The client secret is a shared secret between Authelia and the consumer of this client.
-              # secret: apple123
-    
-              ## Sector Identifiers are occasionally used to generate pairwise subject identifiers. In most cases this is not
-              ## necessary. Read the documentation for more information.
-              ## The subject identifier must be the host component of a URL, which is a domain name with an optional port.
-              # sector_identifier: example.com
-    
-              ## Sets the client to public. This should typically not be set, please see the documentation for usage.
-              # public: false
-    
-              ## The policy to require for this client; one_factor or two_factor.
-              # authorization_policy: two_factor
-    
-              ## By default users cannot remember pre-configured consents. Setting this value to a period of time using a
-              ## duration notation will enable users to remember consent for this client. The time configured is the amount
-              ## of time the pre-configured consent is valid for granting new authorizations to the user.
-              # pre_configured_consent_duration: 30d
-    
-              ## Audience this client is allowed to request.
-              # audience: []
-    
-              ## Scopes this client is allowed to request.
-              # scopes:
-              #   - openid
-              #   - profile
-              #   - email
-              #   - groups
-    
-              ## Redirect URI's specifies a list of valid case-sensitive callbacks for this client.
-              # redirect_uris:
-              #   - https://oidc.example.com/oauth2/callback
-    
-              ## Grant Types configures which grants this client can obtain.
-              ## It's not recommended to configure this unless you know what you're doing.
-              # grant_types:
-              #   - refresh_token
-              #   - authorization_code
-    
-              ## Response Types configures which responses this client can be sent.
-              ## It's not recommended to configure this unless you know what you're doing.
-              # response_types:
-              #   - code
-    
-              ## Response Modes configures which response modes this client supports.
-              ## It's not recommended to configure this unless you know what you're doing.
-              # response_modes:
-              #   - form_post
-              #   - query
-              #   - fragment
-    
-              ## The algorithm used to sign userinfo endpoint responses for this client, either none or RS256.
-              # userinfo_signing_algorithm: none
     
     ##
-    ## Authelia Secret Generator.
-    ##
-    ## If both the values and existingSecret are not defined, this chart randomly generates a new secret on each
-    ## install. It is recommended that you use something like sealed-secrets (https://github.com/bitnami-labs/sealed-secrets)
-    ## and use the existingSecrets. All secrets can be stored in a single k8s secret if desired using the key option.
+    ## Authelia Secret Configuration.
     ##
     secret:
+      disabled: false
       existingSecret: *appname
     
       annotations: {}
       labels: {}
     
       mountPath: /secrets
-    
+
       ## Secrets.
       jwt:
         key: JWT_SECRET
@@ -727,14 +1022,95 @@ spec:
       oidcHMACSecret:
         key: OIDC_HMAC_SECRET
     
+      ## additionalSecrets contains a list of additional secrets to mount.
+      ## They will all be mounted in the format of '/{mountPath}/{key}' where the '{mountPath}' is the value above and
+      ## '{key}' is the key from the dictionary below (in our example we named it 'example'). If the items are specified
+      ## then those options will be rendered in the volumes spec. See 'example-without-items' for an example that doesn't
+      ## specify this.
+      ##
+      additionalSecrets:
+        authelia-test:
+          items:
+            - key: oidc.jwk.RS256.pem
+              path: oidc.jwk.RS256.pem
+            - key: oidc.jwk.RS256.crt
+              path: oidc.jwk.RS256.crt
+    
+    certificates:
+      existingSecret: ''
+      # existingSecret: 'authelia'
+    
+      annotations: {}
+      # annotations:
+      #   myAnnotation: 'myValue'
+    
+      labels: {}
+      # labels:
+      #   myLabel: 'myValue'
+    
+      values: []
+      # values:
+      # - name: 'Example_Com_Root_Certificate_Authority_B64.pem'
+      #   secretValue: 'LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSURYekNDQWtlZ0F3SUJBZ0lMQkFBQUFBQUJJVmhUQ0tJd0RRWUpLb1pJaHZjTkFRRUxCUUF3VERFZ01CNEcKQTFVRUN4TVhSMnh2WW1Gc1UybG5iaUJTYjI5MElFTkJJQzBnVWpNeEV6QVJCZ05WQkFvVENrZHNiMkpoYkZOcApaMjR4RXpBUkJnTlZCQU1UQ2tkc2IySmhiRk5wWjI0d0hoY05NRGt3TXpFNE1UQXdNREF3V2hjTk1qa3dNekU0Ck1UQXdNREF3V2pCTU1TQXdIZ1lEVlFRTEV4ZEhiRzlpWVd4VGFXZHVJRkp2YjNRZ1EwRWdMU0JTTXpFVE1CRUcKQTFVRUNoTUtSMnh2WW1Gc1UybG5iakVUTUJFR0ExVUVBeE1LUjJ4dlltRnNVMmxuYmpDQ0FTSXdEUVlKS29aSQpodmNOQVFFQkJRQURnZ0VQQURDQ0FRb0NnZ0VCQU13bGRwQjVCbmdpRnZYQWc3YUV5aWllL1FWMkVjV3RpSEw4ClJnSkR4N0tLblFSZkpNc3VTK0ZnZ2tiaFVxc01nVWR3Yk4xazBldjFMS01QZ2owTUs2NlgxN1lVaGhCNXV6c1QKZ0hlTUNPRkowbXBpTHg5ZStwWm8zNGtubFRpZkJ0Yyt5Y3NtV1ExejNyREk2U1lPZ3hYRzcxdUwwZ1JneWttbQpLUFpwTy9iTHlDaVI1WjJLWVZjM3JIUVUzSFRnT3U1eUx5NmMrOUM3di9VOUFPRUdNK2lDSzY1VHBqb1djNHpkClFRNGdPc0MwcDZIcHNrK1FMakpnNlZmTHVRU1NhR2psT0NaZ2RiS2ZkLytSRk8rdUlFbjhyVUFWU05FQ01XRVoKWHJpWDc2MTN0MlNhZXI5ZndSUHZtMkw3RFd6Z1ZHa1dxUVBhYnVtRGszRjJ4bW1GZ2hjQ0F3RUFBYU5DTUVBdwpEZ1lEVlIwUEFRSC9CQVFEQWdFR01BOEdBMVVkRXdFQi93UUZNQU1CQWY4d0hRWURWUjBPQkJZRUZJL3dTMytvCkxrVWtyazFRK21PYWk5N2kzUnU4TUEwR0NTcUdTSWIzRFFFQkN3VUFBNElCQVFCTFFOdkFVS3IreUF6djk1WlUKUlVtN2xnQUpRYXl6RTRhR0tBY3p5bXZtZExtNkFDMnVwQXJUOWZIeEQ0cS9jMmRLZzhkRWUzamdyMjVzYndNcApqak01UmNPTzVMbFhiS3I4RXBic1U4WXQ1Q1JzdVpSais5eFRhR2RXUG9PNHp6VWh3OGxvL3M3YXdsT3F6SkNLCjZmQmRSb3lWM1hwWUtCb3ZIZDdOQURkQmorMUViZGRUS0pkKzgyY0VIaFhYaXBhMDA5NU1KNlJNRzNOemR2UVgKbWNJZmVnN2pMUWl0Q2h3cy96eXJWUTRQa1g0MjY4TlhTYjdoTGkxOFlJdkRRVkVUSTUzTzl6SnJsQUdvbWVjcwpNeDg2T3lYU2hrRE9PeXlHZU1saEx4UzY3dHRWYjkrRTdnVUpUYjBvMkhMTzAySlFaUjdya3BlRE1kbXp0Y3BICldEOWYKLS0tLS1FTkQgQ0VSVElGSUNBVEUtLS0tLQ=='
+      # - name: 'Example_Com_Root_Certificate_Authority.pem'
+      #   value: |
+      #     -----BEGIN CERTIFICATE-----
+      #     MIIDXzCCAkegAwIBAgILBAAAAAABIVhTCKIwDQYJKoZIhvcNAQELBQAwTDEgMB4G
+      #     A1UECxMXR2xvYmFsU2lnbiBSb290IENBIC0gUjMxEzARBgNVBAoTCkdsb2JhbFNp
+      #     Z24xEzARBgNVBAMTCkdsb2JhbFNpZ24wHhcNMDkwMzE4MTAwMDAwWhcNMjkwMzE4
+      #     MTAwMDAwWjBMMSAwHgYDVQQLExdHbG9iYWxTaWduIFJvb3QgQ0EgLSBSMzETMBEG
+      #     A1UEChMKR2xvYmFsU2lnbjETMBEGA1UEAxMKR2xvYmFsU2lnbjCCASIwDQYJKoZI
+      #     hvcNAQEBBQADggEPADCCAQoCggEBAMwldpB5BngiFvXAg7aEyiie/QV2EcWtiHL8
+      #     RgJDx7KKnQRfJMsuS+FggkbhUqsMgUdwbN1k0ev1LKMPgj0MK66X17YUhhB5uzsT
+      #     gHeMCOFJ0mpiLx9e+pZo34knlTifBtc+ycsmWQ1z3rDI6SYOgxXG71uL0gRgykmm
+      #     KPZpO/bLyCiR5Z2KYVc3rHQU3HTgOu5yLy6c+9C7v/U9AOEGM+iCK65TpjoWc4zd
+      #     QQ4gOsC0p6Hpsk+QLjJg6VfLuQSSaGjlOCZgdbKfd/+RFO+uIEn8rUAVSNECMWEZ
+      #     XriX7613t2Saer9fwRPvm2L7DWzgVGkWqQPabumDk3F2xmmFghcCAwEAAaNCMEAw
+      #     DgYDVR0PAQH/BAQDAgEGMA8GA1UdEwEB/wQFMAMBAf8wHQYDVR0OBBYEFI/wS3+o
+      #     LkUkrk1Q+mOai97i3Ru8MA0GCSqGSIb3DQEBCwUAA4IBAQBLQNvAUKr+yAzv95ZU
+      #     RUm7lgAJQayzE4aGKAczymvmdLm6AC2upArT9fHxD4q/c2dKg8dEe3jgr25sbwMp
+      #     jjM5RcOO5LlXbKr8EpbsU8Yt5CRsuZRj+9xTaGdWPoO4zzUhw8lo/s7awlOqzJCK
+      #     6fBdRoyV3XpYKBovHd7NADdBj+1EbddTKJd+82cEHhXXipa0095MJ6RMG3NzdvQX
+      #     mcIfeg7jLQitChws/zyrVQ4PkX4268NXSb7hLi18YIvDQVETI53O9zJrlAGomecs
+      #     Mx86OyXShkDOOyyGeMlhLxS67ttVb9+E7gUJTb0o2HLO02JQZR7rkpeDMdmztcpH
+      #     WD9f
+      #     -----END CERTIFICATE-----
+    
     ##
     ## Authelia Persistence Configuration.
     ##
-    #persistence:
-    #  config:
-    #    enabled: true
-    #    type: configMap
-    #    name: *appname
-    #    subPath: configuration.yml
-    #    mountPath: /config/configuration.yml
-    #    readOnly: false
+    persistence:
+      enabled: false
+    
+    # -- Configure redis database subchart under this key.
+    #    This will be deployed when session.redis.deploy is set to true
+    #    Currently settings need to be manually copied from here to the session.redis section
+    #    For more options see [redis chart documentation](https://github.com/bitnami/charts/tree/main/bitnami/redis)
+    redis:
+      architecture: standalone
+      auth:
+        enabled: false
+        sentinel: true
+        password: redis
+        existingSecret: 
+        existingSecretPasswordKey: 
+        usePasswordFiles: false
+      master:
+        resources: {}
+        priorityClassName: 
+        persistence:
+          enabled: false
+          # storageClass: ""
+          accessModes:
+            - ReadWriteOnce
+          size: 1Gi
+      replica:
+        replicaCount: 3
+        resources: {}
+        priorityClassName: ""
+        persistence:
+          enabled: false
+          # storageClass: ""
+          accessModes:
+            - ReadWriteOnce
+          size: 1Gi
