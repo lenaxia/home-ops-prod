@@ -671,7 +671,7 @@ spec:
           enabled: true
           deploy: true
           enabledSecret: false
-          host: redis.databases.svc.cluster.local
+          host: authelia-redis-master.networking.svc.cluster.local
           port: 6379
           username: 
           password:
@@ -909,76 +909,76 @@ spec:
             allowed_origins_from_client_redirect_uris: true
     
           clients:
-          - client_id: tailscale
-            client_secret: ${SECRET_TAILSCALE_OAUTH_CLIENT_SECRET_HASHED}
-            client_name: Tailscale
-            public: false
-            authorization_policy: two_factor
-            consent_mode: implicit
-            pre_configured_consent_duration: 1y
-            scopes: ["openid", "profile", "groups", "email"]
-            redirect_uris: ["https://login.tailscale.com/a/oauth_response"]
-          #- id: minio
-          #  description: MinIO
-          #  secret: ${SECRET_MINIO_OAUTH_CLIENT_SECRET_HASHED}
-          #  public: false
-          #  authorization_policy: one_factor
-          #  consent_mode: implicit
-          #  pre_configured_consent_duration: 1y
-          #  scopes: ["openid", "profile", "email"]
-          #  redirect_uris: ["https://minio.${SECRET_DEV_DOMAIN}/oauth_callback"]
-          #- id: open-webui
-          #  description: Open-WebUI
-          #  secret: ${SECRET_OPEN_WEBUI_OAUTH_CLIENT_SECRET_HASHED}
-          #  public: false
-          #  authorization_policy: one_factor
-          #  consent_mode: implicit
-          #  pre_configured_consent_duration: 1y
-          #  scopes: ["openid", "profile", "email"]
-          #  redirect_uris: ["https://chat2.${SECRET_DEV_DOMAIN}/oauth/oidc/callback"]
-          #- id: pgadmin
-          #  description: PGAdmin
-          #  secret: ${SECRET_PGADMIN_OAUTH_CLIENT_SECRET_HASHED}
-          #  public: false
-          #  authorization_policy: one_factor
-          #  consent_mode: implicit
-          #  pre_configured_consent_duration: 1y
-          #  scopes: ["openid", "profile", "email"]
-          #  redirect_uris: ["https://pgadmin.${SECRET_DEV_DOMAIN}/oauth2/authorize"]
-          #- id: grafana
-          #  description: Grafana
-          #  secret: ${SECRET_GRAFANA_OAUTH_CLIENT_SECRET_HASHED}
-          #  public: false
-          #  authorization_policy: one_factor
-          #  consent_mode: implicit
-          #  pre_configured_consent_duration: 1y
-          #  scopes: ["openid", "profile", "groups", "email"]
-          #  redirect_uris: ["https://grafana.${SECRET_DEV_DOMAIN}/login/generic_oauth"]
-          #  userinfo_signing_algorithm: none
-          #- id: outline
-          #  description: outline
-          #  secret: ${SECRET_OUTLINE_OAUTH_CLIENT_SECRET_HASHED}
-          #  public: false
-          #  authorization_policy: one_factor
-          #  consent_mode: implicit
-          #  pre_configured_consent_duration: 1y
-          #  scopes: ["openid", "profile", "email", "offline_access"]
-          #  redirect_uris: ["https://w.${SECRET_DEV_DOMAIN}/auth/oidc.callback"]
-          #  userinfo_signing_algorithm: 'none'
-          #  token_endpoint_auth_method: 'client_secret_post'
-          #- id: overseerr
-          #  description: overseerr
-          #  secret: ${SECRET_OVERSEERR_OAUTH_CLIENT_SECRET_HASHED}
-          #  public: false
-          #  authorization_policy: one_factor
-          #  consent_mode: implicit
-          #  pre_configured_consent_duration: 1y
-          #  scopes: ["openid", "profile", "email"]
-          #  redirect_uris: 
-          #    - "https://request.${SECRET_DEV_DOMAIN}/api/v1/auth/oidc-callback"
-          #    - "https://request2.${SECRET_DEV_DOMAIN}/api/v1/auth/oidc-callback"
-          #    - "https://overseerr.${SECRET_DEV_DOMAIN}/api/v1/auth/oidc-callback"
-          #  userinfo_signing_algorithm: none
+            - client_id: tailscale
+              client_secret: ${SECRET_TAILSCALE_OAUTH_CLIENT_SECRET_HASHED}
+              client_name: Tailscale
+              public: false
+              authorization_policy: two_factor
+              consent_mode: implicit
+              pre_configured_consent_duration: 1y
+              scopes: ["openid", "profile", "groups", "email"]
+              redirect_uris: ["https://login.tailscale.com/a/oauth_response"]
+            - client_id: minio
+              client_secret: ${SECRET_MINIO_OAUTH_CLIENT_SECRET_HASHED}
+              client_name: MinIO
+              public: false
+              authorization_policy: one_factor
+              consent_mode: implicit
+              pre_configured_consent_duration: 1y
+              scopes: ["openid", "profile", "email"]
+              redirect_uris: ["https://minio.${SECRET_DEV_DOMAIN}/oauth_callback"]
+            - client_id: open-webui
+              client_secret: ${SECRET_OPEN_WEBUI_OAUTH_CLIENT_SECRET_HASHED}
+              client_name: Open-WebUI
+              public: false
+              authorization_policy: one_factor
+              consent_mode: implicit
+              pre_configured_consent_duration: 1y
+              scopes: ["openid", "profile", "email"]
+              redirect_uris: ["https://chat2.${SECRET_DEV_DOMAIN}/oauth/oidc/callback"]
+            - client_id: pgadmin
+              client_secret: ${SECRET_PGADMIN_OAUTH_CLIENT_SECRET_HASHED}
+              client_name: PGAdmin
+              public: false
+              authorization_policy: one_factor
+              consent_mode: implicit
+              pre_configured_consent_duration: 1y
+              scopes: ["openid", "profile", "email"]
+              redirect_uris: ["https://pgadmin.${SECRET_DEV_DOMAIN}/oauth2/authorize"]
+            - client_id: grafana
+              client_secret: ${SECRET_GRAFANA_OAUTH_CLIENT_SECRET_HASHED}
+              client_name: Grafana
+              public: false
+              authorization_policy: one_factor
+              consent_mode: implicit
+              pre_configured_consent_duration: 1y
+              scopes: ["openid", "profile", "groups", "email"]
+              redirect_uris: ["https://grafana.${SECRET_DEV_DOMAIN}/login/generic_oauth"]
+              userinfo_signing_algorithm: none
+            - client_id: outline
+              client_secret: ${SECRET_OUTLINE_OAUTH_CLIENT_SECRET_HASHED}
+              client_name: Outline
+              public: false
+              authorization_policy: one_factor
+              consent_mode: implicit
+              pre_configured_consent_duration: 1y
+              scopes: ["openid", "profile", "email", "offline_access"]
+              redirect_uris: ["https://w.${SECRET_DEV_DOMAIN}/auth/oidc.callback"]
+              userinfo_signing_algorithm: 'none'
+              token_endpoint_auth_method: 'client_secret_post'
+            - client_id: overseerr
+              client_secret: ${SECRET_OVERSEERR_OAUTH_CLIENT_SECRET_HASHED}
+              client_name: Overseerr
+              public: false
+              authorization_policy: one_factor
+              consent_mode: implicit
+              pre_configured_consent_duration: 1y
+              scopes: ["openid", "profile", "email"]
+              redirect_uris:
+                - "https://request.${SECRET_DEV_DOMAIN}/api/v1/auth/oidc-callback"
+                - "https://request2.${SECRET_DEV_DOMAIN}/api/v1/auth/oidc-callback"
+                - "https://overseerr.${SECRET_DEV_DOMAIN}/api/v1/auth/oidc-callback"
+              userinfo_signing_algorithm: none
     
     
     ##
@@ -1088,9 +1088,8 @@ spec:
       auth:
         enabled: false
         sentinel: true
-        password: redis
-        existingSecret: 
-        existingSecretPasswordKey: 
+        existingSecret: *appname
+        existingSecretPasswordKey: REDIS_PASSWORD
         usePasswordFiles: false
       master:
         resources: {}
