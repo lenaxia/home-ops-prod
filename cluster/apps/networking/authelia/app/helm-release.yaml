@@ -881,16 +881,16 @@ spec:
     
           ## The JWK's issuer option configures multiple JSON Web Keys. It's required that at least one of the JWK's
           ## configured has the RS256 algorithm. For RSA keys (RS or PS) the minimum is a 2048 bit key.
-          jwks:
-            - key_id: 
-              algorithm: RS256
-              use: sig
-              key:
-                value: |
-                  ${oidc.jwk.RS256.pem}
-              certificate_chain:
-                value: |
-                  ${oidc.jwk.RS256.crt}
+          #jwks:
+          #  - key_id: 
+          #    algorithm: RS256
+          #    use: sig
+          #    key:
+          #      value: |
+          #        ${oidc.jwk.RS256.pem}
+          #    certificate_chain:
+          #      value: |
+          #        ${oidc.jwk.RS256.crt}
 
     
           ## Cross-Origin Resource Sharing (CORS) settings.
