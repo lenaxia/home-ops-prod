@@ -882,40 +882,42 @@ spec:
           ## The JWK's issuer option configures multiple JSON Web Keys. It's required that at least one of the JWK's
           ## configured has the RS256 algorithm. For RSA keys (RS or PS) the minimum is a 2048 bit key.
           jwks:
-            - key_id: 
+            - key_id:
               algorithm: RS256
               use: sig
               key:
                 value: |
                   -----BEGIN PRIVATE KEY-----
                   MIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQC/p3lSwBnASUTb
-                  EYT0T5IhlX6Ry/jWdgX49483Ob//Cmc3rLq6v4qVFnq+AZH3Rb540Hv/ONJmJF4
-                  nqvNms2/GjUXfz87X8mPbs7g4DthmH/pUyv5k+1Pe8iz9fYhvuwE2X+RBOnn+ey
-                  cEL9JSJw3ajayO/xcNDAkCoNUtwdIfqDGQy9Oa0GpCxoyojFyXiTYShEc3xA8WE5
-                  uyFpmjHtT39mAKOUhw6zJxT64i5tu+YDxch0MnhsQze+05Asvs58GmAw3thupV9
-                  rw0nNjevFKB8sO/GuY8xRQ8hyWibgiVCRKkeoJNezS/e4slxmyLUT20oLVuQ/mw+
-                  amGFVDRBoM7AgMBAAECggEAFtPd0YtsBck0WFuH2Im5wCJMRxVieDjqkTL7bfqE8
-                  d3NWYZLX379BLD+wa7yMd+uxjke69Faziu6w0LLZwosYBvnnLblzjbiygJoCNVL1
-                  S4t5PegwWpmHQH/ddoD7Dr78/wL9fD/It6MUSVZCcv5DHUffpDHsBgk4plBiwew/
-                  XAYQxTihArKzSpFAjYqYsV0s7gOEKTHV3KMacbzHMR7Jbi1n4O6KVy9V4fSakuVv
-                  gAbsueilVxghkcS2KXE2uKeSdJMTYLjzYQKSVwRTvD7d1Di3JLORdPLI0Tc7nRyL
-                  ohxrZ2LvQpk/qu84zzuMc2wauqCXc2D+3bLwIt9W7OObYQKBgQDtRyUathWWXiF/
-                  hxdypB1Hv51kRZ88YGK4Ypli2kHt8kxBYkYx1U8uj3V4evSJn87NU1bH3JA/0wMc
-                  Ajc9s9Uto3JuJeJqPChKpRek2BdWz5VfZVVCH3D6bloSEZ+RjCaqC+yWkdW+HG6/
-                  dgkzASRojlFW4cThDs3YhlcXgAygwwKBgQDOxsKtUbLMSTm9SoshJbwZkzivXmf9
-                  AhuK8wb9mVK0tR++wVq7ZrbAxjNZVV43TnRBg/a4kBzdph6ytZopFis0LWk0rVR6
-                  AI5AcmBREFUGnVukUhMZLUJVXJJSMX+I/Ch5p+Q3gWKeLpj4meLAwXMkB/bBAFCV
-                  oFdO8Gl8zS/sKQKBgEGW3QbZNnZuZswdx7mE7CMdMKC7Lh0+d4uIleXhd0ATLkkU
-                  pVq5ID46obpAIsC4UC4pz19H9QfviHiBlEuWHmOTPtp71m6PWoPnxvVmVm1EzIG
-                  mPT8d+dkAEB3WiUlueHGhAjFM9syqh2KdekWDF1FfpdRibE3aDcTAvepdFyCJAo
-                  GBAMFU TxKzz0N3t3eHadv9JwiWgKpez0VcohnhLgkQQKbariqxJ78NwxMsfTgq
-                  PCPjw4i59IUNoR+PwSX/63o80vo+9x2cbd6ABIC3L9y7M3QyzkstvdONYHblTZ1
-                  x0Ddo5AMS+ar32xfgo3/UiZEFjj0DAS/ktnOfbeJNn6NjSUo5AoGAar7FOfeS35Q
-                  q7KXzKzRVbH7j31SM1RU+5d02+jG6NBpfzfr6Hx2ge+KbuIvSa8j/P0lscFELJ/Z
-                  O8KQxYsQZJb285Hw980hcPG3kOklkp4/ZkMIfXfquM/tHD8U+b8d9Be7Z1TpjT3
-                  KtxRosLJi//gEa0u//jMDA9VoTfeHN3LE=
+                  EYT0T5IhlX6Ry/jWdgX49483Ob//Cmc3rLq6v4qVFnq+AZH3Rb540Hv/ONJmJF4n
+                  qvNms2/GjUXfz87X8mPbs7g4DthmH/pUyv5k+1Pe8iz9fYhvuwE2X+RBOnn+eycE
+                  L9JSJw3ajayO/xcNDAkCoNUtwdIfqDGQy9Oa0GpCxoyojFyXiTYShEc3xA8WE5uy
+                  FpmjHtT39mAKOUhw6zJxT64i5tu+YDxch0MnhsQze+05Asvs58GmAw3thupV9rw0
+                  nNjevFKB8sO/GuY8xRQ8hyWibgiVCRKkeoJNezS/e4slxmyLUT20oLVuQ/mw+amG
+                  FVDRBoM7AgMBAAECggEAFtPd0YtsBck0WFuH2Im5wCJMRxVieDjqkTL7bfqE8d3N
+                  WYZLX379BLD+wa7yMd+uxjke69Faziu6w0LLZwosYBvnnLblzjbiygJoCNVL1S4t
+                  5PegwWpmHQH/ddoD7Dr78/wL9fD/It6MUSVZCcv5DHUffpDHsBgk4plBiwew/XAY
+                  QxTihArKzSpFAjYqYsV0s7gOEKTHV3KMacbzHMR7Jbi1n4O6KVy9V4fSakuVvgAb
+                  seilVxghkcS2KXE2uKeSdJMTYLjzYQKSVwRTvD7d1Di3JLORdPLI0Tc7nRyLohxr
+                  Z2LvQpk/qu84zzuMc2wauqCXc2D+3bLwIt9W7OObYQKBgQDtRyUathWWXiF/hxdy
+                  pB1Hv51kRZ88YGK4Ypli2kHt8kxBYkYx1U8uj3V4evSJn87NU1bH3JA/0wMcAjc9
+                  s9Uto3JuJeJqPChKpRek2BdWz5VfZVVCH3D6bloSEZ+RjCaqC+yWkdW+HG6/dgkz
+                  ASRojlFW4cThDs3YhlcXgAygwwKBgQDOxsKtUbLMSTm9SoshJbwZkzivXmf9AhuK
+                  8wb9mVK0tR++wVq7ZrbAxjNZVV43TnRBg/a4kBzdph6ytZopFis0LWk0rVR6AI5A
+                  cmBREFUGnVukUhMZLUJVXJJSMX+I/Ch5p+Q3gWKeLpj4meLAwXMkB/bBAFCVoFdO
+                  8Gl8zS/sKQKBgEGW3QbZNnZuZswdx7mE7CMdMKC7Lh0+d4uIleXhd0ATLkkUpVq5
+                  ID46obpAIsC4UC4pz19H9QfviHiBlEuWHmOTPtp71m6PWoPnxvVmVm1EzIGmPT8d
+                  +dkAEB3WiUlueHGhAjFM9syqh2KdekWDF1FfpdRibE3aDcTAvepdFyCJAoGBAMFU
+                  TxKzz0N3t3eHadv9JwiWgKpez0VcohnhLgkQQKbariqxJ78NwxMsfTgqPCPjw4i5
+                  9IUNoR+PwSX/63o80vo+9x2cbd6ABIC3L9y7M3QyzkstvdONYHblTZ1x0Ddo5AMS
+                  +ar32xfgo3/UiZEFjj0DAS/ktnOfbeJNn6NjSUo5AoGAar7FOfeS35Qq7KXzKzRV
+                  bH7j31SM1RU+5d02+jG6NBpfzfr6Hx2ge+KbuIvSa8j/P0lscFELJ/ZO8KQxYsQZ
+                  Jb285Hw980hcPG3kOklkp4/ZkMIfXfquM/tHD8U+b8d9Be7Z1TpjT3KtxRosLJi/
+                  /gEa0u//jMDA9VoTfeHN3LE=
                   -----END PRIVATE KEY-----
+                #path: /secrets/authelia-test/oidc.jwk.RS256.pem
               certificate_chain:
+                #path: /secrets/authelia-test/oidc.jwk.RS256.crt
                 value: |
                   -----BEGIN CERTIFICATE-----
                   MIIC0DCCAbigAwIBAgIGAZL/Z3StMA0GCSqGSIb3DQEBCwUAMCkxJzAlBgNVBAMM
