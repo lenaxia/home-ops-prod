@@ -887,56 +887,56 @@ spec:
               use: sig
               key:
                 value: |
-                  -----BEGIN PRIVATE KEY-----
-                  MIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQC/p3lSwBnASUTb
-                  EYT0T5IhlX6Ry/jWdgX49483Ob//Cmc3rLq6v4qVFnq+AZH3Rb540Hv/ONJmJF4n
-                  qvNms2/GjUXfz87X8mPbs7g4DthmH/pUyv5k+1Pe8iz9fYhvuwE2X+RBOnn+eycE
-                  L9JSJw3ajayO/xcNDAkCoNUtwdIfqDGQy9Oa0GpCxoyojFyXiTYShEc3xA8WE5uy
-                  FpmjHtT39mAKOUhw6zJxT64i5tu+YDxch0MnhsQze+05Asvs58GmAw3thupV9rw0
-                  nNjevFKB8sO/GuY8xRQ8hyWibgiVCRKkeoJNezS/e4slxmyLUT20oLVuQ/mw+amG
-                  FVDRBoM7AgMBAAECggEAFtPd0YtsBck0WFuH2Im5wCJMRxVieDjqkTL7bfqE8d3N
-                  WYZLX379BLD+wa7yMd+uxjke69Faziu6w0LLZwosYBvnnLblzjbiygJoCNVL1S4t
-                  5PegwWpmHQH/ddoD7Dr78/wL9fD/It6MUSVZCcv5DHUffpDHsBgk4plBiwew/XAY
-                  QxTihArKzSpFAjYqYsV0s7gOEKTHV3KMacbzHMR7Jbi1n4O6KVy9V4fSakuVvgAb
-                  seilVxghkcS2KXE2uKeSdJMTYLjzYQKSVwRTvD7d1Di3JLORdPLI0Tc7nRyLohxr
-                  Z2LvQpk/qu84zzuMc2wauqCXc2D+3bLwIt9W7OObYQKBgQDtRyUathWWXiF/hxdy
-                  pB1Hv51kRZ88YGK4Ypli2kHt8kxBYkYx1U8uj3V4evSJn87NU1bH3JA/0wMcAjc9
-                  s9Uto3JuJeJqPChKpRek2BdWz5VfZVVCH3D6bloSEZ+RjCaqC+yWkdW+HG6/dgkz
-                  ASRojlFW4cThDs3YhlcXgAygwwKBgQDOxsKtUbLMSTm9SoshJbwZkzivXmf9AhuK
-                  8wb9mVK0tR++wVq7ZrbAxjNZVV43TnRBg/a4kBzdph6ytZopFis0LWk0rVR6AI5A
-                  cmBREFUGnVukUhMZLUJVXJJSMX+I/Ch5p+Q3gWKeLpj4meLAwXMkB/bBAFCVoFdO
-                  8Gl8zS/sKQKBgEGW3QbZNnZuZswdx7mE7CMdMKC7Lh0+d4uIleXhd0ATLkkUpVq5
-                  ID46obpAIsC4UC4pz19H9QfviHiBlEuWHmOTPtp71m6PWoPnxvVmVm1EzIGmPT8d
-                  +dkAEB3WiUlueHGhAjFM9syqh2KdekWDF1FfpdRibE3aDcTAvepdFyCJAoGBAMFU
-                  TxKzz0N3t3eHadv9JwiWgKpez0VcohnhLgkQQKbariqxJ78NwxMsfTgqPCPjw4i5
-                  9IUNoR+PwSX/63o80vo+9x2cbd6ABIC3L9y7M3QyzkstvdONYHblTZ1x0Ddo5AMS
-                  +ar32xfgo3/UiZEFjj0DAS/ktnOfbeJNn6NjSUo5AoGAar7FOfeS35Qq7KXzKzRV
-                  bH7j31SM1RU+5d02+jG6NBpfzfr6Hx2ge+KbuIvSa8j/P0lscFELJ/ZO8KQxYsQZ
-                  Jb285Hw980hcPG3kOklkp4/ZkMIfXfquM/tHD8U+b8d9Be7Z1TpjT3KtxRosLJi/
-                  /gEa0u//jMDA9VoTfeHN3LE=
-                  -----END PRIVATE KEY-----
-                #path: /secrets/authelia-test/oidc.jwk.RS256.pem
+                #  -----BEGIN PRIVATE KEY-----
+                #  MIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQC/p3lSwBnASUTb
+                #  EYT0T5IhlX6Ry/jWdgX49483Ob//Cmc3rLq6v4qVFnq+AZH3Rb540Hv/ONJmJF4n
+                #  qvNms2/GjUXfz87X8mPbs7g4DthmH/pUyv5k+1Pe8iz9fYhvuwE2X+RBOnn+eycE
+                #  L9JSJw3ajayO/xcNDAkCoNUtwdIfqDGQy9Oa0GpCxoyojFyXiTYShEc3xA8WE5uy
+                #  FpmjHtT39mAKOUhw6zJxT64i5tu+YDxch0MnhsQze+05Asvs58GmAw3thupV9rw0
+                #  nNjevFKB8sO/GuY8xRQ8hyWibgiVCRKkeoJNezS/e4slxmyLUT20oLVuQ/mw+amG
+                #  FVDRBoM7AgMBAAECggEAFtPd0YtsBck0WFuH2Im5wCJMRxVieDjqkTL7bfqE8d3N
+                #  WYZLX379BLD+wa7yMd+uxjke69Faziu6w0LLZwosYBvnnLblzjbiygJoCNVL1S4t
+                #  5PegwWpmHQH/ddoD7Dr78/wL9fD/It6MUSVZCcv5DHUffpDHsBgk4plBiwew/XAY
+                #  QxTihArKzSpFAjYqYsV0s7gOEKTHV3KMacbzHMR7Jbi1n4O6KVy9V4fSakuVvgAb
+                #  seilVxghkcS2KXE2uKeSdJMTYLjzYQKSVwRTvD7d1Di3JLORdPLI0Tc7nRyLohxr
+                #  Z2LvQpk/qu84zzuMc2wauqCXc2D+3bLwIt9W7OObYQKBgQDtRyUathWWXiF/hxdy
+                #  pB1Hv51kRZ88YGK4Ypli2kHt8kxBYkYx1U8uj3V4evSJn87NU1bH3JA/0wMcAjc9
+                #  s9Uto3JuJeJqPChKpRek2BdWz5VfZVVCH3D6bloSEZ+RjCaqC+yWkdW+HG6/dgkz
+                #  ASRojlFW4cThDs3YhlcXgAygwwKBgQDOxsKtUbLMSTm9SoshJbwZkzivXmf9AhuK
+                #  8wb9mVK0tR++wVq7ZrbAxjNZVV43TnRBg/a4kBzdph6ytZopFis0LWk0rVR6AI5A
+                #  cmBREFUGnVukUhMZLUJVXJJSMX+I/Ch5p+Q3gWKeLpj4meLAwXMkB/bBAFCVoFdO
+                #  8Gl8zS/sKQKBgEGW3QbZNnZuZswdx7mE7CMdMKC7Lh0+d4uIleXhd0ATLkkUpVq5
+                #  ID46obpAIsC4UC4pz19H9QfviHiBlEuWHmOTPtp71m6PWoPnxvVmVm1EzIGmPT8d
+                #  +dkAEB3WiUlueHGhAjFM9syqh2KdekWDF1FfpdRibE3aDcTAvepdFyCJAoGBAMFU
+                #  TxKzz0N3t3eHadv9JwiWgKpez0VcohnhLgkQQKbariqxJ78NwxMsfTgqPCPjw4i5
+                #  9IUNoR+PwSX/63o80vo+9x2cbd6ABIC3L9y7M3QyzkstvdONYHblTZ1x0Ddo5AMS
+                #  +ar32xfgo3/UiZEFjj0DAS/ktnOfbeJNn6NjSUo5AoGAar7FOfeS35Qq7KXzKzRV
+                #  bH7j31SM1RU+5d02+jG6NBpfzfr6Hx2ge+KbuIvSa8j/P0lscFELJ/ZO8KQxYsQZ
+                #  Jb285Hw980hcPG3kOklkp4/ZkMIfXfquM/tHD8U+b8d9Be7Z1TpjT3KtxRosLJi/
+                #  /gEa0u//jMDA9VoTfeHN3LE=
+                #  -----END PRIVATE KEY-----
+                path: /secrets/authelia/oidc.jwk.RS256.pem
               certificate_chain:
-                #path: /secrets/authelia-test/oidc.jwk.RS256.crt
-                value: |
-                  -----BEGIN CERTIFICATE-----
-                  MIIC0DCCAbigAwIBAgIGAZL/Z3StMA0GCSqGSIb3DQEBCwUAMCkxJzAlBgNVBAMM
-                  HngxRFo5R0pPZUU0cDBhemF2SkdnelBKNlhNUSUzRDAeFw0yNDExMDYwMjU3MDNa
-                  Fw0yNTA5MDIwMjU3MDNaMCkxJzAlBgNVBAMMHngxRFo5R0pPZUU0cDBhemF2Skdn
-                  elBKNlhNUSUzRDCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBAL+neVLA
-                  GcBJRNsRhPRPkiGVfpHL+NZ2Bfj3jzc5v/8KZzesurq/ipUWer4BkfdFvnjQe/84
-                  0mYkXieq82azb8aNRd/PztfyY9uzuDgO2GYf+lTK/mT7U97yLP19iG+7ATZf5EE6
-                  ef57JwQv0lInDdqNrI7/Fw0MCQKg1S3B0h+oMZDL05rQakLGjKiMXJeJNhKERzfE
-                  DxYTm7IWmaMe1Pf2YAo5SHDrMnFPriLm275gPFyHQyeGxDN77TkCy+znwaYDDe2G
-                  6lX2vDSc2N68UoHyw78a5jzFFDyHJaJuCJUJEqR6gk17NL97iyXGbItRPbSgtW5D
-                  +bD5qYYVUNEGgzsCAwEAATANBgkqhkiG9w0BAQsFAAOCAQEAZnpIviDO/wUxgreT
-                  qVfiGi4Sdvt7/diUCgtoAMrVImmQU1nO+J4LVFV9sGnI6nKfrKM9m16YCGBqyWXa
-                  SwTEjD1giPTpBPzAzl0HRtfzeQPJVxtpkto8sW8J8r4tAQy/sVuMLC1vqD7GAd57
-                  Ul8KZoU1nk36LuWZE4FuDtT2sZoSSjiTyF5ncdYz/a4CkiP2cXtJNVTI03yNmJ1Y
-                  rUTlb1EbHCVRxBtGY+JVzN6oyv02GtPSkm1UeZ66aHzS1/Vc60oIgaCCqlHJ3A3Y
-                  C2jTcIaIS+pFFG1ui57sK/2DFUo3yJZGOVsdEp1YYRTQshcFJOkixeE61TcLAf7X
-                  kj7Fxw==
-                  -----END CERTIFICATE-----
+                path: /secrets/authelia/oidc.jwk.RS256.crt
+                #value: |
+                #  -----BEGIN CERTIFICATE-----
+                #  MIIC0DCCAbigAwIBAgIGAZL/Z3StMA0GCSqGSIb3DQEBCwUAMCkxJzAlBgNVBAMM
+                #  HngxRFo5R0pPZUU0cDBhemF2SkdnelBKNlhNUSUzRDAeFw0yNDExMDYwMjU3MDNa
+                #  Fw0yNTA5MDIwMjU3MDNaMCkxJzAlBgNVBAMMHngxRFo5R0pPZUU0cDBhemF2Skdn
+                #  elBKNlhNUSUzRDCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBAL+neVLA
+                #  GcBJRNsRhPRPkiGVfpHL+NZ2Bfj3jzc5v/8KZzesurq/ipUWer4BkfdFvnjQe/84
+                #  0mYkXieq82azb8aNRd/PztfyY9uzuDgO2GYf+lTK/mT7U97yLP19iG+7ATZf5EE6
+                #  ef57JwQv0lInDdqNrI7/Fw0MCQKg1S3B0h+oMZDL05rQakLGjKiMXJeJNhKERzfE
+                #  DxYTm7IWmaMe1Pf2YAo5SHDrMnFPriLm275gPFyHQyeGxDN77TkCy+znwaYDDe2G
+                #  6lX2vDSc2N68UoHyw78a5jzFFDyHJaJuCJUJEqR6gk17NL97iyXGbItRPbSgtW5D
+                #  +bD5qYYVUNEGgzsCAwEAATANBgkqhkiG9w0BAQsFAAOCAQEAZnpIviDO/wUxgreT
+                #  qVfiGi4Sdvt7/diUCgtoAMrVImmQU1nO+J4LVFV9sGnI6nKfrKM9m16YCGBqyWXa
+                #  SwTEjD1giPTpBPzAzl0HRtfzeQPJVxtpkto8sW8J8r4tAQy/sVuMLC1vqD7GAd57
+                #  Ul8KZoU1nk36LuWZE4FuDtT2sZoSSjiTyF5ncdYz/a4CkiP2cXtJNVTI03yNmJ1Y
+                #  rUTlb1EbHCVRxBtGY+JVzN6oyv02GtPSkm1UeZ66aHzS1/Vc60oIgaCCqlHJ3A3Y
+                #  C2jTcIaIS+pFFG1ui57sK/2DFUo3yJZGOVsdEp1YYRTQshcFJOkixeE61TcLAf7X
+                #  kj7Fxw==
+                #  -----END CERTIFICATE-----
 
     
           ## Cross-Origin Resource Sharing (CORS) settings.
