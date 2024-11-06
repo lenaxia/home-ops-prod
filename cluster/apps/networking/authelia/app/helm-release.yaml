@@ -1029,7 +1029,7 @@ spec:
       ## specify this.
       ##
       additionalSecrets:
-        authelia-test:
+        authelia:
           items:
             - key: oidc.jwk.RS256.pem
               path: oidc.jwk.RS256.pem
