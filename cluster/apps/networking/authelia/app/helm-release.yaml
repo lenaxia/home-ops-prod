@@ -228,7 +228,7 @@ spec:
               - name: CookieSession
     
       log:
-        level: info
+        level: debug
         format: text
         file_path: /config/authelia.log
     
