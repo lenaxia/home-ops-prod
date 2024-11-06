@@ -826,35 +826,35 @@ spec:
             # custom:
             #   lifespan_name:
             #     access_token: 1h
-            #     authorize_code: '1 minute'
+            #     authorize_code: 1m
             #     id_token: 1h
-            #     refresh_token: '1 hour and 30 minutes'
+            #     refresh_token: 90m
             #     grants:
             #       authorize_code:
             #         access_token: 1h
-            #         authorize_code: '1 minute'
+            #         authorize_code: 1m
             #         id_token: 1h
-            #         refresh_token: '1 hour and 30 minutes'
+            #         refresh_token: 90m
             #       implicit:
             #         access_token: 1h
-            #         authorize_code: '1 minute'
+            #         authorize_code: 1m
             #         id_token: 1h
-            #         refresh_token: '1 hour and 30 minutes'
+            #         refresh_token: 90m
             #       client_credentials:
             #         access_token: 1h
-            #         authorize_code: '1 minute'
+            #         authorize_code: 1m
             #         id_token: 1h
-            #         refresh_token: '1 hour and 30 minutes'
+            #         refresh_token: 90m
             #       refresh_token:
             #         access_token: 1h
-            #         authorize_code: '1 minute'
+            #         authorize_code: 1m
             #         id_token: 1h
-            #         refresh_token: '1 hour and 30 minutes'
+            #         refresh_token: 90m
             #       jwt_bearer:
             #         access_token: 1h
-            #         authorize_code: '1 minute'
+            #         authorize_code: 1m
             #         id_token: 1h
-            #         refresh_token: '1 hour and 30 minutes'
+            #         refresh_token: 90m
     
           ## Adjusts the PKCE enforcement. Options are always, public_clients_only, never.
           ## For security reasons it's recommended this option is public_clients_only or always, however always is not
@@ -881,16 +881,16 @@ spec:
     
           ## The JWK's issuer option configures multiple JSON Web Keys. It's required that at least one of the JWK's
           ## configured has the RS256 algorithm. For RSA keys (RS or PS) the minimum is a 2048 bit key.
-          #jwks:
-          #  - key_id: 
-          #    algorithm: RS256
-          #    use: sig
-          #    key:
-          #      value: |
-          #        ${oidc.jwk.RS256.pem}
-          #    certificate_chain:
-          #      value: |
-          #        ${oidc.jwk.RS256.crt}
+          jwks:
+            - key_id: 
+              algorithm: RS256
+              use: sig
+              key:
+                value: |
+                  ${oidc.jwk.RS256.pem}
+              certificate_chain:
+                value: |
+                  ${oidc.jwk.RS256.crt}
 
     
           ## Cross-Origin Resource Sharing (CORS) settings.
@@ -1037,7 +1037,7 @@ spec:
               path: oidc.jwk.RS256.crt
     
     certificates:
-      existingSecret: ''
+      existingSecret: 
       # existingSecret: 'authelia'
     
       annotations: {}
@@ -1100,17 +1100,17 @@ spec:
         priorityClassName: 
         persistence:
           enabled: false
-          # storageClass: ""
+          # storageClass: 
           accessModes:
             - ReadWriteOnce
           size: 1Gi
       replica:
         replicaCount: 3
         resources: {}
-        priorityClassName: ""
+        priorityClassName: 
         persistence:
           enabled: false
-          # storageClass: ""
+          # storageClass: 
           accessModes:
             - ReadWriteOnce
           size: 1Gi
