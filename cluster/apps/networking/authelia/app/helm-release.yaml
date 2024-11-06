@@ -887,10 +887,10 @@ spec:
               use: sig
               key:
                 value: |
-                  ${oidc.jwk.RS256.pem}
+                  ${OIDC_JWK_RS256_PEM}
               certificate_chain:
                 value: |
-                  ${oidc.jwk.RS256.crt}
+                  ${OIDC_JWK_RS256_CRT}
 
     
           ## Cross-Origin Resource Sharing (CORS) settings.
