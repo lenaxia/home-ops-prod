@@ -59,7 +59,8 @@ spec:
     pod:
       kind: Deployment
     
-      annotations: {}
+      annotations:
+        reloader.stakater.com/auto: "true"
     
       labels: {}
     
