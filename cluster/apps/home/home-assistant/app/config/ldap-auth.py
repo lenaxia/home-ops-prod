@@ -16,18 +16,18 @@ def eprint(*args, **kwargs):
 # (all settings must be provided via environment variables)
 
 # Environment variables for dynamic configuration
-SERVER = os.environ.get('SERVER')
-BASEDN = os.environ.get('BASEDN')
-USERSCN = os.environ.get('USERSCN')
-GROUPCN = os.environ.get('GROUPCN')
-GROUP = os.environ.get('GROUP')
-ADMINGROUP = os.environ.get('ADMINGROUP')
-HELPERUSER = os.environ.get('HELPERUSER')
-HELPERPASS = os.environ.get('HELPERPASS')
+SERVER = os.environ.get('LDAP_SERVER')
+BASEDN = os.environ.get('LDAP_BASEDN')
+USERSCN = os.environ.get('LDAP_USERSCN')
+GROUPCN = os.environ.get('LDAP_GROUPCN')
+GROUP = os.environ.get('LDAP_GROUP')
+ADMINGROUP = os.environ.get('LDAP_ADMINGROUP')
+HELPERUSER = os.environ.get('LDAP_HELPERUSER')
+HELPERPASS = os.environ.get('LDAP_HELPERPASS')
 
 # Ensure all required environment variables are set
 if not all([SERVER, BASEDN, USERSCN, GROUPCN, ADMINGROUP, HELPERUSER, HELPERPASS, os.environ.get('username'), os.environ.get('password')]):
-    eprint("Need SERVER, BASEDN, USERSCN, GROUPCN, GROUP, ADMINGROUP, HELPERUSER, HELPERPASS, username, and password environment variables!")
+    eprint("Need LDAP_SERVER, LDAP_BASEDN, LDAP_USERSCN, LDAP_GROUPCN, LDAP_GROUP, LDAP_ADMINGROUP, LDAP_HELPERUSER, LDAP_HELPERPASS, username, and password environment variables!")
     exit(1)
 
 # Construct the permissions group DN
