@@ -4,13 +4,14 @@ commonLabels:
   app.kubernetes.io/name: home-assistant
 kind: Kustomization
 namespace: home
-patches:
-- path: ./patches/addons.yaml
-  target:
-    group: helm.toolkit.fluxcd.io
-    kind: HelmRelease
-    name: home-assistant
-    version: v2
 resources:
 - helm-release.yaml
 - secret.sops.yaml
+configMapGenerator:
+  - name: ldap-auth-py
+    files:
+      - config/ldap-auth.py
+generatorOptions:
+  disableNameSuffixHash: true
+  annotations:
+    kustomize.toolkit.fluxcd.io/substitute: enabled

@@ -80,6 +80,22 @@ spec:
                 enabled: false
               startup:
                 enabled: false
+          code-server:
+            image:
+              repository: ghcr.io/coder/code-server
+              tag: 4.95.1@sha256:d9bc7797d997e1b199e333676732e075bac4bae276dc0fe1baece2e313edfa09
+            args: [
+              "--auth", "none",
+              "--user-data-dir", "/config/.vscode",
+              "--extensions-dir", "/config/.vscode",
+              "--port", "12321",
+              "/config"
+            ]
+            resources:
+              requests:
+                cpu: 10m
+              limits:
+                memory: 512Mi
         statefulset:
           volumeClaimTemplates:
             - name: config
@@ -90,6 +106,24 @@ spec:
                 snapshot.home.arpa/enabled: 'true'
               globalMounts:
                 - path: /config
+    persistence:
+      ldap-auth-py:
+        type: configMap
+        name: ldap-auth-py
+        globalMounts:
+          - path: /config/ldap-auth/ldap-auth.py
+      logs:
+        type: emptyDir
+        globalMounts:
+          - path: /config/logs
+      tts:
+        type: emptyDir
+        globalMounts:
+          - path: /config/tts
+      tmp:
+        type: emptyDir
+        globalMounts:
+          - path: /tmp
     service:
       main:
         type: ClusterIP
@@ -98,6 +132,8 @@ spec:
         ports:
           http:
             port: 8123
+          code-server:
+            port: 12321
         primary: true
         controller: main
     ingress:
@@ -122,5 +158,16 @@ spec:
               - *host
             secretName: *host
         className: traefik
+      code-server:
+        annotations:
+          external-dns.alpha.kubernetes.io/target: internal.devbu.io
+        className: internal
+        hosts:
+          - host: hass-code.${SECRET_DEV_DOMAIN}
+            paths:
+              - path: /
+                service:
+                  identifier: app
+                  port: code-server
     podAnnotations:
       k8s.v1.cni.cncf.io/networks: macvlan-static-iot-hass
