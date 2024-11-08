@@ -5,8 +5,13 @@
 
 import os
 import sys
+import logging
 from ldap3 import Server, Connection, ALL
 from ldap3.utils.conv import escape_bytes, escape_filter_chars
+
+# Configure logging
+LOG_FILE = '/var/log/ldap-auth.log'
+logging.basicConfig(filename=LOG_FILE, level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
 # Quick and dirty print to stderr
 def eprint(*args, **kwargs):
@@ -27,20 +32,21 @@ HELPERPASS = os.environ.get('LDAP_HELPERPASS')
 
 # Ensure all required environment variables are set
 if not all([SERVER, BASEDN, USERSCN, GROUPCN, ADMINGROUP, HELPERUSER, HELPERPASS, os.environ.get('username'), os.environ.get('password')]):
+    logging.error("Need LDAP_SERVER, LDAP_BASEDN, LDAP_USERSCN, LDAP_GROUPCN, LDAP_GROUP, LDAP_ADMINGROUP, LDAP_HELPERUSER, LDAP_HELPERPASS, username, and password environment variables!")
     eprint("Need LDAP_SERVER, LDAP_BASEDN, LDAP_USERSCN, LDAP_GROUPCN, LDAP_GROUP, LDAP_ADMINGROUP, LDAP_HELPERUSER, LDAP_HELPERPASS, username, and password environment variables!")
     exit(1)
 
 # Construct the permissions group DN
 PERMISSIONS_GROUP = f"cn={GROUP},cn={GROUPCN},{BASEDN}"
-print(f"{PERMISSIONS_GROUP}")
+logging.info(f"Permissions group DN: {PERMISSIONS_GROUP}")
 
 # Construct the administrators group DN
 ADMINGROUP = f"cn={ADMINGROUP},cn={GROUPCN},{BASEDN}"
-print(f"{ADMINGROUP}")
+logging.info(f"Administrators group DN: {ADMINGROUP}")
 
 # Construct the helper account DN
 HELPERDN = f"uid={HELPERUSER},cn={USERSCN},{BASEDN}"
-print(f"{HELPERDN}")
+logging.info(f"Helper account DN: {HELPERDN}")
 
 TIMEOUT = 3
 
@@ -62,46 +68,57 @@ FILTER = FILTER.format(safe_username)
 server = Server(SERVER, get_info=ALL)
 try:
     conn = Connection(server, HELPERDN, password=HELPERPASS, auto_bind=True, raise_exceptions=True)
+    logging.info("Initial bind successful")
 except Exception as e:
-    eprint("initial bind failed: {}".format(e))
+    logging.error(f"Initial bind failed: {e}")
+    eprint(f"Initial bind failed: {e}")
     exit(1)
 
 try:
     search = conn.search(BASEDN, FILTER, attributes=ATTRS.split(','))
+    logging.info("Search successful")
 except Exception as e:
-    eprint("search failed: {}".format(e))
+    logging.error(f"Search failed: {e}")
+    eprint(f"Search failed: {e}")
     exit(1)
 
 if len(conn.entries) > 0:  # search is True on success regardless of result size
-    eprint("search success: username {}, result {}".format(os.environ['username'], conn.entries))
+    logging.info(f"Search success: username {os.environ['username']}, result {conn.entries}")
     user_dn = conn.entries[0].entry_dn
     user_displayName = conn.entries[0].displayName.value if conn.entries[0].displayName else None
     user_memberOf = conn.entries[0].memberOf.values if conn.entries[0].memberOf else []
 else:
-    eprint("search for username {} yielded empty result".format(os.environ['username']))
+    logging.error(f"Search for username {os.environ['username']} yielded empty result")
+    eprint(f"Search for username {os.environ['username']} yielded empty result")
     exit(1)
 
 # Check if the user is part of the administrators group
 is_admin = ADMINGROUP in user_memberOf
+logging.info(f"User {os.environ['username']} is an admin: {is_admin}")
 
 # Check if the user is part of the permissions group
 is_permitted = PERMISSIONS_GROUP in user_memberOf
+logging.info(f"User {os.environ['username']} is permitted: {is_permitted}")
 
 # Ensure the user is part of the permissions group
 if not is_permitted:
-    eprint("User {} is not part of the required permissions group: {}".format(os.environ['username'], PERMISSIONS_GROUP))
+    logging.error(f"User {os.environ['username']} is not part of the required permissions group: {PERMISSIONS_GROUP}")
+    eprint(f"User {os.environ['username']} is not part of the required permissions group: {PERMISSIONS_GROUP}")
     exit(1)
 
 # Attempt to bind as the user
 try:
     conn.rebind(user=user_dn, password=os.environ['password'])
+    logging.info(f"Bind as {os.environ['username']} successful")
 except Exception as e:
-    eprint("bind as {} failed: {}".format(os.environ['username'], e))
+    logging.error(f"Bind as {os.environ['username']} failed: {e}")
+    eprint(f"Bind as {os.environ['username']} failed: {e}")
     exit(1)
 
 # Print the user's display name and group
-print("name = {}".format(user_displayName))
-print("group = {}".format("system-admin" if is_admin else "system-users"))
+print(f"name = {user_displayName}")
+print(f"group = {'system-admin' if is_admin else 'system-users'}")
 
-eprint("{} authenticated successfully".format(os.environ['username']))
+logging.info(f"{os.environ['username']} authenticated successfully")
+eprint(f"{os.environ['username']} authenticated successfully")
 exit(0)
