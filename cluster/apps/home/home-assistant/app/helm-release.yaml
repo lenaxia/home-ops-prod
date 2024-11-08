@@ -160,14 +160,22 @@ spec:
         className: traefik
       code-server:
         annotations:
-          external-dns.alpha.kubernetes.io/target: internal.devbu.io
-        className: internal
+          cert-manager.io/cluster-issuer: letsencrypt-production
+          hajimari.io/enable: 'true'
+          hajimari.io/icon: home-assistant
+          hajimari.io/group: *namespace 
+          traefik.ingress.kubernetes.io/router.entrypoints: websecure
+        className: traefik
         hosts:
-          - host: hass-code.${SECRET_DEV_DOMAIN}
+          - host: &host2 hass-code.${SECRET_DEV_DOMAIN}
             paths:
               - path: /
                 service:
                   identifier: main
                   port: code-server
+        tls:
+          - hosts:
+              - *host2
+            secretName: *host2
     podAnnotations:
       k8s.v1.cni.cncf.io/networks: macvlan-static-iot-hass
