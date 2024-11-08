@@ -1,5 +1,5 @@
 ---
-apiVersion: traefik.containo.us/v1alpha1
+apiVersion: traefik.io/v1alpha1
 kind: Middleware
 metadata:
   name: middlewares-secure-headers
@@ -16,22 +16,16 @@ spec:
     stsSeconds: 63072000
     stsIncludeSubdomains: true
     stsPreload: true
-    frameDeny: true
-    forceSTSHeader: true
-    # frameDeny: true #overwritten by customFrameOptionsValue
-    customFrameOptionsValue: "allow-from https:${SECRET_DEV_DOMAIN}" #CSP takes care of this but may be needed for organizr.
+    frameDeny: false  
     contentTypeNosniff: true
     browserXssFilter: true
     referrerPolicy: "origin-when-cross-origin"
-      #referrerPolicy: "same-origin"
-    # Setting contentSecurityPolicy is more secure but it can break things. Proper auth will reduce the risk.
-    # the below line also breaks some apps due to 'none' - sonarr, radarr, etc.
-    # contentSecurityPolicy: "frame-ancestors '*.example.com:*';object-src 'none';script-src 'none';"
     permissionsPolicy: "camera 'none'; geolocation 'none'; microphone 'none'; payment 'none'; usb 'none'; vr 'none';"
     customResponseHeaders:
       X-Robots-Tag: "none,noarchive,nosnippet,notranslate,noimageindex,"
+      X-Frame-Options: "ALLOW-FROM https://${SECRET_DEV_DOMAIN}" 
 ---
-apiVersion: traefik.containo.us/v1alpha1
+apiVersion: traefik.io/v1alpha1
 kind: Middleware
 metadata:
   name: middlewares-basic-auth
@@ -40,7 +34,7 @@ spec:
   basicAuth:
     secret: authsecret
 ---
-apiVersion: traefik.containo.us/v1alpha1
+apiVersion: traefik.io/v1alpha1
 kind: Middleware
 metadata:
   name: middlewares-rate-limit
@@ -50,7 +44,7 @@ spec:
     average: 100
     burst: 200
 ---
-apiVersion: traefik.containo.us/v1alpha1
+apiVersion: traefik.io/v1alpha1
 kind: Middleware
 metadata:
   name: middlewares-bitwarden-strip-prefix
@@ -59,31 +53,8 @@ spec:
   stripPrefix:
     prefixes:
       - "/notifications/hub"
-    forceSlash: false
 ---
-apiVersion: traefik.containo.us/v1alpha1
-kind: Middleware
-metadata:
-  name: middlewares-authentik
-  namespace: networking
-spec:
-  forwardAuth:
-    address: http://authentik/outpost.goauthentik.io/auth/traefik
-    trustForwardHeader: true
-    authResponseHeaders:
-      - X-authentik-username
-      - X-authentik-groups
-      - X-authentik-email
-      - X-authentik-name
-      - X-authentik-uid
-      - X-authentik-jwt
-      - X-authentik-meta-jwks
-      - X-authentik-meta-outpost
-      - X-authentik-meta-provider
-      - X-authentik-meta-app
-      - X-authentik-meta-version
----
-apiVersion: traefik.containo.us/v1alpha1
+apiVersion: traefik.io/v1alpha1
 kind: Middleware
 metadata:
   name: middlewares-authelia
