@@ -22,11 +22,13 @@ spec:
     createNamespace: true
     remediation:
       retries: 4
-    crds: CreateReplace
   upgrade:
-    crds: CreateReplace
     remediation:
       retries: 5
+  values:
+    #image:
+    #  name: traefik
+    #  tag: v2.9.6
     deployment:
       kind: Deployment
       replicas: 3
