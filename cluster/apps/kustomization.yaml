@@ -50,7 +50,7 @@ resources:
   - ./home/home-assistant/ks.yaml
   - ./home/esphome/ks.yaml
     #- ./home/magicmirror/ks.yaml
-  - ./home/frigate/ks.yaml
+    #- ./home/frigate/ks.yaml
   - ./home/zwavejs/ks.yaml
   - ./home/mosquitto/ks.yaml
   #- ./home/hercules/ks.yaml
