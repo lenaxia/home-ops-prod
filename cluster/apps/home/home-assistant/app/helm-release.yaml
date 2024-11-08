@@ -111,7 +111,7 @@ spec:
         type: configMap
         name: ldap-auth-py
         globalMounts:
-          - path: /config/ldap-auth/ldap-auth.py
+          - path: /config/ldap-auth
       logs:
         type: emptyDir
         globalMounts:
