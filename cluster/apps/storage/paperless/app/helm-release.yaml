@@ -84,7 +84,7 @@ spec:
           gotenburg:
             image:
               repository: thecodingmachine/gotenberg
-              tag: 8.9.2
+              tag: 8.10.0
             env:
               - {name: DISABLE_GOOGLE_CHROME, value: '1'}
           redis:
@@ -144,7 +144,7 @@ spec:
         type: persistentVolumeClaim
     sidecars:
       gotenburg:
-        image: thecodingmachine/gotenberg:8.9.2
+        image: thecodingmachine/gotenberg:8.10.0
         imagePullPolicy: IfNotPresent
         env:
           - {name: DISABLE_GOOGLE_CHROME, value: '1'}
