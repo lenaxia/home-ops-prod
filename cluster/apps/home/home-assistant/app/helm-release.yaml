@@ -111,6 +111,7 @@ spec:
         name: ldap-auth-py
         globalMounts:
           - path: /config/ldap-auth
+        defaultMode: 0777
       logs:
         type: emptyDir
         globalMounts:
