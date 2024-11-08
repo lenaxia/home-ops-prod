@@ -167,7 +167,7 @@ spec:
             paths:
               - path: /
                 service:
-                  identifier: app
+                  identifier: main
                   port: code-server
     podAnnotations:
       k8s.v1.cni.cncf.io/networks: macvlan-static-iot-hass
