@@ -10,7 +10,7 @@ from ldap3 import Server, Connection, ALL
 from ldap3.utils.conv import escape_bytes, escape_filter_chars
 
 # Configure logging
-LOG_FILE = '/var/log/ldap-auth.log'
+LOG_FILE = '/config/logs/ldap-auth.log'
 logging.basicConfig(filename=LOG_FILE, level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
 # Quick and dirty print to stderr
