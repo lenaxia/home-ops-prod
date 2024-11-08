@@ -28,7 +28,7 @@ resources:
 
   # Networking
   - ./networking/cloudflare-ddns/ks.yaml
-  - ./networking/traefik/ks.yaml
+    #- ./networking/traefik/ks.yaml
   - ./networking/authelia/ks.yaml
   - ./networking/webfinger/ks.yaml
   - ./networking/cert-manager/ks.yaml
