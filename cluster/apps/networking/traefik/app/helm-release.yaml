@@ -50,6 +50,8 @@ spec:
       access:
         enabled: true
         format: json
+    core:
+      defaultRuleSyntax: v2
     ingressClass:
       enabled: true
       isDefaultClass: true
