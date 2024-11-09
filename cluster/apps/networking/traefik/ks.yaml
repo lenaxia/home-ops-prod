@@ -22,43 +22,43 @@ spec:
   retryInterval: 1m
   timeout: 3m
 ---
-# yaml-language-server: $schema=https://kubernetes-schemas.devbu.io/kustomization_v1beta2.json
-apiVersion: kustomize.toolkit.fluxcd.io/v1
-kind: Kustomization
-metadata:
-  name: cluster-networking-traefik-middlewares
-  namespace: flux-system
-  labels:
-    substitution.flux.home.arpa/enabled: "true"
-spec:
-  dependsOn:
-    - name: cluster-networking-traefik
-  path: ./cluster/apps/networking/traefik/middlewares
-  prune: true
-  sourceRef:
-    kind: GitRepository
-    name: flux-system
-  interval: 30m
-  retryInterval: 1m
-  timeout: 3m
----
-# yaml-language-server: $schema=https://kubernetes-schemas.devbu.io/kustomization_v1beta2.json
-apiVersion: kustomize.toolkit.fluxcd.io/v1
-kind: Kustomization
-metadata:
-  name: cluster-networking-traefik-ingresses
-  namespace: flux-system
-  labels:
-    substitution.flux.home.arpa/enabled: "true"
-spec:
-  dependsOn:
-    - name: cluster-networking-traefik
-    - name: cluster-networking-traefik-middlewares
-  path: ./cluster/apps/networking/traefik/ingresses
-  prune: true
-  sourceRef:
-    kind: GitRepository
-    name: flux-system
-  interval: 30m
-  retryInterval: 1m
-  timeout: 3m
+## yaml-language-server: $schema=https://kubernetes-schemas.devbu.io/kustomization_v1beta2.json
+#apiVersion: kustomize.toolkit.fluxcd.io/v1
+#kind: Kustomization
+#metadata:
+#  name: cluster-networking-traefik-middlewares
+#  namespace: flux-system
+#  labels:
+#    substitution.flux.home.arpa/enabled: "true"
+#spec:
+#  dependsOn:
+#    - name: cluster-networking-traefik
+#  path: ./cluster/apps/networking/traefik/middlewares
+#  prune: true
+#  sourceRef:
+#    kind: GitRepository
+#    name: flux-system
+#  interval: 30m
+#  retryInterval: 1m
+#  timeout: 3m
+#---
+## yaml-language-server: $schema=https://kubernetes-schemas.devbu.io/kustomization_v1beta2.json
+#apiVersion: kustomize.toolkit.fluxcd.io/v1
+#kind: Kustomization
+#metadata:
+#  name: cluster-networking-traefik-ingresses
+#  namespace: flux-system
+#  labels:
+#    substitution.flux.home.arpa/enabled: "true"
+#spec:
+#  dependsOn:
+#    - name: cluster-networking-traefik
+#    - name: cluster-networking-traefik-middlewares
+#  path: ./cluster/apps/networking/traefik/ingresses
+#  prune: true
+#  sourceRef:
+#    kind: GitRepository
+#    name: flux-system
+#  interval: 30m
+#  retryInterval: 1m
+#  timeout: 3m
