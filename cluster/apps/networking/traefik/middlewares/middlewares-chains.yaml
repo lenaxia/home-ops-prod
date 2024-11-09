@@ -35,18 +35,6 @@ spec:
 apiVersion: traefik.containo.us/v1alpha1
 kind: Middleware
 metadata:
-  name: chain-authentik
-  namespace: networking
-spec:
-  chain:
-    middlewares:
-      - name: middlewares-rate-limit
-      - name: middlewares-secure-headers
-      - name: middlewares-authentik
----
-apiVersion: traefik.containo.us/v1alpha1
-kind: Middleware
-metadata:
   name: chain-authelia
   namespace: networking
 spec:
