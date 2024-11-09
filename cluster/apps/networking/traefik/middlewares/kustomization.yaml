@@ -3,4 +3,4 @@ kind: Kustomization
 resources:
   - middlewares.yaml
     #- middlewares-chains.yaml
-  - cloudflare.yaml
+    #- cloudflare.yaml
