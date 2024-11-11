@@ -30,6 +30,8 @@ spec:
         #runAsGroup: 100
         #fsGroup: 1000
         #fsGroupChangePolicy: "OnRootMismatch"
+    annotations:
+      reloader.stakater.com/auto: "true"
     controllers:
       hoarder:
         containers:
@@ -59,9 +61,9 @@ spec:
                 memory: 600Mi
           chrome:
             securityContext:
-              runAsUser: 0
-              runAsGroup: 0
-              fsGroup: 0
+              runAsUser: 1000
+              runAsGroup: 1000
+              fsGroup: 1000
               fsGroupChangePolicy: "OnRootMismatch"
             image:
               repository: gcr.io/zenika-hub/alpine-chrome
@@ -73,6 +75,10 @@ spec:
               - --remote-debugging-address=0.0.0.0
               - --remote-debugging-port=9222
               - --hide-scrollbars
+              - --disable-features=SystemDBus
+              - --disable-oom-score-adjustment
+              - --enable-features=ConversionMeasurement,AttributionReportingCrossAppWeb
+              - --disable-audio-output
             resources:
               requests:
                 cpu: 50m
