@@ -34,12 +34,12 @@ spec:
       - 172.16.0.0/12
       - 192.168.0.0/16
 ---
-apiVersion: traefik.containo.us/v1alpha1
-kind: Middleware
-metadata:
-  name: cloudflare
-  namespace: networking
-spec:
-  chain:
-    middlewares:
-      - name: cloudflare-ips
+#apiVersion: traefik.containo.us/v1alpha1
+#kind: Middleware
+#metadata:
+#  name: cloudflare
+#  namespace: networking
+#spec:
+#  chain:
+#    middlewares:
+#      - name: cloudflare-ips

@@ -39,6 +39,7 @@ resources:
   - ./home/babybuddy/ks.yaml
   - ./home/babybuddy-pandaria/ks.yaml
   - ./home/browserless/ks.yaml
+  - ./home/hoarder/ks.yaml
   - ./home/langserver/ks.yaml
     #- ./home/gamevault/ks.yaml
   - ./home/node-red/ks.yaml
@@ -46,11 +47,11 @@ resources:
   - ./home/redlib/ks.yaml
   - ./home/roskills/ks.yaml
   - ./home/localai/ks.yaml
-  #- ./home/stablediffusion/ks.yaml
+    #- ./home/stablediffusion/ks.yaml
   - ./home/home-assistant/ks.yaml
   - ./home/esphome/ks.yaml
     #- ./home/magicmirror/ks.yaml
-  - ./home/frigate/ks.yaml
+    #- ./home/frigate/ks.yaml
   - ./home/zwavejs/ks.yaml
   - ./home/mosquitto/ks.yaml
   #- ./home/hercules/ks.yaml

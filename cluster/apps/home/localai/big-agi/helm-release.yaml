@@ -39,6 +39,7 @@ spec:
               POSTGRES_URL_NON_POOLING:
               # LLMs
               LOCALAI_API_HOST: http://localai.home.svc.cluster.local:8080
+              #LOCALAI_API_HOST: http://tabby.default.svc.cluster.local:5000
               # Browse
               PUPPETEER_WSS_ENDPOINT: ws://browserless:3000
               OPENAI_API_HOST: http://litellm.home.svc.cluster.local:4000

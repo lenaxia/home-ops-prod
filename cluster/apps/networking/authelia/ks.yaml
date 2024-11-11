@@ -25,3 +25,11 @@ spec:
   wait: true
   retryInterval: 1m
   timeout: 3m
+    #  postBuild:
+    #    substituteFrom:
+    #      kind: secret
+    #      name: authelia
+    #      target:
+    #        kind: Deployment
+    #        name: authelia
+    #        namespace: networking

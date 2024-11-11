@@ -301,6 +301,7 @@ spec:
             - "hass.${SECRET_DEV_DOMAIN}"
             - "jelly.${SECRET_DEV_DOMAIN}"
             - "ai.${SECRET_DEV_DOMAIN}"
+            - "tabby.${SECRET_DEV_DOMAIN}"
             - "llm.${SECRET_DEV_DOMAIN}"
             - "ollama.${SECRET_DEV_DOMAIN}"
             - "overseerr.${SECRET_DEV_DOMAIN}"
@@ -464,7 +465,7 @@ spec:
         ## Redis Provider
         ##
         redis:
-          enabled: false
+          enabled: false 
           enabledSecret: true
           host: redis-lb.databases.svc.cluster.local
           port: 6379
@@ -575,6 +576,15 @@ spec:
             pre_configured_consent_duration: 1y
             scopes: ["openid", "profile", "email"]
             redirect_uris: ["https://minio.${SECRET_DEV_DOMAIN}/oauth_callback"]
+          - id: open-webui
+            description: Open-WebUI
+            secret: ${SECRET_OPEN_WEBUI_OAUTH_CLIENT_SECRET}
+            public: false
+            authorization_policy: one_factor
+            consent_mode: implicit
+            pre_configured_consent_duration: 1y
+            scopes: ["openid", "profile", "email"]
+            redirect_uris: ["https://chat2.${SECRET_DEV_DOMAIN}/oauth/oidc/callback"]
           - id: pgadmin
             description: PGAdmin
             secret: ${SECRET_PGADMIN_OAUTH_CLIENT_SECRET}
@@ -614,6 +624,16 @@ spec:
             pre_configured_consent_duration: 1y
             scopes: ["openid", "profile", "email"]
             redirect_uris: ["https://request.${SECRET_DEV_DOMAIN}/api/v1/auth/oidc-callback","https://request2.${SECRET_DEV_DOMAIN}/api/v1/auth/oidc-callback", "https://overseerr.${SECRET_DEV_DOMAIN}/api/v1/auth/oidc-callback"]
+            userinfo_signing_algorithm: none
+          - id: hoarder
+            description: hoarder
+            secret: "${SECRET_HOARDER_OAUTH_CLIENT_SECRET}"
+            public: false
+            authorization_policy: one_factor
+            consent_mode: implicit
+            pre_configured_consent_duration: 1y
+            scopes: ["openid", "profile", "email"]
+            redirect_uris: ["https://hoarder.${SECRET_DEV_DOMAIN}/api/auth/callback/custom"]
             userinfo_signing_algorithm: none
             # -
               ## The ID is the OpenID Connect ClientID which is used to link an application to a configuration.
