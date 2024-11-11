@@ -15,7 +15,6 @@ spec:
         name: bjw-s-charts
         namespace: flux-system
       interval: 5m
-  targetNamespace: hoarder
   install:
     createNamespace: true
     remediation:
