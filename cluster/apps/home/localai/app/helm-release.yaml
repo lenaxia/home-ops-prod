@@ -29,6 +29,9 @@ spec:
             - op: add
               path: /spec/template/spec/runtimeClassName
               value: nvidia
+            #- op: add
+            #  path: /spec/template/spec/containers/0/command
+            #  value: ["/build/entrypoint.sh", "--p2p"]
   # See https://github.com/bjw-s/helm-charts/blob/main/charts/library/common/values.yaml
   values:
     fullnameOverride: localai
@@ -40,18 +43,21 @@ spec:
         tag: v2.20.1-cublas-cuda12-ffmpeg
       pullPolicy: IfNotPresent
       #pullPolicy: Always 
+      #args:
+      #  - --p2p
       env:
-        DEBUG: false
+        #LOCALAI_P2P_TOKEN: b3RwOgogIGRodDoKICAgIGludGVydmFsOiAzNjAKICAgIGtleTogbDFiTEdXZFRLU1AwUFI4ZlJqZTJjMzZHM0Z6bDVPaGM0OWp5WnFWOE1ZdgogICAgbGVuZ3RoOiA0MwogIGNyeXB0bzoKICAgIGludGVydmFsOiA5MDAwCiAgICBrZXk6IHZVTjdqZUJ6TkxiSHdPTEVHVFJmSE5yZnhVUmUxWVVpcUMybkwxeVpOVDEKICAgIGxlbmd0aDogNDMKcm9vbTogbzBoaVpLNFNCM2Nqb0JLdUxpY0pVMklBVFd5alZoYWVnTldUQkJHbUtOcgpyZW5kZXp2b3VzOiB2TGFIbXBuWU1CWlpmY3VVT3FGSzU2M2hVUDBSTXNRNzZDRmlKWlFZVlBICm1kbnM6IFV5WENNaUFMNFdQc2NvcXgyQUhyV2VyNmxqSUF4SHFudERXN1VJQ2pCeDIKbWF4X21lc3NhZ2Vfc2l6ZTogMjA5NzE1MjAK
+        DEBUG: true
         LD_LIBRARY_PATH: "/usr/lib/x86_64-linux-gnu/:$LD_LIBRARY_PATH"
         NVIDIA_VISIBLE_DEVICES: 0
         NVIDIA_DRIVER_CAPABILITIES: "all"
-        PYTHON_GRPC_MAX_WORKERS: 8
-        LLAMACPP_PARALLEL: 8
+        PYTHON_GRPC_MAX_WORKERS: 2
+        LLAMACPP_PARALLEL: 2
         LOCALAI_PARALLEL_REQUESTS: true
+        LOCALAI_CONTEXT_SIZE: 8192
         SINGLE_ACTIVE_BACKEND: true
         #GALLERIES: '[{"name":"huggingface", "url": "github:go-skynet/model-gallery/huggingface.yaml"}]'
-        #PRELOAD_MODELS: '[{"id": "huggingface@thebloke__wizardlm-7b-v1-0-uncensored-superhot-8k-ggml__wizardlm-7b-v1.0-superhot-8k.ggmlv3.q3_k_m.bin","name": "WizardLM-7B-uncensored"}, {"id": "model-gallery@bert-embeddings"}, {"url": "github:go-skynet/model-gallery/stablediffusion.yaml"}]'
-        PRELOAD_MODELS: '[{"id": "model-gallery@bert-embeddings"}, {"url": "github:go-skynet/model-gallery/stablediffusion.yaml"}]'
+        #PRELOAD_MODELS: '[{"id": "model-gallery@bert-embeddings"}, {"url": "github:go-skynet/model-gallery/stablediffusion.yaml"}]'
         COMPEL: 0
         threads: 4
         context_size: 8192
@@ -192,16 +198,13 @@ spec:
     
     tolerations: []
     
-    #affinity:
-    #  podAntiAffinity:
-    #    requiredDuringSchedulingIgnoredDuringExecution:
-    #      - labelSelector:
-    #          matchExpressions:
-    #            #- key: app.kubernetes.io/name
-    #            #  operator: In
-    #            #  values: [plex]
-    #            #- key: "app.kubernetes.io/name"
-    #            #  operator: In
-    #            #  values:
-    #            #    - *appname
-    #        topologyKey: "kubernetes.io/hostname"
+    affinity:
+      podAntiAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          - labelSelector:
+              matchExpressions:
+                - key: app.kubernetes.io/name
+                  operator: In
+                  values:
+                    - localai
+            topologyKey: kubernetes.io/hostname
