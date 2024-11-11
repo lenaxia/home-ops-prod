@@ -128,7 +128,7 @@ spec:
               - path: /
                 pathType: Prefix
                 service:
-                  identifier: main
+                  identifier: hoarder
                   port: http
         tls:
           - hosts:
