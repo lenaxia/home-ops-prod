@@ -625,6 +625,16 @@ spec:
             scopes: ["openid", "profile", "email"]
             redirect_uris: ["https://request.${SECRET_DEV_DOMAIN}/api/v1/auth/oidc-callback","https://request2.${SECRET_DEV_DOMAIN}/api/v1/auth/oidc-callback", "https://overseerr.${SECRET_DEV_DOMAIN}/api/v1/auth/oidc-callback"]
             userinfo_signing_algorithm: none
+          - id: hoarder
+            description: hoarder
+            secret: "${SECRET_HOARDER_OAUTH_CLIENT_SECRET}"
+            public: false
+            authorization_policy: one_factor
+            consent_mode: implicit
+            pre_configured_consent_duration: 1y
+            scopes: ["openid", "profile", "email"]
+            redirect_uris: ["https://hoarder.${SECRET_DEV_DOMAIN}/api/auth/callback/custom"]
+            userinfo_signing_algorithm: none
             # -
               ## The ID is the OpenID Connect ClientID which is used to link an application to a configuration.
               # id: myapp
