@@ -76,10 +76,10 @@ spec:
 #          Type: 'Rename'
       Rulest:
         - Rule:
-          Name: Another Rule
-          Header: Another-Header
-          Value: New-Value
-          Type: Set
+            Name: Another Rule
+            Header: Another-Header
+            Value: New-Value
+            Type: Set
 ---
 apiVersion: traefik.containo.us/v1alpha1
 kind: Middleware
