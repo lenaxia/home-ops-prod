@@ -64,6 +64,16 @@ spec:
 apiVersion: traefik.containo.us/v1alpha1
 kind: Middleware
 metadata:
+  name: middlewares-add-x-remote-user
+  namespace: networking
+spec:
+  headers:
+    customRequestHeaders:
+      X-Remote-User: "{Remote-User}"
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:
   name: middlewares-authelia
   namespace: networking
 spec:
@@ -75,8 +85,4 @@ spec:
         - Remote-Name
         - Remote-Email
         - Remote-Groups
-        - X-Remote-User
-        - X-Forwarded-Host
-        - X-Authenticated-User
-        - X-WebAuth-User
 ---

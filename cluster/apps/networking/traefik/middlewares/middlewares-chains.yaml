@@ -42,5 +42,6 @@ spec:
     middlewares:
       - name: middlewares-rate-limit
       - name: middlewares-secure-headers
+      - name: middlewares-add-x-remote-user
       - name: middlewares-authelia
 ---
