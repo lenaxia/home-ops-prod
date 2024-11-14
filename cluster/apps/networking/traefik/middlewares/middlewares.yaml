@@ -70,11 +70,17 @@ spec:
   plugin:
     htransformation:
       Rules:
-        - Name: X-Remote-User
+        - Name: X-Remote-User-Create
+          Header: x-remote-user
+          Value: ''
+          Type: Set
+        - Name: X-Remote-User-Copy
           Header: x-remote-user
           HeaderPrefix: "^"
-          Value: '^remote-user'
-          Type: Set
+          Values:
+            - '^remote-user'
+          Sep: ''
+          Type: Join
 ---
 apiVersion: traefik.containo.us/v1alpha1
 kind: Middleware
