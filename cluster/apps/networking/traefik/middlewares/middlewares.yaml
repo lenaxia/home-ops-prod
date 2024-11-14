@@ -70,7 +70,7 @@ spec:
   plugin:
     htransformation:
       Rules:
-        - Name: 'x-remote-user-create'
+        - Name: 'x-remote-user-create-'
           Header: 'test-remote-user'
           Value: ''  # Setting it to empty
           Type: 'Set'
