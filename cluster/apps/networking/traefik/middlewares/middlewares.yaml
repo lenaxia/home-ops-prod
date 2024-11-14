@@ -74,13 +74,13 @@ spec:
           Header: x-remote-user
           Value: ''
           Type: Set
-#        - Name: X-Remote-User-Copy
-#          Header: x-remote-user
-#          HeaderPrefix: "^"
-#          Values:
-#            - '^remote-user'
-#          Sep: ''
-#          Type: Join
+        - Name: X-Remote-User-Copy
+          Header: x-remote-user
+          HeaderPrefix: "^"
+          Values:
+            - '^remote-user'
+          Sep: ' '
+          Type: Join
 ---
 apiVersion: traefik.containo.us/v1alpha1
 kind: Middleware
