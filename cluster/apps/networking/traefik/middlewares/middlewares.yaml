@@ -77,9 +77,16 @@ spec:
         - Name: 'x-remote-user-copy'
           Header: 'test-remote-user'
           HeaderPrefix: '^'
-          Sep: ' ' #cant use empty separators so just use space, it will remove it
+          Sep: ',' #cant use empty separators so just use space, it will remove it
           Values:
               - '^Remote-User'
+              - '^Remote-Email'
+              - '^Remote-Groups'
+              - '^Remote-Name'
+              - '^remote-user'
+              - '^remote-email'
+              - '^remote-groups'
+              - '^remote-name'
           Type: 'Join'
         #        - Name: X-Remote-User-Create
         #          Header: x-remote-user
