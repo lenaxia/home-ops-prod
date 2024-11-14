@@ -79,6 +79,7 @@ spec:
           HeaderPrefix: "^"
           Values:
             - '^remote-user'
+            - 'blah213'
           Sep: ' '
           Type: Join
 ---
