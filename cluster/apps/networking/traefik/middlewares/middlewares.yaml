@@ -70,13 +70,12 @@ spec:
   plugin:
     htransformation:
       Rules:
-        - Name: 'Initialize Client-Original-Connecting-Ip'
-          Header: 'Client-Original-Connecting-Ip'
+        - Name: 'x-remote-user-create'
+          Header: 'test-remote-user'
           Value: ''  # Setting it to empty
           Type: 'Set'
-
-        - Name: 'Copy CF-Connecting-Ip'
-          Header: 'Client-Original-Connecting-Ip'
+        - Name: 'x-remote-user-copy'
+          Header: 'test-remote-user'
           HeaderPrefix: '^'
           Sep: ' ' #cant use empty separators so just use space, it will remove it
           Values:
