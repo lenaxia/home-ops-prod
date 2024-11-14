@@ -54,10 +54,8 @@ resources:
     #- ./home/frigate/ks.yaml
   - ./home/zwavejs/ks.yaml
   - ./home/mosquitto/ks.yaml
-  #- ./home/hercules/ks.yaml
   - ./home/rathena/ks.yaml
   - ./home/openkore/ks.yaml
-  #- ./home/fasten/ks.yaml
 
   # Monitoring Namespace
   - ./monitoring/flux
@@ -103,4 +101,4 @@ resources:
   - ./utilities/echo-server/ks.yaml
   - ./utilities/brother-ql-web/ks.yaml
   - ./utilities/it-tools/ks.yaml
-  #- ./utilities/k8sgpt/ks.yaml
+  - ./utilities/k8sgpt/ks.yaml
