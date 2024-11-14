@@ -72,8 +72,8 @@ spec:
       Rules:
         - Name: X-Remote-User
           Header: x-remote-user
-          HeaderPrefix: ^
-          Value: ^remote-user
+          HeaderPrefix: "^"
+          Value: '^remote-user'
           Type: Set
 ---
 apiVersion: traefik.containo.us/v1alpha1
