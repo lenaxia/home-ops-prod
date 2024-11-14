@@ -6,9 +6,9 @@ metadata:
 spec:
   ai:
     enabled: true
-    model: llama3-8b-chinese
-    backend: localai
-    baseUrl: http://localai.home.svc.cluster.local:8080/v1
+    model: Qwen2.5-72B-Instruct-exl2-4_25
+    backend: openai
+    baseUrl: http://tabbyapi.default.svc.cluster.local:5000/v1
       #  ai:
       #    enabled: true
       #    model: gpt-3.5-turbo
