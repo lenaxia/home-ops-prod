@@ -79,7 +79,7 @@ spec:
           HeaderPrefix: '^'
           Sep: ' ' #cant use empty separators so just use space, it will remove it
           Values:
-              - '^remote-user'
+              - '^Remote-User'
           Type: 'Join'
         #        - Name: X-Remote-User-Create
         #          Header: x-remote-user
