@@ -67,13 +67,14 @@ metadata:
   name: middlewares-add-x-remote-user
   namespace: networking
 spec:
-  lua:
-    script: |
-      function onHeaders(headers, ctx)
-        if headers['Remote-User'] then
-          headers['X-Remote-User'] = headers['Remote-User']
-        end
-      end
+  plugin:
+    htransformation:
+      - Rule:
+            Name: 'X-Remote-User'
+            Header: 'remote-user'
+            Value: 'x-remote-user'
+            Type: 'Rename'
+
 ---
 apiVersion: traefik.containo.us/v1alpha1
 kind: Middleware
