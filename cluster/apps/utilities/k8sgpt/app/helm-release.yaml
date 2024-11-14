@@ -18,9 +18,11 @@ spec:
     createNamespace: true
     remediation:
       retries: 7
+    crds: CreateReplace
   upgrade:
     remediation:
       retries: 5
+    crds: CreateReplace
   values:
     serviceMonitor:
       enabled: false
