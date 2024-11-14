@@ -84,6 +84,7 @@ spec:
               - '^Remote-Groups'
               - '^Remote-Name'
               - '^x-real-ip'
+              - '^user-agent'
               - '^remote-user'
               - '^remote-email'
               - '^remote-groups'
