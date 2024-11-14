@@ -69,7 +69,7 @@ metadata:
 spec:
   headers:
     customRequestHeaders:
-      X-Remote-User: "{Remote-User}"
+      X-Remote-User: "{http.request.headers.Remote-User}"
 ---
 apiVersion: traefik.containo.us/v1alpha1
 kind: Middleware
