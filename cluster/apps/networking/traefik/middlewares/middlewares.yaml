@@ -69,11 +69,16 @@ metadata:
 spec:
   plugin:
     htransformation:
-      Rule:
-          Name: 'X-Remote-User'
-          Header: 'remote-user'
-          Value: 'x-remote-user'
-          Type: 'Rename'
+#      - Rule:
+#          Name: 'X-Remote-User'
+#          Header: 'remote-user'
+#          Value: 'x-remote-user'
+#          Type: 'Rename'
+      - Rule:
+          Name: 'Another Rule'
+          Header: 'Another-Header'
+          Value: 'New-Value'
+          Type: 'Set'
 ---
 apiVersion: traefik.containo.us/v1alpha1
 kind: Middleware
