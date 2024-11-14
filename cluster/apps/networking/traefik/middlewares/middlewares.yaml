@@ -70,18 +70,30 @@ spec:
   plugin:
     htransformation:
       Rules:
-        - Name: X-Remote-User-Create
-          Header: x-remote-user
-          Value: ''
-          Type: Set
-        - Name: X-Remote-User-Copy
-          Header: x-remote-user
-          HeaderPrefix: "^"
+        - Name: 'Initialize Client-Original-Connecting-Ip'
+          Header: 'Client-Original-Connecting-Ip'
+          Value: ''  # Setting it to empty
+          Type: 'Set'
+
+        - Name: 'Copy CF-Connecting-Ip'
+          Header: 'Client-Original-Connecting-Ip'
+          HeaderPrefix: '^'
+          Sep: ' ' #cant use empty separators so just use space, it will remove it
           Values:
-            - '^remote-user'
-            - 'blah213'
-          Sep: ' '
-          Type: Join
+              - '^user-agent'
+          Type: 'Join'
+        #        - Name: X-Remote-User-Create
+        #          Header: x-remote-user
+        #          Value: ''
+        #          Type: Set
+        #        - Name: X-Remote-User-Copy
+        #          Header: x-remote-user
+        #          HeaderPrefix: "^"
+        #          Values:
+        #            - '^remote-user'
+        #            - 'blah213'
+        #          Sep: ' '
+        #          Type: Join
 ---
 apiVersion: traefik.containo.us/v1alpha1
 kind: Middleware
