@@ -77,7 +77,7 @@ spec:
         - Name: 'x-remote-user-copy'
           Header: 'test-remote-user'
           HeaderPrefix: '^'
-          Sep: ',' #cant use empty separators so just use space, it will remove it
+          Sep: ' ' #cant use empty separators so just use space, it will remove it
           Values:
               - '^user-agent'
           Type: 'Join'
