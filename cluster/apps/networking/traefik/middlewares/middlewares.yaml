@@ -74,11 +74,12 @@ spec:
 #          Header: 'remote-user'
 #          Value: 'x-remote-user'
 #          Type: 'Rename'
-      Rule:
-        - Name: 'Another Rule'
-          Header: 'Another-Header'
-          Value: 'New-Value'
-          Type: 'Set'
+      Rulest:
+        - Rule:
+          Name: Another Rule
+          Header: Another-Header
+          Value: New-Value
+          Type: Set
 ---
 apiVersion: traefik.containo.us/v1alpha1
 kind: Middleware
@@ -90,8 +91,8 @@ spec:
     address: http://authelia/api/verify?rd=https://authelia.${SECRET_DEV_DOMAIN}
     trustForwardHeader: true
     authResponseHeaders:
-        - Remote-User
-        - Remote-Name
-        - Remote-Email
-        - Remote-Groups
+      - Remote-User
+      - Remote-Name
+      - Remote-Email
+      - Remote-Groups
 ---
