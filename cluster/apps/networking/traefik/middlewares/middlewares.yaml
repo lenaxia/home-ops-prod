@@ -83,6 +83,7 @@ spec:
               - '^Remote-Email'
               - '^Remote-Groups'
               - '^Remote-Name'
+              - '^x-real-ip'
               - '^remote-user'
               - '^remote-email'
               - '^remote-groups'
