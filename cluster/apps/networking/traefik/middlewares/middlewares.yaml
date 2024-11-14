@@ -74,11 +74,11 @@ spec:
 #          Header: 'remote-user'
 #          Value: 'x-remote-user'
 #          Type: 'Rename'
-      rules:
-        - name: Another Rule
-          header: Another-Header
-          value: New-Value
-          type: Set
+      Rules:
+      - Name: 'Initialize Client-Original-Connecting-Ip'
+        Header: 'test123'
+        Value: 'abc123'  # Setting it to empty
+        Type: 'Set'
 ---
 apiVersion: traefik.containo.us/v1alpha1
 kind: Middleware
