@@ -61,26 +61,26 @@ spec:
       - "/notifications/hub"
     forceSlash: false
 ---
-apiVersion: traefik.containo.us/v1alpha1
-kind: Middleware
-metadata:
-  name: middlewares-add-x-remote-user
-  namespace: networking
-spec:
-  plugin:
-    htransformation:
-      Rules:
-        - Name: 'X-Remote-User Create'
-          Header: 'X-Remote-User'
-          Value: ''  # Setting it to empty
-          Type: 'Set'
-        - Name: 'X-Remote-User Copy'
-          Header: 'X-Remote-User'
-          HeaderPrefix: '^'
-          Sep: ' ' #cant use empty separators so just use space, it will remove it
-          Values:
-              - '^remote-user'
-          Type: 'Join'
+#apiVersion: traefik.containo.us/v1alpha1
+#kind: Middleware
+#metadata:
+#  name: middlewares-add-x-remote-user
+#  namespace: networking
+#spec:
+#  plugin:
+#    htransformation:
+#      Rules:
+#        - Name: 'X-Remote-User Create'
+#          Header: 'X-Remote-User'
+#          Value: ''  # Setting it to empty
+#          Type: 'Set'
+#        - Name: 'X-Remote-User Copy'
+#          Header: 'X-Remote-User'
+#          HeaderPrefix: '^'
+#          Sep: ' ' #cant use empty separators so just use space, it will remove it
+#          Values:
+#              - '^remote-user'
+#          Type: 'Join'
 ---
 apiVersion: traefik.containo.us/v1alpha1
 kind: Middleware
