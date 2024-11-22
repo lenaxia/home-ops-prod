@@ -20,12 +20,10 @@ spec:
       #    # language: english
   repository: ghcr.io/k8sgpt-ai/k8sgpt
   version: v0.3.46
-  #integrations:
-  # trivy:
-  #  enabled: true
-  #  namespace: trivy-system
-  # filters:
-  #   - Ingress
+  integrations:
+   prometheus:
+    enabled: true
+    namespace: monitoring
   sink:
     type: slack
     webhook: ${SECRET_SLACK_HOMEOPS_WEBHOOK}
