@@ -4,4 +4,4 @@ namespace: utilities
 resources:
   - helm-release.yaml
   - secret.sops.yaml
-  - k8sgpt.yaml
+    #- k8sgpt.yaml
