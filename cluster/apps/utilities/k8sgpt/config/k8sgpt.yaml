@@ -1,0 +1,32 @@
+apiVersion: core.k8sgpt.ai/v1alpha1
+kind: K8sGPT
+metadata:
+  name: k8sgpt
+  namespace: k8sgpt-operator-system
+spec:
+  ai:
+    enabled: true
+    model: Qwen2.5-72B-Instruct-exl2-4_25
+    backend: openai
+    baseUrl: http://tabbyapi.default.svc.cluster.local:5000/v1
+      #  ai:
+      #    enabled: true
+      #    model: gpt-3.5-turbo
+      #    backend: openai
+      #    secret:
+      #      name: openai-api-key
+      #      key: openai-api-key
+      #    # anonymized: false
+      #    # language: english
+  #integrations:
+  # trivy:
+  #  enabled: true
+  #  namespace: trivy-system
+  # filters:
+  #   - Ingress
+  sink:
+    type: slack
+    webhook: ${SECRET_SLACK_HOMEOPS_WEBHOOK}
+  #extraOptions:
+  #   backstage:
+  #     enabled: true
