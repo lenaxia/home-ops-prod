@@ -40,7 +40,7 @@ spec:
           main:
             image:
               repository: public.ecr.aws/docker/library/haproxy
-              tag: 3.0.5-alpine
+              tag: 3.0.6-alpine
     service:
       main:
         type: LoadBalancer
