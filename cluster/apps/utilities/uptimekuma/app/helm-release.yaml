@@ -25,7 +25,7 @@ spec:
           main:
             image:
               repository: docker.io/louislam/uptime-kuma
-              tag: 1.23.13-debian
+              tag: 1.23.15-debian
               pullPolicy: Always
 
     # -- environment variables.
