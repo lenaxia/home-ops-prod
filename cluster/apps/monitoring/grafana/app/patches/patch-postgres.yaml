@@ -5,30 +5,30 @@ metadata:
   namespace: monitoring
 spec:
   values:
-    extraInitContainers:
-      - name: init-db
-        image: ghcr.io/onedr0p/postgres-initdb:14.8
-        env:
-          #- name: POSTGRES_RESET # True - drops the table upon init if it exists
-          #  value: "false"
-          #- name: POSTGRES_RESET_CONFIRM # Are you sure you want to do this? 
-          #  value: "NO"
-          - name: POSTGRES_HOST
-            value: defaultpg-rw.databases.svc.cluster.local
-          - name: POSTGRES_DB
-            value: *app
-          - name: POSTGRES_SUPER_PASS
-            valueFrom:
-              secretKeyRef:
-                name: postgres-superuser
-                key: password
-          - name: POSTGRES_USER
-            valueFrom:
-              secretKeyRef:
-                name: *app
-                key: POSTGRES_USERNAME
-          - name: POSTGRES_PASS
-            valueFrom:
-              secretKeyRef:
-                name: *app
-                key: POSTGRES_PASSWORD
+    controllers:
+      main:
+        initContainers:
+          init-db:
+            image:
+              repository: ghcr.io/onedr0p/postgres-init
+              tag: 16.3
+            env:
+              - name: INIT_POSTGRES_HOST
+                value: defaultpg-rw.databases.svc.cluster.local
+              - name: INIT_POSTGRES_DBNAME
+                value: *app
+              - name: INIT_POSTGRES_SUPER_PASS
+                valueFrom:
+                  secretKeyRef:
+                    name: postgres-superuser
+                    key: password
+              - name: INIT_POSTGRES_USER
+                valueFrom:
+                  secretKeyRef:
+                    name: *app
+                    key: POSTGRES_USERNAME
+              - name: INIT_POSTGRES_PASS
+                valueFrom:
+                  secretKeyRef:
+                    name: *app
+                    key: POSTGRES_PASSWORD
