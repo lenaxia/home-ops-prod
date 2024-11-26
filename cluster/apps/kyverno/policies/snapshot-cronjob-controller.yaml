@@ -12,7 +12,6 @@ metadata:
       The following label on PVCs are required for this to run:
         - snapshot.home.arpa/enabled
 spec:
-  generateExistingOnPolicyUpdate: true
   mutateExistingOnPolicyUpdate: true
   rules:
     - name: create-snapshot-cronjob2
@@ -51,6 +50,7 @@ spec:
                   values:
                     - "{{ request.object.metadata.labels.\"app.kubernetes.io/instance\" }}"
       generate:
+        generateExisting: true
         synchronize: true
         apiVersion: batch/v1
         kind: CronJob

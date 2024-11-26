@@ -14,7 +14,7 @@ metadata:
       internal application access.
 spec:
   mutateExistingOnPolicyUpdate: true
-  generateExistingOnPolicyUpdate: true
+  #generateExistingOnPolicyUpdate: true
   rules:
     - name: allowlist
       match:

@@ -13,7 +13,7 @@ metadata:
       applies the nginx auth annotations for use with Authelia.
 spec:
   mutateExistingOnPolicyUpdate: true
-  generateExistingOnPolicyUpdate: true
+  #generateExistingOnPolicyUpdate: true
   rules:
     - name: auth
       match:
