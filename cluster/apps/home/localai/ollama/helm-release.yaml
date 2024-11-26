@@ -41,7 +41,7 @@ spec:
           app:
             image:
               repository: docker.io/ollama/ollama
-              tag: 0.3.12
+              tag: 0.4.5
             env:
               TZ: UTC
               NVIDIA_VISIBLE_DEVICES: all
