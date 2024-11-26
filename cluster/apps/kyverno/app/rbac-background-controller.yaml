@@ -1,0 +1,66 @@
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: kyverno:create-cronjobs
+  labels:
+    app.kubernetes.io/component: background-controller
+    app.kubernetes.io/instance: kyverno
+    app.kubernetes.io/part-of: kyverno
+rules:
+- apiGroups:
+  - batch
+  resources:
+  - cronjobs
+  verbs:
+  - create
+  - update
+  - patch
+  - delete
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: kyverno:create-update-secrets
+  labels:
+    app.kubernetes.io/component: background-controller
+    app.kubernetes.io/instance: kyverno
+    app.kubernetes.io/part-of: kyverno
+rules:
+- apiGroups:
+  - ''
+  resources:
+  - secrets
+  verbs:
+  - create
+  - update
+  - delete
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: kyverno:aggregated-background-controller
+  labels:
+    app.kubernetes.io/component: background-controller
+    app.kubernetes.io/instance: kyverno
+    app.kubernetes.io/part-of: kyverno
+aggregationRule:
+  clusterRoleSelectors:
+  - matchLabels:
+      app.kubernetes.io/component: background-controller
+      app.kubernetes.io/instance: kyverno
+      app.kubernetes.io/part-of: kyverno
+rules: []
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: kyverno:background-controller-binding
+subjects:
+- kind: ServiceAccount
+  name: kyverno-background-controller
+  namespace: kyverno
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: kyverno:aggregated-background-controller

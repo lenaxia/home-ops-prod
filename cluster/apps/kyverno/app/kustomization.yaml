@@ -8,3 +8,5 @@ resources:
   # renovate: registryUrl=https://kyverno.github.io/kyverno/ chart=kyverno
   - helm-release.yaml
   - rbac.yaml
+  - rbac-background-controller.yaml
+  - rbac-admissions-controller.yaml

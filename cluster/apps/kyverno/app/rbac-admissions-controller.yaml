@@ -1,0 +1,46 @@
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: kyverno:list-get-secrets
+  labels:
+    app.kubernetes.io/component: admission-controller
+    app.kubernetes.io/instance: kyverno
+    app.kubernetes.io/part-of: kyverno
+rules:
+- apiGroups:
+  - ''
+  resources:
+  - secrets
+  verbs:
+  - list
+  - get
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: kyverno:aggregated-admission-controller
+  labels:
+    app.kubernetes.io/component: admission-controller
+    app.kubernetes.io/instance: kyverno
+    app.kubernetes.io/part-of: kyverno
+aggregationRule:
+  clusterRoleSelectors:
+  - matchLabels:
+      app.kubernetes.io/component: admission-controller
+      app.kubernetes.io/instance: kyverno
+      app.kubernetes.io/part-of: kyverno
+rules: []
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: kyverno:admission-controller-binding
+subjects:
+- kind: ServiceAccount
+  name: kyverno-admission-controller
+  namespace: kyverno
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: kyverno:aggregated-admission-controller
