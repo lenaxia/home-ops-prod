@@ -30,7 +30,7 @@ spec:
           main:
             image:
               repository: ghcr.io/browserless/chromium
-              tag: v2.21.0
+              tag: v2.23.0
     service:
       main:
         type: ClusterIP

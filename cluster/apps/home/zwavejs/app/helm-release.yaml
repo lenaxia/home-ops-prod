@@ -40,7 +40,7 @@ spec:
           main:
             image:
               repository: ghcr.io/zwave-js/zwave-js-ui
-              tag: 9.21.0
+              tag: 9.27.7
             env:
               TZ: ${TIMEZONE}
               KEY_S0_Legacy:
