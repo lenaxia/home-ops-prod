@@ -53,7 +53,7 @@ spec:
                   name: home-assistant-secret
             image:
               repository: ghcr.io/onedr0p/postgres-init
-              tag: '16.3'
+              tag: '16.6'
         containers:
           main:
             image:

@@ -37,7 +37,7 @@ spec:
       existingSecret: grafana-admin-creds
     extraInitContainers:
       - name: init-db
-        image: ghcr.io/onedr0p/postgres-init:16.3
+        image: ghcr.io/onedr0p/postgres-init:16.6
         env:
           - name: INIT_POSTGRES_HOST
             value: defaultpg-rw.databases.svc.cluster.local
