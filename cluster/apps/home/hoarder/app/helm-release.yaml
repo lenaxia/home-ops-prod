@@ -90,7 +90,7 @@ spec:
           meilisearch:
             image:
               repository: getmeili/meilisearch
-              tag: v1.10.3
+              tag: v1.11.3
             env:
               NEXTAUTH_URL: "hoarder.${SECRET_DEV_DOMAIN}"
             envFrom:
