@@ -16,10 +16,42 @@ error_exit() {
     exit 1
 }
 
-# Fetch Current External IP
-current_ipv4="$(curl -s https://ipv4.icanhazip.com/)" || error_exit "Failed to fetch current IPv4 address"
+# Function to fetch IPv4 from multiple sources
+get_current_ipv4() {
+    local ipv4
 
-log "Fetched current IP Address: $current_ipv4"
+    # Array of services to fetch IPv4
+    declare -a services=(
+        "https://ipv4.icanhazip.com/"
+        "https://api.ipify.org/"
+        "https://checkip.amazonaws.com/"
+        "https://ifconfig.me/ip"
+        "https://ipecho.net/plain"
+    )
+
+    for service in "${services[@]}"; do
+        log "Trying to fetch IPv4 from $service"
+        ipv4=$(curl -s --max-time 5 "$service") || {
+            log "Failed to fetch IPv4 from $service"
+            continue
+        }
+        # Validate the fetched IP
+        if [[ $ipv4 =~ ^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+            echo "$ipv4"
+            return 0
+        else
+            log "Invalid IP format from $service: $ipv4"
+        fi
+    done
+
+    # If no service succeeded
+    error_exit "All methods to fetch current IPv4 address have failed"
+}
+
+# Fetch Current External IP
+current_ipv4=$(get_current_ipv4)
+
+log "$current_ipv4"
 
 # Fetch Cloudflare Zone ID
 zone_id=$(curl -s -X GET \
@@ -27,7 +59,6 @@ zone_id=$(curl -s -X GET \
     -H "Authorization: Bearer $CLOUDFLARE_TOKEN" \
     -H "Content-Type: application/json" \
     | jq --raw-output ".result[0] | .id" || error_exit "Failed to fetch Cloudflare Zone ID")
-
 
 log "Fetched zone id: $zone_id"
 
@@ -45,7 +76,7 @@ log "Fetched old IP $old_ipv4 from record"
 
 # Compare IPs and Update if Different
 if [[ "$current_ipv4" == "$old_ipv4" ]]; then
-    log "IP Address '$current_ipv4' has not changed $old_ipv4"
+    log "IP Address '$current_ipv4' has not changed"
     exit 0
 fi
 
