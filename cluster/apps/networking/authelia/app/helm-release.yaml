@@ -31,9 +31,6 @@ spec:
       tag: 4.37.5
       pullPolicy: Always
 
-    nodeSelector:
-      node-role.kubernetes.io/worker: "true"
-
     service:
       enabled: true
       type: LoadBalancer
@@ -47,6 +44,10 @@ spec:
       # Must be Deployment, DaemonSet, or StatefulSet.
       kind: Deployment
       replicas: 1
+
+      selectors:
+        nodeSelector:
+          node-role.kubernetes.io/worker: "true"
 
     envFrom:
       - secretRef:
