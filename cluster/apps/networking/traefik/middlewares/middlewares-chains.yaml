@@ -53,7 +53,19 @@ spec:
   chain:
     middlewares:
       - name: middlewares-rate-limit
-      #- name: middlewares-secure-headers
+      - name: middlewares-secure-headers
       - name: middlewares-authelia
       - name: middlewares-add-x-remote-user
 ---
+apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:
+  name: chain-ldapauth
+  namespace: networking
+spec:
+  chain:
+    middlewares:
+      - name: middlewares-rate-limit
+      - name: middlewares-secure-headers
+      - name: middlewares-ldapauth
+      - name: middlewares-add-x-remote-user-from-username
