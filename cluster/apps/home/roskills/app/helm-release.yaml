@@ -61,7 +61,8 @@ spec:
           hajimari.io/group: Home
           cert-manager.io/cluster-issuer: letsencrypt-production
           traefik.ingress.kubernetes.io/router.entrypoints: websecure
-          traefik.ingress.kubernetes.io/router.middlewares: networking-chain-authelia@kubernetescrd
+          #traefik.ingress.kubernetes.io/router.middlewares: networking-chain-authelia@kubernetescrd
+          traefik.ingress.kubernetes.io/router.middlewares: networking-ldapauth@kubernetescrd
         hosts:
           - host: &uri ro.${SECRET_DEV_DOMAIN}
             paths:
