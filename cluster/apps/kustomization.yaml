@@ -55,6 +55,7 @@ resources:
   - ./home/mosquitto/ks.yaml
   - ./home/rathena/ks.yaml
   - ./home/openkore/ks.yaml
+  - ./home/radicale/ks.yaml
 
   # Monitoring Namespace
   - ./monitoring/flux
