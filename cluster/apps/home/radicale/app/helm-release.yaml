@@ -72,7 +72,7 @@ spec:
           hajimari.io/group: *namespace
           cert-manager.io/cluster-issuer: letsencrypt-production
           traefik.ingress.kubernetes.io/router.entrypoints: websecure
-          traefik.ingress.kubernetes.io/router.middlewares: networking-chain-authelia@kubernetescrd
+          traefik.ingress.kubernetes.io/router.middlewares: networking-chain-authelia-x-remote-user@kubernetescrd
         hosts:
           #- host: &uri cal.${SECRET_DEV_DOMAIN}
           - host: &uri cal.thekao.cloud
