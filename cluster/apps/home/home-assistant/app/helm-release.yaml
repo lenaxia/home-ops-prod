@@ -57,8 +57,8 @@ spec:
         containers:
           main:
             image:
-              repository: ghcr.io/onedr0p/home-assistant
-              tag: 2024.12.1@sha256:9f01866a8ae1ba747a64be0ee1497a21c73679e27de008799e7c3fcd25e6a7cb
+              repository: ghcr.io/lenaxia/home-assistant
+              tag: 2024.12.1@sha256:029baf94419dee02d003ed2b32f2f0d66f8922f583fc299ed1387bd824833920
             envFrom:
               - secretRef:
                   name: home-assistant-secret
