@@ -134,6 +134,8 @@ spec:
             port: 8123
           code-server:
             port: 12321
+          ocpp:
+            port: 9000
         primary: true
         controller: main
     ingress:
@@ -153,6 +155,11 @@ spec:
                 service:
                   identifier: main
                   port: http
+              - path: /ocpp
+                pathType: Prefix
+                service:
+                  identifier: main
+                  port: ocpp
         tls:
           - hosts:
               - *host
