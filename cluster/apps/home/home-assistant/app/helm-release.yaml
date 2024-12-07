@@ -126,7 +126,7 @@ spec:
           - path: /tmp
     service:
       main:
-        type: ClusterIP
+        type: LoadBalancer
           #externalIPs: ["${SVC_HOME_ASSISTANT_ADDR}"]
           #externalTrafficPolicy: Local
         ports:
