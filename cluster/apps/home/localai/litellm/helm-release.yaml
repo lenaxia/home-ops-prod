@@ -137,6 +137,10 @@ spec:
                     model: openai/Qwen2.5-72B-Instruct-exl2-4_25
                     api_base: http://tabbyapi.default.svc.cluster.local:5000/v1
                     api_key: doesnotmatter
+                  model_info:
+                    input_cost_per_token: 0.00001
+                    output_cost_per_token: 0.00001
+                    max_tokens: 40960
 
                 # Ollama
                 - model_name: ollama-openhermes
