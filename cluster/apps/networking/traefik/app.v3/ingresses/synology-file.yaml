@@ -1,0 +1,72 @@
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: synology-file
+  namespace: default
+  annotations:
+    coredns.io/hostname: "file.thekao.cloud"
+    cert-manager.io/cluster-issuer: letsencrypt-production
+    traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
+    traefik.ingress.kubernetes.io/router.middlewares: networking-chain-synology-file@kubernetescrd
+spec:
+  ingressClassName: traefik
+  rules:
+    - host: &host "file.thekao.cloud"
+      http:
+        paths:
+          - backend:
+              service:
+                name: synology-file
+                port:
+                  number: 80
+            path: /
+            pathType: Prefix
+  tls:
+    - hosts:
+        - *host
+      secretName: *host
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: synology-file
+  namespace: default
+spec:
+  ports:
+    - port: 80
+      protocol: TCP
+      targetPort: 40505
+---
+apiVersion: v1
+kind: Endpoints
+metadata:
+  name: synology-file
+  namespace: default
+subsets:
+  - addresses:
+      - ip: "192.168.0.120"
+    ports:
+      - port: 40505
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:
+  name: middlewares-synology-file-addprefix
+  namespace: default
+spec:
+  addPrefix:
+    prefix: "/file"
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:
+  name: chain-synology-file
+  namespace: default
+spec:
+  chain:
+    middlewares:
+      - name: middlewares-rate-limit
+      - name: middlewares-synology-file-addprefix
+      - name: middlewares-secure-headers
+      - name: middlewares-authelia

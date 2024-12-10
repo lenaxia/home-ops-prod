@@ -1,0 +1,17 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+commonLabels:
+  app.kubernetes.io/instance: home-assistant
+  app.kubernetes.io/name: home-assistant
+kind: Kustomization
+namespace: home
+resources:
+- helm-release.yaml
+- secret.sops.yaml
+configMapGenerator:
+  - name: ldap-auth-py
+    files:
+      - config/ldap-auth.py
+generatorOptions:
+  disableNameSuffixHash: true
+  annotations:
+    kustomize.toolkit.fluxcd.io/substitute: enabled

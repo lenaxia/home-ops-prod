@@ -25,15 +25,15 @@ PAPERLESS_HOST = 'http://paperless.storage.svc.cluster.local:80/api'
 PAPERLESS_API_KEY = os.getenv('PAPERLESS_APIKEY')
 OPENAI_API_KEY = os.getenv('OPENAI_APIKEY')
 #OPENAI_API_ENDPOINT = "https://api.openai.com"
-OPENAI_API_ENDPOINT = "http://localai.home.svc.cluster.local:8080"
+OPENAI_API_ENDPOINT = "http://tabby.default.svc.cluster.local:5000"
 
 # OpenAI Model Configuration
 ENABLE_VISION = False
 VISION_MODEL = "bedrock-claude-v2-sonnet"
 VISION_MODEL_TOKENS_MAX = 200000
-TEXT_MODEL = "bedrock-claude-v2-sonnet"
-TEXT_MODEL_TOKENS_MAX = 200000
-MAX_RETURN_TOKENS = 4096 
+TEXT_MODEL = "Qwen2.5-72B-Instruct-exl2-4_25"
+TEXT_MODEL_TOKENS_MAX = 40960
+MAX_RETURN_TOKENS = 8192
 
 def encode_image(image_path):
     with open(image_path, "rb") as image_file:

@@ -1,0 +1,223 @@
+# yaml-language-server: $schema=https://kubernetes-schemas.devbu.io/helmrelease_v2beta1.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &app monica
+  namespace: home
+spec:
+  interval: 15m
+  chart:
+    spec:
+      chart: app-template
+      version: 3.5.1
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s-charts
+        namespace: flux-system
+  maxHistory: 3
+  install:
+    createNamespace: true
+    remediation:
+      retries: 4
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 4
+  uninstall:
+    keepHistory: false
+  values:
+    defaultPodOptions:
+      #securityContext:
+      #  runAsUser: 568
+      #  runAsGroup: 568
+      #  fsGroup: 568
+      #  supplementalGroups:
+      #    - 100
+      nodeSelector:
+        node-role.kubernetes.io/worker: 'true'
+    controllers:
+      main:
+        type: deployment
+        annotations:
+          reloader.stakater.com/auto: 'true'
+        initContainers:
+          init-db:
+            env:
+              - name: INIT_POSTGRES_SUPER_PASS
+                valueFrom:
+                  secretKeyRef:
+                    name: postgres-superuser
+                    key: password
+            envFrom:
+              - secretRef:
+                  name: monica-secret
+            image:
+              repository: ghcr.io/onedr0p/postgres-init
+              tag: '16.6'
+        containers:
+          main:
+            image:
+              repository: ghcr.io/monicahq/monica-next
+              tag: main
+            envFrom:
+              - secretRef:
+                  name: monica-secret
+            env:
+              - name: APP_ENV
+                value: production
+              - name: APP_URL
+                value: https://monica.thekao.cloud
+              - name: APP_TRUSTED_PROXIES
+                value: '*'
+              - name: DB_CONNECTION
+                value: pgsql
+              - name: DB_HOST
+                valueFrom:
+                  secretKeyRef:
+                    name: monica-secret
+                    key: INIT_POSTGRES_HOST
+              - name: DB_PORT
+                value: '5432'
+              - name: DB_DATABASE
+                valueFrom:
+                  secretKeyRef:
+                    name: monica-secret
+                    key: INIT_POSTGRES_DBNAME
+              - name: DB_USERNAME
+                valueFrom:
+                  secretKeyRef:
+                    name: monica-secret
+                    key: INIT_POSTGRES_USER
+              - name: DB_PASSWORD
+                valueFrom:
+                  secretKeyRef:
+                    name: monica-secret
+                    key: INIT_POSTGRES_PASS
+              #- name: CACHE_DRIVER
+              #  value: redis
+              - name: SESSION_DRIVER
+                value: database
+              #- name: QUEUE_CONNECTION
+              #  #value: redis
+              #  value: sync
+              #- name: REDIS_HOST
+              #  valueFrom:
+              #    secretKeyRef:
+              #      name: redis-secret
+              #      key: host
+              #- name: REDIS_PASSWORD
+              #  valueFrom:
+              #    secretKeyRef:
+              #      name: redis-secret
+              #      key: password
+            resources:
+              requests:
+                cpu: 10m
+                memory: 100Mi
+              limits:
+                memory: 750Mi
+            probes:
+              liveness:
+                enabled: false
+              readiness:
+                enabled: false
+              startup:
+                enabled: false
+          #meilisearch:
+          #  image:
+          #    repository: getmeili/meilisearch
+          #    tag: latest
+          #  args: []
+          #  envFrom:
+          #    - secretRef:
+          #        name: monica-secret
+          #  env:
+          #    - name: MEILI_MASTER_KEY
+          #      valueFrom:
+          #        secretKeyRef:
+          #          name: monica-secret
+          #          key: MEILISEARCH_KEY
+          #  resources:
+          #    requests:
+          #      cpu: 10m
+          #      memory: 100Mi
+          #    limits:
+          #      memory: 512Mi
+    persistence:
+      config:
+        enabled: true
+        type: persistentVolumeClaim
+        size: 10Gi
+        accessMode: ReadWriteOnce
+        globalMounts:
+          - path: /config
+      #databases:
+      #  type: persistentVolumeClaim 
+      #  accessMode: ReadWriteOnce
+      #  size: 10Gi
+      #  globalMounts:
+      #    - path: /var/www/html/database
+      #storage:
+      #  type: persistentVolumeClaim 
+      #  accessMode: ReadWriteOnce
+      #  size: 10Gi
+      #  globalMounts:
+      #    - path: /var/www/html/storage
+      logs:
+        type: emptyDir
+        globalMounts:
+          - path: /config/logs
+      #meilisearch-data:
+      #  type: emptyDir
+      #  globalMounts:
+      #    - path: /meili_data
+    service:
+      main:
+        type: ClusterIP
+        ports:
+          http:
+            port: 80
+          #meilisearch:
+          #  port: 7700
+        primary: true
+        controller: main
+    ingress:
+      main:
+        enabled: true
+        annotations:
+          cert-manager.io/cluster-issuer: letsencrypt-production
+          hajimari.io/enable: 'true'
+          hajimari.io/icon: monica
+          hajimari.io/group: home
+          traefik.ingress.kubernetes.io/router.entrypoints: websecure
+        hosts:
+          - host: monica.thekao.cloud
+            paths:
+              - path: /
+                pathType: Prefix
+                service:
+                  identifier: main
+                  port: http
+        tls:
+          - hosts:
+              - monica.thekao.cloud
+            secretName: monica.thekao.cloud
+      #meilisearch:
+      #  enabled: true
+      #  annotations:
+      #    cert-manager.io/cluster-issuer: letsencrypt-production
+      #    hajimari.io/enable: 'true'
+      #    hajimari.io/icon: monica
+      #    hajimari.io/group: home
+      #    traefik.ingress.kubernetes.io/router.entrypoints: websecure
+      #  hosts:
+      #    - host: monica-meilisearch.thekao.cloud
+      #      paths:
+      #        - path: /
+      #          service:
+      #            identifier: main
+      #            port: meilisearch
+      #  tls:
+      #    - hosts:
+      #        - monica-meilisearch.thekao.cloud
+      #      secretName: monica-meilisearch.thekao.cloud

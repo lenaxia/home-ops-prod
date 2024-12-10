@@ -2,22 +2,30 @@
 apiVersion: traefik.containo.us/v1alpha1
 kind: Middleware
 metadata:
-  name: middlewares-add-x-remote-user
+    name: middlewares-ldapauth
+    namespace: networking
+spec:
+    plugin:
+        ldapAuth:
+            Attribute: uid
+            BaseDn: dc=kao,dc=family
+            SearchFilter: (&({{.Attribute}}={{.Username}})(objectClass=posixAccount))
+            #AllowedGroups:
+            #  - ou=mathematicians,dc=example,dc=com
+            Enabled: "true"
+            LogLevel: DEBUG
+            ServerList:
+                - Port: "389"
+                  Url: ldap://192.168.0.120
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:
+  name: chain-ldapauth
   namespace: networking
 spec:
-  plugin:
-    htransformation:
-      Rules:
-        - Name: 'X-Remote-User Create'
-          Header: 'Client-Original-Connecting-Ip'
-          Value: ''  # Setting it to empty
-          Type: 'Set'
-
-        - Name: 'X-Remote-User Copy'
-          Header: 'Client-Original-Connecting-Ip'
-          HeaderPrefix: '^'
-          Sep: ' ' #cant use empty separators so just use space, it will remove it
-          Values:
-              - '^user-agent'
-          Type: 'Join'
----
+  chain:
+    middlewares:
+      - name: middlewares-rate-limit
+      - name: middlewares-secure-headers
+      - name: middlewares-ldapauth

@@ -1,0 +1,74 @@
+---
+apiVersion: traefik.io/v1alpha1
+kind: Middleware
+metadata:
+  name: middlewares-secure-headers
+  namespace: default
+spec:
+  headers:
+    accessControlAllowMethods:
+      - GET
+      - OPTIONS
+      - PUT
+    accessControlMaxAge: 100
+    hostsProxyHeaders:
+      - "X-Forwarded-Host"
+    stsSeconds: 63072000
+    stsIncludeSubdomains: true
+    stsPreload: true
+    frameDeny: false  
+    contentTypeNosniff: true
+    browserXssFilter: true
+    referrerPolicy: "origin-when-cross-origin"
+    permissionsPolicy: "camera 'none'; geolocation 'none'; microphone 'none'; payment 'none'; usb 'none'; vr 'none';"
+    customResponseHeaders:
+      X-Robots-Tag: "none,noarchive,nosnippet,notranslate,noimageindex,"
+      X-Frame-Options: "ALLOW-FROM https://thekao.cloud" 
+---
+apiVersion: traefik.io/v1alpha1
+kind: Middleware
+metadata:
+  name: middlewares-basic-auth
+  namespace: default
+spec:
+  basicAuth:
+    secret: authsecret
+---
+apiVersion: traefik.io/v1alpha1
+kind: Middleware
+metadata:
+  name: middlewares-rate-limit
+  namespace: default
+spec:
+  rateLimit:
+    average: 100
+    burst: 200
+---
+apiVersion: traefik.io/v1alpha1
+kind: Middleware
+metadata:
+  name: middlewares-bitwarden-strip-prefix
+  namespace: default
+spec:
+  stripPrefix:
+    prefixes:
+      - "/notifications/hub"
+---
+apiVersion: traefik.io/v1alpha1
+kind: Middleware
+metadata:
+  name: middlewares-authelia
+  namespace: default
+spec:
+  forwardAuth:
+    address: http://authelia/api/verify?rd=https://authelia.thekao.cloud
+    trustForwardHeader: true
+    authResponseHeaders:
+        - Remote-User
+        - Remote-Name
+        - Remote-Email
+        - Remote-Groups
+        - X-Forwarded-Host
+        - X-Authenticated-User
+        - X-WebAuth-User
+---

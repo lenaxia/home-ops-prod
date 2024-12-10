@@ -1,0 +1,83 @@
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: synology-moments
+  namespace: default
+  annotations:
+    coredns.io/hostname: "moments.${SECRET_PROD_DOMAIN_KF}"
+    cert-manager.io/cluster-issuer: letsencrypt-production
+    traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
+    traefik.ingress.kubernetes.io/router.middlewares: networking-chain-synology-moments@kubernetescrd
+spec:
+  ingressClassName: traefik
+  rules:
+    - host: &host "moments.${SECRET_PROD_DOMAIN_KF}"
+      http:
+        paths:
+          - backend:
+              service:
+                name: synology-moments
+                port:
+                  number: 80
+            path: /
+            pathType: Prefix
+    - host: &host2 "moments.thekao.cloud"
+      http:
+        paths:
+          - backend:
+              service:
+                name: synology-moments
+                port:
+                  number: 80
+            path: /
+            pathType: Prefix
+  tls:
+    - hosts:
+        - *host
+        - *host2
+      secretName: *host
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: synology-moments
+  namespace: default
+spec:
+  ports:
+    - port: 80
+      protocol: TCP
+      targetPort: 40505
+---
+apiVersion: v1
+kind: Endpoints
+metadata:
+  name: synology-moments
+  namespace: default
+subsets:
+  - addresses:
+      - ip: "192.168.0.120"
+    ports:
+      - port: 40505
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:
+  name: middlewares-synology-moments-addprefix
+  namespace: default
+spec:
+  addPrefix:
+    prefix: "/moments"
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:
+  name: chain-synology-moments
+  namespace: default
+spec:
+  chain:
+    middlewares:
+      - name: middlewares-rate-limit
+      - name: middlewares-synology-moments-addprefix
+      - name: middlewares-secure-headers
+        #- name: middlewares-authelia

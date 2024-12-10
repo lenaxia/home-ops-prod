@@ -75,7 +75,7 @@ data:
     
       # Max sequence length (default: Empty).
       # Fetched from the model's base sequence length in config.json by default.
-      max_seq_len:
+      max_seq_len: 40960
     
       # Load model with tensor parallelism.
       # Falls back to autosplit if GPU split isn't provided.
@@ -92,7 +92,7 @@ data:
     
       # An integer array of GBs of VRAM to split between GPUs (default: []).
       # Used with tensor parallelism.
-      gpu_split: [20, 20]
+      gpu_split: [19, 20]
     
       # Rope scale (default: 1.0).
       # Same as compress_pos_emb.
@@ -146,7 +146,7 @@ data:
     
       # An initial draft model to load.
       # Ensure the model is in the model directory.
-      draft_model_name:
+      draft_model_name: 
     
       # Rope scale for draft models (default: 1.0).
       # Same as compress_pos_emb.
@@ -160,7 +160,7 @@ data:
     
       # Cache mode for draft models to save VRAM (default: FP16).
       # Possible values: 'FP16', 'Q8', 'Q6', 'Q4'.
-      draft_cache_mode: FP16
+      draft_cache_mode: Q4
     
     # Options for Loras
     lora:
