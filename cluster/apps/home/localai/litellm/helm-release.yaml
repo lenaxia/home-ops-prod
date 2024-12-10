@@ -55,7 +55,7 @@ spec:
               - "--config"
               - "/app/proxy_server_config.yaml"
             env:
-              - name: TZ: 
+              - name: TZ
                 value: ${TIMEZONE}
               - name: DISABLE_SCHEMA_UPDATE
                 value: "true"
