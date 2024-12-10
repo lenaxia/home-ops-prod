@@ -294,6 +294,22 @@ spec:
             - "^/api/.*$"
             - "^/api"
 
+        # LiteLLM API
+        - domain:
+            - "llm.${SECRET_DEV_DOMAIN}"
+          resources:
+            - "^/v1/models"
+            - "^/v1/model/.*$"
+            - "^/v1/chat/completions"
+            - "^/v1/completions"
+            - "^/v1/embeddings"
+            - "^/v1/images/generations"
+            - "^/v1/audio/speech"
+            - "^/v1/audio/transcriptions"
+            - "^/v1/batches/.*$"
+            - "^/v1/rerank"
+          policy: bypass
+
         # Local only bypass policies
         - domain: 
             - "ldap.${SECRET_DEV_DOMAIN}"
