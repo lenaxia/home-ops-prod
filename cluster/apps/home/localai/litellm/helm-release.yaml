@@ -89,7 +89,7 @@ spec:
                   httpGet:
                     path: /health/readiness
                     port: 4000
-                  initialDelaySeconds: 120
+                  initialDelaySeconds: 20
                   periodSeconds: 15
                   successThreshold: 1
                   failureThreshold: 3
