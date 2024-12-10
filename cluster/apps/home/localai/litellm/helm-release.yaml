@@ -23,12 +23,31 @@ spec:
       retries: 5
   values:
     controllers:
-      main:
+      app:
         type: statefulset
         annotations:
           reloader.stakater.com/auto: 'true'
+        initContainers:
+          init-db:
+            env:
+              - name: INIT_POSTGRES_SUPER_PASS
+                valueFrom:
+                  secretKeyRef:
+                    name: postgres-superuser
+                    key: password
+              - name: INIT_POSTGRES_HOST
+                valueFrom:
+                  secretKeyRef:
+                    name: postgres-superuser
+                    key: host
+            envFrom:
+              - secretRef:
+                  name: *appname
+            image:
+              repository: ghcr.io/onedr0p/postgres-init
+              tag: '16.6'
         containers:
-          main:
+          app:
             image:
               repository: ghcr.io/berriai/litellm
               tag: main-v1.43.9.dev4
@@ -37,10 +56,29 @@ spec:
               - "/app/proxy_server_config.yaml"
             env:
               TZ: ${TIMEZONE}
+              DISABLE_SCHEMA_UPDATE: "true"
             envFrom:
               - secretRef:
                   name: *appname 
-
+            probes:
+              livenessProbe:
+                httpGet:
+                  path: /health/liveliness
+                  port: 4000
+                initialDelaySeconds: 120
+                periodSeconds: 15
+                successThreshold: 1
+                failureThreshold: 3
+                timeoutSeconds: 10
+              readinessProbe:
+                httpGet:
+                  path: /health/readiness
+                  port: 4000
+                initialDelaySeconds: 120
+                periodSeconds: 15
+                successThreshold: 1
+                failureThreshold: 3
+                timeoutSeconds: 10
             resources:
               requests:
                 cpu: 15m
@@ -53,7 +91,22 @@ spec:
           config.yaml: |
               litellm_settings:
                 set_verbose: True  # Uncomment this if you want to see verbose logs; not recommended in production
-                  #drop_params: True
+                #drop_params: True
+                request_timeout: 600    # raise Timeout error if call takes longer than 600 seconds. Default value is 6000seconds if not set
+                set_verbose: False      # Switch off Debug Logging, ensure your logs do not have any debugging on
+                json_logs: true         # Get debug logs in json format
+              
+              general_settings:
+                master_key: sk-1234      # enter your own master key, ensure it starts with 'sk-'
+                alerting: ["slack"]      # Setup slack alerting - get alerts on LLM exceptions, Budget Alerts, Slow LLM Responses
+                proxy_batch_write_at: 60 # Batch write spend updates every 60s
+                database_connection_pool_limit: 10 # limit the number of database connections to = MAX Number of DB Connections/Number of instances of litellm proxy (Around 10-20 is good number)
+              
+                # OPTIONAL Best Practices
+                disable_spend_logs: True # turn off writing each transaction to the db. We recommend doing this is you don't need to see Usage on the LiteLLM UI and are tracking metrics via Prometheus
+                disable_error_logs: True # turn off writing LLM Exceptions to DB
+
+
               model_list: 
                 # LocalAI
                 - model_name: localai-llama3.1-q8-functioncall
@@ -121,15 +174,15 @@ spec:
           - path: /app/proxy_server_config.yaml
             subPath: config.yaml
     service:
-      main:
+      app:
         ports:
           http:
             port: 4000
         primary: true
-        controller: main
+        controller: app
         type: LoadBalancer
     ingress:
-      main:
+      app:
         enabled: true
         className: traefik
         annotations:
@@ -146,7 +199,7 @@ spec:
               - path: /
                 pathType: Prefix
                 service:
-                  identifier: main
+                  identifier: app 
                   port: http
         tls:
           - hosts:
