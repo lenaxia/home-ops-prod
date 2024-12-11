@@ -66,6 +66,8 @@ spec:
                     key: host
               - name: DATABASE_URL
                 value: "postgresql://$(INIT_POSTGRES_USER):$(INIT_POSTGRES_PASS)@$(INIT_POSTGRES_HOST):5432/$(INIT_POSTGRES_DBNAME)"
+              - name: UI_LOGO_PATH
+                value: "https://s3.thekao.cloud/public/customlogo.png"
             envFrom:
               - secretRef:
                   name: *appname 
