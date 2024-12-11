@@ -128,12 +128,12 @@ spec:
 
 
               model_list: 
-                # LocalAI
-                - model_name: localai-llama3.1-q8-functioncall
-                  litellm_params:
-                    model: openai/meta-llama-3.1-8b-instruct:Q8_grammar-functioncall
-                    api_base: http://localai.home.svc.cluster.local:8080
-                    api_key: doesnotmatter
+                ## LocalAI
+                #- model_name: localai-llama3.1-q8-functioncall
+                #  litellm_params:
+                #    model: openai/meta-llama-3.1-8b-instruct:Q8_grammar-functioncall
+                #    api_base: http://localai.home.svc.cluster.local:8080
+                #    api_key: doesnotmatter
 
                 # Tabby API 
                 - model_name: exl2-qwen2.5-72b-instruct_4_25
@@ -145,20 +145,6 @@ spec:
                     input_cost_per_token: 0.00001
                     output_cost_per_token: 0.00001
                     max_tokens: 40960
-
-                # Ollama
-                - model_name: ollama-openhermes
-                  litellm_params:
-                    model: ollama_chat/openhermes:7b-mistral-v2.5-q8_0
-                    api_base: http://ollama.home.svc.cluster.local:11434
-                - model_name: ollama-llama3
-                  litellm_params:
-                    model: ollama_chat/llama3:8b-instruct-q8_0
-                    api_base: http://ollama.home.svc.cluster.local:11434
-                - model_name: ollama-phi3
-                  litellm_params:
-                    model: ollama_chat/phi3:latest
-                    api_base: http://ollama.home.svc.cluster.local:11434
 
                 ## Bedrock
                 #- model_name: bedrock-claude-sonnet-3-5
