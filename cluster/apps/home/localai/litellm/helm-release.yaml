@@ -193,7 +193,7 @@ spec:
         globalMounts:
           - path: /app/proxy_server_config.yaml
             subPath: config.yaml
-      litellm_license:
+      litellm-license:
         enabled: true
         type: configMap
         name: litellm-license-py
