@@ -7,3 +7,9 @@ commonLabels:
 resources:
   - helm-release.yaml
   - secret.sops.yaml
+configMapGenerator:
+  - name: litellm_license_py
+    files:
+      - ./artifacts/litellm_license.py
+generatorOptions:
+  disableNameSuffixHash: true

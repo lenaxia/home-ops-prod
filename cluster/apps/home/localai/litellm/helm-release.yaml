@@ -100,7 +100,7 @@ spec:
                 memory: 94M
 
     configMaps:
-      configyaml:
+      config-yaml:
         enabled: true
         data:
           config.yaml: |
@@ -186,13 +186,20 @@ spec:
                 #    model: bedrock/cohere.command-r-plus-v1:0
                 #    aws_region_name: us-west-2
     persistence:
-      configyaml:
+      config-yaml:
         enabled: true
         type: configMap
-        name: litellm-configyaml
+        name: litellm-config-yaml
         globalMounts:
           - path: /app/proxy_server_config.yaml
             subPath: config.yaml
+      litellm_license:
+        enabled: true
+        type: configMap
+        name: litellm-license-py
+        globalMounts:
+          - path: /app/litellm/proxy/auth/litellm_license.py
+            subPath: litellm_license.py
     service:
       app:
         ports:
