@@ -601,7 +601,7 @@ spec:
             consent_mode: implicit
             pre_configured_consent_duration: 1y
             scopes: ["openid", "profile", "email"]
-            redirect_uris: ["https://chat2.${SECRET_DEV_DOMAIN}/oauth/oidc/callback"]
+            redirect_uris: ["https://chat.${SECRET_DEV_DOMAIN}/oauth/oidc/callback"]
           - id: pgadmin
             description: PGAdmin
             secret: ${SECRET_PGADMIN_OAUTH_CLIENT_SECRET}
