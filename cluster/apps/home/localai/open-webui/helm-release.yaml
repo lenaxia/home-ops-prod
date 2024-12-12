@@ -31,7 +31,7 @@ spec:
           main:
             image:
               repository: ghcr.io/open-webui/open-webui
-              tag: git-c2d1a31
+              tag: git-fc330a1
             env:
               TZ: ${TIMEZONE}
               WEBUI_URL: https://chat2.${SECRET_DEV_DOMAIN}
