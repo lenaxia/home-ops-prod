@@ -40,7 +40,7 @@ spec:
           main:
             image:
               repository: public.ecr.aws/docker/library/haproxy
-              tag: 3.1.0-alpine
+              tag: 3.1.1-alpine
             resources:
               requests:
                 cpu: 10m
