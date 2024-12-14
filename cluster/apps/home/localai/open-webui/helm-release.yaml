@@ -37,10 +37,10 @@ spec:
               tag: main
             env:
               TZ: ${TIMEZONE}
-              WEBUI_URL: https://chat2.${SECRET_DEV_DOMAIN}
+              WEBUI_URL: https://chat.${SECRET_DEV_DOMAIN}
               WEBUI_NAME: The Kao Cloud
               ENABLE_LOGIN_FORM: false
-              DEFAULT_MODELS: qwen2.5-72b-instruct-iq4_xs
+              DEFAULT_MODELS: exl2-qwen2.5-72b-instruct_4_25 
               ENABLE_OLLAMA_API: false
               # OAuth
               ENABLE_OAUTH_SIGNUP: true
@@ -49,8 +49,8 @@ spec:
               OAUTH_CLIENT_SECRET: ${SECRET_OPEN_WEBUI_OAUTH_CLIENT_SECRET}
               OPENID_PROVIDER_URL: https://authelia.${SECRET_DEV_DOMAIN}/.well-known/openid-configuration
               # OpenAI
-              OPENAI_API_BASE_URL: http://localai.home.svc.cluster.local:8080/v1
-              OPENAI_API_KEY: does-not-matter
+              OPENAI_API_BASE_URL: http://litellm.home.svc.cluster.local:8080/v1
+              OPENAI_API_KEY: sk-laaIqgEueCJzGPpIqXVP9w
 
             envFrom:
               - secretRef:
