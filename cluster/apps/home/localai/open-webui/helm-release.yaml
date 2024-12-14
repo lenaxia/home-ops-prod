@@ -49,7 +49,7 @@ spec:
               OAUTH_CLIENT_SECRET: ${SECRET_OPEN_WEBUI_OAUTH_CLIENT_SECRET}
               OPENID_PROVIDER_URL: https://authelia.${SECRET_DEV_DOMAIN}/.well-known/openid-configuration
               # OpenAI
-              OPENAI_API_BASE_URL: http://litellm.home.svc.cluster.local:8080/v1
+              OPENAI_API_BASE_URL: https://ai.thekao.cloud/v1
               OPENAI_API_KEY: sk-laaIqgEueCJzGPpIqXVP9w
 
             envFrom:
