@@ -23,6 +23,9 @@ spec:
       strategy: rollback
       retries: 3
   values:
+    defaultPodOptions:
+      nodeSelector:
+        node-role.kubernetes.io/worker: 'true'
     controllers:
       redlib:
         replicas: 1

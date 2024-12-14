@@ -24,6 +24,9 @@ spec:
     remediation:
       retries: 5
   values:
+    defaultPodOptions:
+      nodeSelector:
+        node-role.kubernetes.io/worker: 'true'
     controllers:
       radicale:
         pod:
