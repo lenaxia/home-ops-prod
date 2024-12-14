@@ -32,6 +32,8 @@ spec:
         runAsGroup: 99
         fsGroup: 99
         fsGroupChangePolicy: OnRootMismatch
+      nodeSelector:
+        node-role.kubernetes.io/worker: 'true'
     controllers:
       main:
         replicas: 2
