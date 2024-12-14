@@ -16,6 +16,9 @@ spec:
         namespace: flux-system
 
   values:
+    defaultPodOptions:
+      nodeSelector:
+        node-role.kubernetes.io/worker: 'true'
     controllers:
       main:
         type: statefulset
