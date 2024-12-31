@@ -5,100 +5,100 @@ resources:
   #- ./system-upgrade/ks.yaml
 
   # Databases
-  - ./databases/redis/ks.yaml
-    #- ./databases/redis-operator/ks.yaml
-  - ./databases/cloudnative-pg/ks.yaml
-  - ./databases/mariadb/ks.yaml
-  - ./databases/influxdb/ks.yaml
-  - ./databases/telegraf/ks.yaml
-  - ./databases/chronograf/ks.yaml
-
-  - ./kube-system/node-feature-discovery/ks.yaml
-  - ./kube-system/intel-device-plugin/ks.yaml
-  - ./kube-system/nvidia-gpu-operator/ks.yaml
-    #- ./kube-system/kured/ks.yaml
-  - ./kube-system/reloader
-  - ./kube-system/descheduler
-
-  # Storage
-  - ./storage/kopia-web/ks.yaml
-  - ./storage/longhorn/ks.yaml
-  - ./storage/minio/ks.yaml
-  - ./storage/paperless/ks.yaml
-
-  # Networking
-  - ./networking/cloudflare-ddns/ks.yaml
-  - ./networking/traefik/ks.yaml
-  - ./networking/authelia/ks.yaml
-  - ./networking/webfinger/ks.yaml
-  - ./networking/cert-manager/ks.yaml
-  - ./networking/metallb/ks.yaml
-  - ./networking/external-dns/ks.yaml
-  
-  # Home
-  - ./home/babybuddy/ks.yaml
-  - ./home/babybuddy-pandaria/ks.yaml
-  - ./home/browserless/ks.yaml
-  - ./home/langserver/ks.yaml
-    #- ./home/gamevault/ks.yaml
-  - ./home/node-red/ks.yaml
-  - ./home/stirling-pdf/ks.yaml
-  - ./home/redlib/ks.yaml
-  - ./home/roskills/ks.yaml
-  - ./home/localai/ks.yaml
-    #- ./home/stablediffusion/ks.yaml
-  - ./home/home-assistant/ks.yaml
-  - ./home/esphome/ks.yaml
-    #- ./home/magicmirror/ks.yaml
-    #- ./home/frigate/ks.yaml
-  - ./home/zwavejs/ks.yaml
-  - ./home/mosquitto/ks.yaml
-  - ./home/rathena/ks.yaml
-  - ./home/openkore/ks.yaml
-  - ./home/radicale/ks.yaml
-
-  # Monitoring Namespace
-  - ./monitoring/flux
-  - ./monitoring/prometheus-stack/ks.yaml
-  - ./monitoring/grafana/ks.yaml
-  #- ./monitoring/loki/ks.yaml
-  #- ./monitoring/vector/ks.yaml
-
-  # Default Namespace
-  - ./home/hajimari/ks.yaml
-
-  # Media Namespace
-  - ./media/plex/ks.yaml
-  - ./media/jellyfin/ks.yaml
-    #- ./media/ersatztv/ks.yaml
-  - ./media/tautulli/ks.yaml
-  - ./media/subgen/ks.yaml
-  - ./media/recyclarr/ks.yaml
-  - ./media/sonarr/ks.yaml
-  - ./media/radarr/ks.yaml
-  - ./media/bazarr/ks.yaml
-    #- ./media/readarr/ks.yaml
-  - ./media/transmission/ks.yaml
-  - ./media/nzbget/ks.yaml
-  - ./media/nzbhydra2/ks.yaml
-  - ./media/metube/ks.yaml
-    #- ./media/invidious/ks.yaml
-  - ./media/mediarequests/ks.yaml
-    #- ./media/calibre/ks.yaml
-  - ./media/outline/ks.yaml
-  - ./media/imaginary/ks.yaml
-
-  # Utilities Namespace
-  - ./utilities/vaultwarden/ks.yaml
-  - ./utilities/vaultwarden-ldap/ks.yaml
-  - ./utilities/uptimekuma/ks.yaml
-  - ./utilities/smokeping/ks.yaml
-  - ./utilities/changedetection/ks.yaml
-  - ./utilities/librespeed/ks.yaml
-  - ./utilities/guacamole/ks.yaml
-  - ./utilities/pgadmin/ks.yaml
-  - ./utilities/podinfo/ks.yaml
-  - ./utilities/echo-server/ks.yaml
-  - ./utilities/brother-ql-web/ks.yaml
-  - ./utilities/it-tools/ks.yaml
-  - ./utilities/k8sgpt/ks.yaml
+  #  - ./databases/redis/ks.yaml
+  #    #- ./databases/redis-operator/ks.yaml
+  #  - ./databases/cloudnative-pg/ks.yaml
+  #  - ./databases/mariadb/ks.yaml
+  #  - ./databases/influxdb/ks.yaml
+  #  - ./databases/telegraf/ks.yaml
+  #  - ./databases/chronograf/ks.yaml
+  #
+  #  - ./kube-system/node-feature-discovery/ks.yaml
+  #  - ./kube-system/intel-device-plugin/ks.yaml
+  #  - ./kube-system/nvidia-gpu-operator/ks.yaml
+  #    #- ./kube-system/kured/ks.yaml
+  #  - ./kube-system/reloader
+  #  - ./kube-system/descheduler
+  #
+  #  # Storage
+  #  - ./storage/kopia-web/ks.yaml
+  #  - ./storage/longhorn/ks.yaml
+  #  - ./storage/minio/ks.yaml
+  #  - ./storage/paperless/ks.yaml
+  #
+  #  # Networking
+  #  - ./networking/cloudflare-ddns/ks.yaml
+  #  - ./networking/traefik/ks.yaml
+  #  - ./networking/authelia/ks.yaml
+  #  - ./networking/webfinger/ks.yaml
+  #  - ./networking/cert-manager/ks.yaml
+  #  - ./networking/metallb/ks.yaml
+  #  - ./networking/external-dns/ks.yaml
+  #  
+  #  # Home
+  #  - ./home/babybuddy/ks.yaml
+  #  - ./home/babybuddy-pandaria/ks.yaml
+  #  - ./home/browserless/ks.yaml
+  #  - ./home/langserver/ks.yaml
+  #    #- ./home/gamevault/ks.yaml
+  #  - ./home/node-red/ks.yaml
+  #  - ./home/stirling-pdf/ks.yaml
+  #  - ./home/redlib/ks.yaml
+  #  - ./home/roskills/ks.yaml
+  #  - ./home/localai/ks.yaml
+  #    #- ./home/stablediffusion/ks.yaml
+  #  - ./home/home-assistant/ks.yaml
+  #  - ./home/esphome/ks.yaml
+  #    #- ./home/magicmirror/ks.yaml
+  #    #- ./home/frigate/ks.yaml
+  #  - ./home/zwavejs/ks.yaml
+  #  - ./home/mosquitto/ks.yaml
+  #  - ./home/rathena/ks.yaml
+  #  - ./home/openkore/ks.yaml
+  #  - ./home/radicale/ks.yaml
+  #
+  #  # Monitoring Namespace
+  #  - ./monitoring/flux
+  #  - ./monitoring/prometheus-stack/ks.yaml
+  #  - ./monitoring/grafana/ks.yaml
+  #  #- ./monitoring/loki/ks.yaml
+  #  #- ./monitoring/vector/ks.yaml
+  #
+  #  # Default Namespace
+  #  - ./home/hajimari/ks.yaml
+  #
+  #  # Media Namespace
+  #  - ./media/plex/ks.yaml
+  #  - ./media/jellyfin/ks.yaml
+  #    #- ./media/ersatztv/ks.yaml
+  #  - ./media/tautulli/ks.yaml
+  #  - ./media/subgen/ks.yaml
+  #  - ./media/recyclarr/ks.yaml
+  #  - ./media/sonarr/ks.yaml
+  #  - ./media/radarr/ks.yaml
+  #  - ./media/bazarr/ks.yaml
+  #    #- ./media/readarr/ks.yaml
+  #  - ./media/transmission/ks.yaml
+  #  - ./media/nzbget/ks.yaml
+  #  - ./media/nzbhydra2/ks.yaml
+  #  - ./media/metube/ks.yaml
+  #    #- ./media/invidious/ks.yaml
+  #  - ./media/mediarequests/ks.yaml
+  #    #- ./media/calibre/ks.yaml
+  #  - ./media/outline/ks.yaml
+  #  - ./media/imaginary/ks.yaml
+  #
+  #  # Utilities Namespace
+  #  - ./utilities/vaultwarden/ks.yaml
+  #  - ./utilities/vaultwarden-ldap/ks.yaml
+  #  - ./utilities/uptimekuma/ks.yaml
+  #  - ./utilities/smokeping/ks.yaml
+  #  - ./utilities/changedetection/ks.yaml
+  #  - ./utilities/librespeed/ks.yaml
+  #  - ./utilities/guacamole/ks.yaml
+  #  - ./utilities/pgadmin/ks.yaml
+  #  - ./utilities/podinfo/ks.yaml
+  #  - ./utilities/echo-server/ks.yaml
+  #  - ./utilities/brother-ql-web/ks.yaml
+  #  - ./utilities/it-tools/ks.yaml
+  #  - ./utilities/k8sgpt/ks.yaml
