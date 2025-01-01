@@ -60,7 +60,7 @@ spec:
           main:
             image:
               repository: karsten13/magicmirror
-              tag: v2.29.0
+              tag: v2.30.0
             env:
               TZ: ${TIMEZONE}
             command:
