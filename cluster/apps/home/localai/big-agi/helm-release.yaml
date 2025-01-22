@@ -34,7 +34,7 @@ spec:
           main:
             image:
               repository: ghcr.io/enricoros/big-agi
-              tag: v1.16.8
+              tag: v1.16.9
             env:
               TZ: ${TIMEZONE}
               # Databases
