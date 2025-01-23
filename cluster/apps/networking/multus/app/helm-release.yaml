@@ -23,7 +23,7 @@ spec:
     cni:
       image:
         repository: ghcr.io/angelnu/cni-plugins
-        tag: 1.5.1
+        tag: 1.6.2
 
       paths:
         config: /var/lib/rancher/k3s/agent/etc/cni/net.d/
