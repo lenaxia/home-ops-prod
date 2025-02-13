@@ -37,7 +37,7 @@ spec:
           app:
             image:
               repository: ghcr.io/onedr0p/kubanetics
-              tag: 2024.12.1@sha256:7a056118fa69fe3f8536fea0566859d741f9e7daf498ad632166098542e130eb
+              tag: 2025.2.1@sha256:5968624454c48075f0c9b9746d314bf25d53f1177792a7291f51217ba309f196
             command: ["/app/cloudflare-ddns.sh"]
             restartPolicy: Never
             env:
