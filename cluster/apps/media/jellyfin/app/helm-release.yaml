@@ -43,7 +43,7 @@ spec:
           main:
             image:
               repository: jellyfin/jellyfin
-              tag: 10.10.3@sha256:17c3a8d9dddb97789b5f37112840ebf96566442c14d4754193a6c2eb154bc221
+              tag: 10.10.6@sha256:96b09723b22fdde74283274bdc1f63b9b76768afd6045dd80d4a4559fc4bb7f3
             env:
               TZ: America/Los_Angeles
               PGID: 1000
