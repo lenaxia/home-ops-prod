@@ -53,7 +53,7 @@ spec:
                   name: monica-secret
             image:
               repository: ghcr.io/onedr0p/postgres-init
-              tag: '16.6'
+              tag: '16.8'
         containers:
           main:
             image:
