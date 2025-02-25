@@ -41,7 +41,7 @@ spec:
             image:
               repository: ghcr.io/onedr0p/plex
               tag: 
-                1.41.3.9292-bc7397402@sha256:9a9196a109437035b9b20c8d368c569555623f14faf2247c3aa0a84cf568242d
+                1.41.4.9463-630c9f557@sha256:7e169d17670c8f34bcb1f40500747b1b689c1c2ef7b80e604b968b5375e62022
             env:
               TZ: ${TIMEZONE}
               PLEX_CLAIM: claim-RGPtV5WwXo9JZcoHzti2
