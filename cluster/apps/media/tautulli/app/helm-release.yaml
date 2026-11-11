@@ -37,7 +37,7 @@ spec:
           main:
             image:
               repository: ghcr.io/tautulli/tautulli
-              tag: v2.15.0@sha256:f13daee2a403a95a51902b2625de5f6b944f034e9cd790e9d2a0c5e84c9842cb
+              tag: v2.19.1@sha256:239cd6dbc429a0eb441bdf88a7a015871e2d4d6e02b6e6039af30c0487528a8e
               pullPolicy: Always
             env:
               TZ: ${TIMEZONE}
